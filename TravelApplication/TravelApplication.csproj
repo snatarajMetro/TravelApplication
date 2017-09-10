@@ -138,6 +138,7 @@
     <Compile Include="Class\SQLBuilder\SelectQueryBuilder.cs" />
     <Compile Include="Class\SQLBuilder\UpdateQueryBuilder.cs" />
     <Compile Include="Controllers\MVC\HomeController.cs" />
+    <Compile Include="Controllers\MVC\LoginController.cs" />
     <Compile Include="DAL\DBProvider\ConnectionFactory.cs" />
     <Compile Include="DAL\Repositories\Base\IBaseRepository.cs" />
     <Compile Include="Global.asax.cs">
@@ -162,6 +163,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bs.css" />
+    <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -174,6 +177,8 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Images\logo.jpg" />
+    <Content Include="Images\logo.png" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap-table\bootstrap-table-locale-all.js" />
@@ -456,6 +461,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

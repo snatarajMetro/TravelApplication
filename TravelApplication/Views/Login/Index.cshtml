@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="main">
+    <div id="signin" class="main signincontainer">
+        <div id="inputs" class="main">
+            <span class="signin">Sign in</span>
+        </div>
+        <div class="main label">
+            <input type="text" width="100" name="txtEmail" id="txtEmail" placeholder="Email" class="email" />
+        </div>
+        <div class="main label">
+            <input type="password" width="100" name="txtPassword" placeholder="Password" class="password" />
+        </div>
+        <div class="button">
+            <div class="register">
+                <a href="#">New user? Register</a>
+            </div>
+            <input type="button" value="SIGN IN" class="signinbutton" />
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#txtEmail").focus();
+        });
+
+</script>
