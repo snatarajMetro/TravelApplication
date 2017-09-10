@@ -1,4 +1,13 @@
-﻿div.main {
+﻿.background {
+    background-image: url("/images/wallpaper.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-blend-mode: overlay;
+    width:100%;
+}
+
+div.main {
     display:block;
 }
 
@@ -9,18 +18,16 @@ div.signincontainer {
     bottom: 0;
     left: 0;
     right: 0;
-    width: 500px;
+    width: 450px;
     height: 250px;
     margin: auto;
     background-color: #f3f3f3;
-    /*background-color:lightgrey;*/
 
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .signin {
-    padding-top:25px;
-    padding-left:60px;
+    padding-left:38px;
     padding-bottom:50px;
     font-family:'Open Sans Condensed', sans-serif;
     font-weight:bold;
@@ -69,21 +76,25 @@ input.password {
     padding-right:62px;
 }
 
-.signinbutton {
-    background-color:dodgerblue;
+.signinbutton,
+.signinbutton:hover,
+.signinbutton:focus {
     color:white;
     width:100px;
     cursor:pointer;
-    font-family:'Open Sans Condensed', sans-serif;
-    font-weight:bold;
+    /*font-family:'Open Sans Condensed', sans-serif;
+    font-weight:bold*/
+    background-color:dodgerblue;
+    border-color: #53A3CD;
 }
 
 .register
 {
     float:left;
-    font-family:'Open Sans Condensed', sans-serif;
+    /*font-family:'Open Sans Condensed', sans-serif;*/
     font-size:11px;
-    padding-right:220px;
+    padding-top:15px;
+    padding-right:150px;
 }
 
 a
