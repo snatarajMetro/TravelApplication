@@ -86,7 +86,9 @@ input.password {
 
 .signinbutton,
 .signinbutton:hover,
-.signinbutton:focus {
+.signinbutton:focus,
+.signinbutton:active
+{
     color:white;
     width:100px;
     cursor:pointer;
@@ -169,6 +171,7 @@ a
     width:220px;
     height:27px;
     margin-top:5px;
+    color:black;
     background-color:aliceblue;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -188,8 +191,8 @@ a
     font-size:15px;
     font-weight:bold;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    border-radius:2px;border:1px solid;
-    width:160px;
+    /*border-radius:2px;border:1px solid;*/
+    width:192px;
     height:45px;
 }
 
@@ -197,25 +200,31 @@ a
 {
     float:left;
     margin-top:20px;
-    margin-left:30px;
+    margin-left:20px;
     padding:10px;
     font-family:'Open Sans Condensed', sans-serif;
     font-size:15px;
     font-weight:bold;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    border-radius:2px;border:1px solid;
-    width:160px;
+    /*border-radius:2px;border:1px solid;*/
+    width:192px;
     height:45px;
 
 }
 
 .action1:hover {
-background-color:dodgerblue;
+/*background-color:dodgerblue;*/
+border-radius:2px;
+border:1px solid;
+border-color:dodgerblue;
 cursor:pointer;
 }
 
 .action2:hover {
-background-color:dodgerblue;
+/*background-color:dodgerblue;*/
+border-radius:2px;
+border:1px solid;
+border-color:dodgerblue;
 cursor:pointer;
 }
 
