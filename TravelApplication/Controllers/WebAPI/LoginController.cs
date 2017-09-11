@@ -28,8 +28,9 @@ namespace TravelApplication.Controllers.WebAPI
                 }
 
                 var roles = new List<Role>();
-                roles.Add(new Role() { Id = 1, Name = "Submitter" });
-                roles.Add(new Role() { Id = 2, Name = "Approver" });
+                roles.Add(new Role() { Id = 1, Name = "Approver" });
+                roles.Add(new Role() { Id = 2, Name = "Submitter" });
+                roles.Add(new Role() { Id = 3, Name = "Traveler" });
 
                 var user = new UserRole() { UserId = 100, UserName = userModel.UserName, Roles = roles };
 

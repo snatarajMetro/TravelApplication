@@ -5,6 +5,7 @@
     background-size: cover;
     background-blend-mode: overlay;
     width:100%;
+    height:auto;
 }
 
 div.main {
@@ -254,4 +255,13 @@ a:hover
 
 .roleName {
     font-weight:bold;
+}
+
+.logout{
+    float:right;
+    color:white;
+    padding:10px;
+    padding-right:10px;
+    display:none;
+    cursor:pointer;
 }

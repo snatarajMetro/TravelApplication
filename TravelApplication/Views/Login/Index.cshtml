@@ -94,10 +94,15 @@
                     var options = $("#roles");
 
                     options.empty();
-                    options.append($("<option />").val(0));
+                    //options.append($("<option />").val(0));
 
-                    for (var i = 0; i < result.Roles.length; i++) {
-                        options.append($("<option />").val(result.Roles[i].Id).text(result.Roles[i].Name));
+                    for (var index = 0; index < result.Roles.length; index++) {
+                        if (result.Roles[index].Name == "Traveler") {
+                            options.append($("<option selected />").val(result.Roles[index].Id).text(result.Roles[index].Name));
+                        }
+                        else {
+                            options.append($("<option />").val(result.Roles[index].Id).text(result.Roles[index].Name));
+                        }
                     }
 
                     // set user name
@@ -108,6 +113,7 @@
                     $("#signin").hide();
                     $("#action").hide();
                     $("#role").show();
+                    $("#logout").show();
                 },
                 error: function (xhr, options, error) {
                     if (xhr.status == 401) {
@@ -119,6 +125,7 @@
         }
 
         function backtosignin() {
+            $("#logout").hide();
             $("#signin").show();
             $("#role").hide();
             $("#action").hide();
@@ -146,5 +153,16 @@
             $("#role").show();
         }
 
+        function showSignIn()
+        {
+            $("#signin").show();
+            $("#action").hide();
+            $("#role").hide();
+            $("#action").hide();
+            $("#invaliduser").hide();
+            $("#logout").hide();
+
+            $("#txtEmail").focus();
+        }
 </script>
 
