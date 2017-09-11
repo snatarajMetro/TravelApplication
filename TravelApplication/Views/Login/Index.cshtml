@@ -35,8 +35,6 @@
         <div id="roleselection" class="main roles">
             <select id="roles" class="availableroles">
                 <option value="0"></option>
-                <option value="1">Submitter</option>
-                <option value="2">Traveller</option>
             </select>
         </div>
         <div class="main button">
@@ -67,15 +65,24 @@
                 dataType: "json",
                 success: function (data) {
                     
-                    //console.log(data);
                     var result = JSON.parse(data);
 
                     // set the roles dropdown
-                    
+                    var options = $("#roles");
+
+                    options.empty();
+                    options.append($("<option />").val(0));
+
+                    for (var i = 0; i < result.Roles.length; i++) {
+                        options.append($("<option />").val(result.Roles[i].Id).text(result.Roles[i].Name));
+                    }
+
+                    // set user name
+                    $("#userName").text(result.UserName);
+
                     //show role section
                     $("#signin").hide();
                     $("#role").show();
-                    $("#userName").text(result.UserName);
                 },
                 error: function (xhr, options, error) {
                     if (xhr.status == 401) {
