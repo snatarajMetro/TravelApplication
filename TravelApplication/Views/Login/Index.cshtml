@@ -44,8 +44,31 @@
             <input class="btn btn-success signinbutton" type="button" name="btnNext" value="Next" onclick="actionselection()" />
         </div>
     </div>
+
+    <div id="action" class="main signincontainer" style="display:none">
+        <div id="inputs">
+            <span class="username"><b>Hello,</b>&nbsp;</span>
+            <span class="" id="userName2"></span>
+        </div>
+        <div class="main selectrole">
+            <span>What would you like to do as a</span>
+            <span class="roleName" id="roleName"></span>&nbsp;?
+        </div>
+        <div id="roleselection" class="main roles">
+            <div>
+                <div class="action1">View existing travel requests</div>
+                <div class="action2">Create new travel request</div>
+            </div>
+        </div>
+        <div class="main button2">
+            <div class="main backsection2">
+                <input class="btn btn-success signinbutton" type="button" name="btnBack" value="Back" onclick="backtoroleselection()" />
+            </div>
+        </div>
+    </div>
 </div>
 <script type="text/javascript">
+        var userName = '';
 
         $(document).ready(function () {
             $("#txtEmail").focus();
@@ -54,13 +77,13 @@
         function signIn() {
 
             // Make api call to authenticate the user
-            var userName = $("#txtEmail").val();
+            var user = $("#txtEmail").val();
             var password = $("#txtPassword").val();
 
             $.ajax({
                 type: "POST",
                 url: "/api/login",
-                data: JSON.stringify({ "UserName":userName, "Password":password }),
+                data: JSON.stringify({ "UserName":user, "Password":password }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
@@ -79,9 +102,11 @@
 
                     // set user name
                     $("#userName").text(result.UserName);
+                    userName = result.UserName;
 
                     //show role section
                     $("#signin").hide();
+                    $("#action").hide();
                     $("#role").show();
                 },
                 error: function (xhr, options, error) {
@@ -91,16 +116,34 @@
                     }
                 }
             });
-            
-
-            // on failure
-            // display error
-           
         }
 
         function backtosignin() {
             $("#signin").show();
             $("#role").hide();
+            $("#action").hide();
+            $("#invaliduser").hide();
+        }
+
+        function actionselection() {
+
+            var userRole = $("#roles option:selected").text();
+
+            $("#action").show();
+            $("#role").hide();
+            $("#signin").hide();
+
+            // set user name
+            $("#userName2").text(userName);
+
+            // set role
+            $("#roleName").text(userRole);
+        }
+
+        function backtoroleselection() {
+            $("#signin").hide();
+            $("#action").hide();
+            $("#role").show();
         }
 
 </script>

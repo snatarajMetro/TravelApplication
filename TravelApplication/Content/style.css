@@ -76,6 +76,13 @@ input.password {
     padding-right:62px;
 }
 
+.button2 {
+    padding-top:40px;
+    float:left;
+    height:100px;
+    padding-left:28px;
+}
+
 .signinbutton,
 .signinbutton:hover,
 .signinbutton:focus {
@@ -120,6 +127,12 @@ a
 {
     float:left;
     padding-right:150px;
+    padding-left:30px;
+}
+
+.backsection2
+{
+    float:left;
     padding-left:30px;
 }
 
@@ -175,8 +188,8 @@ a
     font-weight:bold;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius:2px;border:1px solid;
-    width:150px;
-    height:25px;
+    width:160px;
+    height:45px;
 }
 
 .action2
@@ -190,8 +203,8 @@ a
     font-weight:bold;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius:2px;border:1px solid;
-    width:150px;
-    height:25px;
+    width:160px;
+    height:45px;
 
 }
 
@@ -237,4 +250,8 @@ a:hover
     padding-bottom:5px;
     font-size:11px;
     margin-left:30px;
+}
+
+.roleName {
+    font-weight:bold;
 }
