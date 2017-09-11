@@ -45,7 +45,7 @@
         </div>
     </div>
 
-    <div id="action" class="main signincontainer" >
+    <div id="action" class="main signincontainer" style="display:none">
         <div id="inputs">
             <span class="username"><b>Hello,</b>&nbsp;</span>
             <span class="" id="userName2"></span>
@@ -58,11 +58,11 @@
             <div>
                 <div class="action1">
                     <img style="padding:0px;" src="~/Images/View.png" width="30" height="30" />
-                    View existing travel requests
+                    <span onclick="">View existing travel requests</span>
                 </div>
-                <div class="action2">
+                <div class="action2" onclick="createnewrequest()">
                     <img style="padding:0px;" src="~/Images/New.png" width="30" height="30" />
-                    Create new travel request
+                    <span>Create new travel request</span>
                 </div>
             </div>
         </div>
@@ -72,7 +72,22 @@
             </div>
         </div>
     </div>
+
+    <div id="dataentry" class="dataentry" style="display:none">
+        <div id="content" class="content">
+            data entry section
+        </div>
+        <div id="footer" class="footer">
+            <div class="footerback">
+                <input class="btn btn-success signinbutton" type="button" name="btnBack" value="Back" onclick="backtoactionselection()" />
+            </div>
+            <div class="saveandcontinue">
+                <input class="btn btn-success signinbutton" type="button" name="btnNext" value="Save and Continue" onclick="" />
+            </div>
+        </div>
+    </div>
 </div>
+
 <script type="text/javascript">
         var userName = '';
 
@@ -132,10 +147,11 @@
 
         function backtosignin() {
             $("#logout").hide();
-            $("#signin").show();
             $("#role").hide();
             $("#action").hide();
             $("#invaliduser").hide();
+            $("#dataentry").hide();
+            $("#signin").show();
         }
 
         function actionselection() {
@@ -159,16 +175,28 @@
             $("#role").show();
         }
 
-        function showSignIn()
+        function backtoactionselection()
         {
-            $("#signin").show();
+            $("#dataentry").hide();
+            $("#action").show();
+        }
+
+        function logout()
+        {
             $("#action").hide();
             $("#role").hide();
             $("#action").hide();
             $("#invaliduser").hide();
             $("#logout").hide();
+            $("#dataentry").hide();
+            $("#signin").show();
 
             $("#txtEmail").focus();
+        }
+
+        function createnewrequest() {
+            $("#action").hide();
+            $("#dataentry").show();
         }
 </script>
 
