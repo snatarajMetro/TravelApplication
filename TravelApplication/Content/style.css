@@ -102,3 +102,140 @@ a
     color:dodgerblue;
     text-decoration:none;
 }
+
+.roleselection {
+    height:87px;
+}
+
+.back {
+    background-color:dodgerblue;
+    color:white;
+    width:100px;
+    cursor:pointer;
+    font-family:'Open Sans Condensed', sans-serif;
+    font-weight:bold;
+}
+
+.backsection
+{
+    float:left;
+    padding-right:150px;
+    padding-left:30px;
+}
+
+.hellouser {
+    padding-left:50px;
+    padding-bottom:0px;
+    font-family:'Open Sans Condensed', sans-serif;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.username {
+    padding-left:38px;
+    padding-top:0px;
+    font-family:'Open Sans Condensed', sans-serif;
+    font-size:20px;
+}
+
+.selectrole {
+    padding-left:38px;
+    padding-top:10px;
+}
+
+.roles {
+    padding-left:38px;
+    height:96px;
+}
+
+.availableroles {
+    padding-left:50px;
+    font-family:'Open Sans Condensed', sans-serif;
+    font-size:15px;
+    border-radius:2px;border:1px solid;
+    width:220px;
+    height:27px;
+    margin-top:5px;
+    background-color:aliceblue;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.backsection2
+{
+    float:left;
+    padding-right:290px;
+    padding-left:10px;
+}
+.action1
+{
+    float:left;
+    margin-top:20px;
+    padding:10px;
+    font-family:'Open Sans Condensed', sans-serif;
+    font-size:15px;
+    font-weight:bold;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius:2px;border:1px solid;
+    width:150px;
+    height:25px;
+}
+
+.action2
+{
+    float:left;
+    margin-top:20px;
+    margin-left:30px;
+    padding:10px;
+    font-family:'Open Sans Condensed', sans-serif;
+    font-size:15px;
+    font-weight:bold;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius:2px;border:1px solid;
+    width:150px;
+    height:25px;
+
+}
+
+.action1:hover {
+background-color:dodgerblue;
+cursor:pointer;
+}
+
+.action2:hover {
+background-color:dodgerblue;
+cursor:pointer;
+}
+
+a
+{
+    color:dodgerblue;
+    text-decoration:none;
+}
+
+a:hover
+{
+    color:darkblue;
+    text-decoration:none;
+}
+
+.invaliduser {
+    color:red;
+    width:300px;
+    height:5px;
+    padding-left:10px;
+    padding-top:5px;
+    padding-bottom:5px;
+    font-size:11px;
+    margin-left:30px;
+}
+
+.invaliduser2 {
+    color:red;
+    width:300px;
+    height:10px;
+    padding-left:10px;
+    padding-top:5px;
+    padding-bottom:5px;
+    font-size:11px;
+    margin-left:30px;
+}

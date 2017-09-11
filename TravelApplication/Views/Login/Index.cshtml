@@ -2,34 +2,50 @@
 @{
     ViewBag.Title = "Index";
 }
-
 <div class="main">
     <div id="signin" class="main signincontainer">
         <div id="inputs" class="main">
             <span class="signin">Sign in</span>
         </div>
         <div class="main label">
-            <input type="text" width="100" name="txtEmail" id="txtEmail" placeholder="Email" class="email" />
+            <input type="text" width="100" name="txtEmail" id="txtEmail" placeholder="Username" class="email" />
         </div>
         <div class="main label">
-            <input type="password" width="100" name="txtPassword" placeholder="Password" class="password" />
+            <input type="password" width="100" id="txtPassword" name="txtPassword" placeholder="Password" class="password" />
+        </div>
+        <div id="invaliduser" class="main invaliduser" style="display:none">
+            <span>Invalid username and/or password. Please try again.</span>
         </div>
         <div class="button">
             <div class="register">
                 <a href="#">New user? Register</a>
-            </div>
-            <input class="btn btn-success signinbutton" type="button" name="btnSignIn" value="Sign in" />
+            </div> 
+            <input class="btn btn-success signinbutton" type="button" name="btnSignIn" value="Sign in" onclick="signIn()" />
         </div>
     </div>
-    @*<div id="login" class="span3 well well-large offset4">
-        <h4>Sign in</h4>
-        <form class="form">
-            <input type="text" placeholder="Email" id="txtLogInId" name="txtLogInId" tabindex="1" required /> <br />
-            <input type="password" placeholder="Password" id="txtPassword" name="txtPassword" tabindex="2" required /><br />
-            <input class="btn btn-success signin" type="button" name="btnSignIn" value="Sign in" onclick="signIn()" tabindex="3" />&nbsp;
-            <a class="register" href="#" tabindex="4">New user? Register</a>
-        </form>
-    </div>*@
+    
+    <div id="role" class="main signincontainer" style="display:none">
+        <div id="inputs">
+            <span class="username" ><b>Hello,</b>&nbsp;</span>
+            <span class="" id="userName"></span>
+        </div>
+        <div class="main selectrole">
+            <span>Please select your role</span>
+        </div>
+        <div id="roleselection" class="main roles">
+            <select id="roles" class="availableroles">
+                <option value="0"></option>
+                <option value="1">Submitter</option>
+                <option value="2">Traveller</option>
+            </select>
+        </div>
+        <div class="main button">
+            <div class="backsection">
+                <input class="btn btn-success signinbutton" type="button" name="btnBack" value="Back" onclick="backtosignin()" />
+            </div>
+            <input class="btn btn-success signinbutton" type="button" name="btnNext" value="Next" onclick="actionselection()" />
+        </div>
+    </div>
 </div>
 <script type="text/javascript">
 
@@ -37,4 +53,48 @@
             $("#txtEmail").focus();
         });
 
+        function signIn() {
+
+            // Make api call to authenticate the user
+            var userName = $("#txtEmail").val();
+            var password = $("#txtPassword").val();
+
+            $.ajax({
+                type: "POST",
+                url: "/api/login",
+                data: JSON.stringify({ "UserName":userName, "Password":password }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    
+                    //console.log(data);
+                    var result = JSON.parse(data);
+
+                    // set the roles dropdown
+                    
+                    //show role section
+                    $("#signin").hide();
+                    $("#role").show();
+                    $("#userName").text(result.UserName);
+                },
+                error: function (xhr, options, error) {
+                    if (xhr.status == 401) {
+                        $("#invaliduser").show();
+                        $("#txtEmail").focus();
+                    }
+                }
+            });
+            
+
+            // on failure
+            // display error
+           
+        }
+
+        function backtosignin() {
+            $("#signin").show();
+            $("#role").hide();
+        }
+
 </script>
+

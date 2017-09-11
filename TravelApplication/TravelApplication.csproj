@@ -139,6 +139,7 @@
     <Compile Include="Class\SQLBuilder\UpdateQueryBuilder.cs" />
     <Compile Include="Controllers\MVC\HomeController.cs" />
     <Compile Include="Controllers\MVC\LoginController.cs" />
+    <Compile Include="Controllers\WebAPI\LoginController.cs" />
     <Compile Include="DAL\DBProvider\ConnectionFactory.cs" />
     <Compile Include="DAL\Repositories\Base\IBaseRepository.cs" />
     <Compile Include="Global.asax.cs">
@@ -465,7 +466,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\WebAPI\" />
     <Folder Include="DAL\DataContracts\" />
     <Folder Include="Services\" />
   </ItemGroup>
