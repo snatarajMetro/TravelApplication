@@ -275,19 +275,8 @@ a:hover
     cursor:pointer;
 }
 
-.dataentry{
-    float:left;
-    /*min-width:820px;*/
-    width:auto;
-    min-height:350px;
-    margin-top:55px;
-    padding:10px;
-    background-color: #f3f3f3;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
 .content{
-    min-height:300px;
+    min-height:430px;
     margin-top:5px;
     width:auto;
 }
@@ -312,6 +301,7 @@ a:hover
     font-family:'Open Sans Condensed', sans-serif;
     font-size:25px;
     padding-bottom:5px;
+    padding-left:5px;
 }
 
 .label2 {
@@ -338,7 +328,7 @@ a:hover
 }
 
 .rowentry{
-    padding:4px;
+    padding:10px;
 }
 
 .dataentrysection1 {
@@ -347,14 +337,29 @@ a:hover
     float:left;
     display:inline-block;
     margin-right:10px;
+    margin-left:10px;
 }
 
 .dataentrysection2 {
     /*background-color:aqua;*/
     width:400px;
     display:inline-block;
-    padding-left:5px;
+
     /*border-radius: 3px;
     border:solid 1px gray;*/
     min-height:300px;
+}
+
+div.dataentrycontainer {
+    display: inline-block;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 900px;
+    height: 500px;
+    margin: auto;
+    background-color: #f3f3f3;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
