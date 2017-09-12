@@ -83,7 +83,7 @@
                     <div class="label2">
                         <span>Badge #</span>
                     </div>
-                    <input type="text" placeholder="Badge Number" id="txtBadgeNumber" width="100" class="datainput" /> <br />
+                    <input type="text" placeholder="Badge Number" id="txtBadgeNumber" width="100" class="datainput" onblur="setUserName()" /> <br />
                 </div>
                 <div class="rowentry">
                     <div class="label2">
@@ -148,7 +148,7 @@
                 <input class="btn btn-success signinbutton" type="button" name="btnBack" value="Back" onclick="backtoactionselection()" />
             </div>
             <div class="saveandcontinue">
-                <input class="btn btn-success signinbutton" type="button" name="btnNext" value="Save and Continue" onclick="" />
+                <input class="btn btn-success signinbutton" type="button" name="btnNext" value="Save and Continue" onclick="savedataentry()" />
             </div>
         </div>
     </div>
@@ -264,6 +264,65 @@
             $("#action").hide();
             $("#dataentry").show();
             $("#txtBadgeNumber").focus();
+        }
+
+        function setUserName() {
+
+            var badgeNumber = $('#txtBadgeNumber').val();
+
+            if (badgeNumber) {
+                // make api call to get user info
+                // and set other fields
+                var result = "Metro";
+
+                $('#txtName').val(result);
+            }
+        }
+
+        function savedataentry()
+        {
+            // Get user inputs
+            var badgeNumber         = $('#txtBadgeNumber').val();
+            var name                = $('#txtName').val();
+            var division            = $('#txtDivision').val();
+            var section             = $('#txtSection').val();
+            var organization        = $('#txtOrganization').val();
+            var meetingLocation     = $('#txtMeetingLocation').val();
+            var meetingBeginDate    = $('#txtMeetingBeginDate').val();
+            var meetingEndDate      = $('#txtMeetingEndDate').val();
+            var departureDate       = $('#txtDepartureDate').val();
+            var returnDate          = $('#txtReturnDate').val();
+            var userId              = "";
+
+            $.ajax({
+                type: "POST",
+                url: "/login/savetravelrequest",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    'BadgeNumber': badgeNumber,
+                    'Name': name,
+                    'Division': division,
+                    'Section': section,
+                    'organization': organization,
+                    'MeetingLocation': meetingLocation,
+                    'MeetingBeginDateTime': meetingBeginDate,
+                    'DepartureDateTime': departureDate,
+                    'MeetingEndDateTime': meetingEndDate,
+                    'ReturnDateTime': returnDate,
+                    'UserId': userId
+                }),
+                dataType: "json",
+                success: function (result) {
+                    if (result.valid != 0) {
+
+                        // Show next section
+                        // window.location.href = "/Login/EstimatedExpense/" + result.valid + "";
+                    }
+                    else {
+                        // Show error message
+                    }
+                }
+            });
         }
 </script>
 
