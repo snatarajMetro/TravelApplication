@@ -8,13 +8,14 @@
             <span class="signin">Sign in</span>
         </div>
         <div class="main label">
-            <input type="text" width="100" name="txtEmail" id="txtEmail" placeholder="Username" class="email" />
+            <input type="text" width="100" name="txtEmail" id="txtEmail" placeholder="Username" class="datainput" />
         </div>
         <div class="main label">
-            <input type="password" width="100" id="txtPassword" name="txtPassword" placeholder="Password" class="password" />
+            <input type="password" width="100" id="txtPassword" name="txtPassword" placeholder="Password" class="datainput" />
         </div>
-        <div id="invaliduser" class="main invaliduser" style="display:none">
-            <span>Invalid username and/or password. Please try again.</span>
+        <div id="invaliduser" class="main errorcontainer" style="display:none">
+            <div class="dialog">Invalid username and/or password. Please try again.</div>
+            <a href="#" class="close-thick" onclick="return closeerror();"></a>
         </div>
         <div class="button">
             <div class="register">
@@ -161,6 +162,11 @@
             $("#txtEmail").focus();
         });
 
+        function closeerror() {
+            $("#invaliduser").hide();
+            $("#txtEmail").focus();
+        }
+
         function signIn() {
 
             // Make api call to authenticate the user
@@ -204,7 +210,12 @@
                 },
                 error: function (xhr, options, error) {
                     if (xhr.status == 401) {
-                        $("#invaliduser").show();
+
+                        $("#invaliduser").fadeIn("slow");
+                        $("#invaliduser").fadeOut(6000);
+
+                        $("#txtEmail").attr("class", "datainputerror");
+                        $("#txtPassword").attr("class", "datainputerror");
                         $("#txtEmail").focus();
                     }
                 }

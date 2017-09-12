@@ -43,7 +43,7 @@ div.signincontainer {
     /*padding-left:10px;*/
 }
 
-input.email {
+.email {
     -moz-border-radius: 3px;
     border-radius: 3px;
     border:solid 1px gray;
@@ -56,7 +56,7 @@ input.email {
     color:black;
 }
 
-input.password {
+.password {
      -moz-border-radius: 3px;
     border-radius: 3px;
     border:solid 1px gray;
@@ -325,6 +325,23 @@ a:hover
     font-family:'Open Sans Condensed', sans-serif;
     font-size:15px;
     color:black;
+    margin-top:5px;
+    margin-bottom:10px;
+}
+
+.datainputerror {
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px red;
+    padding-left:5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width:375px;
+    height:35px;
+    font-family:'Open Sans Condensed', sans-serif;
+    font-size:15px;
+    color:black;
+    margin-top:5px;
+    margin-bottom:10px;
 }
 
 .rowentry{
@@ -358,8 +375,51 @@ div.dataentrycontainer {
     left: 0;
     right: 0;
     width: 900px;
-    height: 500px;
+    height: 560px;
     margin: auto;
+    margin-top:55px;
     background-color: #f3f3f3;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.errorcontainer {
+    position:fixed;
+    top:57%;
+    left:50%;
+    -webkit-transform:translate(-50%,-50%);
+    transform:translate(-50%,-50%);
+}
+
+.close-thick {
+    color:white;
+    font:14px/100% arial, sans-serif;
+    position:absolute;
+    right:12px;
+    text-decoration:none;
+    text-shadow: 0 1px 0 #fff;
+    top:11px;
+    text-wrap:normal;
+    /*border-radius:50%;
+    -moz-border-radius:50%;
+    -webkit-border-radius:50%;
+    border:2px solid white;*/ 
+}
+
+.close-thick:after {
+    content:'❌';
+}
+
+.dialog {
+    background-color:#c44c4c;
+    color:white;
+    width:310px;
+    height:auto;
+    margin:10px; 
+    padding:10px;
+    font-size:15px;
+    font-family:'Open Sans Condensed', sans-serif;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    float:left;
+    position:relative;
 }
