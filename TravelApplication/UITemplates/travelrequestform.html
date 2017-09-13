@@ -1,80 +1,5 @@
-﻿
-@{
-    ViewBag.Title = "Index";
-}
-<div class="main">
-    <div id="signin" class="main signincontainer">
-        <div id="inputs" class="main">
-            <span class="signin">Sign in</span>
-        </div>
-        <div class="main label">
-            <input type="text" width="100" name="txtEmail" id="txtEmail" placeholder="Username" class="datainput" />
-        </div>
-        <div class="main label">
-            <input type="password" width="100" id="txtPassword" name="txtPassword" placeholder="Password" class="datainput" />
-        </div>
-        <div id="invaliduser" class="main errorcontainer" style="display:none">
-            <div class="dialog">Invalid username and/or password. Please try again.</div>
-            <a href="#" class="close-thick" onclick="return closeerror();"></a>
-        </div>
-        <div class="button">
-            <div class="register">
-                <a href="#">New user? Register</a>
-            </div> 
-            <input class="btn btn-success signinbutton" type="button" name="btnSignIn" value="Sign in" onclick="signIn()" />
-        </div>
-    </div>
-    
-    <div id="role" class="main signincontainer" style="display:none">
-        <div id="inputs">
-            <span class="username" ><b>Hello,</b>&nbsp;</span>
-            <span class="" id="userName"></span>
-        </div>
-        <div class="main selectrole">
-            <span>Please select your role</span>
-        </div>
-        <div id="roleselection" class="main roles">
-            <select id="roles" class="availableroles">
-                <option value="0"></option>
-            </select>
-        </div>
-        <div class="main button">
-            <div class="backsection">
-                <input class="btn btn-success signinbutton" type="button" name="btnBack" value="Back" onclick="backtosignin()" />
-            </div>
-            <input class="btn btn-success signinbutton" type="button" name="btnNext" value="Next" onclick="actionselection()" />
-        </div>
-    </div>
-
-    <div id="action" class="main signincontainer" style="display:none">
-        <div id="inputs">
-            <span class="username"><b>Hello,</b>&nbsp;</span>
-            <span class="" id="userName2"></span>
-        </div>
-        <div class="main selectrole">
-            <span>What would you like to do as a</span>
-            <span class="roleName" id="roleName"></span>&nbsp;?
-        </div>
-        <div id="roleselection" class="main roles">
-            <div>
-                <div class="action1">
-                    <img style="padding:0px;" src="~/Images/View.png" width="30" height="30" />
-                    <span onclick="">View existing travel requests</span>
-                </div>
-                <div class="action2" onclick="createnewrequest()">
-                    <img style="padding:0px;" src="~/Images/New.png" width="30" height="30" />
-                    <span>Create new travel request</span>
-                </div>
-            </div>
-        </div>
-        <div class="main button2">
-            <div class="main backsection2">
-                <input class="btn btn-success signinbutton" type="button" name="btnBack" value="Back" onclick="backtoroleselection()" />
-            </div>
-        </div>
-    </div>
-
-    @*<div id="dataentry" class="main dataentrycontainer" style="display:none">
+﻿<div id="travelrequestform">
+    <div id="dataentry" class="main dataentrycontainer">
         <div id="content" class="content">
             <div class="title">
                 <span>Travel Request Form</span>
@@ -152,9 +77,5 @@
                 <input class="btn btn-success signinbutton" type="button" name="btnNext" value="Save and Continue" onclick="savedataentry()" />
             </div>
         </div>
-    </div>*@
-
-    <div id="datatemplate" class="main dataentrycontainer" style="display:none">
     </div>
 </div>
-

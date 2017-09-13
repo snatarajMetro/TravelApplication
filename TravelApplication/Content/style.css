@@ -35,7 +35,7 @@ div.signincontainer {
 }
 
 .maincontent {
-    min-height:575px;
+    height:100%;
 }
 
 .label {
@@ -275,16 +275,29 @@ a:hover
     cursor:pointer;
 }
 
-.content{
-    min-height:430px;
+.contentold {
     margin-top:5px;
     width:auto;
 }
 
-.footer{
+.content {
+    margin-top:5px;
+    width:auto;
+    height:auto;
+}
+
+.footerold{
     float:right;
     min-height:50px;
     padding-top:14px;
+    background-color:green;
+}
+
+.footer {
+    position:absolute;
+    right:0;
+    bottom:0;
+    padding-bottom:5px;
 }
 
 .footerback{
@@ -375,12 +388,15 @@ div.dataentrycontainer {
     left: 0;
     right: 0;
     width: 900px;
-    height: 560px;
+    height: 540px;
     margin: auto;
     margin-top:55px;
     background-color: #f3f3f3;
+    /*background-color: yellow;*/
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
 }
+
 
 .errorcontainer {
     position:fixed;

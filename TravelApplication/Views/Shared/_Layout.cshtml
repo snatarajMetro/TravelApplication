@@ -12,6 +12,7 @@
     <script src="/Scripts/modernizr-2.8.3.js"></script>
     <script src="/Scripts/jquery-3.1.1.min.js"></script>
     <script src="/Scripts/bootstrap.min.js"></script>
+    <script src="/Scripts/travelapp.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -20,7 +21,7 @@
     <![endif]-->
 
 </head>
-<body>
+<body style="background-image:url('/images/wallpaper.png')">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div style="float:left">
             <img src="~/Images/logo.jpg" width="45" height="45" />
@@ -32,15 +33,12 @@
             <span onclick="logout()">Log out</span>
         </div>
     </div>
-    <div class="container body-content background">
+    <div class="container body-content">
         <div class="maincontent">
         @RenderBody()
         </div>
-        <div>
-            <hr />
-            <footer>
-                <p>Copyright &copy; @DateTime.Now.Year Metro</p>
-            </footer>
+        <div >
+            <p>Copyright &copy; @DateTime.Now.Year Metro</p>
         </div>
     </div>
 </body>
