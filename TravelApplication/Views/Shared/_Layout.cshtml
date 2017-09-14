@@ -6,12 +6,12 @@
     <title>@ViewBag.Title</title>
     <link rel="icon" href="/favicon.ico" />
     <link href="/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="/Content/Site.css" rel="stylesheet" type="text/css" />
+    @*<link href="/Content/Site.css" rel="stylesheet" type="text/css" />*@
     <link href="/Content/Style.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
     <script src="/Scripts/modernizr-2.8.3.js"></script>
     <script src="/Scripts/jquery-3.1.1.min.js"></script>
-    <script src="/Scripts/bootstrap.min.js"></script>
+    @*<script src="/Scripts/bootstrap.min.js"></script>*@
     <script src="/Scripts/travelapp.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -19,27 +19,26 @@
       <script src="/Scripts/html5shiv.min.js"></script>
       <script src="/Scripts/respond.min.js"></script>
     <![endif]-->
-
 </head>
-<body style="background-image:url('/images/wallpaper.png');">
+<body class="appbackground">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div style="float:left">
             <img src="~/Images/logo.jpg" width="45" height="45" />
         </div>
         <div>
-            @Html.ActionLink("TRAVEL APPLICATION", "Index", "Login", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("TRAVEL APPLICATION", "Index", "Login", new { area = "" }, new { @class = "logotitle" })
         </div>
         <div id="logout" class="logout">
             <span onclick="logout()">Log out</span>
         </div>
     </div>
-    <div class="container body-content">
+    <div class="container body-content" style="background-color:red;">
         <div class="maincontent">
         @RenderBody()
         </div>
-        <div >
-            <p>Copyright &copy; @DateTime.Now.Year Metro</p>
-        </div>
+    </div>
+    <div class="copyright">
+        <p>Copyright &copy; @DateTime.Now.Year Metro</p>
     </div>
 </body>
 </html>
