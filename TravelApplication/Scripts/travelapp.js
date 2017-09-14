@@ -158,6 +158,8 @@ function savedataentry()
         .done(function (data) {
             $('#datatemplate').html($(data).html());
             $('#datatemplate').show();
+
+            $("#txtAdvLodge").focus();
         });
 
     //$.ajax({
@@ -201,3 +203,26 @@ function showtravelrequestformsection() {
             $("#txtBadgeNumber").focus();
         });
 }
+
+function updateTotal(expense) {
+
+    //if (!isNan(expense)) {
+    //    total = $("#txtAdvTotal").val();
+
+    //    if (!isNan(total)) {
+    //        $("#txtAdvTotal").val(parseFloat(total) + parseFloat(expense));
+    //    }
+    //    else {
+    //        $("#txtAdvTotal").val(parseFloat(expense));
+    //    }
+    //}
+}
+
+    //$.get('/uitemplates/estimatedexpense.html')
+    //    .done(function (data) {
+    //        $('#datatemplate').html($(data).html());
+    //        $('#datatemplate').show();
+
+    //        $("#txtAdvLodge").focus();
+    //    });
+    
