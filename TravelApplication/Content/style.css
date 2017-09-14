@@ -183,12 +183,12 @@ a
 .availableroles {
     font-family:'Open Sans Condensed', sans-serif;
     font-size:15px;
-    border-radius:2px;border:1px solid;
+    border-radius:4px;border:0px solid;
     width:220px;
     height:27px;
     margin-top:5px;
+    background-color:#b4d3ea;
     color:black;
-    background-color:aliceblue;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 

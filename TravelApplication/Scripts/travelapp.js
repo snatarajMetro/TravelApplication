@@ -32,6 +32,7 @@ function signIn() {
             //options.append($("<option />").val(0));
 
             for (var index = 0; index < result.Roles.length; index++) {
+
                 if (result.Roles[index].Name == "Traveler") {
                     options.append($("<option selected />").val(result.Roles[index].Id).text(result.Roles[index].Name));
                 }
