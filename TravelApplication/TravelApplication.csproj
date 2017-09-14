@@ -181,7 +181,6 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Images\logo.jpg" />
     <Content Include="Images\logo.png" />
-    <Content Include="Images\logonew.png" />
     <Content Include="Images\New.png" />
     <Content Include="Images\view.png" />
     <Content Include="Images\wallpaper.png" />
