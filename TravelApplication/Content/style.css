@@ -408,8 +408,8 @@ a:hover
 }
 
 div.dataentrycontainer {
-    display: inline-block;
-    position: fixed;
+    position: absolute;
+    float:left;
     top: 0;
     bottom: 0;
     left: 0;
@@ -417,8 +417,6 @@ div.dataentrycontainer {
     width: 1100px;
     height: 540px;
     margin: auto;
-    margin-top:55px;
-    /*background-color: #f3f3f3;*/
     background-color: white;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
