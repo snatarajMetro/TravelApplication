@@ -30,15 +30,17 @@ function signIn() {
 
             options.empty();
             //options.append($("<option />").val(0));
+            options.append($("<option />").val(0).text('Please select your role'));
 
             for (var index = 0; index < result.Roles.length; index++) {
 
-                if (result.Roles[index].Name == "Traveler") {
-                    options.append($("<option selected />").val(result.Roles[index].Id).text(result.Roles[index].Name));
-                }
-                else {
-                    options.append($("<option />").val(result.Roles[index].Id).text(result.Roles[index].Name));
-                }
+                options.append($("<option />").val(result.Roles[index].Id).text(result.Roles[index].Name));
+                //if (result.Roles[index].Name == "Traveler") {
+                //    options.append($("<option selected />").val(result.Roles[index].Id).text(result.Roles[index].Name));
+                //}
+                //else {
+                //    options.append($("<option />").val(result.Roles[index].Id).text(result.Roles[index].Name));
+                //}
             }
 
             // set user name
