@@ -26,15 +26,15 @@
                             <div class="tablehead">Total</div>
                         </div>
                         <div class="tablebody">
-                            <div class="tablerow">
+                            <div ng-app="travelApp" ng-controller="estimatedExpenseCtrl" class="tablerow">
                                 <div class="tablecellheader expenserowtitle">Advance Needed</div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <input type="number" min="0.00" step="0.01" placeholder="0.00" id="txtAdvLodge" class="inputnumber" />
+                                    <input type="number" min="0.00" step="0.01" placeholder="0.00" id="txtAdvLodge" class="inputnumber" ng-model="advanceLodgingAmount" />
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <input type="number" min="0.00" step="0.01" placeholder="0.00" id="txtAdvAirfare" class="inputnumber" />
+                                    <input type="number" min="0.00" step="0.01" placeholder="0.00" id="txtAdvAirfare" class="inputnumber" ng-model="advanceAirfareAmount" />
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <input type="number" min="0.00" step="0.01" placeholder="0.00" id="txtExpenseItemTotal" readonly class="inputnumber" />
+                                    <input type="number" min="0.00" step="0.01" placeholder="0.00" id="txtExpenseItemTotal" readonly class="inputnumber" ng-model="totalAdvanceAmount" value="{{ parseFloat(totalAdvanceAmount) }}"/>
                                 </div>
                             </div>
 
