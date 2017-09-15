@@ -33,33 +33,38 @@ function signIn() {
                     
             var result = JSON.parse(data);
 
-            // set the roles dropdown
-            var options = $("#roles");
+            //show role selection section
+            $.get('/uitemplates/roleselection.html')
+                .done(function (data) {
+                    $('#signintemplate').html($(data).html());
+                    $('#signintemplate').show();
 
-            options.empty();
-            //options.append($("<option />").val(0));
-            options.append($("<option />").val(0).text('Please select your role'));
+                    // set the roles dropdown
+                    var options = $("#roles");
 
-            for (var index = 0; index < result.Roles.length; index++) {
+                    options.empty();
+                    //options.append($("<option />").val(0));
+                    options.append($("<option />").val(0).text('Please select your role'));
 
-                options.append($("<option />").val(result.Roles[index].Id).text(result.Roles[index].Name));
-                //if (result.Roles[index].Name == "Traveler") {
-                //    options.append($("<option selected />").val(result.Roles[index].Id).text(result.Roles[index].Name));
-                //}
-                //else {
-                //    options.append($("<option />").val(result.Roles[index].Id).text(result.Roles[index].Name));
-                //}
-            }
+                    for (var index = 0; index < result.Roles.length; index++) {
 
-            // set user name
-            $("#userName").text(result.UserName);
-            userName = result.UserName;
+                        options.append($("<option />").val(result.Roles[index].Id).text(result.Roles[index].Name));
+                        //if (result.Roles[index].Name == "Traveler") {
+                        //    options.append($("<option selected />").val(result.Roles[index].Id).text(result.Roles[index].Name));
+                        //}
+                        //else {
+                        //    options.append($("<option />").val(result.Roles[index].Id).text(result.Roles[index].Name));
+                        //}
+                    }
 
-            //show role section
-            $("#signin").hide();
-            $("#action").hide();
-            $("#role").show();
-            $("#logout").show();
+                    // set user name
+                    $("#userName").text(result.UserName);
+                    userName = result.UserName;
+
+                    $("#signin").hide();
+                    $("#action").hide();
+                    $("#logout").show();
+                });
         },
         error: function (xhr, options, error) {
             if (xhr.status == 401) {
@@ -78,11 +83,12 @@ function signIn() {
 
 function backtosignin() {
     $("#logout").hide();
-    $("#role").hide();
+    $("#signintemplate").hide();
     $("#action").hide();
     $("#invaliduser").hide();
     $("#dataentry").hide();
     $("#signin").show();
+    $("#txtEmail").focus();
 }
 
 function actionselection() {
@@ -97,9 +103,8 @@ function actionselection() {
         $("#invalidrole").fadeOut(5000);
     }
     else {
+        $("#signintemplate").hide();
         $("#action").show();
-        $("#role").hide();
-        $("#signin").hide();
 
         // set user name
         $("#userName2").text(userName);
@@ -112,7 +117,7 @@ function actionselection() {
 function backtoroleselection() {
     $("#signin").hide();
     $("#action").hide();
-    $("#role").show();
+    $('#signintemplate').show();
 }
 
 function backtoactionselection()
@@ -124,11 +129,11 @@ function backtoactionselection()
 function logout()
 {
     $("#action").hide();
-    $("#role").hide();
     $("#action").hide();
     $("#invaliduser").hide();
     $("#logout").hide();
     $("#datatemplate").hide();
+    $('#signintemplate').hide();
     $("#signin").show();
 
     $("#txtEmail").focus();

@@ -1,0 +1,26 @@
+﻿<div id="roleselection">
+    <div id="role" class="main signincontainer">
+        <div id="inputs">
+            <span class="username"><b>Hello,</b>&nbsp;</span>
+            <span class="" id="userName"></span>
+        </div>
+        <div class="main selectrole">
+            <span>What role would you like to use?</span>
+        </div>
+        <div id="roleselection" class="main roles">
+            <select id="roles" class="availableroles">
+                <option value="0"></option>
+            </select>
+        </div>
+        <div id="invalidrole" class="main errorcontainer" style="display:none">
+            <div class="dialog">Please select the role you would like to use.</div>
+            <a href="#" class="close-thick" onclick="return closeinvalidrole();"></a>
+        </div>
+        <div class="main button">
+            <div class="backsection">
+                <input class="btn btn-success signinbutton" type="button" name="btnBack" value="Back" onclick="backtosignin()" />
+            </div>
+            <input class="btn btn-success signinbutton" type="button" name="btnNext" value="Next" onclick="actionselection()" />
+        </div>
+    </div>
+</div>

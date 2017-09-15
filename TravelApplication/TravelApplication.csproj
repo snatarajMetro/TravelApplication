@@ -454,6 +454,7 @@
     <Content Include="Scripts\travelapp.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="UITemplates\estimatedexpense.html" />
+    <Content Include="UITemplates\roleselection.html" />
     <Content Include="UITemplates\travelrequestform.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
