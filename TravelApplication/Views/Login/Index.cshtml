@@ -15,7 +15,7 @@
         </div>
         <div id="invaliduser" class="main errorcontainer" style="display:none">
             <div class="dialog">Invalid username and/or password. Please try again.</div>
-            <a href="#" class="close-thick" onclick="return closeerror();"></a>
+            <a href="#" class="close-thick" onclick="return closeinvaliduser();"></a>
         </div>
         <div>
             <div class="signinbutton2">
@@ -26,7 +26,6 @@
             </div>
         </div>
     </div>
-    
     <div id="role" class="main signincontainer" style="display:none">
         <div id="inputs">
             <span class="username" ><b>Hello,</b>&nbsp;</span>
@@ -39,6 +38,10 @@
             <select id="roles" class="availableroles">
                 <option value="0"></option>
             </select>
+        </div>
+        <div id="invalidrole" class="main errorcontainer" style="display:none">
+            <div class="dialog">Please select the role you would like to use.</div>
+            <a href="#" class="close-thick" onclick="return closeinvalidrole();"></a>
         </div>
         <div class="main button">
             <div class="backsection">

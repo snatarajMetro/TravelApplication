@@ -4,9 +4,14 @@ $(document).ready(function () {
     $("#txtEmail").focus();
 });
 
-function closeerror() {
+function closeinvaliduser() {
     $("#invaliduser").hide();
     $("#txtEmail").focus();
+}
+
+function closeinvalidrole() {
+    $("#invalidrole").hide();
+    $("#roles").focus();
 }
 
 function signIn() {
@@ -84,15 +89,24 @@ function actionselection() {
 
     var userRole = $("#roles option:selected").text();
 
-    $("#action").show();
-    $("#role").hide();
-    $("#signin").hide();
+    if ($("#roles option:selected").val() == 0) {
 
-    // set user name
-    $("#userName2").text(userName);
+        $("#invalidrole").fadeIn("slow");
+        
+        // fade out in 5 seconds
+        $("#invalidrole").fadeOut(5000);
+    }
+    else {
+        $("#action").show();
+        $("#role").hide();
+        $("#signin").hide();
 
-    // set role
-    $("#roleName").text(userRole);
+        // set user name
+        $("#userName2").text(userName);
+
+        // set role
+        $("#roleName").text(userRole);
+    }
 }
 
 function backtoroleselection() {
