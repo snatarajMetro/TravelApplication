@@ -182,6 +182,7 @@
     <Content Include="Images\logo.jpg" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\New.png" />
+    <Content Include="Images\newbg.png" />
     <Content Include="Images\view.png" />
     <Content Include="Images\wallpaper.png" />
     <Content Include="Scripts\bootstrap-datepicker.js" />

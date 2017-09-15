@@ -1,5 +1,5 @@
 ﻿.appbackground {
-    background-image: url("/images/wallpaper.png");
+    background-image: url("/images/newbg.png");
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
@@ -21,8 +21,12 @@ div.signincontainer {
     width: 500px;
     height: 250px;
     margin: auto;
-    background-color: #f3f3f3;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    /*background-color: #f3f3f3;*/
+    background-color: white;
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 12px 20px 0 rgba(0, 0, 0, 0.19);*/
+    box-shadow: 10px 10px 5px #3c3c3c;
+    border-radius: 3px;
+    border:solid 1px black;
 }
 
 .signin {
@@ -418,7 +422,10 @@ div.dataentrycontainer {
     height: 540px;
     margin: auto;
     background-color: white;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
+    box-shadow: 10px 10px 5px #3c3c3c;
+    border-radius: 3px;
+    border:solid 1px black;
 }
 
 .errorcontainer {
