@@ -432,20 +432,25 @@ div.dataentrycontainer {
 }
 
 .errorcontainer {
+    position:absolute;
+    display:block;
+    top:0;
+    right:0;
     /*top:57%;
     left:50%;
     -webkit-transform:translate(-50%,-50%);
     transform:translate(-50%,-50%);*/
 }
 
-.close-thick {
+.close-thick,
+.close-thick:hover {
     color:white;
     font:14px/100% arial, sans-serif;
     position:absolute;
-    right:12px;
+    right:5px;
     text-decoration:none;
     text-shadow: 0 1px 0 #fff;
-    top:11px;
+    top:3px;
     text-wrap:normal;
     /*border-radius:50%;
     -moz-border-radius:50%;
@@ -460,10 +465,11 @@ div.dataentrycontainer {
 .dialog {
     background-color:#c44c4c;
     color:white;
-    width:310px;
+    /*width:310px;*/
     height:auto;
-    margin:10px; 
+    margin:2px; 
     padding:10px;
+    padding-right:20px;
     font-size:15px;
     font-family:'Open Sans Condensed', sans-serif;
     border: 1px solid #ccc;

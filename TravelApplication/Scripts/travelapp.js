@@ -15,6 +15,9 @@ function signIn() {
     var user = $("#txtEmail").val();
     var password = $("#txtPassword").val();
 
+    $("#txtEmail").attr("class", "datainput");
+    $("#txtPassword").attr("class", "datainput");
+
     $.ajax({
         type: "POST",
         url: "/api/login",
@@ -57,7 +60,8 @@ function signIn() {
             if (xhr.status == 401) {
 
                 $("#invaliduser").fadeIn("slow");
-                $("#invaliduser").fadeOut(6000);
+                // fade out in 5 seconds
+                $("#invaliduser").fadeOut(5000);
 
                 $("#txtEmail").attr("class", "datainputerror");
                 $("#txtPassword").attr("class", "datainputerror");
