@@ -244,11 +244,11 @@ function updateTotal(expense) {
     //}
 }
 
-$.get('/uitemplates/estimatedexpense.html')
-    .done(function (data) {
-        $('#datatemplate').html($(data).html());
-        $('#datatemplate').show();
+//$.get('/uitemplates/estimatedexpense.html')
+//    .done(function (data) {
+//        $('#datatemplate').html($(data).html());
+//        $('#datatemplate').show();
 
-        $("#txtAdvLodge").focus();
-    });
+//        $("#txtAdvLodge").focus();
+//    });
     
