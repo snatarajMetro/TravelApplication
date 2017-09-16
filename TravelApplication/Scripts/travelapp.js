@@ -2,6 +2,9 @@
 
 $(document).ready(function () {
     $("#txtEmail").focus();
+
+    
+    //$("#datatemplate").hide();
 });
 
 function closeinvaliduser() {
@@ -180,13 +183,8 @@ function savedataentry()
     var userId              = "";
 
     //show estimated expense section
-    $.get('/uitemplates/estimatedexpense.html')
-        .done(function (data) {
-            $('#datatemplate').html($(data).html());
-            $('#datatemplate').show();
-
-            $("#txtAdvLodge").focus();
-        });
+    var scope= angular.element('#datatemplate').scope();
+    scope.loadEstimatedExpense();
 
     //$.ajax({
     //    type: "POST",
@@ -230,25 +228,11 @@ function showtravelrequestformsection() {
         });
 }
 
-function updateTotal(expense) {
-
-    //if (!isNan(expense)) {
-    //    total = $("#txtAdvTotal").val();
-
-    //    if (!isNan(total)) {
-    //        $("#txtAdvTotal").val(parseFloat(total) + parseFloat(expense));
-    //    }
-    //    else {
-    //        $("#txtAdvTotal").val(parseFloat(expense));
-    //    }
-    //}
-}
-
 //$.get('/uitemplates/estimatedexpense.html')
 //    .done(function (data) {
 //        $('#datatemplate').html($(data).html());
 //        $('#datatemplate').show();
-
-//        $("#txtAdvLodge").focus();
+        //$.apply();
+        //$("#txtAdvLodge").focus();
 //    });
     

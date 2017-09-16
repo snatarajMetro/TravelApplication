@@ -25,68 +25,67 @@
                             <div class="spacer"></div>
                             <div class="tablehead">Total</div>
                         </div>
-                        <div class="tablebody">
-                            <div ng-app="travelApp" ng-controller="estimatedExpenseCtrl" class="tablerow">
+                        <div class="tablebody" ng-app="travelApp" ng-controller="estimatedExpenseCtrl">
+                            <div class="tablerow">
                                 <div class="tablecellheader expenserowtitle">Advance Needed</div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <input type="number" min="0.00" max="999.99" step="0.01" placeholder="0.00" id="txtAdvLodge" class="inputnumber" ng-model="advanceLodgingAmount" ng-change="updateTotalAdvanceAmount()" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAdvLodge" class="inputnumber" ng-model="advanceLodgingAmount" ng-change="updateTotalAdvanceAmount()" />
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <input type="number" min="0.00" step="0.01" placeholder="0.00" id="txtAdvAirfare" class="inputnumber" ng-model="advanceAirfareAmount" ng-change="updateTotalAdvanceAmount()" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAdvAirfare" class="inputnumber" ng-model="advanceAirfareAmount" ng-change="updateTotalAdvanceAmount()" />
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <input type="number" min="0.00" step="0.01" placeholder="0.00" id="txtAdvRegistration" class="inputnumber" ng-model="advanceRegistrationAmount" ng-change="updateTotalAdvanceAmount()" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAdvRegistration" class="inputnumber" ng-model="advanceRegistrationAmount" ng-change="updateTotalAdvanceAmount()" />
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <input type="number" min="0.00" step="0.01" placeholder="0.00" id="txtAdvMeals" class="inputnumber" ng-model="advanceMealsAmount" ng-change="updateTotalAdvanceAmount()" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAdvMeals" class="inputnumber" ng-model="advanceMealsAmount" ng-change="updateTotalAdvanceAmount()" />
+                                </div>
+                                <div class="spacer"></div>
+                                <div class="tablecell"> 
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAdvCarRental" class="inputnumber" ng-model="advanceCarRentalAmount"  ng-change="updateTotalAdvanceAmount()" />
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <input type="number" min="0.00" step="0.01" placeholder="0.00" id="txtAdvCarRental" class="inputnumber" ng-model="advanceCarRentalAmount"  ng-change="updateTotalAdvanceAmount()" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAdvMiscellaneous" class="inputnumber" ng-model="advanceMiscellaneousAmount" ng-change="updateTotalAdvanceAmount()" />
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <input type="number" min="0.00" step="0.01" placeholder="0.00" id="txtAdvMiscellaneous" class="inputnumber" ng-model="advanceMiscellaneousAmount" ng-change="updateTotalAdvanceAmount()" />
-                                </div>
-                                <div class="spacer"></div>
-                                <div class="tablecell">
-                                    <input type="number" min="0.00" step="0.01" placeholder="0.00" id="txtExpenseItemTotal" readonly class="inputnumber" ng-model="totalAdvanceAmount" />
+                                    <input type="number" min="0.00" step="0.01" placeholder="0.00" id="txtExpenseItemTotal" readonly class="inputnumberTotal" ng-model="totalAdvanceAmount" />
                                 </div>
                             </div>
-
                             <div class="tablerow">
                                 <div class="tablecellheader expenserowtitle">Total Estimated Cost</div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <input type="number" min="0.00" step="0.01" placeholder="0.00" id="txtTotalEstimatedLodge" class="inputnumber" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTotalEstimatedLodge" class="inputnumber" ng-model="estimatedLodgingAmount" ng-change="updateTotalEstimatedAmount()" />
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <input type="number" min="0.00" step="0.01" placeholder="0.00" id="txtTotalEstimatedAirfare" class="inputnumber" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTotalEstimatedAirfare" class="inputnumber" ng-model="estimatedAirfareAmount" ng-change="updateTotalEstimatedAmount()" />
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <input type="number" min="0.00" step="0.01" placeholder="0.00" id="txtTotalEstimatedRegistration" class="inputnumber" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTotalEstimatedRegistration" class="inputnumber" ng-model="estimatedRegistrationAmount" ng-change="updateTotalEstimatedAmount()" />
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <input type="number" min="0.00" step="0.01" placeholder="0.00" id="txtTotalEstimatedMeals" class="inputnumber" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTotalEstimatedMeals" class="inputnumber" ng-model="estimatedMealsAmount" ng-change="updateTotalEstimatedAmount()" />
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <input type="number" min="0.00" step="0.01" placeholder="0.00" id="txtTotalEstimatedCarRental" class="inputnumber" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTotalEstimatedCarRental" class="inputnumber" ng-model="estimatedCarRentalAmount" ng-change="updateTotalEstimatedAmount()" />
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <input type="number" min="0.00" step="0.01" placeholder="0.00" id="txtTotalEstimatedMiscellaneous" class="inputnumber" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTotalEstimatedMiscellaneous" class="inputnumber" ng-model="estimatedMiscellaneousAmount" ng-change="updateTotalEstimatedAmount()" />
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <input type="number" min="0.00" step="0.01" placeholder="0.00" id="txtTotalEstimatedTotal" readonly class="inputnumber" />
+                                    <input type="number" min="0.00" step="0.01" placeholder="0.00" id="txtTotalEstimatedTotal" readonly class="inputnumberTotal" ng-model="totalEstimatedAmount" />
                                 </div>
                             </div>
 
