@@ -173,13 +173,32 @@ function setUserName() {
 
     var badgeNumber = $('#txtBadgeNumber').val();
 
-    if (badgeNumber) {
-        // make api call to get user info
-        // and set other fields
-        var result = "Metro";
+    $.ajax({
+        type: "POST",
+        url: "/api/travelrequest/BadgeInfo",
+        data: JSON.stringify({ "UserName": user, "Password": password }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
 
-        $('#txtName').val(result);
-    }
+            var result = JSON.parse(data);
+            $('#txtName').val(result);
+            $("#userName").text(result.UserName);
+        },
+        error: function (xhr, options, error) {
+            if (xhr.status == 401) {
+
+                $("#invaliduser").fadeIn("slow");
+                // fade out in 5 seconds
+                $("#invaliduser").fadeOut(5000);
+
+                $("#txtEmail").attr("class", "datainputerror");
+                $("#txtPassword").attr("class", "datainputerror");
+                $("#txtEmail").focus();
+            }
+        }
+    });
+
 }
 
 function savedataentry()
