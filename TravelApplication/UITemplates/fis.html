@@ -26,7 +26,10 @@
                                 <div class="tablecellheader expenserowtitle">&nbsp;</div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <select class="inputdropdown" id="ddlCostCenter1" ng-model="ddlCostCenter1" ng-options="costcenter.Name for costcenter in CostCenters track by costcenter.Id"></select>
+                                    <select class="inputdropdown" id="ddlCostCenter1" 
+                                            ng-model="ddlCostCenter1" 
+                                            ng-options="costcenter.Name for costcenter in CostCenters track by costcenter.Id"
+                                            ng-change="getProjects('ddlCostCenter1', ddlCostCenter1)"></select>
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
@@ -34,7 +37,9 @@
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <input type="text" placeholder="" id="txtProject1" class="inputtext" />
+                                    <select class="inputdropdown" id="project1" 
+                                            ng-model="ddlProjects1" 
+                                            ng-options="project.Name for project in projects1 track by project.Id"></select>
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
@@ -49,7 +54,10 @@
                                 <div class="tablecellheader expenserowtitle">&nbsp;</div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <select class="inputdropdown" id="ddlCostCenter2" ng-model="ddlCostCenter2" ng-options="costcenter.Name for costcenter in CostCenters track by costcenter.Id"></select>
+                                    <select class="inputdropdown" id="ddlCostCenter2" 
+                                            ng-model="ddlCostCenter2" 
+                                            ng-options="costcenter.Name for costcenter in CostCenters track by costcenter.Id"
+                                            ng-change="getProjects('ddlCostCenter2', ddlCostCenter2)"></select>
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
@@ -57,7 +65,9 @@
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <input type="text" placeholder="" id="txtProject2" class="inputtext" />
+                                    <select class="inputdropdown" id="project2"
+                                            ng-model="ddlProjects2"
+                                            ng-options="project.Name for project in projects2 track by project.Id"></select>
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
@@ -72,7 +82,10 @@
                                 <div class="tablecellheader expenserowtitle">&nbsp;</div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <select class="inputdropdown" id="ddlCostCenter3" ng-model="ddlCostCenter3" ng-options="costcenter.Name for costcenter in CostCenters track by costcenter.Id"></select>
+                                    <select class="inputdropdown" id="ddlCostCenter3" 
+                                            ng-model="ddlCostCenter3" 
+                                            ng-options="costcenter.Name for costcenter in CostCenters track by costcenter.Id"
+                                            ng-change="getProjects('ddlCostCenter3', ddlCostCenter3)"></select>
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
@@ -80,7 +93,9 @@
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <input type="text" placeholder="" id="txtProject3" class="inputtext" />
+                                    <select class="inputdropdown" id="project3"
+                                            ng-model="ddlProjects3"
+                                            ng-options="project.Name for project in projects3 track by project.Id"></select>
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
@@ -95,7 +110,10 @@
                                 <div class="tablecellheader expenserowtitle">&nbsp;</div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <select class="inputdropdown" id="ddlCostCenter4" ng-model="ddlCostCenter4" ng-options="costcenter.Name for costcenter in CostCenters track by costcenter.Id"></select>
+                                    <select class="inputdropdown" id="ddlCostCenter4" 
+                                            ng-model="ddlCostCenter4" 
+                                            ng-options="costcenter.Name for costcenter in CostCenters track by costcenter.Id"
+                                            ng-change="getProjects('ddlCostCenter4', ddlCostCenter4)"></select>
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
@@ -103,7 +121,9 @@
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <input type="text" placeholder="" id="txtProject4" class="inputtext" />
+                                    <select class="inputdropdown" id="project4"
+                                            ng-model="ddlProjects4"
+                                            ng-options="project.Name for project in projects4 track by project.Id"></select>
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
@@ -118,7 +138,10 @@
                                 <div class="tablecellheader expenserowtitle">&nbsp;</div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <select class="inputdropdown" id="ddlCostCenter5" ng-model="ddlCostCenter5" ng-options="costcenter.Name for costcenter in CostCenters track by costcenter.Id"></select>
+                                    <select class="inputdropdown" id="ddlCostCenter5" 
+                                            ng-model="ddlCostCenter5" 
+                                            ng-options="costcenter.Name for costcenter in CostCenters track by costcenter.Id"
+                                            ng-change="getProjects('ddlCostCenter5', ddlCostCenter5)"></select>
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
@@ -126,7 +149,9 @@
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <input type="text" placeholder="" id="txtProject5" class="inputtext" />
+                                    <select class="inputdropdown" id="project5"
+                                            ng-model="ddlProjects5"
+                                            ng-options="project.Name for project in projects5 track by project.Id"></select>
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">

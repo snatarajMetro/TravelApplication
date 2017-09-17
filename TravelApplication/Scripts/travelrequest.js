@@ -59,14 +59,41 @@ app.controller('estimatedExpenseCtrl', function ($scope,$compile) {
         });
     }
 
-    $scope.CostCenters = [{
-        Id: 1,
-        Name: 'New York'
-    }, {
-        Id: 2,
-        Name: 'Los Angeles'
-    }, {
-        Id: 3,
-        Name: 'Seattle'
-    }];
+    $scope.CostCenters = [
+        { Id: 0, Name: 'Texas' },
+        { Id: 1, Name: 'California' },
+        { Id: 2, Name: 'Washington' }];
+
+    var projectsByCostCenter = [
+                    [{ Id: 0, Name: "Houston" }, { Id: 1, Name: "Dallas" }],
+                    [{ Id: 2, Name: "Los Angeles" }, { Id: 3, Name: "San Fransisco" }],
+                    [{ Id: 4, Name: "Seattle" }, { Id: 5, Name: "Spokane" }]];
+
+        $scope.projects1 = []; 
+        $scope.projects2 = [];
+        $scope.projects3 = [];
+        $scope.projects4 = [];
+        $scope.projects5 = [];
+
+        $scope.getProjects = function (source, costCenter) {
+
+            var key = costCenter.Id;
+            var newProjects = projectsByCostCenter[key];
+
+            if (source == 'ddlCostCenter1') {
+                $scope.projects1 = newProjects;
+            }
+            else if (source == 'ddlCostCenter2') {
+                $scope.projects2 = newProjects;
+            }
+            else if (source == 'ddlCostCenter3') {
+                $scope.projects3 = newProjects;
+            }
+            else if (source == 'ddlCostCenter4') {
+                $scope.projects4 = newProjects;
+            }
+            else if (source == 'ddlCostCenter5') {
+                $scope.projects5 = newProjects;
+            }
+        };
 });
