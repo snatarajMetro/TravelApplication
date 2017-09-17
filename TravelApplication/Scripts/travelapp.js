@@ -3,8 +3,12 @@
 $(document).ready(function () {
     $("#txtEmail").focus();
 
-    
-    //$("#datatemplate").hide();
+    ////set travel request form section
+    //$.get('/uitemplates/travelrequestform.html')
+    //    .done(function (data) {
+    //        $('#travelrequesttemplate').html($(data).html());
+    //    });
+
 });
 
 function closeinvaliduser() {
@@ -44,7 +48,6 @@ function signIn() {
 
                     // set the roles dropdown
                     var options = $("#roles");
-
                     options.empty();
                     //options.append($("<option />").val(0));
                     options.append($("<option />").val(0).text('Please select your role'));
@@ -125,6 +128,7 @@ function backtoroleselection() {
 
 function backtoactionselection()
 {
+    $("#travelrequesttemplate").hide();
     $("#datatemplate").hide();
     $("#action").show();
 }
@@ -135,6 +139,7 @@ function logout()
     $("#action").hide();
     $("#invaliduser").hide();
     $("#logout").hide();
+    $("#travelrequesttemplate").hide();
     $("#datatemplate").hide();
     $('#signintemplate').hide();
     $("#signin").show();
@@ -145,11 +150,11 @@ function logout()
 function createnewrequest() {
     $("#action").hide();
 
-    //show travel request form section
+    //set travel request form section
     $.get('/uitemplates/travelrequestform.html')
         .done(function (data) {
-            $('#datatemplate').html($(data).html());
-            $('#datatemplate').show();
+            $('#travelrequesttemplate').html($(data).html());
+            $('#travelrequesttemplate').show();
             $("#txtBadgeNumber").focus();
         });
 }
@@ -183,6 +188,7 @@ function savedataentry()
     var userId              = "";
 
     //show estimated expense section
+    
     var scope= angular.element('#datatemplate').scope();
     scope.loadEstimatedExpense();
 
@@ -209,14 +215,9 @@ function savedataentry()
 }
 
 function showtravelrequestformsection() {
-
-    //show travel request form section
-    $.get('/uitemplates/travelrequestform.html')
-        .done(function (data) {
-            $('#datatemplate').html($(data).html());
-            $('#datatemplate').show();
-            $("#txtBadgeNumber").focus();
-        });
+    $("#datatemplate").hide();
+    $("#travelrequesttemplate").show();
+    $("#txtBadgeNumber").focus();
 }
 
 function saveestimatedexpense() {
