@@ -58,13 +58,20 @@
          class="main dataentrycontainer" 
          style="display:none"></div>
 
-    <div id="datatemplate" 
-         class="main dataentrycontainer" 
-         style="display:none" 
-         ng-app="travelApp" 
-         ng-controller="estimatedExpenseCtrl"></div>
+    <div ng-app="travelApp">
+        <div id="datatemplate"
+             class="main dataentrycontainer"
+             ng-controller="estimatedExpenseCtrl"
+             style="display:none"></div>
+        <div id="estimatedexpensetemplate"
+             class="main dataentrycontainer"
+             style="display:none"
+             ng-controller="estimatedExpenseCtrl"></div>
+    </div>
 
-    <div id="signintemplate" class="main signincontainer" style="display:none">
+    <div id="signintemplate" 
+         class="main signincontainer" 
+         style="display:none">
     </div>
 </div>
 

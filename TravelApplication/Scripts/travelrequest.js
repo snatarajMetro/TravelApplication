@@ -45,10 +45,8 @@ app.controller('estimatedExpenseCtrl', function ($scope,$compile) {
     $scope.loadEstimatedExpense = function () {
         $.get('/uitemplates/estimatedexpense.html')
         .done(function (data) {
-            $('#datatemplate').html($compile($(data).html())($scope));
+            $('#estimatedexpensetemplate').html($compile($(data).html())($scope));
             $scope.$apply();
-            $('#datatemplate').show();
-            $("#txtAdvLodge").focus();
         });
     }
 
@@ -57,11 +55,7 @@ app.controller('estimatedExpenseCtrl', function ($scope,$compile) {
         $.get('/uitemplates/fis.html')
         .done(function (data) {
             $('#datatemplate').html($compile($(data).html())($scope));
-            $scope.$apply();
-            $('#datatemplate').show();
-
-            $("#txtCostCenter1").focus();
-            
+            $scope.$apply();        
         });
     }
 });

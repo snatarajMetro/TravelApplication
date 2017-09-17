@@ -1,13 +1,16 @@
 ﻿var userName = '';
 
 $(document).ready(function () {
+
     $("#txtEmail").focus();
 
-    ////set travel request form section
-    //$.get('/uitemplates/travelrequestform.html')
-    //    .done(function (data) {
-    //        $('#travelrequesttemplate').html($(data).html());
-    //    });
+    //load estimated expense section
+    var scope = angular.element('#estimatedexpensetemplate').scope();
+    scope.loadEstimatedExpense();
+
+    //load fis section
+    scope = angular.element('#datatemplate').scope();
+    scope.loadFIS();
 
 });
 
@@ -129,6 +132,7 @@ function backtoroleselection() {
 function backtoactionselection()
 {
     $("#travelrequesttemplate").hide();
+    $("#estimatedexpensetemplate").hide();
     $("#datatemplate").hide();
     $("#action").show();
 }
@@ -140,6 +144,7 @@ function logout()
     $("#invaliduser").hide();
     $("#logout").hide();
     $("#travelrequesttemplate").hide();
+    $("#estimatedexpensetemplate").hide();
     $("#datatemplate").hide();
     $('#signintemplate').hide();
     $("#signin").show();
@@ -150,7 +155,11 @@ function logout()
 function createnewrequest() {
     $("#action").hide();
 
-    //set travel request form section
+    //reset estimated expense section
+    var scope = angular.element('#estimatedexpensetemplate').scope();
+    scope.loadEstimatedExpense();
+
+    //reset travel request form section
     $.get('/uitemplates/travelrequestform.html')
         .done(function (data) {
             $('#travelrequesttemplate').html($(data).html());
@@ -188,9 +197,9 @@ function savedataentry()
     var userId              = "";
 
     //show estimated expense section
-    
-    var scope= angular.element('#datatemplate').scope();
-    scope.loadEstimatedExpense();
+    $('#travelrequesttemplate').hide();
+    $('#estimatedexpensetemplate').show();
+    $("#txtAdvLodge").focus();
 
     //$.ajax({
     //    type: "POST",
@@ -215,6 +224,8 @@ function savedataentry()
 }
 
 function showtravelrequestformsection() {
+
+    $("#estimatedexpensetemplate").hide();
     $("#datatemplate").hide();
     $("#travelrequesttemplate").show();
     $("#txtBadgeNumber").focus();
@@ -225,28 +236,14 @@ function saveestimatedexpense() {
     // save estimated data expense section
 
     //show fis section
-    var scope = angular.element('#datatemplate').scope();
-    scope.loadFIS();
+    $('#travelrequesttemplate').hide();
+    $('#estimatedexpensetemplate').hide();
+    $('#datatemplate').show();
+    $("#txtCostCenter1").focus();
 }
 
 function showestimatedexpensesection() {
 
-    var scope = angular.element('#datatemplate').scope();
-    scope.loadEstimatedExpense();
-
-    ////show travel request form section
-    //$.get('/uitemplates/travelrequestform.html')
-    //    .done(function (data) {
-    //        $('#datatemplate').html($(data).html());
-    //        $('#datatemplate').show();
-    //        $("#txtBadgeNumber").focus();
-    //    });
+    $("#datatemplate").hide();
+    $("#estimatedexpensetemplate").show();
 }
-
-//$.get('/uitemplates/fis.html')
-//    .done(function (data) {
-//        $('#datatemplate').html($(data).html());
-//        $('#datatemplate').show();
-
-//    });
-    
