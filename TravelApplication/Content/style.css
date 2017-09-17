@@ -488,6 +488,10 @@ div.dataentrycontainer {
     /*margin-right:auto;*/
 }
 
+.fiscontainer{
+width:950px;
+}
+
 .tableheading{
 display:table-header-group;
 }
@@ -506,6 +510,14 @@ display:table-header-group;
     background-color:white;
     text-align:center;
     min-width:120px;
+}
+
+.tableheadtopleftfis{
+    display:table-cell;
+    /*background-color:#f3f3f3;*/
+    background-color:white;
+    text-align:center;
+    min-width:50px;
 }
 
 .tablerow{
@@ -531,12 +543,57 @@ display:table-header-group;
     width:2px;
 }
 
+.totalfis {
+    text-align:right;
+    vertical-align:middle;
+    padding-right:3px;
+    font-weight:bold;
+}
+
+.inputnumberTotalfis{
+    width:185px;
+    float:left;
+    margin-top:3px;
+    margin-bottom:3px;
+    text-align:right;
+    font-weight:bold;
+    background-color:yellow;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 .inputnumber{
     width:120px;
     float:left;
     margin-top:3px;
     margin-bottom:3px;
     text-align:right;
+
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.inputnumberfis{
+    width:185px;
+    float:left;
+    margin-top:3px;
+    margin-bottom:3px;
+    text-align:right;
+
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.inputtext{
+    width:185px;
+    float:left;
+    margin-top:3px;
+    margin-bottom:3px;
 
     -moz-border-radius: 3px;
     border-radius: 3px;

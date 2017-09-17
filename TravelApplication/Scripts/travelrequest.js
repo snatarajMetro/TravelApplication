@@ -51,4 +51,17 @@ app.controller('estimatedExpenseCtrl', function ($scope,$compile) {
             $("#txtAdvLodge").focus();
         });
     }
+
+    //set fis section
+    $scope.loadFIS = function () {
+        $.get('/uitemplates/fis.html')
+        .done(function (data) {
+            $('#datatemplate').html($compile($(data).html())($scope));
+            $scope.$apply();
+            $('#datatemplate').show();
+
+            $("#txtCostCenter1").focus();
+            
+        });
+    }
 });

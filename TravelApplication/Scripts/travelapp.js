@@ -206,15 +206,6 @@ function savedataentry()
     //    dataType: "json",
     //    success: function (result) {
     //        if (result.valid != 0) {
-
-    //            // Show next section
-    //            // window.location.href = "/Login/EstimatedExpense/" + result.valid + "";
-    //        }
-    //        else {
-    //            // Show error message
-    //        }
-    //    }
-    //});
 }
 
 function showtravelrequestformsection() {
@@ -228,11 +219,33 @@ function showtravelrequestformsection() {
         });
 }
 
-//$.get('/uitemplates/estimatedexpense.html')
+function saveestimatedexpense() {
+
+    // save estimated data expense section
+
+    //show fis section
+    var scope = angular.element('#datatemplate').scope();
+    scope.loadFIS();
+}
+
+function showestimatedexpensesection() {
+
+    var scope = angular.element('#datatemplate').scope();
+    scope.loadEstimatedExpense();
+
+    ////show travel request form section
+    //$.get('/uitemplates/travelrequestform.html')
+    //    .done(function (data) {
+    //        $('#datatemplate').html($(data).html());
+    //        $('#datatemplate').show();
+    //        $("#txtBadgeNumber").focus();
+    //    });
+}
+
+//$.get('/uitemplates/fis.html')
 //    .done(function (data) {
 //        $('#datatemplate').html($(data).html());
 //        $('#datatemplate').show();
-        //$.apply();
-        //$("#txtAdvLodge").focus();
+
 //    });
     
