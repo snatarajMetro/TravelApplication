@@ -144,12 +144,20 @@
     <Compile Include="Controllers\WebAPI\LoginController.cs" />
     <Compile Include="DAL\DBProvider\ConnectionFactory.cs" />
     <Compile Include="DAL\Repositories\Base\IBaseRepository.cs" />
+    <Compile Include="DAL\Repositories\IUserRepository.cs" />
+    <Compile Include="DAL\Repositories\UserRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BootstrapTableJSONModel.cs" />
     <Compile Include="Models\PageConfigModel.cs" />
+    <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Models\UserResponse.cs" />
+    <Compile Include="Models\UserRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IUserService.cs" />
+    <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datepicker.css" />
@@ -478,7 +486,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="DAL\DataContracts\" />
-    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -507,7 +514,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>2461</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:2461/</IISUrl>
+          <IISUrl>http://localhost:2462/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Script.Serialization;
+using TravelApplication.Models;
+using TravelApplication.Services;
 
 namespace TravelApplication.Controllers.WebAPI
 {
@@ -15,6 +17,7 @@ namespace TravelApplication.Controllers.WebAPI
         [Route("api/login")]
         public HttpResponseMessage Login(UserModel userModel)
         {
+            IUserService userService = new UserService();
             HttpResponseMessage response = null;
             
             try
@@ -27,14 +30,16 @@ namespace TravelApplication.Controllers.WebAPI
                     throw new Exception("Invalid username and/or password. Please try again.");
                 }
 
-                var roles = new List<Role>();
-                roles.Add(new Role() { Id = 1, Name = "Approver" });
-                roles.Add(new Role() { Id = 2, Name = "Submitter" });
-                roles.Add(new Role() { Id = 3, Name = "Traveler" });
+                //var roles = new List<Role>();
+                //roles.Add(new Role() { Id = 1, Name = "Approver" });
+                //roles.Add(new Role() { Id = 2, Name = "Submitter" });
+                //roles.Add(new Role() { Id = 3, Name = "Traveler" });
 
-                var user = new UserRole() { UserId = 100, UserName = userModel.UserName, Roles = roles };
+                //var user = new UserRole() { UserId = 100, UserName = userModel.UserName, Roles = roles };
 
-                var data = new JavaScriptSerializer().Serialize(user);
+                //var data = new JavaScriptSerializer().Serialize(user);
+                var result = userService.ValidateAndGetRoles(userModel);
+                var data = new JavaScriptSerializer().Serialize(result);
                 response = Request.CreateResponse(HttpStatusCode.OK, data);
 
                 //throw new Exception();
@@ -48,25 +53,25 @@ namespace TravelApplication.Controllers.WebAPI
         }
     }
 
-    public class UserModel
-    {
-        public string UserName { get; set; }
-        public string Password { get; set; }
-    }
+    //public class UserModel
+    //{
+    //    public string UserName { get; set; }
+    //    public string Password { get; set; }
+    //}
 
-    public class UserRole
-    {
-        public int UserId { get; set; }
+    //public class UserRole
+    //{
+    //    public int UserId { get; set; }
 
-        public string UserName { get; set; }
+    //    public string UserName { get; set; }
 
-        public IEnumerable<Role> Roles { get; set; }
-    }
+    //    public IEnumerable<Role> Roles { get; set; }
+    //}
 
-    public class Role
-    {
-        public int Id { get; set; }
+    //public class Role
+    //{
+    //    public int Id { get; set; }
 
-        public string Name { get; set; }
-    }
+    //    public string Name { get; set; }
+    //}
 }
