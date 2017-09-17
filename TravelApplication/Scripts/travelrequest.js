@@ -1,10 +1,20 @@
 ﻿var app = angular.module('travelApp', []);
 
-app.controller('estimatedExpenseCtrl', function ($scope,$compile) {
+app.controller('travelAppCtrl', function ($scope,$compile) {
 
-    $scope.parseFloat = function (value) {
-        return parseFloat(value).toFixed(2);
-    };
+    // Estimated Expense section
+    $scope.advanceLodgingAmount = "0.00";
+    $scope.advanceAirfareAmount = "0.00";
+    $scope.advanceRegistrationAmount = "0.00";
+    $scope.advanceMealsAmount = "0.00";
+    $scope.advanceCarRentalAmount = "0.00";
+    $scope.advanceMiscellaneousAmount = "0.00";
+    $scope.estimatedLodgingAmount = "0.00";
+    $scope.estimatedAirfareAmount = "0.00";
+    $scope.estimatedRegistrationAmount = "0.00";
+    $scope.estimatedMealsAmount = "0.00";
+    $scope.estimatedCarRentalAmount = "0.00";
+    $scope.estimatedMiscellaneousAmount = "0.00";
 
     $scope.updateTotalAdvanceAmount = function () {
         $scope.totalAdvanceAmount = (
@@ -28,19 +38,6 @@ app.controller('estimatedExpenseCtrl', function ($scope,$compile) {
             );
     }
 
-    $scope.advanceLodgingAmount = "0.00";
-    $scope.advanceAirfareAmount = "0.00";
-    $scope.advanceRegistrationAmount = "0.00";
-    $scope.advanceMealsAmount = "0.00";
-    $scope.advanceCarRentalAmount = "0.00";
-    $scope.advanceMiscellaneousAmount = "0.00";
-    $scope.estimatedLodgingAmount = "0.00";
-    $scope.estimatedAirfareAmount = "0.00";
-    $scope.estimatedRegistrationAmount = "0.00";
-    $scope.estimatedMealsAmount = "0.00";
-    $scope.estimatedCarRentalAmount = "0.00";
-    $scope.estimatedMiscellaneousAmount = "0.00";
-
     //set estimated expense section
     $scope.loadEstimatedExpense = function () {
         $.get('/uitemplates/estimatedexpense.html')
@@ -48,6 +45,23 @@ app.controller('estimatedExpenseCtrl', function ($scope,$compile) {
             $('#estimatedexpensetemplate').html($compile($(data).html())($scope));
             $scope.$apply();
         });
+    }
+
+    // FIS section
+    $scope.totalFISAmount1 = "0.00";
+    $scope.totalFISAmount2 = "0.00";
+    $scope.totalFISAmount3 = "0.00";
+    $scope.totalFISAmount4 = "0.00";
+    $scope.totalFISAmount5 = "0.00";
+
+    $scope.updateTotalFISAmount = function () {
+        $scope.totalFISAmount = (
+            ($scope.totalFISAmount1 * 1)
+            + ($scope.totalFISAmount2 * 1)
+            + ($scope.totalFISAmount3 * 1)
+            + ($scope.totalFISAmount4 * 1)
+            + ($scope.totalFISAmount5 * 1)
+            );
     }
 
     //set fis section

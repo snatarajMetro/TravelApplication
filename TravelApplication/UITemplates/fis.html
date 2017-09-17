@@ -21,7 +21,7 @@
                             <div class="spacer"></div>
                             <div class="tablehead">Amount</div>
                         </div>
-                        <div class="tablebody" ng-app="travelApp" ng-controller="estimatedExpenseCtrl">
+                        <div class="tablebody" ng-app="travelApp" ng-controller="travelAppCtrl">
                             <div class="tablerow">
                                 <div class="tablecellheader expenserowtitle">&nbsp;</div>
                                 <div class="spacer"></div>
@@ -47,7 +47,12 @@
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <input type="number" min="0.00" max="99999999.99" step="0.01" placeholder="0.00" id="txtAmount1" class="inputnumberfis" />
+                                    <input type="number" min="0.00" max="99999999.99" step="0.01" 
+                                           placeholder="0.00" 
+                                           id="txtAmount1" 
+                                           class="inputnumberfis"
+                                           ng-model="totalFISAmount1" 
+                                           ng-change="updateTotalFISAmount()" />
                                 </div>
                             </div>
                             <div class="tablerow">
@@ -75,7 +80,12 @@
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <input type="number" min="0.00" max="99999999.99" step="0.01" placeholder="0.00" id="txtAmount2" class="inputnumberfis" />
+                                    <input type="number" min="0.00" max="99999999.99" step="0.01" 
+                                           placeholder="0.00" 
+                                           id="txtAmount2" 
+                                           class="inputnumberfis"
+                                           ng-model="totalFISAmount2" 
+                                           ng-change="updateTotalFISAmount()" />
                                 </div>
                             </div>
                             <div class="tablerow">
@@ -103,7 +113,12 @@
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <input type="number" min="0.00" max="99999999.99" step="0.01" placeholder="0.00" id="txtAmount3" class="inputnumberfis" />
+                                    <input type="number" min="0.00" max="99999999.99" step="0.01" 
+                                           placeholder="0.00" 
+                                           id="txtAmount3" 
+                                           class="inputnumberfis"
+                                           ng-model="totalFISAmount3" 
+                                           ng-change="updateTotalFISAmount()" />
                                 </div>
                             </div>
                             <div class="tablerow">
@@ -131,7 +146,12 @@
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <input type="number" min="0.00" max="99999999.99" step="0.01" placeholder="0.00" id="txtAmount4" class="inputnumberfis" />
+                                    <input type="number" min="0.00" max="99999999.99" step="0.01" 
+                                           placeholder="0.00" 
+                                           id="txtAmount4" 
+                                           class="inputnumberfis"
+                                           ng-model="totalFISAmount4" 
+                                           ng-change="updateTotalFISAmount()" />
                                 </div>
                             </div>
                             <div class="tablerow">
@@ -159,7 +179,12 @@
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <input type="number" min="0.00" max="99999999.99" step="0.01" placeholder="0.00" id="txtAmount5" class="inputnumberfis" />
+                                    <input type="number" min="0.00" max="99999999.99" step="0.01" 
+                                           placeholder="0.00" 
+                                           id="txtAmount5" 
+                                           class="inputnumberfis"
+                                           ng-model="totalFISAmount5" 
+                                           ng-change="updateTotalFISAmount()" />
                                 </div>
                             </div>
                             <div class="tablerow">
@@ -176,7 +201,11 @@
                                 </div>
                                 <div class="spacer"></div>
                                 <div class="tablecell">
-                                    <input type="number" min="0.00" max="99999999.99" step="0.01" placeholder="0.00" id="txtAmountTotal" readonly class="inputnumberTotalfis" />
+                                    <input type="number" 
+                                           placeholder="0.00" 
+                                           id="txtAmountTotal"
+                                           ng-model="totalFISAmount" readonly 
+                                           class="inputnumberTotalfis" />
                                 </div>
                             </div>
                         </div>

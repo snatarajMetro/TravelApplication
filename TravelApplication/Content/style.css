@@ -185,7 +185,7 @@ a
 }
 
 .availableroles {
-    font-family:'Open Sans Condensed', sans-serif;
+    /*font-family:'Open Sans Condensed', sans-serif;
     font-size:15px;
     border-radius:4px;border:0px solid;
     width:220px;
@@ -193,10 +193,22 @@ a
     margin-top:5px;
     background-color:#e1dfdf;
     color:black;
-    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
-     box-shadow: 4px 5px 3px #3c3c3c;
+    box-shadow: 4px 5px 3px #3c3c3c;
     border-radius: 4px;
-    border:solid 1px black;
+    border:solid 1px black;*/
+
+    font-family:'Open Sans Condensed', sans-serif;
+    font-size:15px;
+    width:185px;
+    height:30px;
+    float:left;
+    margin-top:3px;
+    margin-bottom:3px;
+
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .backsection2

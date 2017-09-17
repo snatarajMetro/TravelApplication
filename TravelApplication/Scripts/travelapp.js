@@ -53,7 +53,7 @@ function signIn() {
                     var options = $("#roles");
                     options.empty();
                     //options.append($("<option />").val(0));
-                    options.append($("<option />").val(0).text('Please select your role'));
+                    options.append($("<option />").val(0).text('Please select the role'));
 
                     for (var index = 0; index < result.Roles.length; index++) {
 
