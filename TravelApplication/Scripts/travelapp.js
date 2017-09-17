@@ -11,6 +11,7 @@ $(document).ready(function () {
     //load fis section
     scope = angular.element('#datatemplate').scope();
     scope.loadFIS();
+    scope.loadCostCenters();
 
 });
 
@@ -203,7 +204,7 @@ function savedataentry()
 
     //$.ajax({
     //    type: "POST",
-    //    url: "/login/savetravelrequest",
+    //    url: "/api/travelrequest/save",
     //    contentType: "application/json; charset=utf-8",
     //    data: JSON.stringify({
     //        'BadgeNumber': badgeNumber,
