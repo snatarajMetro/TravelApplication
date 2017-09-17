@@ -30,17 +30,17 @@ namespace TravelApplication.Controllers.WebAPI
                     throw new Exception("Invalid username and/or password. Please try again.");
                 }
 
-                var roles = new List<Role>();
-                roles.Add(new Role() { Id = 1, Name = "Approver" });
-                roles.Add(new Role() { Id = 2, Name = "Submitter" });
-                roles.Add(new Role() { Id = 3, Name = "Traveler" });
+                //var roles = new List<Role>();
+                //roles.Add(new Role() { Id = 1, Name = "Approver" });
+                //roles.Add(new Role() { Id = 2, Name = "Submitter" });
+                //roles.Add(new Role() { Id = 3, Name = "Traveler" });
 
-                var user = new UserRole() { UserId = 100, UserName = userModel.UserName, Roles = roles };
+                //var user = new UserRole() { UserId = 100, UserName = userModel.UserName, Roles = roles };
 
-                var data = new JavaScriptSerializer().Serialize(user);
+                //var data = new JavaScriptSerializer().Serialize(user);
 
-                //var result = userService.ValidateAndGetRoles(userModel);
-                //var data = new JavaScriptSerializer().Serialize(result);
+                var result = userService.ValidateAndGetRoles(userModel);
+                var data = new JavaScriptSerializer().Serialize(result);
 
                 response = Request.CreateResponse(HttpStatusCode.OK, data);
 
