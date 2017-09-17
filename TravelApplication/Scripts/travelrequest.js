@@ -58,4 +58,15 @@ app.controller('estimatedExpenseCtrl', function ($scope,$compile) {
             $scope.$apply();        
         });
     }
+
+    $scope.CostCenters = [{
+        Id: 1,
+        Name: 'New York'
+    }, {
+        Id: 2,
+        Name: 'Los Angeles'
+    }, {
+        Id: 3,
+        Name: 'Seattle'
+    }];
 });

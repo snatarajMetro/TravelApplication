@@ -239,7 +239,7 @@ function saveestimatedexpense() {
     $('#travelrequesttemplate').hide();
     $('#estimatedexpensetemplate').hide();
     $('#datatemplate').show();
-    $("#txtCostCenter1").focus();
+    $("#ddlCostCenter1").focus();
 }
 
 function showestimatedexpensesection() {
