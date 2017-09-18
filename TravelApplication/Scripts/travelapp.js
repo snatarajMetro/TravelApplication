@@ -174,28 +174,17 @@ function setUserName() {
     var badgeNumber = $('#txtBadgeNumber').val();
 
     $.ajax({
-        type: "POST",
-        url: "/api/travelrequest/BadgeInfo",
-        data: JSON.stringify({ "UserName": user, "Password": password }),
+        type: "GET",
+        url: "/api/travelrequest/employee/" + badgeNumber,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
-
             var result = JSON.parse(data);
-            $('#txtName').val(result);
-            $("#userName").text(result.UserName);
+
+            $('#txtName').val(result.Result.EmployeeFirstName + ' ' + result.Result.EmployeeLastName);
+            $('#txtOrganization').val(result.Result.Department);
         },
         error: function (xhr, options, error) {
-            if (xhr.status == 401) {
-
-                $("#invaliduser").fadeIn("slow");
-                // fade out in 5 seconds
-                $("#invaliduser").fadeOut(5000);
-
-                $("#txtEmail").attr("class", "datainputerror");
-                $("#txtPassword").attr("class", "datainputerror");
-                $("#txtEmail").focus();
-            }
         }
     });
 
