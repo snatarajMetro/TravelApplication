@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelApplication", "TravelApplication\TravelApplication.csproj", "{A0C8B72B-091B-432B-AAA1-03C4E371BC32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{8F8E65D9-4840-498E-AFFB-1F22ED4103E9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelApplication.Tests", "Tests\TravelApplication.Tests.csproj", "{8F8E65D9-4840-498E-AFFB-1F22ED4103E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
