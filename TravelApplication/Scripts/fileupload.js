@@ -304,8 +304,8 @@ $(document).ready(function () {
     $.ajaxSetup({ cache: false });
 
 
-    getUploadedFiles(parentID,allowDelete);
-    getFileAttributes();
+    //getUploadedFiles(parentID,allowDelete);
+    //getFileAttributes();
     // Service call End
 
     $.ajaxSetup({ cache: true });

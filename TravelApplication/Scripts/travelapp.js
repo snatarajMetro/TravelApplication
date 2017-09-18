@@ -13,6 +13,8 @@ $(document).ready(function () {
     scope.loadFIS();
     scope.loadCostCenters();
     scope.loadFileUpload();
+
+    $("#fileuploadtemplate").show();
 });
 
 function closeinvaliduser() {
