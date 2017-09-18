@@ -155,6 +155,7 @@
     <Compile Include="Models\EmployeeDetails.cs" />
     <Compile Include="Models\PageConfigModel.cs" />
     <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\TravelRequest.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\UserResponse.cs" />
     <Compile Include="Models\UserRole.cs" />

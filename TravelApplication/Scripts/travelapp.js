@@ -210,26 +210,31 @@ function savedataentry()
     $('#estimatedexpensetemplate').show();
     $("#txtAdvLodge").focus();
 
-    //$.ajax({
-    //    type: "POST",
-    //    url: "/api/travelrequest/save",
-    //    contentType: "application/json; charset=utf-8",
-    //    data: JSON.stringify({
-    //        'BadgeNumber': badgeNumber,
-    //        'Name': name,
-    //        'Division': division,
-    //        'Section': section,
-    //        'organization': organization,
-    //        'MeetingLocation': meetingLocation,
-    //        'MeetingBeginDateTime': meetingBeginDate,
-    //        'DepartureDateTime': departureDate,
-    //        'MeetingEndDateTime': meetingEndDate,
-    //        'ReturnDateTime': returnDate,
-    //        'UserId': userId
-    //    }),
-    //    dataType: "json",
-    //    success: function (result) {
-    //        if (result.valid != 0) {
+    $.ajax({
+        type: "POST",
+        url: "/api/travelrequest/save",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            'BadgeNumber': badgeNumber,
+            'Name': name,
+            'Division': division,
+            'Section': section,
+            'organization': organization,
+            'MeetingLocation': meetingLocation,
+            'MeetingBeginDateTime': meetingBeginDate,
+            'DepartureDateTime': departureDate,
+            'MeetingEndDateTime': meetingEndDate,
+            'ReturnDateTime': returnDate,
+            'UserId': userId
+        }),
+        success: function (data) {
+            var result = JSON.parse(data);
+            // TravelRequestId is in result.Result;
+        },
+        error: function (xhr, options, error) {
+        }
+    });
+
 }
 
 function showtravelrequestformsection() {

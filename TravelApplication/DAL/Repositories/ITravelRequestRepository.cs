@@ -6,5 +6,6 @@ namespace TravelApplication.Services
     public interface ITravelRequestRepository
     {
         Task<EmployeeDetails> GetEmployeeDetails(int BadgeNumber);
+        Task<int> SaveTravelRequest(TravelRequest request);
     }
 }

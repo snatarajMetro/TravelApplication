@@ -15,5 +15,10 @@ namespace TravelApplication.Services
             EmployeeDetails result =  await travelRequestRepo.GetEmployeeDetails(BadgeNumber).ConfigureAwait(false);
             return result;
         }
+        public async Task<int> SaveTravelRequest(TravelRequest travelRequest)
+        {
+            int travelRequestId = await travelRequestRepo.SaveTravelRequest(travelRequest).ConfigureAwait(false);
+            return travelRequestId;
+        }
     }
 }
