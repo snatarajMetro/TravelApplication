@@ -64,6 +64,15 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
             );
     }
 
+    //set fileupload section
+    $scope.loadFileUpload = function () {
+        $.get('/uitemplates/fileupload.html')
+        .done(function (data) {
+            $('#fileuploadtemplate').html($compile($(data).html())($scope));
+            $scope.$apply();        
+        });
+    }
+
     //set fis section
     $scope.loadFIS = function () {
         $.get('/uitemplates/fis.html')
@@ -119,4 +128,5 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
             $scope.projects5 = $scope.Projects[costCenter.Id];;
         }
     };
+
 });

@@ -12,7 +12,7 @@ $(document).ready(function () {
     scope = angular.element('#datatemplate').scope();
     scope.loadFIS();
     scope.loadCostCenters();
-
+    scope.loadFileUpload();
 });
 
 function closeinvaliduser() {
@@ -147,6 +147,7 @@ function logout()
     $("#travelrequesttemplate").hide();
     $("#estimatedexpensetemplate").hide();
     $("#datatemplate").hide();
+    $("#fileuploadtemplate").hide();
     $('#signintemplate').hide();
     $("#signin").show();
 
@@ -260,4 +261,19 @@ function showestimatedexpensesection() {
 
     $("#datatemplate").hide();
     $("#estimatedexpensetemplate").show();
+}
+
+function savefis() {
+    // save fis data
+
+    // show file upload section
+    $("#datatemplate").hide();
+    $("#fileuploadtemplate").show();
+}
+
+
+
+function showfissection() {
+    $("#fileuploadtemplate").hide();
+    $("#datatemplate").show();
 }

@@ -182,6 +182,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\fileDropZone.css" />
     <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -375,6 +376,8 @@
     <Content Include="Content\bootstrap-datepicker.min.css.map" />
     <Content Include="Content\bootstrap-datepicker.css.map" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\dropzone.js" />
+    <Content Include="Scripts\fileupload.js" />
     <Content Include="Scripts\html5shiv-printshiv.js" />
     <Content Include="Scripts\html5shiv-printshiv.min.js" />
     <Content Include="Scripts\html5shiv.js" />
@@ -471,6 +474,7 @@
     <Content Include="Scripts\travelrequest.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="UITemplates\estimatedexpense.html" />
+    <Content Include="UITemplates\fileupload.html" />
     <Content Include="UITemplates\fis.html" />
     <Content Include="UITemplates\roleselection.html" />
     <Content Include="UITemplates\travelrequestform.html" />
