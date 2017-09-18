@@ -73,43 +73,50 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
         });
     }
 
-    // get cost centers
+    // load cost centers and projects
     $scope.loadCostCenters = function () 
     {
+        $scope.Projects = {};
+
         $.get('/api/fis/costcenters')
         .done(function (data) {
             $scope.CostCenters = JSON.parse(data);
+
+            angular.forEach($scope.CostCenters, function (value, index) {
+
+                // get projects based on cost center id
+                $.get('/api/fis/projects/' + value.Id)
+                .done(function (data) {
+
+                    $scope.Projects[value.Id] = JSON.parse(data);
+                    $scope.$apply();
+                });
+            })
         });
     }; 
 
-        $scope.projects1 = []; 
-        $scope.projects2 = [];
-        $scope.projects3 = [];
-        $scope.projects4 = [];
-        $scope.projects5 = [];
+    $scope.projects1 = []; 
+    $scope.projects2 = [];
+    $scope.projects3 = [];
+    $scope.projects4 = [];
+    $scope.projects5 = [];
 
-        $scope.getProjects = function (source, costCenter) {
+    $scope.getProjects = function (source, costCenter) {
 
-            // get projects based on cost center id
-            $.get('/api/fis/projects/' + costCenter.Id)
-            .done(function (data) {
-                var newProjects = JSON.parse(data);
-
-                if (source == 'ddlCostCenter1') {
-                    $scope.projects1 = newProjects;
-                }
-                else if (source == 'ddlCostCenter2') {
-                    $scope.projects2 = newProjects;
-                }
-                else if (source == 'ddlCostCenter3') {
-                    $scope.projects3 = newProjects;
-                }
-                else if (source == 'ddlCostCenter4') {
-                    $scope.projects4 = newProjects;
-                }
-                else if (source == 'ddlCostCenter5') {
-                    $scope.projects5 = newProjects;
-                }
-            });
-        };
+        if (source == 'ddlCostCenter1') {
+            $scope.projects1 = $scope.Projects[costCenter.Id];
+        }
+        else if (source == 'ddlCostCenter2') {
+            $scope.projects2 = $scope.Projects[costCenter.Id];;
+        }
+        else if (source == 'ddlCostCenter3') {
+            $scope.projects3 = $scope.Projects[costCenter.Id];;
+        }
+        else if (source == 'ddlCostCenter4') {
+            $scope.projects4 = $scope.Projects[costCenter.Id];;
+        }
+        else if (source == 'ddlCostCenter5') {
+            $scope.projects5 = $scope.Projects[costCenter.Id];;
+        }
+    };
 });
