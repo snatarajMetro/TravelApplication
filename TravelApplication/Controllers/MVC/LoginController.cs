@@ -13,5 +13,36 @@ namespace TravelApplication.Controllers.MVC
         {
             return View();
         }
+
+        public ActionResult Upload()
+        {
+            bool isSavedSuccessfully = true;
+            string fName = "";
+
+            try
+            {
+                foreach (string fileName in Request.Files)
+                {
+                    HttpPostedFileBase file = Request.Files[fileName];
+                    
+                    fName = file.FileName;
+                }
+
+            }
+            catch (Exception)
+            {
+                isSavedSuccessfully = false;
+            }
+
+
+            if (isSavedSuccessfully)
+            {
+                return Json(new { Message = fName });
+            }
+            else
+            {
+                return Json(new { Message = "Error in saving file" });
+            }
+        }
     }
 }

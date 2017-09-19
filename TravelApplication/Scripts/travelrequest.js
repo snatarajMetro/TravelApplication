@@ -69,8 +69,61 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
         $.get('/uitemplates/fileupload.html')
         .done(function (data) {
             $('#fileuploadtemplate').html($compile($(data).html())($scope));
-            $scope.$apply();        
+            $scope.$apply();
+
+            Dropzone.autoDiscover = false;
+
+            $("#supportingDocumentZone").dropzone({
+                url: "/login/upload",
+                //addRemoveLinks: true,
+                thumbnailWidth:10,
+                thumbnailHeight:10,
+                maxFilesize: 5, // MB
+                addRemoveLinks: true,
+                acceptedFiles: ".jpeg,.png,.gif,.txt",
+                init: function () {
+                    var self = this;
+                    // config
+                    self.options.addRemoveLinks = true;
+                    self.options.dictRemoveFile = "Delete";
+
+                    //New file added
+                    self.on("addedfile", function (file) {
+                        console.log('new file added ', file);
+                    });
+                    // Send file starts
+                    self.on("sending", function (file) {
+                        console.log('upload started', file);
+                        $('.meter').show();
+                    });
+
+                    // File upload Progress
+                    self.on("totaluploadprogress", function (progress) {
+                        console.log("progress ", progress);
+                        $('.roller').width(progress + '%');
+                    });
+
+                    self.on("queuecomplete", function (progress) {
+                        $('.meter').delay(999).slideUp(999);
+                    });
+
+                    // On removing file
+                    self.on("removedfile", function (file) {
+                        console.log(file);
+                    });
+                },
+                success: function (file, response) {
+                    var imgName = response;
+                    file.previewElement.classList.add("dz-success");
+                    //console.log("Successfully uploaded :" + imgName);
+                },
+                error: function (file, response) {
+                    file.previewElement.classList.add("dz-error");
+                }
+            });
         });
+
+        //$('#fileuploadtemplate').show();
     }
 
     //set fis section
