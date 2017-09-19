@@ -169,6 +169,9 @@ function createnewrequest() {
             $('#travelrequesttemplate').html($(data).html());
             $('#travelrequesttemplate').show();
             $("#txtBadgeNumber").focus();
+
+            // reset travelRequestId
+            $('#travelRequestId').text('0');
         });
 }
 
@@ -207,22 +210,21 @@ function savedataentry()
     var departureDate       = $('#txtDepartureDate').val();
     var returnDate          = $('#txtReturnDate').val();
     var userId              = "";
+    var travelRequestId     = $('#travelRequestId').text();
 
-    //show estimated expense section
-    $('#travelrequesttemplate').hide();
-    $('#estimatedexpensetemplate').show();
-    $("#txtAdvLodge").focus();
+
 
     $.ajax({
         type: "POST",
         url: "/api/travelrequest/save",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({
+            'TravelRequestId':travelRequestId,
             'BadgeNumber': badgeNumber,
             'Name': name,
             'Division': division,
             'Section': section,
-            'organization': organization,
+            'Organization': organization,
             'MeetingLocation': meetingLocation,
             'MeetingBeginDateTime': meetingBeginDate,
             'DepartureDateTime': departureDate,
@@ -232,12 +234,17 @@ function savedataentry()
         }),
         success: function (data) {
             var result = JSON.parse(data);
-            // TravelRequestId is in result.Result;
+            $('#travelRequestId').text(result);
+
+            //show estimated expense section
+            $('#travelrequesttemplate').hide();
+            $('#estimatedexpensetemplate').show();
+            $("#txtAdvLodge").focus();
         },
         error: function (xhr, options, error) {
+            $('#travelRequestId').text(0);
         }
     });
-
 }
 
 function showtravelrequestformsection() {
@@ -251,7 +258,8 @@ function showtravelrequestformsection() {
 function saveestimatedexpense() {
 
     // save estimated data expense section
-
+    var travelRequestId = $('#travelRequestId').text();
+    
     //show fis section
     $('#travelrequesttemplate').hide();
     $('#estimatedexpensetemplate').hide();
