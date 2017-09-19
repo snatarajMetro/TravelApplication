@@ -37,7 +37,7 @@ namespace TravelApplication.Controllers.WebAPI
 
         [HttpPost]
         [Route("api/travelrequest/save")]
-        public HttpResponseMessage save(TravelRequest travelRequest)
+        public HttpResponseMessage Save(TravelRequest travelRequest)
         {
             HttpResponseMessage response = null;
             try

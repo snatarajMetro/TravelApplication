@@ -259,12 +259,74 @@ function saveestimatedexpense() {
 
     // save estimated data expense section
     var travelRequestId = $('#travelRequestId').text();
-    
-    //show fis section
-    $('#travelrequesttemplate').hide();
-    $('#estimatedexpensetemplate').hide();
-    $('#datatemplate').show();
-    $("#ddlCostCenter1").focus();
+    var advLodge = $('#txtAdvLodge').val();
+    var advAirfare = $('#txtAdvAirfare').val();
+    var advRegistration = $('#txtAdvRegistration').val();
+    var advMeals = $('#txtAdvMeals').val();
+    var advCarRental = $('#txtAdvCarRental').val();
+    var advMiscellaneous = $('#txtAdvMiscellaneous').val();
+    var expenseItemTotal = $('#txtExpenseItemTotal').val();
+    var totalEstimatedLodge = $('#txtTotalEstimatedLodge').val();
+    var totalEstimatedAirfare = $('#txtTotalEstimatedAirfare').val();
+    var totalEstimatedRegistration = $('#txtTotalEstimatedRegistration').val();
+    var totalEstimatedMeals = $('#txtTotalEstimatedMeals').val();
+    var totalEstimatedCarRental = $('#txtTotalEstimatedCarRental').val();
+    var totalEstimatedMiscellaneous = $('#txtTotalEstimatedMiscellaneous').val();
+    var totalEstimatedTotal = $('#txtTotalEstimatedTotal').val();
+    var hotelNameAndAddress = $('#txtHotelNameAndAddress').val();
+    var payableTo = $('#txtPayableTo').val();
+    var schedule = $('#txtSchedule').val();
+    var agencyName = $('#txtAgencyName').val();
+    var shuttle = $('#txtShuttle').val();
+    var cashAdvance = $('#txtCashAdvance').val();
+    var dateNeededBy = $('#dtDateNeededBy').val();
+    var noteAnyMeals = $('#txtNoteAnyMeals').val();
+
+ 
+    $.ajax({
+    type: "POST",
+    url: "/api/estimatedexpense/save",
+    contentType: "application/json; charset=utf-8",
+    data: JSON.stringify({
+        'TravelRequestId':travelRequestId,
+        'AdvanceLodging': advLodge,
+        'AdvanceAirFare': advAirfare,
+        'AdvanceRegistration': advRegistration,
+        'AdvanceMeals': advMeals,
+        'AdvanceCarRental': advCarRental,
+        'AdvanceMiscellaneous': advMiscellaneous,
+        'AdvanceTotal': expenseItemTotal,
+        'TotalEstimatedLodge': totalEstimatedLodge,
+        'TotalEstimatedAirfare': totalEstimatedAirfare,
+        'TotalEstimatedRegistration': totalEstimatedRegistration,
+        'TotalEstimatedMeals': totalEstimatedMeals,
+        'TotalEstimatedCarRental': totalEstimatedCarRental,
+        'TotalEstimatedMiscellaneous': totalEstimatedMiscellaneous,
+        'TotalEstimatedTotal': totalEstimatedTotal,
+        'HotelNameAndAddress': hotelNameAndAddress,
+        'PayableToAndAddress': payableTo,
+        'Schedule': schedule,
+        'AgencyNameAndReservation': agencyName,
+        'Shuttle': shuttle,
+        'CashAdvance': cashAdvance,
+        'DateNeededBy': dateNeededBy,
+        'Note' : noteAnyMeals
+
+    }),
+    success: function (data) {
+        var result = JSON.parse(data);
+        $('#travelRequestId').text(result);
+
+        //show fis section
+        $('#travelrequesttemplate').hide();
+        $('#estimatedexpensetemplate').hide();
+        $('#datatemplate').show();
+        $("#ddlCostCenter1").focus();
+    },
+    error: function (xhr, options, error) {
+      //  $('#travelRequestId').text(0);
+    }
+});
 }
 
 function showestimatedexpensesection() {
