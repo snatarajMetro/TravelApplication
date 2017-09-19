@@ -17,8 +17,71 @@ namespace TravelApplication.Services
         }
         public async Task<int> SaveTravelRequest(TravelRequest travelRequest)
         {
-            int travelRequestId = await travelRequestRepo.SaveTravelRequest(travelRequest).ConfigureAwait(false);
-            return travelRequestId;
+            try
+            {
+                ValidateTravelRequestInfo(travelRequest);
+                int travelRequestId = await travelRequestRepo.SaveTravelRequest(travelRequest).ConfigureAwait(false);
+                return travelRequestId;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            
+        }
+
+        public void ValidateTravelRequestInfo(TravelRequest request)
+        {
+            try
+            {
+                if (request.BadgeNumber <= 0)
+                {
+                    throw new Exception("Invalid Badge Number");
+                }
+                if (string.IsNullOrWhiteSpace(request.Name))
+                {
+                    throw new Exception("Invalid Name");
+                }
+
+                if (string.IsNullOrWhiteSpace(request.Division))
+                {
+                    throw new Exception("Invalid Division");
+                }
+                if (string.IsNullOrWhiteSpace(request.Section))
+                {
+                    throw new Exception("Invalid Section");
+                }
+                if (string.IsNullOrWhiteSpace(request.Organization))
+                {
+                    throw new Exception("Invalid Organization");
+                }
+                if (string.IsNullOrWhiteSpace(request.MeetingLocation))
+                {
+                    throw new Exception("Invalid Meeting Location");
+                }
+
+                if  (request.MeetingBeginDateTime == DateTime.MinValue)
+                {
+                    throw new Exception("Invalid Meeting Begin Date");
+                }
+                if (request.MeetingEndDateTime == DateTime.MinValue)
+                {
+                    throw new Exception("Invalid Meeting End Date");
+                }
+                if (request.DepartureDateTime == DateTime.MinValue)
+                {
+                    throw new Exception("Invalid Departure Date");
+                }
+                if (request.ReturnDateTime == DateTime.MinValue)
+                {
+                    throw new Exception("Invalid Return Date");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

@@ -42,7 +42,8 @@ namespace TravelApplication.Controllers.WebAPI
             HttpResponseMessage response = null;
             try
             {
-                var result = travelRequestService.SaveTravelRequest(travelRequest);
+
+                var result = travelRequestService.SaveTravelRequest(travelRequest).Result;
                 var data = new JavaScriptSerializer().Serialize(result);
 
                 response = Request.CreateResponse(HttpStatusCode.OK, data);
