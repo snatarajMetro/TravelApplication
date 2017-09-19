@@ -6,6 +6,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Script.Serialization;
+using TravelApplication.Models;
+using TravelApplication.Services;
 
 namespace TravelApplication.Controllers.WebAPI
 {
@@ -13,6 +15,7 @@ namespace TravelApplication.Controllers.WebAPI
     {
         private Dictionary<int, List<Project>> Projects = new Dictionary<int, List<Project>>();
 
+        IFISService fisService = new FISService();
         public FISController()
         {
             int index = 1000;
@@ -54,6 +57,24 @@ namespace TravelApplication.Controllers.WebAPI
             }
 
             return response;
+
+            //HttpResponseMessage response = null;
+            //try
+            //{
+            //    var result = fisService.GetAllCostCenters();
+            //    var data = new JavaScriptSerializer().Serialize(result);
+
+            //    response = Request.CreateResponse(HttpStatusCode.OK, data);
+            //}
+            //catch (Exception ex)
+            //{
+            //    // TODO: Log the exception message
+            //    response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrieve cost centers from FIS  " + ex.Message);
+
+            //}
+            //return response;
+
+
         }
 
         [HttpGet]
@@ -79,12 +100,7 @@ namespace TravelApplication.Controllers.WebAPI
         }
     }
 
-    public class CostCenter
-    {
-        public int Id { get; set; }
 
-        public string Name { get; set; }
-    }
 
     public class Project
     {
