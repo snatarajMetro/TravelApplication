@@ -14,7 +14,7 @@ $(document).ready(function () {
     scope.loadCostCenters();
     scope.loadFileUpload();
 
-    $("#fileuploadtemplate").show();
+    //$("#fileuploadtemplate").show();
 });
 
 function closeinvaliduser() {
