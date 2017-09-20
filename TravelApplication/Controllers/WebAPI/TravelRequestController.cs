@@ -56,5 +56,64 @@ namespace TravelApplication.Controllers.WebAPI
             }
             return response;
         }
+
+
+        [HttpGet]
+        [Route("api/travelrequest/supportingdocuments/{travelRequestId}")]
+        public HttpResponseMessage SupportingDocuments(int travelRequestId)
+        {
+            HttpResponseMessage response = null;
+
+            try
+            {
+                List<SupportingDocument> supportingDocuments = new List<SupportingDocument>();
+                Random number = new Random(1000);
+
+                int maxCount = 15;
+                if(DateTime.Now.Minute %2 == 0) { maxCount = 16; }
+                DateTime now = DateTime.Now;
+
+                for (int counter = 1; counter < maxCount; counter++)
+                {
+                    supportingDocuments.Add(new SupportingDocument()
+                    {
+                        Id                  = counter,
+                        FileName            = string.Format(@"Test{0}.txt", number.Next()),
+                        DownloadDateTime    = now.AddMinutes(counter).ToString("MM/dd/yyyy h:mm tt"),
+                        ViewUrl             = string.Format(@"/document/view/{0}", counter),
+                        DownloadUrl         = string.Format(@"/document/download/{0}", counter),
+                        DeleteUrl           = string.Format(@"/document/delete/{0}", counter)
+                    }
+                    );
+                }
+
+                var data = new JavaScriptSerializer().Serialize(supportingDocuments.OrderByDescending(item => item.Id));
+
+                response = Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Log the exception message
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+            
+            return response;
+
+        }
+    }
+
+    public class SupportingDocument
+    {
+        public int Id { get; set; }
+
+        public string FileName { get; set; }
+
+        public string DownloadDateTime { get; set; }
+
+        public string ViewUrl { get; set; }
+
+        public string DownloadUrl { get; set; }
+
+        public string DeleteUrl { get; set; }
     }
 }
