@@ -147,7 +147,7 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
             angular.forEach($scope.CostCenters, function (value, index) {
 
                 // get projects based on cost center id
-                $.get('/api/fis/projects/' + value.Id)
+                $.get('/api/fis/projects/' + value.Name)
                 .done(function (data) {
 
                     $scope.Projects[value.Id] = JSON.parse(data);

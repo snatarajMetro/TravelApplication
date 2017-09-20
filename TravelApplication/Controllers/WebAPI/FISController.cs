@@ -35,44 +35,44 @@ namespace TravelApplication.Controllers.WebAPI
         [Route("api/fis/costcenters")]
         public HttpResponseMessage GetCostCenters()
         {
-            HttpResponseMessage response = null;
-
-            List<CostCenter> costCenters = new List<CostCenter>();
-
-            try
-            {
-                //TODO: Get it from service
-                costCenters.Add(new CostCenter() { Id = 19876, Name = 19876.ToString() });
-                costCenters.Add(new CostCenter() { Id = 19925, Name = 19925.ToString() });
-                costCenters.Add(new CostCenter() { Id = 20012, Name = 20012.ToString() });
-
-                var data = new JavaScriptSerializer().Serialize(costCenters);
-
-                response = Request.CreateResponse(HttpStatusCode.OK, data);
-            }
-            catch (Exception ex)
-            {
-                //TODO: Log the exception
-                response = Request.CreateResponse(HttpStatusCode.InternalServerError);
-            }
-
-            return response;
-
             //HttpResponseMessage response = null;
+
+            //List<CostCenter> costCenters = new List<CostCenter>();
+
             //try
             //{
-            //    var result = fisService.GetAllCostCenters();
-            //    var data = new JavaScriptSerializer().Serialize(result);
+            //    //TODO: Get it from service
+            //    costCenters.Add(new CostCenter() { Id = 19876, Name = 19876.ToString() });
+            //    costCenters.Add(new CostCenter() { Id = 19925, Name = 19925.ToString() });
+            //    costCenters.Add(new CostCenter() { Id = 20012, Name = 20012.ToString() });
+
+            //    var data = new JavaScriptSerializer().Serialize(costCenters);
 
             //    response = Request.CreateResponse(HttpStatusCode.OK, data);
             //}
             //catch (Exception ex)
             //{
-            //    // TODO: Log the exception message
-            //    response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrieve cost centers from FIS  " + ex.Message);
-
+            //    //TODO: Log the exception
+            //    response = Request.CreateResponse(HttpStatusCode.InternalServerError);
             //}
+
             //return response;
+
+            HttpResponseMessage response = null;
+            try
+            {
+                var result = fisService.GetAllCostCenters().Result;
+                var data = new JavaScriptSerializer().Serialize(result);
+
+                response = Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Log the exception message
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrieve cost centers from FIS  " + ex.Message);
+
+            }
+            return response;
 
 
         }
