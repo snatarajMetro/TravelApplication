@@ -1,4 +1,4 @@
-﻿var app = angular.module('travelApp', []);
+﻿var app = angular.module('travelApp', ['ui.grid', 'ui.grid.pagination']);
 
 app.controller('travelAppCtrl', function ($scope,$compile) {
 
@@ -66,6 +66,12 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
 
     //set fileupload section
     $scope.loadFileUpload = function () {
+
+        var travelRequestId = 123456;
+
+        // load supporting document grid
+        $scope.loadSupportingDocuments(travelRequestId);
+
         $.get('/uitemplates/fileupload.html')
         .done(function (data) {
             $('#fileuploadtemplate').html($compile($(data).html())($scope));
@@ -87,43 +93,29 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
                     self.options.addRemoveLinks = true;
                     self.options.dictRemoveFile = "Delete";
 
-                    //New file added
-                    self.on("addedfile", function (file) {
-                        console.log('new file added ', file);
-                    });
-                    // Send file starts
-                    self.on("sending", function (file) {
-                        console.log('upload started', file);
-                        $('.meter').show();
-                    });
-
                     // File upload Progress
                     self.on("totaluploadprogress", function (progress) {
-                        console.log("progress ", progress);
                         $('.roller').width(progress + '%');
                     });
 
                     self.on("queuecomplete", function (progress) {
                         $('.meter').delay(999).slideUp(999);
-                    });
 
-                    // On removing file
-                    self.on("removedfile", function (file) {
-                        console.log(file);
+                        var travelRequestId = 123456;
+
+                        // reload supporting document grid
+                        $scope.loadSupportingDocuments(travelRequestId);
                     });
                 },
                 success: function (file, response) {
                     var imgName = response;
                     file.previewElement.classList.add("dz-success");
-                    //console.log("Successfully uploaded :" + imgName);
                 },
                 error: function (file, response) {
                     file.previewElement.classList.add("dz-error");
                 }
             });
         });
-
-        //$('#fileuploadtemplate').show();
     }
 
     //set fis section
@@ -181,5 +173,55 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
             $scope.projects5 = $scope.Projects[costCenter.Id];;
         }
     };
+
+    $scope.loadSupportingDocuments = function (travelRequestNumber) {
+
+        $scope.gridOptions = {
+            enableSorting: false,
+            enableFiltering: true,
+            paginationPageSizes: [5, 10, 15],
+            paginationPageSize: 5,
+            columnDefs: [
+            {
+                field: 'FileName',
+                headerCellClass: 'headerCell',
+                displayName: 'File Name',
+                width: '300'
+            },
+            {
+                field: 'DownloadDateTime',
+                headerCellClass: 'headerCell',
+                displayName: 'Upload Datetime',
+                width: '200'
+            },
+            {
+                field: 'actions',
+                headerCellClass: 'headerCell',
+                displayName: 'Actions',
+                cellTemplate: "<a href='{{row.entity.ViewUrl}}'><img  title='View Document' class='viewDocument' src='/Images/New.png' width='30' height='30' /></a><a href='{{row.entity.DownloadUrl}}'><img title='Download Document' class='viewDocument' src='/Images/New.png' width='30' height='30' /></a><a href='{{row.entity.DeleteUrl}}'><img title='Delete Document' class='viewDocument' src='/Images/New.png' width='30' height='30' /></a>",
+                enableFiltering: false,
+                enableColumnMenu: false
+            }
+            ],
+            onRegisterApi: function (gridApi) {
+                $scope.grid1Api = gridApi;
+            }
+        };
+
+        $.ajax({
+            type: "GET",
+            url: "api/travelrequest/supportingdocuments/" + travelRequestNumber,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                var result = JSON.parse(data);
+
+                $scope.gridOptions.data = result;
+                $scope.$apply();
+            },
+            error: function (xhr, options, error) {
+            }
+        });
+    }
 
 });
