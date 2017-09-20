@@ -10,5 +10,6 @@ namespace TravelApplication.DAL.Repositories
     public interface IFISRepository
     {
         Task<List<CostCenter>> GetAllCostCenters();
+        Task<List<Project>> GetProjectsByCostCenterId(int costCenterId);
     }
 }

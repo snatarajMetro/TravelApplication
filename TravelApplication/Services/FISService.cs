@@ -16,5 +16,11 @@ namespace TravelApplication.Services
             List<CostCenter> result = await fisRepository.GetAllCostCenters().ConfigureAwait(false);
             return result;
         }
+
+        public async Task<List<Project>> GetProjectsByCostCenterId(int costCenterId)
+        {
+            List<Project> result = await fisRepository.GetProjectsByCostCenterId(costCenterId).ConfigureAwait(false);
+            return result;
+        }
     }
 }

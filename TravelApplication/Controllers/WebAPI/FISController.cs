@@ -82,7 +82,7 @@ namespace TravelApplication.Controllers.WebAPI
         public HttpResponseMessage GetProjectsByCostCenterId(int costCenterId)
         {
             HttpResponseMessage response = null;
-            
+
             try
             {
                 //TODO: Get it from service
@@ -97,15 +97,27 @@ namespace TravelApplication.Controllers.WebAPI
             }
 
             return response;
+
+            //HttpResponseMessage response = null;
+            //try
+            //{
+            //    var result = fisService.GetProjectsByCostCenterId(costCenterId);
+            //    var data = new JavaScriptSerializer().Serialize(result);
+
+            //    response = Request.CreateResponse(HttpStatusCode.OK, data);
+            //}
+            //catch (Exception ex)
+            //{
+            //    // TODO: Log the exception message
+            //    response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrieve projects by cost center Id  " + ex.Message);
+
+            //}
+            //return response;
+
         }
     }
 
 
 
-    public class Project
-    {
-        public int Id { get; set; }
 
-        public string Name { get; set; }
-    }
 }
