@@ -42,7 +42,6 @@ namespace TravelApplication.Controllers.WebAPI
             HttpResponseMessage response = null;
             try
             {
-
                 var result = travelRequestService.SaveTravelRequest(travelRequest).Result;
                 var data = new JavaScriptSerializer().Serialize(result);
 
@@ -67,26 +66,28 @@ namespace TravelApplication.Controllers.WebAPI
             try
             {
                 List<SupportingDocument> supportingDocuments = new List<SupportingDocument>();
-                Random number = new Random(1000);
 
-                int maxCount = 15;
-                if(DateTime.Now.Minute %2 == 0) { maxCount = 16; }
-                DateTime now = DateTime.Now;
-
-                for (int counter = 1; counter < maxCount; counter++)
+                if (travelRequestId > 0)
                 {
-                    supportingDocuments.Add(new SupportingDocument()
-                    {
-                        Id                  = counter,
-                        FileName            = string.Format(@"Test{0}.txt", number.Next()),
-                        DownloadDateTime    = now.AddMinutes(counter).ToString("MM/dd/yyyy h:mm tt"),
-                        ViewUrl             = string.Format(@"/document/view/{0}", counter),
-                        DownloadUrl         = string.Format(@"/document/download/{0}", counter),
-                        DeleteUrl           = string.Format(@"/document/delete/{0}", counter)
-                    }
-                    );
-                }
+                    Random number = new Random(1000);
 
+                    int maxCount = 5;
+                    if (DateTime.Now.Minute % 2 == 0) { maxCount = 6; }
+                    DateTime now = DateTime.Now;
+
+                    for (int counter = 1; counter < maxCount; counter++)
+                    {
+                        supportingDocuments.Add(new SupportingDocument()
+                        {
+                            Id                  = counter,
+                            FileName            = string.Format(@"Test{0}.txt", number.Next()),
+                            UploadDateTime      = now.AddMinutes(counter).ToString("MM/dd/yyyy h:mm tt"),
+                            DownloadUrl         = string.Format(@"/download/download/{0}", counter),
+                            DeleteUrl           = string.Format(@"/download/delete/{0}", counter)
+                        }
+                        );
+                    }
+                }
                 var data = new JavaScriptSerializer().Serialize(supportingDocuments.OrderByDescending(item => item.Id));
 
                 response = Request.CreateResponse(HttpStatusCode.OK, data);
@@ -108,9 +109,7 @@ namespace TravelApplication.Controllers.WebAPI
 
         public string FileName { get; set; }
 
-        public string DownloadDateTime { get; set; }
-
-        public string ViewUrl { get; set; }
+        public string UploadDateTime { get; set; }
 
         public string DownloadUrl { get; set; }
 
