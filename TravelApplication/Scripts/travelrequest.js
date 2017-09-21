@@ -67,8 +67,6 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
     //set fileupload section
     $scope.loadFileUpload = function () {
 
-        var travelRequestId = 123456;
-
         // load supporting document grid
         $scope.loadSupportingDocuments(travelRequestId);
 
@@ -81,7 +79,6 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
 
             $("#supportingDocumentZone").dropzone({
                 url: "/login/upload",
-                //addRemoveLinks: true,
                 thumbnailWidth:10,
                 thumbnailHeight:10,
                 maxFilesize: 5, // MB
@@ -93,6 +90,14 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
                     self.options.addRemoveLinks = true;
                     self.options.dictRemoveFile = "Delete";
 
+                    // on file added
+                    self.on("addedfile", function (progress) {
+                        var travelRequestId = $('#travelRequestId').text();
+                        var badgeNumber = $('#badgeNumber').text();
+                        var uploadUrl = "/login/upload?travelRequestId=" + travelRequestId + "&badgeNumber=" + badgeNumber;
+                        self.options.url = uploadUrl;
+                    });
+
                     // File upload Progress
                     self.on("totaluploadprogress", function (progress) {
                         $('.roller').width(progress + '%');
@@ -101,7 +106,7 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
                     self.on("queuecomplete", function (progress) {
                         $('.meter').delay(999).slideUp(999);
 
-                        var travelRequestId = 123456;
+                        var travelRequestId = $('#travelRequestId').text();
 
                         // reload supporting document grid
                         $scope.loadSupportingDocuments(travelRequestId);

@@ -172,6 +172,7 @@ function createnewrequest() {
 
             // reset travelRequestId
             $('#travelRequestId').text('0');
+            $('#badgeNumber').text('0');
         });
 }
 
@@ -235,6 +236,7 @@ function savedataentry()
         success: function (data) {
             var result = JSON.parse(data);
             $('#travelRequestId').text(result);
+            $('#badgeNumber').text(badgeNumber);
 
             //show estimated expense section
             $('#travelrequesttemplate').hide();
@@ -243,6 +245,7 @@ function savedataentry()
         },
         error: function (xhr, options, error) {
             $('#travelRequestId').text(0);
+            $('#badgeNumber').text(0);
         }
     });
 }

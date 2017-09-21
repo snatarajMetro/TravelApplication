@@ -14,7 +14,7 @@ namespace TravelApplication.Controllers.MVC
             return View();
         }
 
-        public ActionResult Upload()
+        public ActionResult Upload(int travelRequestId, int badgeNumber)
         {
             bool isSavedSuccessfully = true;
             string fName = "";
