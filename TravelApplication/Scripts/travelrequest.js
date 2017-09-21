@@ -1,4 +1,5 @@
-﻿var app = angular.module('travelApp', ['ui.grid', 'ui.grid.pagination']);
+﻿//var app = angular.module('travelApp', ['ui.grid', 'ui.grid.pagination']);
+var app = angular.module('travelApp', ['ui.grid']);
 
 app.controller('travelAppCtrl', function ($scope,$compile) {
 
@@ -100,6 +101,11 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
                         self.options.url = uploadUrl;
                     });
 
+                    // on file added
+                    //self.on("success", function (file,response) {
+                    //    this.removeFile(file);
+                    //});
+
                     // File upload Progress
                     self.on("totaluploadprogress", function (progress) {
                         $('.roller').width(progress + '%');
@@ -185,10 +191,9 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
 
         $scope.gridOptions = {
             enableSorting: false,
-            enableFiltering: true,
-            paginationPageSizes: [5, 10, 15],
-            paginationPageSize: 5,
-            autoResize: "",
+            //enableFiltering: true,
+            //paginationPageSizes: [5, 10, 15],
+            //paginationPageSize: 5, 
             columnDefs: [
             {
                 field: 'FileName',
@@ -196,14 +201,17 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
                 width: '350'
             },
             {
-                field: 'DownloadDateTime',
+                field: 'UploadDateTime',
+                headerCellClass: 'headerStyle',
                 displayName: 'Upload Datetime',
                 width: '150'
             },
             {
                 field: 'actions',
+                headerCellClass: 'headerStyle',
+                width: '100',
                 displayName: 'Actions',
-                cellTemplate: "<a href='{{row.entity.ViewUrl}}'><img  title='View Document' class='viewDocument' src='/Images/View.png' width='30' height='30' /></a><a href='{{row.entity.DownloadUrl}}'><img title='Download Document' class='viewDocument' src='/Images/download.png' width='30' height='30' /></a><a href='{{row.entity.DeleteUrl}}'><img title='Delete Document' class='viewDocument' src='/Images/delete.png' width='30' height='30' /></a>",
+                cellTemplate: "<a href='{{row.entity.DownloadUrl}}'><img title='View/Download Document' class='viewDocument' src='/Images/download.png' width='30' height='30' /></a><a href='{{row.entity.DeleteUrl}}'><img title='Delete Document' class='viewDocument' src='/Images/delete.png' width='30' height='30' /></a>",
                 enableFiltering: false,
                 enableColumnMenu: false
             }
@@ -229,4 +237,7 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
         });
     }
 
+    $scope.deleteDocument = function (documentId) {
+        alert(documentId);
+    }
 });

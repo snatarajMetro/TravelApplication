@@ -739,17 +739,19 @@ display:table-header-group;
 }
 
 .supportingDocumentGrid {
-width: 800px;
-height:245px;
+width: 600px;
+height:200px;
 }
 
 .supportingDocumentSection{
     margin-left:10px;
-    margin-top:20px;
+    margin-top:40px;
 }
 
 .viewDocument {
-    margin-left:20px;
+    margin-left:15px;
+    width:30px;
+    height:30px;
 }
 
 
@@ -780,3 +782,6 @@ height:245px;
     color:white;
 }
 
+.headerStyle{
+    text-align:center;
+}
