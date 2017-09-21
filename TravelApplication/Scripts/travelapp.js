@@ -14,7 +14,6 @@ $(document).ready(function () {
     scope.loadFIS();
     scope.loadCostCenters();
     scope.loadFileUpload();
-
 });
 
 function closeinvaliduser() {
@@ -30,6 +29,11 @@ function closeinvalidrole() {
 function closetravelrequesterror() {
     $("#travelrequesterror").hide();
     $("#badgeNumber").focus();
+}
+
+function closeestimatedexpenseerror() {
+    $("#estimatedexpenseerror").hide();
+    $("#txtAdvLodge").focus();
 }
 
 function signIn() {
@@ -343,7 +347,16 @@ function saveestimatedexpense() {
         $("#ddlCostCenter1").focus();
     },
     error: function (xhr, options, error) {
-      //  $('#travelRequestId').text(0);
+      
+        if (xhr.status == 500) {
+            var errorMessage = xhr.responseText;
+
+            $("#estimatedexpenseerror").fadeIn("slow");
+            $('#estimatedexpenseerrormessage').text(errorMessage);
+
+            // fade out in 5 seconds
+            $("#estimatedexpenseerror").fadeOut(fadeOutTimeInMilliseconds);
+        }
     }
 });
 }
