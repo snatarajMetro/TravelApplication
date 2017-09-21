@@ -436,9 +436,19 @@ function savefis() {
     scope.loadSupportingDocuments(travelRequestId);
 }
 
-
-
 function showfissection() {
     $("#fileuploadtemplate").hide();
     $("#datatemplate").show();
+}
+
+function downloaddocument(obj) {
+    var documentId = obj.alt;
+    //TODO: Call the download document API
+ 
+}
+
+function deletedocument(obj) {
+    var documentId = obj.alt;
+    //TODO: Call the delete document API
+ 
 }

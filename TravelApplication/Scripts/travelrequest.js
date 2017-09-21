@@ -211,7 +211,7 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
                 headerCellClass: 'headerStyle',
                 width: '100',
                 displayName: 'Actions',
-                cellTemplate: "<a href='{{row.entity.DownloadUrl}}'><img title='View/Download Document' class='viewDocument' src='/Images/download.png' width='30' height='30' /></a><a href='{{row.entity.DeleteUrl}}'><img title='Delete Document' class='viewDocument' src='/Images/delete.png' width='30' height='30' /></a>",
+                cellTemplate: "<a href='#'><img title='View/Download Document' class='viewDocument' src='/Images/download.png' width='30' height='30' alt='{{row.entity.Id}}' onclick=downloaddocument(this); /></a><a href='#'><img title='Delete Document' class='viewDocument' src='/Images/delete.png' width='30' height='30' alt='{{row.entity.Id}}' onclick=deletedocument(this); /></a>",
                 enableFiltering: false,
                 enableColumnMenu: false
             }
