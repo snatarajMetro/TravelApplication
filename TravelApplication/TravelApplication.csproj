@@ -210,6 +210,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Images\delete.png" />
+    <Content Include="Images\delete2.png" />
     <Content Include="Images\download.png" />
     <Content Include="Images\logo.jpg" />
     <Content Include="Images\logo.png" />

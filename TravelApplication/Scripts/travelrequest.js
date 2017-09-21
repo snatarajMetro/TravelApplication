@@ -102,9 +102,9 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
                     });
 
                     // on file added
-                    //self.on("success", function (file,response) {
-                    //    this.removeFile(file);
-                    //});
+                    self.on("success", function (file,response) {
+                        this.removeFile(file);
+                    });
 
                     // File upload Progress
                     self.on("totaluploadprogress", function (progress) {
@@ -191,6 +191,7 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
 
         $scope.gridOptions = {
             enableSorting: false,
+            rowHeight:34,
             //enableFiltering: true,
             //paginationPageSizes: [5, 10, 15],
             //paginationPageSize: 5, 
@@ -204,14 +205,14 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
                 field: 'UploadDateTime',
                 headerCellClass: 'headerStyle',
                 displayName: 'Upload Datetime',
-                width: '150'
+                width: '200'
             },
             {
                 field: 'actions',
                 headerCellClass: 'headerStyle',
                 width: '100',
                 displayName: 'Actions',
-                cellTemplate: "<a href='#'><img title='View/Download Document' class='viewDocument' src='/Images/download.png' width='30' height='30' alt='{{row.entity.Id}}' onclick=downloaddocument(this); /></a><a href='#'><img title='Delete Document' class='viewDocument' src='/Images/delete.png' width='30' height='30' alt='{{row.entity.Id}}' onclick=deletedocument(this); /></a>",
+                cellTemplate: "<a href='#'><img title='View/Download Document' class='viewDocument' src='/Images/download.png' width='30' height='30' alt='{{row.entity.Id}}' onclick=downloaddocument(this); /></a><a href='#'><img title='Delete Document' class='viewDocument' src='/Images/delete2.png' width='20' height='20' alt='{{row.entity.Id}}' onclick=deletedocument(this); /></a>",
                 enableFiltering: false,
                 enableColumnMenu: false
             }
