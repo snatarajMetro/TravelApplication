@@ -734,24 +734,49 @@ display:table-header-group;
     /*display:block;*/
 }
 
+.supportingDocumentZone {
+    height:165px;
+}
+
 .supportingDocumentGrid {
 width: 800px;
-height:260px;
+height:245px;
 }
 
 .supportingDocumentSection{
     margin-left:10px;
-    margin-top:50px;
+    margin-top:20px;
 }
 
 .viewDocument {
     margin-left:20px;
 }
 
-.headerCell{
-    height:20px;
-    background-color:green;
-}
+
 .ui-grid-column-menu-button{
   display: none;
 }
+
+.ui-grid{
+    font-family:'Open Sans Condensed', sans-serif;
+    font-size:14px;
+     -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px red;
+}
+.ui-grid-header-canvas{
+    font-family:'Open Sans Condensed', sans-serif;
+    font-size:14px; 
+    color:black;
+    /*background-color:#dcdada;*/
+    background-color:gray;
+}
+.ui-grid-top-panel{
+    color: black;
+}
+
+.ui-grid-pager-panel{
+    background-color:gray;
+    color:white;
+}
+
