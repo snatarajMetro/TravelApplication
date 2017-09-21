@@ -138,11 +138,11 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
 
             angular.forEach($scope.CostCenters, function (value, index) {
 
-                // get projects based on cost center id
+                // get projects based on cost center name
                 $.get('/api/fis/projects/' + value.Name)
                 .done(function (data) {
 
-                    $scope.Projects[value.Id] = JSON.parse(data);
+                    $scope.Projects[value.Name] = JSON.parse(data);
                     $scope.$apply();
                 });
             })
@@ -158,19 +158,19 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
     $scope.getProjects = function (source, costCenter) {
 
         if (source == 'ddlCostCenter1') {
-            $scope.projects1 = $scope.Projects[costCenter.Id];
+            $scope.projects1 = $scope.Projects[costCenter.Name];
         }
         else if (source == 'ddlCostCenter2') {
-            $scope.projects2 = $scope.Projects[costCenter.Id];;
+            $scope.projects2 = $scope.Projects[costCenter.Name];;
         }
         else if (source == 'ddlCostCenter3') {
-            $scope.projects3 = $scope.Projects[costCenter.Id];;
+            $scope.projects3 = $scope.Projects[costCenter.Name];;
         }
         else if (source == 'ddlCostCenter4') {
-            $scope.projects4 = $scope.Projects[costCenter.Id];;
+            $scope.projects4 = $scope.Projects[costCenter.Name];;
         }
         else if (source == 'ddlCostCenter5') {
-            $scope.projects5 = $scope.Projects[costCenter.Id];;
+            $scope.projects5 = $scope.Projects[costCenter.Name];;
         }
     };
 

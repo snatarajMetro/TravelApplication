@@ -11,15 +11,19 @@ namespace TravelApplication.Services
     public class FISService : IFISService
     {
         IFISRepository fisRepository = new FISRepository();
-        public async Task<List<CostCenter>> GetAllCostCenters()
+
+        public async Task<List<CostCenter>> GetCostCenters()
         {
-            List<CostCenter> result = await fisRepository.GetAllCostCenters().ConfigureAwait(false);
+            List<CostCenter> result = await fisRepository.GetCostCenters().ConfigureAwait(false);
             return result;
         }
 
-        public async Task<List<Project>> GetProjectsByCostCenterId(int costCenterId)
+        public async Task<List<Project>> GetProjectsByCostCenterName(string costCenterName)
         {
-            List<Project> result = await fisRepository.GetProjectsByCostCenterId(costCenterId).ConfigureAwait(false);
+            List<Project> result = await fisRepository
+                                        .GetProjectsByCostCenterName(costCenterName)
+                                        .ConfigureAwait(false);
+
             return result;
         }
     }

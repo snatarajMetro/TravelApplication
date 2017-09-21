@@ -9,7 +9,8 @@ namespace TravelApplication.Services
 {
     public interface IFISService
     {
-        Task<List<CostCenter>> GetAllCostCenters();
-        Task<List<Project>> GetProjectsByCostCenterId(int costCenterId);
+        Task<List<CostCenter>> GetCostCenters();
+
+        Task<List<Project>> GetProjectsByCostCenterName(string costCenterName);
     }
 }

@@ -11,7 +11,7 @@ namespace TravelApplication.DAL.Repositories
     public class FISRepository : IFISRepository
     {
 
-        public async Task<List<CostCenter>> GetAllCostCenters()
+        public async Task<List<CostCenter>> GetCostCenters()
         {
             List<CostCenter> costCenters = new List<CostCenter>();
             var client = new HttpClient();
@@ -40,21 +40,28 @@ namespace TravelApplication.DAL.Repositories
             return costCenters;
         }
 
-        public async Task<List<Project>> GetProjectsByCostCenterId(int costCenterId)
+        public async Task<List<Project>> GetProjectsByCostCenterName(string costCenterName)
         {
             List<Project> projects = new List<Project>();
+            List<string> projectIds = null;
+
             var client = new HttpClient();
             try
             {
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                var endpointUrl = string.Format("http://apitest.metro.net/fis/ProjecstByCostCenterId/{0}",costCenterId);
+                var endpointUrl = string.Format("http://apitest.metro.net/fis/ProjecstByCostCenterId/{0}",costCenterName);
                 HttpResponseMessage response = await client.GetAsync(endpointUrl).ConfigureAwait(false);
 
                 if (response.IsSuccessStatusCode)
                 {
 
-                    projects = await response.Content.ReadAsAsync<List<Project>>();
+                    projectIds = await response.Content.ReadAsAsync<List<string>>();
+
+                    foreach (var item in projectIds)
+                    {
+                        projects.Add(new Project() { Id = item, Name = item });
+                    }
                 }
             }
             catch (Exception ex)

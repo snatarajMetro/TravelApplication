@@ -18,7 +18,7 @@ namespace TravelApplication.Tests
         [TestMethod]
         public void GetAllCostCenters()
         {           
-            var response = fisService.GetAllCostCenters();
+            var response = fisService.GetCostCenters();
             Assert.IsNotNull(response);
         }
 
