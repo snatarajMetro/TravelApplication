@@ -245,7 +245,74 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
         .done(function (data) {
             $('#submittemplate').html($compile($(data).html())($scope));
             $scope.$apply();
+
+            $scope.loadDepartmentHeads();
+            $scope.loadExecutiveOfficers();
+            $scope.loadCEOForInternational();
+            $scope.loadCEOForAPTA();
+            $scope.loadTravelCoordinators();
         });
 
+    }
+
+    // load department head
+    $scope.loadDepartmentHeads = function () {
+
+        $scope.DepartmentHeads = [
+            { "Id": "1", "Name": "User 1" },
+            { "Id": "2", "Name": "User 2" },
+            { "Id": "3", "Name": "User 3" },
+            { "Id": "4", "Name": "User 4" },
+            { "Id": "5", "Name": "User 5" },
+            { "Id": "6", "Name": "User 6" },
+            { "Id": "7", "Name": "User 7" }
+        ]
+    }
+
+    // load executive officers
+    $scope.loadExecutiveOfficers = function () {
+
+        $scope.ExecutiveOfficers = [
+            { "Id": "8", "Name": "User 8" },
+            { "Id": "9", "Name": "User 9" },
+            { "Id": "10", "Name": "User 10" },
+            { "Id": "11", "Name": "User 11" },
+            { "Id": "12", "Name": "User 12" },
+            { "Id": "13", "Name": "User 13" },
+            { "Id": "14", "Name": "User 14" }
+        ]
+    }
+
+    // load CEO for international
+    $scope.loadCEOForInternational = function () {
+
+        $scope.CEOsForInternational = [
+            { "Id": "15", "Name": "User 15" },
+            { "Id": "16", "Name": "User 16" },
+            { "Id": "17", "Name": "User 17" }
+        ]
+    }
+
+    // load CEO for APTA/CTA conferences
+    $scope.loadCEOForAPTA = function () {
+
+        $scope.CEOsForAPTA = [
+            { "Id": "18", "Name": "User 18" },
+            { "Id": "19", "Name": "User 19" },
+            { "Id": "20", "Name": "User 20" }
+        ]
+    }
+
+    $scope.loadTravelCoordinators = function () {
+
+        $scope.TravelCoordinators = [
+            { "Id": "21", "Name": "User 21" },
+            { "Id": "22", "Name": "User 22" },
+            { "Id": "23", "Name": "User 23" },
+            { "Id": "24", "Name": "User 24" },
+            { "Id": "25", "Name": "User 25" },
+            { "Id": "26", "Name": "User 26" },
+            { "Id": "27", "Name": "User 27" }
+        ]
     }
 });

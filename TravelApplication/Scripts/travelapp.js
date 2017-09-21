@@ -15,7 +15,6 @@ $(document).ready(function () {
     scope.loadCostCenters();
     scope.loadFileUpload();
     scope.loadSubmit();
-    
 });
 
 function closeinvaliduser() {
@@ -165,6 +164,7 @@ function logout()
     $("#estimatedexpensetemplate").hide();
     $("#datatemplate").hide();
     $("#fileuploadtemplate").hide();
+    $("#submittemplate").hide();
     $('#signintemplate').hide();
     $("#signin").show();
 

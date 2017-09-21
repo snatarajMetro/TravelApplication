@@ -2,7 +2,71 @@
     <div class="main dataentrycontainer">
         <div id="content" class="content estimatedexpense">
             <div class="title">
-                <span>Submit</span>
+                <span>Review and Submit</span>
+            </div>
+            <div id="submitsection">
+                <span class="expenserowtitle">This new travel request needs approvals from the following;</span>
+                <div class="submitsection">
+                    <div style="padding-top:10px;">
+                        <div style="float:left;" class="approvaltitle"><span>Department Head</span></div>
+                        <div ng-app="travelApp" ng-controller="travelAppCtrl">
+                            <select class="inputdropdown submitUser" id="ddlDepartmentHead"
+                                    ng-model="ddlDepartmentHead"
+                                    ng-options="department.Name for department in DepartmentHeads track by department.Id"></select>
+                        </div>
+                    </div>
+                    <div style="clear:both;padding-top:10px;">
+                        <div style="float:left;" class="approvaltitle"><span>Executive Officer</span></div>
+                        <div ng-app="travelApp" ng-controller="travelAppCtrl">
+                            <select class="inputdropdown submitUser" id="ddlExecutiveOfficer"
+                                    ng-model="ddlExecutiveOfficer"
+                                    ng-options="officer.Name for officer in ExecutiveOfficers track by officer.Id"></select>
+                        </div>
+                    </div>
+                    <div style="clear:both;padding-top:10px;">
+                        <div style="float:left;" class="approvaltitle"><span>CEO (For International)</span></div>
+                        <div ng-app="travelApp" ng-controller="travelAppCtrl">
+                            <select class="inputdropdown submitUser" id="ddlCEOForInternational"
+                                    ng-model="ddlCEOForInternational"
+                                    ng-options="officer.Name for officer in CEOsForInternational track by officer.Id"></select>
+                        </div>
+                    </div>
+                    <div style="clear:both;padding-top:10px;">
+                        <div style="float:left;" class="approvaltitle"><span>CEO (For APTA/CTA conference)</span></div>
+                        <div ng-app="travelApp" ng-controller="travelAppCtrl">
+                            <select class="inputdropdown submitUser" id="ddlCEOForAPTA"
+                                    ng-model="ddlCEOForAPTA"
+                                    ng-options="officer.Name for officer in CEOsForAPTA track by officer.Id"></select>
+                        </div>
+                    </div>
+                    <div style="clear:both;padding-top:10px;">
+                        <div style="float:left;" class="approvaltitle"><span>Travel Co-ordinator</span></div>
+                        <div ng-app="travelApp" ng-controller="travelAppCtrl">
+                            <select class="inputdropdown submitUser" id="ddlTravelCoordinator"
+                                    ng-model="ddlTravelCoordinator"
+                                    ng-options="officer.Name for officer in TravelCoordinators track by officer.Id"></select>
+                        </div>
+                    </div>
+                </div>
+                <div style="clear:both;padding-top:10px;">
+                    <div class="agreement">
+                        <span>I hereby certify that all expenditures reported here are legitimate expenses chargeable to the Los Angeles County Metropolitan Transportation Authority. As a condition of recieving a Travel Advance, I agree that the
+                            Los Angeles County Metropolitan Transportation Authority may deduct the amount of my Travel Advance from my pay check,<b>in the event I fail to submit a Travel and Business Expence Report (ACCS-501) with appropriate documentation
+                        within 30 days of my return.</b></span>
+                    </div>
+                    <div style="margin-top:30px;">
+                        <div>
+                            <div style="float:left;padding-top:10px;margin-right:10px;">
+                                <span class="approvaltitle">Employee Name</span>
+                            </div>
+                            <div style="margin-left:10px;">
+                                <input type="text" placeholder="Employee Name" id="txtEmployeeName" width="100" class="datainput employee" />
+                                <input type="checkbox" id="cbAgree" value="1" class="agreecheckbox" />
+                                <input type="text" placeholder="I Agree" id="txtAgreeText" width="30" class="datainput iagree" readonly value="I AGREE" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="submiterror" class="main errorcontainer" style="display:none">
