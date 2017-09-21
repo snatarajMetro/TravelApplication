@@ -18,15 +18,15 @@ namespace TravelApplication.Tests
         [TestMethod]
         public void GetAllCostCenters()
         {           
-        //    var response = fisService.GetCostCenters();
-      //      Assert.IsNotNull(response);
+            var response = fisService.GetCostCenters();
+            Assert.IsNotNull(response);
         }
 
         [TestMethod]
         public void GetprojectsByCostCenterId()
         {
-       //     var response = fisService.GetProjectsByCostCenterId(9210);
-        //    Assert.IsNotNull(response);
+            var response = fisService.GetProjectsByCostCenterId(9210);
+            Assert.IsNotNull(response);
         }
     }
 }
