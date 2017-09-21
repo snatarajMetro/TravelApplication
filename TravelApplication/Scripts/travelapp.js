@@ -1,4 +1,5 @@
 ﻿var userName = '';
+var fadeOutTimeInMilliseconds = 5000; // 5 seconds
 
 $(document).ready(function () {
 
@@ -14,7 +15,6 @@ $(document).ready(function () {
     scope.loadCostCenters();
     scope.loadFileUpload();
 
-    //$("#fileuploadtemplate").show();
 });
 
 function closeinvaliduser() {
@@ -25,6 +25,11 @@ function closeinvaliduser() {
 function closeinvalidrole() {
     $("#invalidrole").hide();
     $("#roles").focus();
+}
+
+function closetravelrequesterror() {
+    $("#travelrequesterror").hide();
+    $("#badgeNumber").focus();
 }
 
 function signIn() {
@@ -83,7 +88,7 @@ function signIn() {
 
                 $("#invaliduser").fadeIn("slow");
                 // fade out in 5 seconds
-                $("#invaliduser").fadeOut(5000);
+                $("#invaliduser").fadeOut(fadeOutTimeInMilliseconds);
 
                 $("#txtEmail").attr("class", "datainputerror");
                 $("#txtPassword").attr("class", "datainputerror");
@@ -112,7 +117,7 @@ function actionselection() {
         $("#invalidrole").fadeIn("slow");
         
         // fade out in 5 seconds
-        $("#invalidrole").fadeOut(5000);
+        $("#invalidrole").fadeOut(fadeOutTimeInMilliseconds);
     }
     else {
         $("#signintemplate").hide();
@@ -244,6 +249,17 @@ function savedataentry()
             $("#txtAdvLodge").focus();
         },
         error: function (xhr, options, error) {
+
+            if (xhr.status == 500) {
+                var errorMessage = xhr.responseText;
+
+                $("#travelrequesterror").fadeIn("slow");
+                $('#travelrequesterrormessage').text(errorMessage);
+
+                // fade out in 5 seconds
+                $("#travelrequesterror").fadeOut(fadeOutTimeInMilliseconds);
+            }
+
             $('#travelRequestId').text(0);
             $('#badgeNumber').text(0);
         }
