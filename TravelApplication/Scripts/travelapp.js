@@ -344,6 +344,10 @@ function savefis() {
     // show file upload section
     $("#datatemplate").hide();
     $("#fileuploadtemplate").show();
+
+    var travelRequestId = $('#travelRequestId').text();
+    var scope = angular.element('#fileuploadtemplate').scope();
+    scope.loadSupportingDocuments(travelRequestId);
 }
 
 

@@ -67,6 +67,8 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
     //set fileupload section
     $scope.loadFileUpload = function () {
 
+        var travelRequestId = $('#travelRequestId').text();
+
         // load supporting document grid
         $scope.loadSupportingDocuments(travelRequestId);
 
@@ -186,6 +188,7 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
             enableFiltering: true,
             paginationPageSizes: [5, 10, 15],
             paginationPageSize: 5,
+            autoResize: "",
             columnDefs: [
             {
                 field: 'FileName',
