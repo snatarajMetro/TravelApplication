@@ -14,6 +14,8 @@ $(document).ready(function () {
     scope.loadFIS();
     scope.loadCostCenters();
     scope.loadFileUpload();
+    scope.loadSubmit();
+    
 });
 
 function closeinvaliduser() {
@@ -451,4 +453,32 @@ function deletedocument(obj) {
     var documentId = obj.alt;
     //TODO: Call the delete document API
  
+}
+
+function showsubmitsection()
+{
+    // hide upload section
+    $("#fileuploadtemplate").hide();
+
+    // show submit section
+    var scope = angular.element('#submittemplate').scope();
+    scope.loadSubmit();
+    $("#submittemplate").show();
+}
+
+function showuploadsection()
+{
+    // hide submit section
+    $("#submittemplate").hide();
+
+    // show upload section
+    var travelRequestId = $('#travelRequestId').text();
+    var scope = angular.element('#fileuploadtemplate').scope();
+    scope.loadSupportingDocuments(travelRequestId);
+    $('#fileuploadtemplate').show();
+}
+
+function submitRequest() {
+
+
 }

@@ -238,7 +238,14 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
         });
     }
 
-    $scope.deleteDocument = function (documentId) {
-        alert(documentId);
+    // load submit section
+    $scope.loadSubmit = function () {
+
+        $.get('/uitemplates/submit.html')
+        .done(function (data) {
+            $('#submittemplate').html($compile($(data).html())($scope));
+            $scope.$apply();
+        });
+
     }
 });

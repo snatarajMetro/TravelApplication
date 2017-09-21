@@ -493,6 +493,7 @@
     <Content Include="UITemplates\fileupload.html" />
     <Content Include="UITemplates\fis.html" />
     <Content Include="UITemplates\roleselection.html" />
+    <Content Include="UITemplates\submit.html" />
     <Content Include="UITemplates\travelrequestform.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
