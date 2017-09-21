@@ -81,12 +81,12 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
             Dropzone.autoDiscover = false;
 
             $("#supportingDocumentZone").dropzone({
-                url: "/login/upload",
+                url: "/api/Documents/Upload",
                 thumbnailWidth:10,
                 thumbnailHeight:10,
                 maxFilesize: 5, // MB
                 addRemoveLinks: true,
-                acceptedFiles: ".jpeg,.png,.gif,.txt",
+                acceptedFiles: ".jpeg,.png,.gif,.txt,.docx,.xlsx,.xls,.pdf",
                 init: function () {
                     var self = this;
                     // config
@@ -97,7 +97,7 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
                     self.on("addedfile", function (progress) {
                         var travelRequestId = $('#travelRequestId').text();
                         var badgeNumber = $('#badgeNumber').text();
-                        var uploadUrl = "/login/upload?travelRequestId=" + travelRequestId + "&badgeNumber=" + badgeNumber;
+                        var uploadUrl = "/api/Documents/upload?travelRequestId=" + travelRequestId + "&badgeNumber=" + badgeNumber;
                         self.options.url = uploadUrl;
                     });
 
@@ -224,7 +224,7 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
 
         $.ajax({
             type: "GET",
-            url: "api/travelrequest/supportingdocuments/" + travelRequestNumber,
+            url: "api/travelrequest/supportingdocuments?travelRequestId=" + travelRequestNumber + "&badgeNumber=" + $('#badgeNumber').text(),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
