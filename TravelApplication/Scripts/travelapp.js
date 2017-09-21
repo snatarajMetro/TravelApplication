@@ -35,6 +35,10 @@ function closeestimatedexpenseerror() {
     $("#estimatedexpenseerror").hide();
     $("#txtAdvLodge").focus();
 }
+function closefiserror() {
+    $("#fiserror").hide();
+    $("#ddlCostCenter1").focus();
+}
 
 function signIn() {
 
@@ -335,30 +339,30 @@ function saveestimatedexpense() {
         'DateNeededBy': dateNeededBy,
         'Note' : noteAnyMeals
 
-    }),
-    success: function (data) {
-        var result = JSON.parse(data);
-        $('#travelRequestId').text(result);
+        }),
+        success: function (data) {
+            var result = JSON.parse(data);
+            $('#travelRequestId').text(result);
 
-        //show fis section
-        $('#travelrequesttemplate').hide();
-        $('#estimatedexpensetemplate').hide();
-        $('#datatemplate').show();
-        $("#ddlCostCenter1").focus();
-    },
-    error: function (xhr, options, error) {
+            //show fis section
+            $('#travelrequesttemplate').hide();
+            $('#estimatedexpensetemplate').hide();
+            $('#datatemplate').show();
+            $("#ddlCostCenter1").focus();
+        },
+        error: function (xhr, options, error) {
       
-        if (xhr.status == 500) {
-            var errorMessage = xhr.responseText;
+            if (xhr.status == 500) {
+                var errorMessage = xhr.responseText;
 
-            $("#estimatedexpenseerror").fadeIn("slow");
-            $('#estimatedexpenseerrormessage').text(errorMessage);
+                $("#estimatedexpenseerror").fadeIn("slow");
+                $('#estimatedexpenseerrormessage').text(errorMessage);
 
-            // fade out in 5 seconds
-            $("#estimatedexpenseerror").fadeOut(fadeOutTimeInMilliseconds);
+                // fade out in 5 seconds
+                $("#estimatedexpenseerror").fadeOut(fadeOutTimeInMilliseconds);
+            }
         }
-    }
-});
+    });
 }
 
 function showestimatedexpensesection() {
@@ -368,9 +372,62 @@ function showestimatedexpensesection() {
 }
 
 function savefis() {
-    // save fis data
 
-    // show file upload section
+    // save fis data
+    $.ajax({
+        type: "POST",
+        url: "/api/fis/save",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            //'TravelRequestId': travelRequestId,
+            //'AdvanceLodging': advLodge,
+            //'AdvanceAirFare': advAirfare,
+            //'AdvanceRegistration': advRegistration,
+            //'AdvanceMeals': advMeals,
+            //'AdvanceCarRental': advCarRental,
+            //'AdvanceMiscellaneous': advMiscellaneous,
+            //'AdvanceTotal': expenseItemTotal,
+            //'TotalEstimatedLodge': totalEstimatedLodge,
+            //'TotalEstimatedAirfare': totalEstimatedAirfare,
+            //'TotalEstimatedRegistration': totalEstimatedRegistration,
+            //'TotalEstimatedMeals': totalEstimatedMeals,
+            //'TotalEstimatedCarRental': totalEstimatedCarRental,
+            //'TotalEstimatedMiscellaneous': totalEstimatedMiscellaneous,
+            //'TotalEstimatedTotal': totalEstimatedTotal,
+            //'HotelNameAndAddress': hotelNameAndAddress,
+            //'PayableToAndAddress': payableTo,
+            //'Schedule': schedule,
+            //'AgencyNameAndReservation': agencyName,
+            //'Shuttle': shuttle,
+            //'CashAdvance': cashAdvance,
+            //'DateNeededBy': dateNeededBy,
+            //'Note': noteAnyMeals
+        }),
+        success: function (data) {
+
+            // show file upload section
+            $("#datatemplate").hide();
+            $("#fileuploadtemplate").show();
+
+            var travelRequestId = $('#travelRequestId').text();
+            var scope = angular.element('#fileuploadtemplate').scope();
+            scope.loadSupportingDocuments(travelRequestId);
+        },
+        error: function (xhr, options, error) {
+
+            if (xhr.status == 500) {
+            var errorMessage = xhr.responseText;
+
+                $("#fiserror").fadeIn("slow");
+                $('#fiserrormessage').text(errorMessage);
+
+                // fade out in 5 seconds
+                $("#fiserror").fadeOut(fadeOutTimeInMilliseconds);
+            }
+        }
+    });
+
+    // TODO: Remove these lines of code after save API is implemented
     $("#datatemplate").hide();
     $("#fileuploadtemplate").show();
 
