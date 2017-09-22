@@ -1,7 +1,7 @@
 ﻿//var app = angular.module('travelApp', ['ui.grid', 'ui.grid.pagination']);
 var app = angular.module('travelApp', ['ui.grid']);
 
-app.controller('travelAppCtrl', function ($scope,$compile) {
+app.controller('travelAppCtrl', function ($scope, $compile) {
 
     // Estimated Expense section
     $scope.advanceLodgingAmount = "0.00";
@@ -81,12 +81,12 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
             Dropzone.autoDiscover = false;
 
             $("#supportingDocumentZone").dropzone({
-                url: "/login/upload",
-                thumbnailWidth:10,
-                thumbnailHeight:10,
+                url: "api/documents/upload",
+                thumbnailWidth: 10,
+                thumbnailHeight: 10,
                 maxFilesize: 5, // MB
                 addRemoveLinks: true,
-                acceptedFiles: ".jpeg,.png,.gif,.txt",
+                acceptedFiles: ".jpeg,.png,.gif,.txt,.pdf,.docx,.xlxs",
                 init: function () {
                     var self = this;
                     // config
@@ -97,12 +97,12 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
                     self.on("addedfile", function (progress) {
                         var travelRequestId = $('#travelRequestId').text();
                         var badgeNumber = $('#badgeNumber').text();
-                        var uploadUrl = "/login/upload?travelRequestId=" + travelRequestId + "&badgeNumber=" + badgeNumber;
+                        var uploadUrl = "/api/documents/upload?travelRequestId=" + travelRequestId + "&badgeNumber=" + badgeNumber;
                         self.options.url = uploadUrl;
                     });
 
                     // on file added
-                    self.on("success", function (file,response) {
+                    self.on("success", function (file, response) {
                         this.removeFile(file);
                     });
 
@@ -136,13 +136,12 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
         $.get('/uitemplates/fis.html')
         .done(function (data) {
             $('#datatemplate').html($compile($(data).html())($scope));
-            $scope.$apply();        
+            $scope.$apply();
         });
     }
 
     // load cost centers and projects
-    $scope.loadCostCenters = function () 
-    {
+    $scope.loadCostCenters = function () {
         $scope.Projects = {};
 
         $.get('/api/fis/costcenters')
@@ -160,9 +159,9 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
                 });
             })
         });
-    }; 
+    };
 
-    $scope.projects1 = []; 
+    $scope.projects1 = [];
     $scope.projects2 = [];
     $scope.projects3 = [];
     $scope.projects4 = [];
@@ -191,7 +190,7 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
 
         $scope.gridOptions = {
             enableSorting: false,
-            rowHeight:34,
+            rowHeight: 34,
             //enableFiltering: true,
             //paginationPageSizes: [5, 10, 15],
             //paginationPageSize: 5, 
@@ -212,7 +211,7 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
                 headerCellClass: 'headerStyle',
                 width: '100',
                 displayName: 'Actions',
-                cellTemplate: "<a href='#'><img title='View/Download Document' class='viewDocument' src='/Images/download.png' width='30' height='30' alt='{{row.entity.Id}}' onclick=downloaddocument(this); /></a><a href='#'><img title='Delete Document' class='viewDocument' src='/Images/delete2.png' width='20' height='20' alt='{{row.entity.Id}}' onclick=deletedocument(this); /></a>",
+                cellTemplate: "<a href='{{row.entity.DownloadUrl}}'><img title='View/Download Document' class='viewDocument' src='/Images/download.png' width='30' height='30' /></a><a href='#'><img title='Delete Document' class='viewDocument' src='/Images/delete2.png' width='20' height='20' alt='{{row.entity.Id}}' onclick=deletedocument(this); /></a>",
                 enableFiltering: false,
                 enableColumnMenu: false
             }
@@ -224,7 +223,7 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
 
         $.ajax({
             type: "GET",
-            url: "api/travelrequest/supportingdocuments/" + travelRequestNumber,
+            url: "/api/travelrequest/supportingdocuments?travelRequestId=" + travelRequestNumber+"&badgeNumber="+$('#badgeNumber').text(),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
@@ -245,7 +244,74 @@ app.controller('travelAppCtrl', function ($scope,$compile) {
         .done(function (data) {
             $('#submittemplate').html($compile($(data).html())($scope));
             $scope.$apply();
+
+            $scope.loadDepartmentHeads();
+            $scope.loadExecutiveOfficers();
+            $scope.loadCEOForInternational();
+            $scope.loadCEOForAPTA();
+            $scope.loadTravelCoordinators();
         });
 
+    }
+
+    // load department head
+    $scope.loadDepartmentHeads = function () {
+
+        $scope.DepartmentHeads = [
+            { "Id": "1", "Name": "User 1" },
+            { "Id": "2", "Name": "User 2" },
+            { "Id": "3", "Name": "User 3" },
+            { "Id": "4", "Name": "User 4" },
+            { "Id": "5", "Name": "User 5" },
+            { "Id": "6", "Name": "User 6" },
+            { "Id": "7", "Name": "User 7" }
+        ]
+    }
+
+    // load executive officers
+    $scope.loadExecutiveOfficers = function () {
+
+        $scope.ExecutiveOfficers = [
+            { "Id": "8", "Name": "User 8" },
+            { "Id": "9", "Name": "User 9" },
+            { "Id": "10", "Name": "User 10" },
+            { "Id": "11", "Name": "User 11" },
+            { "Id": "12", "Name": "User 12" },
+            { "Id": "13", "Name": "User 13" },
+            { "Id": "14", "Name": "User 14" }
+        ]
+    }
+
+    // load CEO for international
+    $scope.loadCEOForInternational = function () {
+
+        $scope.CEOsForInternational = [
+            { "Id": "15", "Name": "User 15" },
+            { "Id": "16", "Name": "User 16" },
+            { "Id": "17", "Name": "User 17" }
+        ]
+    }
+
+    // load CEO for APTA/CTA conferences
+    $scope.loadCEOForAPTA = function () {
+
+        $scope.CEOsForAPTA = [
+            { "Id": "18", "Name": "User 18" },
+            { "Id": "19", "Name": "User 19" },
+            { "Id": "20", "Name": "User 20" }
+        ]
+    }
+
+    $scope.loadTravelCoordinators = function () {
+
+        $scope.TravelCoordinators = [
+            { "Id": "21", "Name": "User 21" },
+            { "Id": "22", "Name": "User 22" },
+            { "Id": "23", "Name": "User 23" },
+            { "Id": "24", "Name": "User 24" },
+            { "Id": "25", "Name": "User 25" },
+            { "Id": "26", "Name": "User 26" },
+            { "Id": "27", "Name": "User 27" }
+        ]
     }
 });

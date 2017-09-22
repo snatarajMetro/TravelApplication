@@ -25,7 +25,7 @@ namespace TravelApplication.Tests
         [TestMethod]
         public void GetprojectsByCostCenterId()
         {
-            var response = fisService.GetProjectsByCostCenterId(9210);
+            var response = fisService.GetProjectsByCostCenterName("9210");
             Assert.IsNotNull(response);
         }
     }

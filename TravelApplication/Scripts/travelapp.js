@@ -15,7 +15,6 @@ $(document).ready(function () {
     scope.loadCostCenters();
     scope.loadFileUpload();
     scope.loadSubmit();
-    
 });
 
 function closeinvaliduser() {
@@ -54,11 +53,11 @@ function signIn() {
     $.ajax({
         type: "POST",
         url: "/api/login",
-        data: JSON.stringify({ "UserName":user, "Password":password }),
+        data: JSON.stringify({ "UserName": user, "Password": password }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
-                    
+
             var result = JSON.parse(data);
 
             //show role selection section
@@ -125,7 +124,7 @@ function actionselection() {
     if ($("#roles option:selected").val() == 0) {
 
         $("#invalidrole").fadeIn("slow");
-        
+
         // fade out in 5 seconds
         $("#invalidrole").fadeOut(fadeOutTimeInMilliseconds);
     }
@@ -147,16 +146,14 @@ function backtoroleselection() {
     $('#signintemplate').show();
 }
 
-function backtoactionselection()
-{
+function backtoactionselection() {
     $("#travelrequesttemplate").hide();
     $("#estimatedexpensetemplate").hide();
     $("#datatemplate").hide();
     $("#action").show();
 }
 
-function logout()
-{
+function logout() {
     $("#action").hide();
     $("#action").hide();
     $("#invaliduser").hide();
@@ -165,6 +162,7 @@ function logout()
     $("#estimatedexpensetemplate").hide();
     $("#datatemplate").hide();
     $("#fileuploadtemplate").hide();
+    $("#submittemplate").hide();
     $('#signintemplate').hide();
     $("#signin").show();
 
@@ -212,21 +210,20 @@ function setUserName() {
 
 }
 
-function savedataentry()
-{
+function savedataentry() {
     // Get user inputs
-    var badgeNumber         = $('#txtBadgeNumber').val();
-    var name                = $('#txtName').val();
-    var division            = $('#txtDivision').val();
-    var section             = $('#txtSection').val();
-    var organization        = $('#txtOrganization').val();
-    var meetingLocation     = $('#txtMeetingLocation').val();
-    var meetingBeginDate    = $('#txtMeetingBeginDate').val();
-    var meetingEndDate      = $('#txtMeetingEndDate').val();
-    var departureDate       = $('#txtDepartureDate').val();
-    var returnDate          = $('#txtReturnDate').val();
-    var userId              = "";
-    var travelRequestId     = $('#travelRequestId').text();
+    var badgeNumber = $('#txtBadgeNumber').val();
+    var name = $('#txtName').val();
+    var division = $('#txtDivision').val();
+    var section = $('#txtSection').val();
+    var organization = $('#txtOrganization').val();
+    var meetingLocation = $('#txtMeetingLocation').val();
+    var meetingBeginDate = $('#txtMeetingBeginDate').val();
+    var meetingEndDate = $('#txtMeetingEndDate').val();
+    var departureDate = $('#txtDepartureDate').val();
+    var returnDate = $('#txtReturnDate').val();
+    var userId = "";
+    var travelRequestId = $('#travelRequestId').text();
 
 
 
@@ -235,7 +232,7 @@ function savedataentry()
         url: "/api/travelrequest/save",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({
-            'TravelRequestId':travelRequestId,
+            'TravelRequestId': travelRequestId,
             'BadgeNumber': badgeNumber,
             'Name': name,
             'Division': division,
@@ -311,35 +308,35 @@ function saveestimatedexpense() {
     var dateNeededBy = $('#dtDateNeededBy').val();
     var noteAnyMeals = $('#txtNoteAnyMeals').val();
 
- 
+
     $.ajax({
-    type: "POST",
-    url: "/api/estimatedexpense/save",
-    contentType: "application/json; charset=utf-8",
-    data: JSON.stringify({
-        'TravelRequestId':travelRequestId,
-        'AdvanceLodging': advLodge,
-        'AdvanceAirFare': advAirfare,
-        'AdvanceRegistration': advRegistration,
-        'AdvanceMeals': advMeals,
-        'AdvanceCarRental': advCarRental,
-        'AdvanceMiscellaneous': advMiscellaneous,
-        'AdvanceTotal': expenseItemTotal,
-        'TotalEstimatedLodge': totalEstimatedLodge,
-        'TotalEstimatedAirfare': totalEstimatedAirfare,
-        'TotalEstimatedRegistration': totalEstimatedRegistration,
-        'TotalEstimatedMeals': totalEstimatedMeals,
-        'TotalEstimatedCarRental': totalEstimatedCarRental,
-        'TotalEstimatedMiscellaneous': totalEstimatedMiscellaneous,
-        'TotalEstimatedTotal': totalEstimatedTotal,
-        'HotelNameAndAddress': hotelNameAndAddress,
-        'PayableToAndAddress': payableTo,
-        'Schedule': schedule,
-        'AgencyNameAndReservation': agencyName,
-        'Shuttle': shuttle,
-        'CashAdvance': cashAdvance,
-        'DateNeededBy': dateNeededBy,
-        'Note' : noteAnyMeals
+        type: "POST",
+        url: "/api/estimatedexpense/save",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            'TravelRequestId': travelRequestId,
+            'AdvanceLodging': advLodge,
+            'AdvanceAirFare': advAirfare,
+            'AdvanceRegistration': advRegistration,
+            'AdvanceMeals': advMeals,
+            'AdvanceCarRental': advCarRental,
+            'AdvanceMiscellaneous': advMiscellaneous,
+            'AdvanceTotal': expenseItemTotal,
+            'TotalEstimatedLodge': totalEstimatedLodge,
+            'TotalEstimatedAirfare': totalEstimatedAirfare,
+            'TotalEstimatedRegistration': totalEstimatedRegistration,
+            'TotalEstimatedMeals': totalEstimatedMeals,
+            'TotalEstimatedCarRental': totalEstimatedCarRental,
+            'TotalEstimatedMiscellaneous': totalEstimatedMiscellaneous,
+            'TotalEstimatedTotal': totalEstimatedTotal,
+            'HotelNameAndAddress': hotelNameAndAddress,
+            'PayableToAndAddress': payableTo,
+            'Schedule': schedule,
+            'AgencyNameAndReservation': agencyName,
+            'Shuttle': shuttle,
+            'CashAdvance': cashAdvance,
+            'DateNeededBy': dateNeededBy,
+            'Note': noteAnyMeals
 
         }),
         success: function (data) {
@@ -353,7 +350,7 @@ function saveestimatedexpense() {
             $("#ddlCostCenter1").focus();
         },
         error: function (xhr, options, error) {
-      
+
             if (xhr.status == 500) {
                 var errorMessage = xhr.responseText;
 
@@ -418,7 +415,7 @@ function savefis() {
         error: function (xhr, options, error) {
 
             if (xhr.status == 500) {
-            var errorMessage = xhr.responseText;
+                var errorMessage = xhr.responseText;
 
                 $("#fiserror").fadeIn("slow");
                 $('#fiserrormessage').text(errorMessage);
@@ -446,17 +443,16 @@ function showfissection() {
 function downloaddocument(obj) {
     var documentId = obj.alt;
     //TODO: Call the download document API
- 
+
 }
 
 function deletedocument(obj) {
     var documentId = obj.alt;
     //TODO: Call the delete document API
- 
+
 }
 
-function showsubmitsection()
-{
+function showsubmitsection() {
     // hide upload section
     $("#fileuploadtemplate").hide();
 
@@ -466,8 +462,7 @@ function showsubmitsection()
     $("#submittemplate").show();
 }
 
-function showuploadsection()
-{
+function showuploadsection() {
     // hide submit section
     $("#submittemplate").hide();
 

@@ -786,3 +786,49 @@ height:230px;
 .headerStyle{
     text-align:center;
 }
+
+.submitsection{
+    margin-top:20px;
+    margin-left:10px;
+}
+
+.submitUser {
+    width:250px;
+    height:25px;
+    margin-left:10px;
+    font-family:'Open Sans Condensed', sans-serif;
+    font-size:14px; 
+}
+
+.approvaltitle
+{
+    padding-left:10px;
+    font-family:'Open Sans Condensed', sans-serif;
+    font-size:15px;
+    font-weight:bold;
+    margin-bottom:5px;
+    width:165px;
+    padding-top:5px;
+}
+
+.agreement{
+    padding:10px;
+    padding-top:20px;
+    font-family:'Open Sans Condensed', sans-serif;
+    font-size:15px;
+}
+
+.agreecheckbox{
+    width:20px;
+    height:20px;
+    margin-left:150px;
+}
+
+.iagree{
+    width:70px;
+}
+
+.employee{
+    margin-right:50px;
+    font-weight:bold;
+}
