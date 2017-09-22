@@ -455,7 +455,7 @@ function deletedocument(obj) {
     // Call the delete document API
     $.ajax({
         type: "DELETE",
-        url: "/api/travelrequest/deletedocument?travelRequestId=" + travelRequestId + "&documentId=" + documentId,
+        url: "/api/documents/deletedocument?travelRequestId=" + travelRequestId + "&documentId=" + documentId,
         contentType: "application/json; charset=utf-8",
         success: function () {
 

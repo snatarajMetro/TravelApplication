@@ -223,7 +223,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
 
         $.ajax({
             type: "GET",
-            url: "/api/travelrequest/supportingdocuments?travelRequestId=" + travelRequestNumber+"&badgeNumber="+$('#badgeNumber').text(),
+            url: "/api/documents/supportingdocuments?travelRequestId=" + travelRequestNumber+"&badgeNumber="+$('#badgeNumber').text(),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
