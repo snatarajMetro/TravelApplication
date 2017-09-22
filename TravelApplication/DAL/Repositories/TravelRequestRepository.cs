@@ -48,9 +48,9 @@ namespace TravelApplication.Services
             int travelRequestId = 0;
             try
             {
+                ValidateTravelRequestInfo(request);
                 if (request.TravelRequestId == 0)
-                {
-                    ValidateTravelRequestInfo(request);
+                {                   
                     var loginId = getUserName(request.UserId);
                     request.LoginId = loginId;
                     using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
