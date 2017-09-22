@@ -7,5 +7,6 @@ namespace TravelApplication.Services
     {
         Task<EmployeeDetails> GetEmployeeDetails(int BadgeNumber);
         Task<int> SaveTravelRequest(TravelRequest request);
+        TravelRequest GetTravelRequestDetail(int travelRequestId);
     }
 }

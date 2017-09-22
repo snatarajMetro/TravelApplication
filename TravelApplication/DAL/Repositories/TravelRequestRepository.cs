@@ -218,5 +218,41 @@ namespace TravelApplication.Services
                 throw new Exception(ex.Message);
             }
         }
+
+        public TravelRequest GetTravelRequestDetail(int travelRequestId)
+        {
+            TravelRequest response = null;
+            using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+            {
+                string query = string.Format("Select * from TRAVELREQUEST where TRAVELREQUESTID= {0}", travelRequestId);
+                OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+                command.CommandText = query;
+                DbDataReader dataReader = command.ExecuteReader();
+                if (dataReader.HasRows)
+                {
+                    while (dataReader.Read())
+                    {
+                        response = new TravelRequest()
+                        {
+                            BadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]),
+                            Name = dataReader["NAME"].ToString(),
+                            Division = dataReader["DIVISION"].ToString(),
+                            Section = dataReader["SECTION"].ToString(),
+                            Organization = dataReader["ORGANIZATION"].ToString(),
+                            MeetingLocation = dataReader["MEETINGLOCATION"].ToString(),
+                            MeetingBeginDateTime = Convert.ToDateTime(dataReader["MEETINGBEGINDATETIME"]),
+                            MeetingEndDateTime = Convert.ToDateTime(dataReader["MEETINGENDDATETIME"]),
+                            DepartureDateTime = Convert.ToDateTime(dataReader["DEPARTUREDATETIME"]),
+                            ReturnDateTime = Convert.ToDateTime(dataReader["RETURNDATETIME"])
+                        };
+                    }
+                }
+                else
+                {
+                    throw new Exception("Couldn't retrieve travel request");
+                }
+            }
+            return response;
+        }
     }
 }
