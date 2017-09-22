@@ -10,5 +10,6 @@ namespace TravelApplication.DAL.Repositories
     public interface IEstimatedExpenseRepository
     {
         Task<int> SaveEstimatedExpenseRequest(EstimatedExpense request);
+        EstimatedExpense GetTravelRequestDetail(int travelRequestId);
     }
 }

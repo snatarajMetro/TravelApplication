@@ -10,5 +10,6 @@ namespace TravelApplication.Services
     public interface IEstimatedExpenseService
     {
         Task<int> SaveEstimatedExpenseRequest(EstimatedExpense estimatedExpense);
+        EstimatedExpense GetEstimatedExpenseByTravelRequestId(int travelRequestId);
     }
 }

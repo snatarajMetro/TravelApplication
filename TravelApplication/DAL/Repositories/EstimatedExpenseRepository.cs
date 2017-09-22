@@ -14,6 +14,57 @@ namespace TravelApplication.DAL.Repositories
     public class EstimatedExpenseRepository : IEstimatedExpenseRepository
     {
         private DbConnection dbConn;
+
+        public EstimatedExpense GetTravelRequestDetail(int travelRequestId)
+        {
+            EstimatedExpense response = null;
+            using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+            {
+                string query = string.Format("Select * from TRAVELREQUEST_ESTIMATEDEXPENSE where TRAVELREQUESTID= {0}", travelRequestId);
+                OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+                command.CommandText = query;
+                DbDataReader dataReader = command.ExecuteReader();
+                if (dataReader.HasRows)
+                {
+                    while (dataReader.Read())
+                    {
+                        response = new EstimatedExpense()
+                        {
+                            EstimatedId = Convert.ToInt32(dataReader["ESTIMATEDID"]),
+                            TravelRequestId = Convert.ToInt32(dataReader["TRAVELREQUESTID"]),
+                            AdvanceLodging = Convert.ToInt32(dataReader["ADVANCELODGING"]),
+                            AdvanceAirFare = Convert.ToInt32(dataReader["ADVANCEAIRFARE"]),
+                            AdvanceRegistration = Convert.ToInt32(dataReader["ADVANCEREGISTRATION"]),
+                            AdvanceMeals = Convert.ToInt32(dataReader["ADVANCEMEALS"]),
+                            AdvanceCarRental = Convert.ToInt32(dataReader["ADVANCECARRENTAL"]),
+                            AdvanceMiscellaneous = Convert.ToInt32(dataReader["ADVANCEMISCELLANEOUS"]),
+                            AdvanceTotal = Convert.ToInt32(dataReader["ADVANCETOTAL"]),
+                            TotalEstimatedLodge = Convert.ToInt32(dataReader["TOTALESTIMATEDLODGE"]),
+                            TotalEstimatedAirFare = Convert.ToInt32(dataReader["TOTALESTIMATEDAIRFARE"]),
+                            TotalEstimatedRegistration = Convert.ToInt32(dataReader["TOTALESTIMATEDREGISTRATION"]),
+                            TotalEstimatedMeals = Convert.ToInt32(dataReader["TOTALESTIMATEDMEALS"]),
+                            TotalEstimatedCarRental = Convert.ToInt32(dataReader["TOTALESTIMATEDCARRENTAL"]),
+                            TotalEstimatedMiscellaneous = Convert.ToInt32(dataReader["TOTALESTIMATEDMISCELLANEOUS"]),
+                            TotalEstimatedTotal = Convert.ToInt32(dataReader["TOTALESTIMATEDTOTAL"]),
+                            HotelNameAndAddress = dataReader["HOTELNAMEANDADDRESS"].ToString(),
+                            AgencyNameAndReservation = dataReader["AGENCYNAMEANDRESERVATION"].ToString(),
+                            PayableToAndAddress = dataReader["PAYABLETOANDADDRESS"].ToString(),
+                            Shuttle = dataReader["SHUTTLE"].ToString(),
+                            Schedule = dataReader["SCHEDULE"].ToString(),
+                            CashAdvance = Convert.ToInt32(dataReader["CASHADVANCE"]),
+                            DateNeededBy = Convert.ToDateTime(dataReader["DATENEEDEDBY"]),
+                            Note =  dataReader["NOTE"].ToString()
+                        };
+                    }
+                }
+                else
+                {
+                    throw new Exception("Couldn't retrieve travel request");
+                }
+            }
+            return response;
+        }
+
         public async Task<int> SaveEstimatedExpenseRequest(EstimatedExpense request)
         {
             int estimatedExpenseId = 0;

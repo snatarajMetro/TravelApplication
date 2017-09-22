@@ -111,7 +111,7 @@ namespace TravelApplication.Controllers.WebAPI
 
             try
             {
-                var result = fisService.GetProjectsByCostCenterName(costCenterName);
+                var result = fisService.GetProjectsByCostCenterName(costCenterName).Result;
                 var data = new JavaScriptSerializer().Serialize(result);
 
                 response = Request.CreateResponse(HttpStatusCode.OK, data);

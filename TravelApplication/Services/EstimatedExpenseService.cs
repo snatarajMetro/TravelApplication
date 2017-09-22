@@ -11,6 +11,13 @@ namespace TravelApplication.Services
     public class EstimatedExpenseService : IEstimatedExpenseService
     {
         IEstimatedExpenseRepository estimatedExpenseRepository = new EstimatedExpenseRepository();
+
+        public EstimatedExpense GetEstimatedExpenseByTravelRequestId(int travelRequestId)
+        {
+            EstimatedExpense result = estimatedExpenseRepository.GetTravelRequestDetail(travelRequestId);
+            return result;
+        }
+
         public async Task<int> SaveEstimatedExpenseRequest(EstimatedExpense estimatedExpense)
         {
             try
