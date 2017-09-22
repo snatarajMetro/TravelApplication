@@ -14,6 +14,10 @@
                     <div ui-grid="gridOptions" ui-grid-pagination class="supportingDocumentGrid"></div>
                 </div>
             </div>
+            <div id="fileuploaderror" class="main errorcontainer" style="display:none">
+                <span class="dialog" id="fileuploaderrormessage"></span>
+                <a href="#" class="close-thick" onclick="return closefileuploaderror();"></a>
+            </div>
             <div id="footer" class="footer estimatedexpense">
                 <div class="footerback">
                     <input class="btn btn-success signinbutton" type="button" name="btnBack" value="Back" onclick="showfissection()" />

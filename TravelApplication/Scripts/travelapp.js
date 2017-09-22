@@ -36,9 +36,14 @@ function closeestimatedexpenseerror() {
     $("#estimatedexpenseerror").hide();
     $("#txtAdvLodge").focus();
 }
+
 function closefiserror() {
     $("#fiserror").hide();
     $("#ddlCostCenter1").focus();
+}
+
+function closefileuploaderror() {
+    $("#fileuploaderror").hide();
 }
 
 function signIn() {
@@ -137,6 +142,7 @@ function actionselection() {
 
         // set role
         $("#roleName").text(userRole);
+        $("#selectedRoleId").text($("#roles option:selected").val());
     }
 }
 
@@ -224,7 +230,7 @@ function savedataentry() {
     var returnDate = $('#txtReturnDate').val();
     var userId = "";
     var travelRequestId = $('#travelRequestId').text();
-
+    var selectedRoleId =  $("#selectedRoleId").text();
 
 
     $.ajax({
@@ -243,7 +249,8 @@ function savedataentry() {
             'DepartureDateTime': departureDate,
             'MeetingEndDateTime': meetingEndDate,
             'ReturnDateTime': returnDate,
-            'UserId': userId
+            'UserId': userId,
+            'SelectedRoleId': selectedRoleId
         }),
         success: function (data) {
             var result = JSON.parse(data);
@@ -440,16 +447,35 @@ function showfissection() {
     $("#datatemplate").show();
 }
 
-function downloaddocument(obj) {
-    var documentId = obj.alt;
-    //TODO: Call the download document API
-
-}
-
 function deletedocument(obj) {
-    var documentId = obj.alt;
-    //TODO: Call the delete document API
 
+    var documentId = obj.alt;
+    var travelRequestId = $('#travelRequestId').text();
+
+    // Call the delete document API
+    $.ajax({
+        type: "DELETE",
+        url: "/api/travelrequest/deletedocument?travelRequestId=" + travelRequestId + "&documentId=" + documentId,
+        contentType: "application/json; charset=utf-8",
+        success: function () {
+
+            // reload supporting documents section
+            var scope = angular.element('#fileuploadtemplate').scope();
+            scope.loadSupportingDocuments(travelRequestId);
+        },
+        error: function (xhr, options, error) {
+
+            if (xhr.status == 500) {
+                var errorMessage = xhr.responseText;
+
+                $("#fileuploaderror").fadeIn("slow");
+                $('#fileuploaderrormessage').text(errorMessage);
+
+                // fade out in 5 seconds
+                $("#fileuploaderror").fadeOut(fadeOutTimeInMilliseconds);
+            }
+        }
+    });
 }
 
 function showsubmitsection() {

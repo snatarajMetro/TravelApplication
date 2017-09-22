@@ -57,11 +57,10 @@ namespace TravelApplication.DAL.Repositories
                         result.Add(new SupportingDocument()
                         {
                             TravelRequestId = Convert.ToInt32(dataReader["TRAVELREQUESTID"]),
-                            FileName = dataReader["FILENAME"].ToString(),
-                            Id = Convert.ToInt32(dataReader["ID"]),
-                            UploadDateTime = dataReader["UPLOADEDDATETIME"].ToString(),
-                            DownloadUrl = "http://apitest.metro.net/Document/Document/GetDocument?siteUrl=http://mymetro/collaboration/InformationManagement/ATMS/apps&documentListName=TravelApp/" + badgeNumber + "/&fileName=" + dataReader["FILENAME"].ToString(),
-                            DeleteUrl = "/api/travelrequest/deletedocument?travelRequestId=" + Convert.ToInt32(dataReader["TRAVELREQUESTID"]) + "&id=" + Convert.ToInt32(dataReader["ID"])
+                            FileName        = dataReader["FILENAME"].ToString(),
+                            Id              = Convert.ToInt32(dataReader["ID"]),
+                            UploadDateTime  = dataReader["UPLOADEDDATETIME"].ToString(),
+                            DownloadUrl     = "http://apitest.metro.net/Document/Document/GetDocument?siteUrl=http://mymetro/collaboration/InformationManagement/ATMS/apps&documentListName=TravelApp/" + badgeNumber + "/&fileName=" + dataReader["FILENAME"].ToString()
                         }
                         );
                     }

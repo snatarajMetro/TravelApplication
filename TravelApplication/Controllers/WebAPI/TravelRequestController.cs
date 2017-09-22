@@ -80,15 +80,16 @@ namespace TravelApplication.Controllers.WebAPI
                 //    {
                 //        supportingDocuments.Add(new SupportingDocument()
                 //        {
-                //            Id                  = counter,
-                //            FileName            = string.Format(@"Test{0}.txt", number.Next()),
-                //            UploadDateTime      = now.AddMinutes(counter).ToString("MM/dd/yyyy h:mm tt"),
-                //            DownloadUrl         = string.Format(@"/download/download/{0}", counter),
-                //            DeleteUrl           = string.Format(@"/download/delete/{0}", counter)
+                //            Id = counter,
+                //            FileName = string.Format(@"Test{0}.txt", number.Next()),
+                //            UploadDateTime = now.AddMinutes(counter).ToString("MM/dd/yyyy h:mm tt"),
+                //            DownloadUrl = string.Format(@"/download/download/{0}", counter),
+                //            DeleteUrl = string.Format(@"/download/delete/{0}", counter)
                 //        }
                 //        );
                 //    }
                 //}
+
                 var supportingDocuments = documentService.GetAllDocumentsByTravelId(travelRequestId, badgeNumber);
 
                 var data = new JavaScriptSerializer().Serialize(supportingDocuments.OrderByDescending(item => item.Id));
@@ -104,20 +105,20 @@ namespace TravelApplication.Controllers.WebAPI
             return response;
 
         }
-        [HttpGet]
+        [HttpDelete]
         [Route("api/travelrequest/deletedocument")]
-        public HttpResponseMessage DeleteDocument(int travelRequestId, int id)
+        public HttpResponseMessage DeleteDocument(int travelRequestId, int documentId)
         {
             HttpResponseMessage response = null;
             try
             {
-                documentService.DeleteFilesByTravelId(travelRequestId, id);
+                documentService.DeleteFilesByTravelId(travelRequestId, documentId);
                 response = Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
                 // TODO: Log the exception message
-                response = Request.CreateResponse(HttpStatusCode.InternalServerError);
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError,"Document cannot be deleted.");
             }
             return response;
         }
