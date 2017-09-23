@@ -292,6 +292,7 @@ function saveestimatedexpense() {
 
     // save estimated data expense section
     var travelRequestId = $('#travelRequestId').text();
+    var estimatedExpenseId = $('#estimatedExpenseId').text();
     var advLodge = $('#txtAdvLodge').val();
     var advAirfare = $('#txtAdvAirfare').val();
     var advRegistration = $('#txtAdvRegistration').val();
@@ -321,6 +322,7 @@ function saveestimatedexpense() {
         url: "/api/estimatedexpense/save",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({
+            'EstimatedExpenseId':estimatedExpenseId,
             'TravelRequestId': travelRequestId,
             'AdvanceLodging': advLodge,
             'AdvanceAirFare': advAirfare,
@@ -348,7 +350,7 @@ function saveestimatedexpense() {
         }),
         success: function (data) {
             var result = JSON.parse(data);
-            $('#travelRequestId').text(result);
+           $('#estimatedExpenseId').text(result);
 
             //show fis section
             $('#travelrequesttemplate').hide();
@@ -367,6 +369,7 @@ function saveestimatedexpense() {
                 // fade out in 5 seconds
                 $("#estimatedexpenseerror").fadeOut(fadeOutTimeInMilliseconds);
             }
+            $('#estimatedExpenseId').text(0);
         }
     });
 }

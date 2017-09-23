@@ -30,7 +30,7 @@ namespace TravelApplication.DAL.Repositories
                     {
                         response = new EstimatedExpense()
                         {
-                            EstimatedId = Convert.ToInt32(dataReader["ESTIMATEDID"]),
+                            EstimatedExpenseId = Convert.ToInt32(dataReader["ESTIMATEDEXPENSEID"]),
                             TravelRequestId = Convert.ToInt32(dataReader["TRAVELREQUESTID"]),
                             AdvanceLodging = Convert.ToInt32(dataReader["ADVANCELODGING"]),
                             AdvanceAirFare = Convert.ToInt32(dataReader["ADVANCEAIRFARE"]),
@@ -70,7 +70,7 @@ namespace TravelApplication.DAL.Repositories
             int estimatedExpenseId = 0;
             try
             {
-                if (request.EstimatedId == 0)
+                if (request.EstimatedExpenseId == 0)
                 {
                     using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
                     {
@@ -100,7 +100,7 @@ namespace TravelApplication.DAL.Repositories
 						SHUTTLE,
 						CASHADVANCE,
 						DATENEEDEDBY					 
-						 ) VALUES (:p1 ,:p2,:p3,:p4,:p5,:p6,:p7,:p8,:p9,:p10,:p11,:p12,:p13,:p14,:p15,:p16,:p17,:p18,:p19,:p20,:p21,:p22,:p23 ) returning ESTIMATEDID into : estimatedExpenseId ";
+						 ) VALUES (:p1 ,:p2,:p3,:p4,:p5,:p6,:p7,:p8,:p9,:p10,:p11,:p12,:p13,:p14,:p15,:p16,:p17,:p18,:p19,:p20,:p21,:p22,:p23 ) returning ESTIMATEDEXPENSEID into : estimatedExpenseId ";
                         cmd.Parameters.Add(new OracleParameter("p1", request.TravelRequestId));
                         cmd.Parameters.Add(new OracleParameter("p2", request.AdvanceLodging));
                         cmd.Parameters.Add(new OracleParameter("p3", request.AdvanceAirFare));
@@ -184,7 +184,7 @@ namespace TravelApplication.DAL.Repositories
                         cmd.Parameters.Add(new OracleParameter("p22", request.CashAdvance));
                         cmd.Parameters.Add(new OracleParameter("p23", request.DateNeededBy));                         
                         var rowsUpdated = cmd.ExecuteNonQuery();
-                        estimatedExpenseId = request.EstimatedId;
+                        estimatedExpenseId = request.EstimatedExpenseId;
                     }
                 }
                 dbConn.Close();

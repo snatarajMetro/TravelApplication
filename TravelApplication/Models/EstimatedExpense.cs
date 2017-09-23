@@ -7,7 +7,7 @@ namespace TravelApplication.Models
 {
     public class EstimatedExpense
     {
-        public int EstimatedId { get; set; }
+        public int EstimatedExpenseId { get; set; }
         public int TravelRequestId { get; set; }
         public int AdvanceLodging { get; set; }
         public int AdvanceAirFare { get; set; }
