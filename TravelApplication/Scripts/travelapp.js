@@ -15,7 +15,7 @@ $(document).ready(function () {
     scope.loadCostCenters();
     scope.loadFileUpload();
     scope.loadSubmit();
-    scope.loadExistingTravelRequests();
+    //scope.loadExistingTravelRequests();
 
     //$('#existingtravelrequeststemplate').show();
 });
@@ -90,6 +90,9 @@ function signIn() {
                         //    options.append($("<option />").val(result.Roles[index].Id).text(result.Roles[index].Name));
                         //}
                     }
+
+                    // set badge number
+                    $('#badgeNumber').text(result.BadgeNumber);
 
                     // set user name
                     $("#userName").text(result.UserName);
