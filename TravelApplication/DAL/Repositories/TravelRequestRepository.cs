@@ -419,7 +419,7 @@ namespace TravelApplication.Services
                             result.Add(dataReader["APPROVERNAME"].ToString());
                         }
                     }
-                    response = string.Join(";", result);
+                    response = string.Join(", ", result);
                 }
            
             return response;
