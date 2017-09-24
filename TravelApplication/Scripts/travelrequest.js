@@ -254,6 +254,17 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
 
     }
 
+    // load existing travel requests
+    $scope.loadExistingTravelRequests = function () {
+
+        $.get('/uitemplates/existingtravelrequests.html')
+        .done(function (data) {
+            $('#existingtravelrequeststemplate').html($compile($(data).html())($scope));
+            $scope.$apply();
+        });
+
+    }
+
     // load department head
     $scope.loadDepartmentHeads = function () {
 

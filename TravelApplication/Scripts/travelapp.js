@@ -15,6 +15,9 @@ $(document).ready(function () {
     scope.loadCostCenters();
     scope.loadFileUpload();
     scope.loadSubmit();
+    scope.loadExistingTravelRequests();
+
+    //$('#existingtravelrequeststemplate').show();
 });
 
 function closeinvaliduser() {
@@ -115,6 +118,7 @@ function signIn() {
 function backtosignin() {
     $("#logout").hide();
     $("#signintemplate").hide();
+    $("#existingtravelrequeststemplate").hide();
     $("#action").hide();
     $("#invaliduser").hide();
     $("#dataentry").hide();
@@ -170,6 +174,7 @@ function logout() {
     $("#fileuploadtemplate").hide();
     $("#submittemplate").hide();
     $('#signintemplate').hide();
+    $("#existingtravelrequeststemplate").hide();
     $("#signin").show();
 
     $("#txtEmail").focus();
@@ -505,4 +510,14 @@ function showuploadsection() {
 function submitRequest() {
 
 
+}
+
+function viewexistingtravelrequests() {
+    $("#action").hide();
+
+    //reset estimated expense section
+    var scope = angular.element('#existingtravelrequeststemplate').scope();
+    scope.loadExistingTravelRequests();
+
+    $('#existingtravelrequeststemplate').show();
 }

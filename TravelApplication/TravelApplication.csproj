@@ -498,6 +498,7 @@
     <Content Include="Scripts\travelrequest.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="UITemplates\estimatedexpense.html" />
+    <Content Include="UITemplates\existingtravelrequests.html" />
     <Content Include="UITemplates\fileupload.html" />
     <Content Include="UITemplates\fis.html" />
     <Content Include="UITemplates\roleselection.html" />
