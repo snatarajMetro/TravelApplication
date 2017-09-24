@@ -11,6 +11,8 @@ namespace TravelApplication.Models
 
         public string UserName { get; set; }
 
+        public int BadgeNumber { get; set; }
+
         public IEnumerable<Role> Roles { get; set; }
     }
 }

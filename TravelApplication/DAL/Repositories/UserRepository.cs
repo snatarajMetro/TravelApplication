@@ -20,6 +20,7 @@ namespace TravelApplication.DAL.Repositories
                 var response = GetUserRole(userResult.userId, userResult.userName);
                 if (response.Roles.Any())
                 {
+                    response.BadgeNumber = userResult.BadgeNumber;
                     return response;
                 }
                 else
@@ -49,7 +50,7 @@ namespace TravelApplication.DAL.Repositories
                     while (dataReader.Read())
                     {
 
-                        response = new UserResponse() { result = true, userId = Convert.ToInt32(dataReader["Id"]), userName = dataReader["LoginId"].ToString() };
+                        response = new UserResponse() { result = true, userId = Convert.ToInt32(dataReader["Id"]), userName = dataReader["LoginId"].ToString(), BadgeNumber = Convert.ToInt32(dataReader["BAdgeNumber"]) };
                     }
                 }
                 else

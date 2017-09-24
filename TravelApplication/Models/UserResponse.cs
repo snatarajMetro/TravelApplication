@@ -10,5 +10,6 @@ namespace TravelApplication.Models
         public bool result { get; set; }
         public int userId { get; set; }
         public string userName { get; set; }
+        public int BadgeNumber { get; set; }
     }
 }
