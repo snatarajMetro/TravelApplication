@@ -12,7 +12,7 @@
                         <div ng-app="travelApp" ng-controller="travelAppCtrl">
                             <select class="inputdropdown submitUser" id="ddlDepartmentHead"
                                     ng-model="ddlDepartmentHead"
-                                    ng-options="department.Name for department in DepartmentHeads track by department.Id"></select>
+                                    ng-options="department.Name for department in DepartmentHeads track by department.BadgeNumber"></select>
                         </div>
                     </div>
                     <div style="clear:both;padding-top:10px;">
@@ -20,7 +20,7 @@
                         <div ng-app="travelApp" ng-controller="travelAppCtrl">
                             <select class="inputdropdown submitUser" id="ddlExecutiveOfficer"
                                     ng-model="ddlExecutiveOfficer"
-                                    ng-options="officer.Name for officer in ExecutiveOfficers track by officer.Id"></select>
+                                    ng-options="officer.Name for officer in ExecutiveOfficers track by officer.BadgeNumber"></select>
                         </div>
                     </div>
                     <div style="clear:both;padding-top:10px;">
@@ -28,7 +28,7 @@
                         <div ng-app="travelApp" ng-controller="travelAppCtrl">
                             <select class="inputdropdown submitUser" id="ddlCEOForInternational"
                                     ng-model="ddlCEOForInternational"
-                                    ng-options="officer.Name for officer in CEOsForInternational track by officer.Id"></select>
+                                    ng-options="officer.Name for officer in CEOsForInternational track by officer.BadgeNumber"></select>
                         </div>
                     </div>
                     <div style="clear:both;padding-top:10px;">
@@ -36,7 +36,7 @@
                         <div ng-app="travelApp" ng-controller="travelAppCtrl">
                             <select class="inputdropdown submitUser" id="ddlCEOForAPTA"
                                     ng-model="ddlCEOForAPTA"
-                                    ng-options="officer.Name for officer in CEOsForAPTA track by officer.Id"></select>
+                                    ng-options="officer.Name for officer in CEOsForAPTA track by officer.BadgeNumber"></select>
                         </div>
                     </div>
                     <div style="clear:both;padding-top:10px;">
@@ -44,7 +44,7 @@
                         <div ng-app="travelApp" ng-controller="travelAppCtrl">
                             <select class="inputdropdown submitUser" id="ddlTravelCoordinator"
                                     ng-model="ddlTravelCoordinator"
-                                    ng-options="officer.Name for officer in TravelCoordinators track by officer.Id"></select>
+                                    ng-options="officer.Name for officer in TravelCoordinators track by officer.BadgeNumber"></select>
                         </div>
                     </div>
                 </div>

@@ -14,10 +14,8 @@ $(document).ready(function () {
     scope.loadFIS();
     scope.loadCostCenters();
     scope.loadFileUpload();
-    scope.loadSubmit();
-    //scope.loadExistingTravelRequests();
 
-    //$('#existingtravelrequeststemplate').show();
+    //$('#submittemplate').show();
 });
 
 function closeinvaliduser() {
