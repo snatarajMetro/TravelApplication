@@ -373,4 +373,35 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
         });
     }
 
+    // object for submit data
+    $scope.travelRequestId = 0;
+    $scope.departmentHeadBadgeNumber = "";
+    $scope.executiveOfficerBadgeNumber = "";
+    $scope.ceoForInternationalBadgeNumber = "";
+    $scope.ceoForAPTABadgeNumber = "";
+    $scope.travelCoordinatorBadgeNumber = "";
+    $scope.agreedToTermsAndConditions = false;
+    $scope.submitterUserName = "";
+    $scope.submittedDatetime = ""
+
+    $scope.displayOther = function (container, focusElement, clearElement, source) {
+
+        var div = '#' + container;
+        var focuselement = '#' + focusElement;
+
+        if(source.BadgeNumber == -1)
+        {
+            $(div).show();
+            $(focuselement).focus();
+        } else {
+            $(focuselement).val('');
+            $('#' + clearElement).val('');
+
+            // enable the submit button
+            $('#btnSubmit').prop("disabled", false);
+
+            $(div).hide();
+        }
+    };
+
 });

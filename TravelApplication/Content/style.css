@@ -868,3 +868,34 @@ div.existingtravelrequestcontainer {
     width:25px;
     height:25px;
 }
+
+.badgeNumberForSubmit {
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    padding-left:5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width:150px;
+    height:30px;
+    font-family:'Open Sans Condensed', sans-serif;
+    font-size:15px;
+    color:black;
+}
+
+.approverNameForSubmit {
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    padding-left:5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width:350px;
+    height:30px;
+    font-family:'Open Sans Condensed', sans-serif;
+    font-size:15px;
+    color:black;
+}
+
+.otherBadgeNumberContainer{
+    float:left;
+    margin-left:5px;
+}

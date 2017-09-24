@@ -10,9 +10,9 @@ namespace TravelApplication.Services
     public class TravelRequestService : ITravelRequestService
     {
         ITravelRequestRepository travelRequestRepo = new TravelRequestRepository();
-        public async Task<EmployeeDetails> GetEmployeeDetails(int BadgeNumber)
+        public async Task<EmployeeDetails> GetEmployeeDetails(int badgeNumber)
         {
-            EmployeeDetails result =  await travelRequestRepo.GetEmployeeDetails(BadgeNumber).ConfigureAwait(false);
+            EmployeeDetails result =  await travelRequestRepo.GetEmployeeDetails(badgeNumber).ConfigureAwait(false);
             return result;
         }
 

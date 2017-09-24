@@ -206,21 +206,22 @@ function setUserName() {
 
     var badgeNumber = $('#txtBadgeNumber').val();
 
-    $.ajax({
-        type: "GET",
-        url: "/api/travelrequest/employee/" + badgeNumber,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (data) {
-            var result = JSON.parse(data);
+    if (badgeNumber) {
+        $.ajax({
+            type: "GET",
+            url: "/api/travelrequest/employee/" + badgeNumber,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                var result = JSON.parse(data);
 
-            $('#txtName').val(result.Result.EmployeeFirstName + ' ' + result.Result.EmployeeLastName);
-            $('#txtOrganization').val(result.Result.Department);
-        },
-        error: function (xhr, options, error) {
-        }
-    });
-
+                $('#txtName').val(result.EmployeeFirstName + ' ' + result.EmployeeLastName);
+                $('#txtOrganization').val(result.Result.Department);
+            },
+            error: function (xhr, options, error) {
+            }
+        });
+    }
 }
 
 function savedataentry() {
@@ -522,4 +523,45 @@ function viewexistingtravelrequests() {
     scope.loadExistingTravelRequests();
 
     $('#existingtravelrequeststemplate').show();
+}
+
+function setOtherUserName(source2, container) {
+
+    var badgeNumber = $('#' + source2).val();
+
+    if (badgeNumber) {
+        $.ajax({
+            type: "GET",
+            url: "/api/travelrequest/employee/" + badgeNumber,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                var result = JSON.parse(data);
+
+                $('#' + container).val(result.EmployeeFirstName + ' ' + result.EmployeeLastName);
+
+                // enable the submit button
+                $('#btnSubmit').prop("disabled", false);
+            },
+            error: function (xhr, options, error) {
+
+                if (xhr.status == 500) {
+                    var errorMessage = xhr.responseText;
+
+                    $("#submiterror").fadeIn("slow");
+                    $('#submiterrormessage').text(errorMessage);
+
+                    // fade out in 5 seconds
+                    $("#submiterror").fadeOut(fadeOutTimeInMilliseconds);
+
+                    // disable the submit button
+                    $('#btnSubmit').prop("disabled",true);
+                }
+            }
+        });
+    }
+}
+
+function closesubmiterror() {
+    $("#submiterror").hide();
 }

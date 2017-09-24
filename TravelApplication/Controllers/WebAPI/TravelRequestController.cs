@@ -21,7 +21,7 @@ namespace TravelApplication.Controllers.WebAPI
             HttpResponseMessage response = null;
             try
             {
-                var result = travelRequestService.GetEmployeeDetails(badgeNumber);
+                var result = travelRequestService.GetEmployeeDetails(badgeNumber).Result;
                 var data = new JavaScriptSerializer().Serialize(result);
 
                 response = Request.CreateResponse(HttpStatusCode.OK, data);
@@ -29,7 +29,7 @@ namespace TravelApplication.Controllers.WebAPI
             catch (Exception ex)
             {
                 // TODO: Log the exception message
-                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrieve EmployeeInfo for Badge # : " + ex.Message);
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, string.Format(@"The badge# {0} you have entered is invalid. Please try again.", badgeNumber));
 
             }
             return response;
