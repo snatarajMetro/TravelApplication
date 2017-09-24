@@ -1,0 +1,38 @@
+[
+   {
+      "TravelRequestId":100,
+      "Description":"Dev Connection 2017Dev Connection 2017Dev Connection 2017",
+      "SubmittedByUser":"J.Peter",
+      "SubmittedDateTime":"09/22/2017 07:02:57 PM",
+      "RequiredApprovers":"Director, CEO, Department Head, CEO, Department Head12345",
+      "LastApproveredByUser":null,
+      "LastApprovedDateTime":null,
+      "ViewActionVisible":true,
+      "EditActionVisible":true,
+      "ApproveActionVisible":false
+   },
+   {
+      "TravelRequestId":200,
+      "Description":"MTA Bootcamp",
+      "SubmittedByUser":"S.Nataraj",
+      "SubmittedDateTime":"09/20/2017 07:02:57 PM",
+      "RequiredApprovers":"Director, Department Head",
+      "LastApproveredByUser":"Director",
+      "LastApprovedDateTime":"09/21/2017 07:02:57 PM",
+      "ViewActionVisible":true,
+      "EditActionVisible":false,
+      "ApproveActionVisible":true
+   },
+   {
+      "TravelRequestId":300,
+      "Description":"MTA Bootcamp",
+      "SubmittedByUser":"S.Nataraj",
+      "SubmittedDateTime":"09/20/2017 07:02:57 PM",
+      "RequiredApprovers":"CEO, Department Head",
+      "LastApproveredByUser":"Director",
+      "LastApprovedDateTime":"09/21/2017 07:02:57 PM",
+      "ViewActionVisible":true,
+      "EditActionVisible":false,
+      "ApproveActionVisible":true
+   }
+]

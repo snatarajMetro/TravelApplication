@@ -259,6 +259,75 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
 
         $.get('/uitemplates/existingtravelrequests.html')
         .done(function (data) {
+            
+
+            var actionTemplate = '<div style="float:left;" ng-if="row.entity.ViewActionVisible == true"><img title="View" class="actionImage" src="/Images/view.png" /></div><div ng-if="row.entity.EditActionVisible == true"><img title="Edit" class="actionImage" src="/Images/edit.png" /></div> <div ng-if="row.entity.ApproveActionVisible == true"><img title="Approve" class="actionImage" src="/Images/approve.png" /><img title="Reject" class="actionImage" src="/Images/reject.jpg" /></div>';
+
+            $scope.columns = [{
+                field: 'TravelRequestId',
+                displayName: 'Travel Request Id',
+                width: 100
+            },
+                {
+                    name: 'Description',
+                    width: 275,
+                    cellTemplate: "<div class='ui-grid-cell-contents wrap' title='{{ row.entity.Description }}'>{{ row.entity.Description }}</div>"
+                },
+                {
+                    field: 'SubmittedByUser',
+                    name: 'Submitted By',
+                    width: 100
+                },
+                {
+                    field: 'SubmittedDateTime',
+                    displayName: 'Submitted On',
+                    width: 140
+                },
+                {
+                    name: "Required Approvers",
+                    cellTemplate: "<div class='ui-grid-cell-contents wrap' title='{{ row.entity.RequiredApprovers }}'>{{ row.entity.RequiredApprovers }}</div>",
+                    width: 200
+                },
+                {
+                    field: 'LastApproveredByUser',
+                    displayName: 'Last Approvered By',
+                    width: 110
+                },
+                {
+                    field: 'LastApprovedDateTime',
+                    displayName: 'Last Approved On',
+                    width: 140
+                },
+                {
+                    name: 'Actions',
+                    cellTemplate: actionTemplate,
+                    enableFiltering: false,
+                    width: 100
+                }];
+
+            $scope.existingRequestsGridOptions = {
+                enableSorting: false,
+                columnDefs: $scope.columns,
+                enableFiltering: true,
+                paginationPageSizes: [10, 15, 20],
+                paginationPageSize: 10,
+                onRegisterApi: function (gridApi) {
+                    $scope.grid1Api = gridApi;
+                }
+            };
+
+            $.get('requests.json')
+                .done(function (data) {
+                    $scope.existingRequestsGridOptions.data = data;
+
+                    angular.forEach($scope.existingRequestsGridOptions.data, function (value, index) {
+
+                        if (value.SubmittedByUser == null || value.SubmittedByUser == '') {
+                            $scope.columns[2].visible = false;
+                        }
+                    })
+                });
+
             $('#existingtravelrequeststemplate').html($compile($(data).html())($scope));
             $scope.$apply();
         });
