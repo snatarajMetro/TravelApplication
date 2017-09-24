@@ -283,7 +283,8 @@ namespace TravelApplication.Services
                                 LastApprovedDateTime = getLastApproverDateTime(Convert.ToInt32(dataReader["TravelRequestId"])),
                                 EditActionVisible = (Convert.ToInt32(dataReader["SELECTEDROLEID"]) == 1) || (Convert.ToInt32(dataReader["SELECTEDROLEID"]) == 2) ? true : false,
                                 ViewActionVisible = true,
-                                ApproveActionVisible = (Convert.ToInt32(dataReader["SELECTEDROLEID"]) == 3) ? true : false
+                                ApproveActionVisible = (Convert.ToInt32(dataReader["SELECTEDROLEID"]) == 3) ? true : false,
+                                Status = dataReader["STATUS"].ToString()
                             });
                         }
                     }
@@ -329,7 +330,8 @@ namespace TravelApplication.Services
                                 LastApprovedDateTime = getLastApproverDateTime(Convert.ToInt32(dataReader["TravelRequestId"])),
                                 EditActionVisible = false,
                                 ViewActionVisible = true,
-                                ApproveActionVisible = true 
+                                ApproveActionVisible = true,
+                                Status = dataReader["STATUS"].ToString()
                             });
                         }
                     }

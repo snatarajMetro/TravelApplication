@@ -26,5 +26,7 @@ namespace TravelApplication.Models
         public bool EditActionVisible { get; set; }
 
         public bool ApproveActionVisible { get; set; }
+
+        public  string Status { get; set; }
     }
 }
