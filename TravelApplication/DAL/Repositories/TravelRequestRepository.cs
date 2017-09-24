@@ -70,11 +70,10 @@ namespace TravelApplication.Services
                                                     MEETINGENDDATETIME,
                                                     RETURNDATETIME,
                                                     CREATIONDATETIME,
-                                                    SUBMITTEDBYLOGINID,
                                                     SELECTEDROLEID
                                                 )
                                                 VALUES
-                                                    (:p2,:p3,:p4,:p5,:p6,:p7,:p8,:p9,:p10,:p11,:p12,:p13,:p14) returning TRAVELREQUESTID into :travelRequestId";
+                                                    (:p2,:p3,:p4,:p5,:p6,:p7,:p8,:p9,:p10,:p11,:p12,:p13) returning TRAVELREQUESTID into :travelRequestId";
                         cmd.Parameters.Add(new OracleParameter("p2", request.BadgeNumber));
                         cmd.Parameters.Add(new OracleParameter("p3", request.Name));
                         cmd.Parameters.Add(new OracleParameter("p4", request.Division));
@@ -86,8 +85,7 @@ namespace TravelApplication.Services
                         cmd.Parameters.Add(new OracleParameter("p10", request.MeetingEndDateTime));
                         cmd.Parameters.Add(new OracleParameter("p11", request.ReturnDateTime));
                         cmd.Parameters.Add(new OracleParameter("p12", DateTime.Now));
-                        cmd.Parameters.Add(new OracleParameter("p13", request.LoginId));
-                        cmd.Parameters.Add(new OracleParameter("p14", request.SelectedRoleId));
+                        cmd.Parameters.Add(new OracleParameter("p13", request.SelectedRoleId));
                         cmd.Parameters.Add("travelRequestId", OracleDbType.Int32, ParameterDirection.ReturnValue);
                         var rowsUpdated = cmd.ExecuteNonQuery();
                         travelRequestId = Decimal.ToInt32(((Oracle.ManagedDataAccess.Types.OracleDecimal)(cmd.Parameters["travelRequestId"].Value)).Value);

@@ -141,6 +141,7 @@
     <Compile Include="Class\SQLBuilder\InsertQueryBuilder.cs" />
     <Compile Include="Class\SQLBuilder\SelectQueryBuilder.cs" />
     <Compile Include="Class\SQLBuilder\UpdateQueryBuilder.cs" />
+    <Compile Include="Common\enum.cs" />
     <Compile Include="Controllers\MVC\HomeController.cs" />
     <Compile Include="Controllers\MVC\LoginController.cs" />
     <Compile Include="Controllers\WebAPI\ApprovalController.cs" />

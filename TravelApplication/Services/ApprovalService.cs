@@ -15,6 +15,8 @@ namespace TravelApplication.Services
         {
             List<HeirarchichalPosition> result = await approvalRepository.GetHeirarchichalPositions(badgeNumber).ConfigureAwait(false);
             result.Add(new HeirarchichalPosition() { BadgeNumber = -1, Name = "Other" });
+            result.Add(new HeirarchichalPosition() { BadgeNumber = 0, Name = "Not Applicable" });
+
             return result;
         }
 
@@ -23,6 +25,12 @@ namespace TravelApplication.Services
             List<HeirarchichalPosition> result = new List<HeirarchichalPosition>();
             result.Add(new HeirarchichalPosition() { BadgeNumber = -1, Name = "Other" });
             result.Add(new HeirarchichalPosition() { BadgeNumber = 85163, Name = "MARIA BANUELOS" });
+            return result;
+        }
+
+        public bool SubmitTravelRequest(SubmitTravelRequestData submitTravelRequestData)
+        {
+            var result = approvalRepository.SubmitTravelRequest(submitTravelRequestData);
             return result;
         }
     }

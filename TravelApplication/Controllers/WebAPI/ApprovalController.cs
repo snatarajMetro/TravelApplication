@@ -64,7 +64,7 @@ namespace TravelApplication.Controllers.WebAPI
 
             try
             {
-                // TODO: Submit the travel request
+                var result = approvalService.SubmitTravelRequest(submitTravelRequestData);
                 response = Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception ex)

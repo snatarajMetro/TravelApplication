@@ -10,5 +10,6 @@ namespace TravelApplication.DAL.Repositories
     public interface IApprovalRepository
     {
         Task<List<HeirarchichalPosition>> GetHeirarchichalPositions(int badgeNumber);
+        bool SubmitTravelRequest(SubmitTravelRequestData submitTravelRequestData);
     }
 }
