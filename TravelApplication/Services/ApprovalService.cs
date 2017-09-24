@@ -14,6 +14,15 @@ namespace TravelApplication.Services
         public async Task<List<HeirarchichalPosition>> GetHeirarchichalPositions(int badgeNumber)
         {
             List<HeirarchichalPosition> result = await approvalRepository.GetHeirarchichalPositions(badgeNumber).ConfigureAwait(false);
+            result.Add(new HeirarchichalPosition() { BadgeNumber = -1, Name = "Other" });
+            return result;
+        }
+
+        public List<HeirarchichalPosition> GetTAAprovers()
+        {
+            List<HeirarchichalPosition> result = new List<HeirarchichalPosition>();
+            result.Add(new HeirarchichalPosition() { BadgeNumber = -1, Name = "Other" });
+            result.Add(new HeirarchichalPosition() { BadgeNumber = 85163, Name = "MARIA BANUELOS" });
             return result;
         }
     }

@@ -10,5 +10,6 @@ namespace TravelApplication.Services
     public interface IApprovalService
     {
         Task<List<HeirarchichalPosition>> GetHeirarchichalPositions(int badgeNumber);
+        List<HeirarchichalPosition> GetTAAprovers();
     }
 }

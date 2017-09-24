@@ -33,5 +33,26 @@ namespace TravelApplication.Controllers.WebAPI
 
 
         }
+
+        [HttpGet]
+        [Route("api/approval/TAApprovers")]
+        public HttpResponseMessage GetTAAprovers()
+        {
+            HttpResponseMessage response = null;
+            try
+            {
+                var result = approvalService.GetTAAprovers();
+                response = Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Log the exception message
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrieve cost centers from FIS  " + ex.Message);
+
+            }
+            return response;
+
+
+        }
     }
 }
