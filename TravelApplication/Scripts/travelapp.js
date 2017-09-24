@@ -159,6 +159,7 @@ function backtoroleselection() {
 function backtoactionselection() {
     $("#travelrequesttemplate").hide();
     $("#estimatedexpensetemplate").hide();
+    $("#existingtravelrequeststemplate").hide();
     $("#datatemplate").hide();
     $("#action").show();
 }

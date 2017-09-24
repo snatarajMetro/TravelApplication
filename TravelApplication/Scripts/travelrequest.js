@@ -1,5 +1,5 @@
-﻿//var app = angular.module('travelApp', ['ui.grid', 'ui.grid.pagination']);
-var app = angular.module('travelApp', ['ui.grid']);
+﻿var app = angular.module('travelApp', ['ui.grid', 'ui.grid.pagination']);
+//var app = angular.module('travelApp', ['ui.grid']);
 
 app.controller('travelAppCtrl', function ($scope, $compile) {
 
@@ -192,8 +192,8 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             enableSorting: false,
             rowHeight: 34,
             //enableFiltering: true,
-            //paginationPageSizes: [5, 10, 15],
-            //paginationPageSize: 5, 
+            paginationPageSizes: [10, 20, 30],
+            paginationPageSize: 10, 
             columnDefs: [
             {
                 field: 'FileName',
