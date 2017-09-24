@@ -312,7 +312,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             }
         };
 
-        var badgeNumber = $('#badgeNumber').val();
+        var badgeNumber = $("#badgeNumber").text();
         var selectedRoleId = $("#selectedRoleId").text();
         var url = "api/travelrequests?badgeNumber=" + badgeNumber + "&roleId=" + selectedRoleId;
 

@@ -288,10 +288,10 @@ namespace TravelApplication.Services
                             });
                         }
                     }
-                    else
-                    {
-                        throw new Exception("Couldn't retrieve travel request");
-                    }
+                    //else
+                    //{
+                    //    throw new Exception("Couldn't retrieve travel request");
+                    //}
                 }
                 return response;
             }
@@ -335,10 +335,10 @@ namespace TravelApplication.Services
                             });
                         }
                     }
-                    else
-                    {
-                        throw new Exception("Couldn't retrieve travel request");
-                    }
+                    //else
+                    //{
+                    //    throw new Exception("Couldn't retrieve travel request");
+                    //}
                 }
                 return response;
             }
