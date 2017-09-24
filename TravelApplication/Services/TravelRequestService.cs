@@ -22,6 +22,12 @@ namespace TravelApplication.Services
             return result;
         }
 
+        public List<TravelRequestDetails> GetTravelrequestList(int badgeNumber, int selectedRoleId)
+        {
+            var result = travelRequestRepo.GetTravelRequestList(badgeNumber, selectedRoleId);
+            return result;
+        }
+
         public async Task<int> SaveTravelRequest(TravelRequest travelRequest)
         {
             try

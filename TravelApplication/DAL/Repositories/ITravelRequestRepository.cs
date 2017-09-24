@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using TravelApplication.Models;
 
 namespace TravelApplication.Services
@@ -8,5 +9,6 @@ namespace TravelApplication.Services
         Task<EmployeeDetails> GetEmployeeDetails(int BadgeNumber);
         Task<int> SaveTravelRequest(TravelRequest request);
         TravelRequest GetTravelRequestDetail(int travelRequestId);
+        List<TravelRequestDetails> GetTravelRequestList(int badgeNumber, int selectedRoleId);
     }
 }

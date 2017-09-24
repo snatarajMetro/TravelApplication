@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using TravelApplication.DAL.DBProvider;
 using TravelApplication.Models;
+using System.Collections.Generic;
 
 namespace TravelApplication.Services
 {
@@ -253,6 +254,177 @@ namespace TravelApplication.Services
                 }
             }
             return response;
+        }
+
+        public List<TravelRequestDetails> GetTravelRequestList(int badgeNumber, int selectedRoleId)
+        {
+            List<TravelRequestDetails> response = new List<TravelRequestDetails>();
+
+            if (selectedRoleId == 1 || selectedRoleId == 2)
+            {
+                using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+                {
+                    string query = string.Format("Select * from TRAVELREQUEST where BADGENUMBER= {0} AND SELECTEDROLEID ={1}", badgeNumber, selectedRoleId);
+                    OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+                    command.CommandText = query;
+                    DbDataReader dataReader = command.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            response.Add(new TravelRequestDetails()
+                            {
+                                TravelRequestId = Convert.ToInt32(dataReader["TravelRequestId"]),
+                                Description = dataReader["Description"].ToString(),
+                                SubmittedByUser = dataReader["SUBMITTEDBYLOGINID"].ToString(),
+                                SubmittedDateTime = dataReader["SUBMITTEDDATETIME"].ToString(),
+                                RequiredApprovers = GetApproversListByTravelRequestId(Convert.ToInt32(dataReader["TravelRequestId"])),
+                                LastApproveredByUser = getLastApproverName(Convert.ToInt32(dataReader["TravelRequestId"])),
+                                LastApprovedDateTime = getLastApproverDateTime(Convert.ToInt32(dataReader["TravelRequestId"])),
+                                EditActionVisible = (Convert.ToInt32(dataReader["SELECTEDROLEID"]) == 1) || (Convert.ToInt32(dataReader["SELECTEDROLEID"]) == 2) ? true : false,
+                                ViewActionVisible = true,
+                                ApproveActionVisible = (Convert.ToInt32(dataReader["SELECTEDROLEID"]) == 3) ? true : false
+                            });
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("Couldn't retrieve travel request");
+                    }
+                }
+                return response;
+            }
+            else
+            {
+                using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+                {
+                    string query = string.Format(@"SELECT
+	                                                    *
+                                                    FROM
+	                                                    TRAVELREQUEST
+                                                    WHERE
+	                                                    TRAVELREQUESTID IN (
+		                                                    SELECT
+			                                                    TRAVELREQUESTId
+		                                                    FROM
+			                                                    TRAVELREQUEST_APPROVAL
+		                                                    WHERE
+			                                                    BADGENUMBER = {0}
+	                                                    )", badgeNumber);
+                    OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+                    command.CommandText = query;
+                    DbDataReader dataReader = command.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            response.Add(new TravelRequestDetails()
+                            {
+                                TravelRequestId = Convert.ToInt32(dataReader["TravelRequestId"]),
+                                Description = dataReader["Description"].ToString(),
+                                SubmittedByUser = dataReader["SUBMITTEDBYLOGINID"].ToString(),
+                                SubmittedDateTime = dataReader["SUBMITTEDDATETIME"].ToString(),
+                                RequiredApprovers = GetApproversListByTravelRequestId(Convert.ToInt32(dataReader["TravelRequestId"])),
+                                LastApproveredByUser = getLastApproverName(Convert.ToInt32(dataReader["TravelRequestId"])),
+                                LastApprovedDateTime = getLastApproverDateTime(Convert.ToInt32(dataReader["TravelRequestId"])),
+                                EditActionVisible = false,
+                                ViewActionVisible = true,
+                                ApproveActionVisible = true 
+                            });
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("Couldn't retrieve travel request");
+                    }
+                }
+                return response;
+            }
+        }
+
+        private string getLastApproverDateTime(int travelRequestId)
+        {
+            string response = "";
+            using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+            {
+                string query = string.Format(@"SELECT
+	                                            APPROVALDATETIME
+                                            FROM
+	                                            TRAVELREQUEST_APPROVAL
+                                            WHERE
+	                                            TRAVELREQUESTID = {0}
+                                            AND APPROVALDATETIME IS NOT NULL
+                                            AND ROWNUM = 1
+                                            ORDER BY
+	                                            APPROVALDATETIME DESC", travelRequestId);
+
+                OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+                command.CommandText = query;
+                DbDataReader dataReader = command.ExecuteReader();
+                if (dataReader.HasRows)
+                {
+                    while (dataReader.Read())
+                    {
+                        response = dataReader["APPROVALDATETIME"].ToString();
+                    }
+                }
+            }
+            return response;
+        }
+
+        private string getLastApproverName(int travelRequestId)
+        {
+            string response = "";
+            using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+            {
+                string query = string.Format(@"SELECT
+	                                            APPROVERNAME
+                                            FROM
+	                                            TRAVELREQUEST_APPROVAL
+                                            WHERE
+	                                            TRAVELREQUESTID = {0}
+                                            AND APPROVALDATETIME IS NOT NULL
+                                            AND ROWNUM = 1
+                                            ORDER BY
+	                                            APPROVALDATETIME DESC", travelRequestId);
+
+                OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+                command.CommandText = query;
+                DbDataReader dataReader = command.ExecuteReader();
+                if (dataReader.HasRows)
+                {
+                    while (dataReader.Read())
+                    {
+                        response = dataReader["APPROVERNAME"].ToString();
+                    }
+                }
+            }
+            return response;
+        }
+
+        private string GetApproversListByTravelRequestId(int travelRequestId)
+        {
+            string response = string.Empty;
+                using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+                {
+                    string query = string.Format("select APPROVERNAME from TRAVELREQUEST_APPROVAL where TRAVELREQUESTID = {0} order by ApprovalOrder", travelRequestId);
+                    OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+                    command.CommandText = query;
+                    DbDataReader dataReader = command.ExecuteReader();
+                    List<string> result = new List<string>();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            result.Add(dataReader["APPROVERNAME"].ToString());
+                        }
+                    }
+                    response = string.Join(";", result);
+                }
+           
+            return response;
+
+              
         }
     }
 }

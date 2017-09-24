@@ -176,6 +176,7 @@
     <Compile Include="Models\SharePointUpload.cs" />
     <Compile Include="Models\SupportingDocument.cs" />
     <Compile Include="Models\TravelRequest.cs" />
+    <Compile Include="Models\TravelRequestDetails.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\UserResponse.cs" />
     <Compile Include="Models\UserRole.cs" />
