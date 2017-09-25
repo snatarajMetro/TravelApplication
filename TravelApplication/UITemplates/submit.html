@@ -8,7 +8,7 @@
                 <span class="expenserowtitle">This new travel request needs approvals from the following;</span>
                 <div class="submitsection">
                     <div style="padding-top:10px;">
-                        <div style="float:left;" class="approvaltitle"><span>Department Head</span></div>
+                        <div style="float:left;" class="approvaltitle"><span>Department Head</span><sup class="required">*</sup></div>
                         <div ng-app="travelApp" ng-controller="travelAppCtrl">
                             <div>
                                 <select class="inputdropdown submitUser" id="ddlDepartmentHead"
@@ -20,7 +20,7 @@
                                 <span class="label2 approvaltitle">Badge #</span>
                                 <input type="text" placeholder="Badge Number" id="txtDepartmentHeadBadgeNumber" width="50" ng-model="departmentHeadBadgeNumber" class="badgeNumberForSubmit" onblur="setOtherUserName('txtDepartmentHeadBadgeNumber', 'txtDepartmentHeadName')" />
                                 <span class="label2 approvaltitle">Name</span>
-                                <input type="text" placeholder="Name" id="txtDepartmentHeadName" width="50" class="approverNameForSubmit" />
+                                <input type="text" placeholder="Name" id="txtDepartmentHeadName" width="50" class="approverNameForSubmit" readonly />
                             </div>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                                 <span class="label2 approvaltitle">Badge #</span>
                                 <input type="text" placeholder="Badge Number" id="txtExecutiveOfficerBadgeNumber" width="50" ng-model="executiveOfficerBadgeNumber" class="badgeNumberForSubmit" onblur="setOtherUserName('txtExecutiveOfficerBadgeNumber', 'txtExecutiveOfficerName')" />
                                 <span class="label2 approvaltitle">Name</span>
-                                <input type="text" placeholder="Name" id="txtExecutiveOfficerName" width="50" class="approverNameForSubmit" />
+                                <input type="text" placeholder="Name" id="txtExecutiveOfficerName" width="50" class="approverNameForSubmit" readonly />
                             </div>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                                 <span class="label2 approvaltitle">Badge #</span>
                                 <input type="text" placeholder="Badge Number" id="txtCEOForInternationalBadgeNumber" width="50" ng-model="ceoForInternationalBadgeNumber" class="badgeNumberForSubmit" onblur="setOtherUserName('txtCEOForInternationalBadgeNumber', 'txtCEOForInternationalName')" />
                                 <span class="label2 approvaltitle">Name</span>
-                                <input type="text" placeholder="Name" id="txtCEOForInternationalName" width="50" class="approverNameForSubmit" />
+                                <input type="text" placeholder="Name" id="txtCEOForInternationalName" width="50" class="approverNameForSubmit" readonly />
                             </div>
                         </div>
                     </div>
@@ -71,12 +71,12 @@
                                 <span class="label2 approvaltitle">Badge #</span>
                                 <input type="text" placeholder="Badge Number" id="txtCEOForAPTABadgeNumber" width="50" ng-model="ceoForAPTABadgeNumber" class="badgeNumberForSubmit" onblur="setOtherUserName('txtCEOForAPTABadgeNumber', 'txtCEOForAPTAName')" />
                                 <span class="label2 approvaltitle">Name</span>
-                                <input type="text" placeholder="Name" id="txtCEOForAPTAName" width="50" class="approverNameForSubmit" />
+                                <input type="text" placeholder="Name" id="txtCEOForAPTAName" width="50" class="approverNameForSubmit" readonly />
                             </div>
                         </div>
                     </div>
                     <div style="clear:both;padding-top:10px;">
-                        <div style="float:left;" class="approvaltitle"><span>Travel Co-ordinator</span></div>
+                        <div style="float:left;" class="approvaltitle"><span>Travel Co-ordinator</span><sup class="required">*</sup></div>
                         <div ng-app="travelApp" ng-controller="travelAppCtrl">
                             <div>
                                 <select class="inputdropdown submitUser" id="ddlTravelCoordinator"
@@ -88,16 +88,16 @@
                                 <span class="label2 approvaltitle">Badge #</span>
                                 <input type="text" placeholder="Badge Number" id="txtTravelCoordinatorBadgeNumber" width="50" ng-model="travelCoordinatorBadgeNumber" class="badgeNumberForSubmit" onblur="setOtherUserName('txtTravelCoordinatorBadgeNumber', 'txtTravelCoordinatorName')" />
                                 <span class="label2 approvaltitle">Name</span>
-                                <input type="text" placeholder="Name" id="txtTravelCoordinatorName" width="50" class="approverNameForSubmit" />
+                                <input type="text" placeholder="Name" id="txtTravelCoordinatorName" width="50" class="approverNameForSubmit" readonly />
                             </div>
                         </div>
                     </div>
                 </div>
                 <div style="clear:both;padding-top:5px;">
                     <div class="agreement">
-                        <input type="checkbox" id="cbAgree" value="1" class="agreecheckbox" /><br />
                         <span>
-                            I hereby certify that all expenditures reported here are legitimate expenses chargeable to the Los Angeles County Metropolitan Transportation Authority. As a condition of recieving a Travel Advance, I agree that the
+                            <input type="checkbox" id="cbAgree" value="1" class="agreecheckbox" />
+                            <sup class="required">*</sup>&nbsp;I hereby certify that all expenditures reported here are legitimate expenses chargeable to the Los Angeles County Metropolitan Transportation Authority. As a condition of recieving a Travel Advance, I agree that the
                             Los Angeles County Metropolitan Transportation Authority may deduct the amount of my Travel Advance from my pay check,<b>
                                 in the event I fail to submit a Travel and Business Expence Report (ACCS-501) with appropriate documentation
                                 within 30 days of my return.
@@ -110,10 +110,10 @@
                     <div style="margin-top:10px;">
                         <div>
                             <div style="float:left;padding-top:10px;margin-right:10px;">
-                                <span class="approvaltitle">Submitter's Name</span>
+                                <span class="approvaltitle">Submitter's Name</span><sup class="required">*</sup>
                             </div>
                             <div style="margin-left:10px;">
-                                <input type="text" placeholder="Submitter's Name" id="txtEmployeeName" width="100" class="datainput employee" />
+                                <input type="text" placeholder="Submitter's Name" id="txtSubmittedByUserName" width="100" class="datainput employee" />
                             </div>
                         </div>
                     </div>
@@ -124,12 +124,19 @@
             <span class="dialog" id="submiterrormessage"></span>
             <a href="#" class="close-thick" onclick="return closesubmiterror();"></a>
         </div>
+        <div id="submitsuccess" class="main successcontainer" style="display:none">
+            <span class="dialogSuccess" id="submitsuccessmessage"></span>
+            <a href="#" class="close-thick" onclick="return closesubmitsuccess();"></a>
+        </div>
+        <div class="main requiredcontainer">
+            <sub class="required">* required fields.</sub>
+        </div>
         <div id="footer" class="footer estimatedexpense">
             <div class="footerback">
                 <input class="btn btn-success signinbutton" type="button" name="btnBack" value="Back" onclick="showuploadsection()" />
             </div>
             <div class="saveandcontinue">
-                <input class="btn btn-success signinbutton" type="button" id="btnSubmit" name="btnSubmit" value="Submit" onclick="submitRequest()" />
+                <input class="btn btn-success signinbutton" type="button" id="btnSubmit" name="btnSubmit" value="Submit" ng-click="submitRequest()" />
             </div>
         </div>
     </div>

@@ -15,6 +15,8 @@ $(document).ready(function () {
     scope.loadCostCenters();
     scope.loadFileUpload();
 
+    showsubmitsection();
+
     //$('#submittemplate').show();
 });
 
@@ -508,11 +510,6 @@ function showuploadsection() {
     var scope = angular.element('#fileuploadtemplate').scope();
     scope.loadSupportingDocuments(travelRequestId);
     $('#fileuploadtemplate').show();
-}
-
-function submitRequest() {
-
-
 }
 
 function viewexistingtravelrequests() {

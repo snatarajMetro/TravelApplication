@@ -899,3 +899,42 @@ div.existingtravelrequestcontainer {
     float:left;
     margin-left:5px;
 }
+
+.required{
+    color:red;
+    font-weight:bold;
+}
+
+.requiredcontainer {
+    position:absolute;
+    display:block;
+    bottom:0;
+    left:0;
+    padding:5px;
+    font-family:'Open Sans Condensed', sans-serif;
+    font-size:15px;
+}
+
+.successcontainer {
+    position:absolute;
+    display:block;
+    top:0;
+    right:0;
+}
+
+.dialogSuccess {
+    background-color:green;
+    color:white;
+    /*width:310px;*/
+    width:290px;
+    height:auto;
+    margin:2px; 
+    padding:10px;
+    padding-right:20px;
+    font-size:15px;
+    font-family:'Open Sans Condensed', sans-serif;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    float:left;
+    position:relative;
+}

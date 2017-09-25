@@ -65,12 +65,12 @@ namespace TravelApplication.Controllers.WebAPI
             try
             {
                 var result = approvalService.SubmitTravelRequest(submitTravelRequestData);
-                response = Request.CreateResponse(HttpStatusCode.OK);
+                response = Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)
             {
                 // TODO: Log the exception message
-                response = Request.CreateResponse(HttpStatusCode.InternalServerError);
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Travel request was not successfully submited. Please try again.");
             }
 
             return response;

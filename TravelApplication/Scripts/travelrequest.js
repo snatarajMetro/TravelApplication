@@ -404,4 +404,145 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
         }
     };
 
+    $scope.submitRequest = function () {
+
+        var canSubmit = false;
+        var travelRequestId = $('#travelRequestId').text();
+
+        // Department Head
+        var departmentHeadBadgeNumber = $("#ddlDepartmentHead option:selected").val();
+
+        if (departmentHeadBadgeNumber && departmentHeadBadgeNumber != '?') {
+
+            if (departmentHeadBadgeNumber == '-1') {
+                departmentHeadBadgeNumber = $('#txtDepartmentHeadBadgeNumber').val();
+            }
+
+            if (departmentHeadBadgeNumber) {
+
+                canSubmit = true;
+            }
+        }
+
+        // Executive Officer
+        var executiveOfficerBadgeNumber = $("#ddlExecutiveOfficer option:selected").val();
+
+        if (executiveOfficerBadgeNumber && executiveOfficerBadgeNumber != '?') {
+
+            if (executiveOfficerBadgeNumber == '-1') {
+                executiveOfficerBadgeNumber = $('#txtExecutiveOfficerBadgeNumber').val();
+            }
+        }
+        else {
+            executiveOfficerBadgeNumber = "";
+        }
+
+        // CEO (For International)
+        var ceoForInternationalBadgeNumber = $("#ddlCEOForInternational option:selected").val();
+
+        if (ceoForInternationalBadgeNumber && ceoForInternationalBadgeNumber != '?') {
+
+            if (ceoForInternationalBadgeNumber == '-1') {
+                ceoForInternationalBadgeNumber = $('#txtCEOForInternationalName').val();
+            }
+        }
+        else {
+            ceoForInternationalBadgeNumber = "";
+        }
+
+        // CEO (For APTA/CTA conference)
+        var ceoForAPTABadgeNumber = $("#ddlCEOForAPTA option:selected").val();
+
+        if (ceoForAPTABadgeNumber && ceoForAPTABadgeNumber != '?') {
+
+            if (ceoForAPTABadgeNumber == '-1') {
+                ceoForAPTABadgeNumber = $('#txtCEOForAPTABadgeNumber').val();
+            }
+        }
+        else {
+            ceoForAPTABadgeNumber = "";
+        }
+
+        // Travel Co-ordinator
+        var travelCoordinatorBadgeNumber = $("#ddlTravelCoordinator option:selected").val();
+
+        if (travelCoordinatorBadgeNumber && travelCoordinatorBadgeNumber != '?') {
+
+            if (travelCoordinatorBadgeNumber == '-1') {
+                travelCoordinatorBadgeNumber = $('#txtTravelCoordinatorBadgeNumber').val();
+            }
+
+            if (travelCoordinatorBadgeNumber && canSubmit) {
+                canSubmit = true;
+            }
+        }
+        else {
+            canSubmit = false;
+        }
+
+        // Agree checkbox
+        var agreedToTermsAndConditions =  $('#cbAgree').prop('checked');
+
+        if (!agreedToTermsAndConditions)
+        {
+            canSubmit = false;
+        }
+
+        // Submitted by user name
+        var submittedByUserName = $('#txtSubmittedByUserName').val().trim();
+        if (!submittedByUserName)
+        {
+            canSubmit = false;
+        }
+
+        if (canSubmit)
+        {
+            $.ajax({
+                type: "POST",
+                url: "/api/approval/submit",
+                data: JSON.stringify({
+                    "TravelRequestId": travelRequestId,
+                    "DepartmentHeadBadgeNumber": departmentHeadBadgeNumber,
+                    "ExecutiveOfficerBadgeNumber": executiveOfficerBadgeNumber,
+                    "CEOForInternationalBadgeNumber": ceoForInternationalBadgeNumber,
+                    "CEOForAPTABadgeNumber": ceoForAPTABadgeNumber,
+                    "TravelCoordinatorBadgeNumber": travelCoordinatorBadgeNumber,
+                    "AgreedToTermsAndConditions": agreedToTermsAndConditions,
+                    "SubmittedByUserName": submittedByUserName
+                }), 
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+
+                    $("#submitsuccess").fadeIn("slow");
+                    $('#submitsuccessmessage').text("Travel request has been successfully submited.");
+
+                    // fade out in 5 seconds
+                    $("#submitsuccess").fadeOut(fadeOutTimeInMilliseconds);
+                   
+                },
+                error: function (xhr, options, error) {
+                    if (xhr.status == 500) {
+
+                        var errorMessage = xhr.responseText;
+
+                        $("#submiterror").fadeIn("slow");
+                        $('#submiterrormessage').text(errorMessage);
+
+                        // fade out in 5 seconds
+                        $("#submiterror").fadeOut(fadeOutTimeInMilliseconds);
+                    }
+                }
+            });
+        }
+        else
+        {
+            $("#submiterror").fadeIn("slow");
+            $('#submiterrormessage').text("Some of the required fields are missing. Please try again.");
+
+            // fade out in 5 seconds
+            $("#submiterror").fadeOut(fadeOutTimeInMilliseconds);
+        }
+
+    }
 });
