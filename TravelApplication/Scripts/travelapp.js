@@ -15,7 +15,7 @@ $(document).ready(function () {
     scope.loadCostCenters();
     scope.loadFileUpload();
 
-    showsubmitsection();
+   // showsubmitsection();
 
     //$('#submittemplate').show();
 });

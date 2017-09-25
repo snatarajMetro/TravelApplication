@@ -274,7 +274,7 @@ namespace TravelApplication.Services
                             {
                                 TravelRequestId = Convert.ToInt32(dataReader["TravelRequestId"]),
                                 Description = dataReader["Description"].ToString(),
-                                SubmittedByUser = dataReader["SUBMITTEDBYLOGINID"].ToString(),
+                                SubmittedByUser = dataReader["SUBMITTEDBYUSERNAME"].ToString(),
                                 SubmittedDateTime = dataReader["SUBMITTEDDATETIME"].ToString(),
                                 RequiredApprovers = GetApproversListByTravelRequestId(Convert.ToInt32(dataReader["TravelRequestId"])),
                                 LastApproveredByUser = getLastApproverName(Convert.ToInt32(dataReader["TravelRequestId"])),
@@ -321,7 +321,7 @@ namespace TravelApplication.Services
                             {
                                 TravelRequestId = Convert.ToInt32(dataReader["TravelRequestId"]),
                                 Description = dataReader["Description"].ToString(),
-                                SubmittedByUser = dataReader["SUBMITTEDBYLOGINID"].ToString(),
+                                SubmittedByUser = dataReader["SUBMITTEDBYUSERNAME"].ToString(),
                                 SubmittedDateTime = dataReader["SUBMITTEDDATETIME"].ToString(),
                                 RequiredApprovers = GetApproversListByTravelRequestId(Convert.ToInt32(dataReader["TravelRequestId"])),
                                 LastApproveredByUser = getLastApproverName(Convert.ToInt32(dataReader["TravelRequestId"])),
