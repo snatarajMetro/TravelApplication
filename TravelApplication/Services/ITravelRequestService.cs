@@ -13,5 +13,6 @@ namespace TravelApplication.Services
         Task<int> SaveTravelRequest(TravelRequest travelRequest);
         TravelRequest GetTravelRequestDetail(int travelRequestId);
         List<TravelRequestDetails> GetTravelrequestList(int badgeNumber, int selectedRoleId);
+        bool Approve(int badgeNumber, int travelRequestId, string comments);
     }
 }

@@ -104,8 +104,8 @@ namespace TravelApplication.Controllers.WebAPI
 
             try
             {
-                // TODO: Implement Approve API. Return true/false
-                var result = true;
+
+                var result = travelRequestService.Approve(badgeNumber, travelRequestNumber, comments);
                 response = Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)

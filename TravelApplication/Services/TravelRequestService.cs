@@ -10,6 +10,13 @@ namespace TravelApplication.Services
     public class TravelRequestService : ITravelRequestService
     {
         ITravelRequestRepository travelRequestRepo = new TravelRequestRepository();
+
+        public bool Approve(int badgeNumber, int travelRequestId, string comments)
+        {
+            var result = travelRequestRepo.Approve(badgeNumber, travelRequestId, comments);
+            return result;
+        }
+
         public async Task<EmployeeDetails> GetEmployeeDetails(int badgeNumber)
         {
             EmployeeDetails result =  await travelRequestRepo.GetEmployeeDetails(badgeNumber).ConfigureAwait(false);

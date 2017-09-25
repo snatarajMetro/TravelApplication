@@ -57,8 +57,7 @@ namespace TravelApplication.DAL.Repositories
             approvalOrderList.Add(new BadgeInfo() { BadgeId = submitTravelRequestData.CEOForAPTABadgeNumber, Name = submitTravelRequestData.CEOForAPTAName });
             approvalOrderList.Add(new BadgeInfo() { BadgeId = submitTravelRequestData.CEOForInternationalBadgeNumber, Name = submitTravelRequestData.CEOForInternationalName });
             approvalOrderList.Add(new BadgeInfo() { BadgeId = submitTravelRequestData.TravelCoordinatorBadgeNumber, Name = submitTravelRequestData.TravelCoordinatorName });
-            try
-            {
+            
                 int count = 1;
                 foreach (var item in approvalOrderList)
                 {
@@ -107,17 +106,8 @@ namespace TravelApplication.DAL.Repositories
                 var rowsUpdated = cmd.ExecuteNonQuery();
             }
                 return true;
-            }
-            catch (Exception ex)
-            {
-
-                return false;
-            }
-           
-        }
-
-
-       
+    }
+                  
     }
 
         public class BadgeInfo
@@ -125,6 +115,5 @@ namespace TravelApplication.DAL.Repositories
             public string  Name { get; set; }
             public string  BadgeId { get; set; }
         }
-
        
 }

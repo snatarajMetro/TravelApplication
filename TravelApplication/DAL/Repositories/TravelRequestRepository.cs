@@ -8,6 +8,7 @@ using System.Web.Script.Serialization;
 using TravelApplication.DAL.DBProvider;
 using TravelApplication.Models;
 using System.Collections.Generic;
+using TravelApplication.Common;
 
 namespace TravelApplication.Services
 {
@@ -425,6 +426,95 @@ namespace TravelApplication.Services
             return response;
 
               
+        }
+
+        public bool Approve(int badgeNumber, int travelRequestId, string comments)
+        {
+            int approvalOrder = 0;
+            using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+            {
+                //Update travel request _approval
+                OracleCommand cmd = new OracleCommand();
+                cmd.Connection = (OracleConnection)dbConn;
+                cmd.CommandText = string.Format(@"UPDATE  TRAVELREQUEST_APPROVAL SET                                                  
+                                                    APPROVERCOMMENTS = :p1,
+                                                    APPROVALSTATUS = :p2 ,
+                                                    APPROVALDATETIME = :p3
+                                                    WHERE TRAVELREQUESTID = {0} AND BADGENUMBER = {1} returning APPROVALORDER into :approvalOrder", travelRequestId,badgeNumber);
+                cmd.Parameters.Add(new OracleParameter("p1", comments));
+                cmd.Parameters.Add(new OracleParameter("p2", ApprovalStatus.Approved.ToString()));
+                cmd.Parameters.Add(new OracleParameter("p3", DateTime.Now));
+                cmd.Parameters.Add("approvalOrder", OracleDbType.Int32, ParameterDirection.ReturnValue);
+                var rowsUpdated = cmd.ExecuteNonQuery();
+                approvalOrder = Decimal.ToInt32(((Oracle.ManagedDataAccess.Types.OracleDecimal)(cmd.Parameters["approvalOrder"].Value)).Value);
+                
+                // Get the approval order 
+                var result = 0;
+                string query = string.Format(@"Select Max(ApprovalOrder) as count from TRAVELREQUEST_APPROVAL  WHERE TRAVELREQUESTID = {0}", travelRequestId);
+                OracleCommand cmd1 = new OracleCommand(query, (OracleConnection)dbConn);
+                cmd1.CommandText = query;
+                DbDataReader dataReader = cmd1.ExecuteReader();
+                if (dataReader.HasRows)
+                {
+                    while (dataReader.Read())
+                    {
+                        result = Convert.ToInt32(dataReader["count"]);
+                    }
+                }
+
+                // update travel request for the latest status 
+                cmd1.CommandText = string.Format(@"UPDATE  TRAVELREQUEST SET                                                  
+                                                     STATUS = :p1 
+                                                    WHERE TRAVELREQUESTID = {0}", travelRequestId);
+                if (approvalOrder < result)
+                {                    
+                    cmd1.Parameters.Add(new OracleParameter("p1", ApprovalStatus.Pending.ToString()));                                       
+                }
+                else
+                {
+                    cmd1.Parameters.Add(new OracleParameter("p1", ApprovalStatus.Complete.ToString()));
+                }
+
+                var rowsUpdated1 = cmd1.ExecuteNonQuery();
+            }
+
+                
+            return true;
+        }
+
+        public bool Reject(int badgeNumber, int travelRequestId, string comments)
+        {
+            int approvalOrder = 0;
+            using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+            {
+                //Update travel request _approval
+                OracleCommand cmd = new OracleCommand();
+                cmd.Connection = (OracleConnection)dbConn;
+                cmd.CommandText = string.Format(@"UPDATE  TRAVELREQUEST_APPROVAL SET                                                  
+                                                    APPROVERCOMMENTS = :p1,
+                                                    APPROVALSTATUS = :p2 ,
+                                                    APPROVALDATETIME = :p3
+                                                    WHERE TRAVELREQUESTID = {0} AND BADGENUMBER = {1} returning APPROVALORDER into :approvalOrder", travelRequestId, badgeNumber);
+                cmd.Parameters.Add(new OracleParameter("p1", comments));
+                cmd.Parameters.Add(new OracleParameter("p2", ApprovalStatus.Rejected.ToString()));
+                cmd.Parameters.Add(new OracleParameter("p3", DateTime.Now));
+                cmd.Parameters.Add("approvalOrder", OracleDbType.Int32, ParameterDirection.ReturnValue);
+                var rowsUpdated = cmd.ExecuteNonQuery();
+                approvalOrder = Decimal.ToInt32(((Oracle.ManagedDataAccess.Types.OracleDecimal)(cmd.Parameters["approvalOrder"].Value)).Value);
+  
+
+                // update travel request for the latest status 
+                cmd.CommandText = string.Format(@"UPDATE  TRAVELREQUEST SET                                                  
+                                                     STATUS = :p1 
+                                                    WHERE TRAVELREQUESTID = {0}", travelRequestId);
+ 
+                cmd.Parameters.Add(new OracleParameter("p1", ApprovalStatus.Rejected.ToString()));
+                
+                var rowsUpdated1 = cmd.ExecuteNonQuery();
+            }
+
+
+            return true;
         }
     }
 }
