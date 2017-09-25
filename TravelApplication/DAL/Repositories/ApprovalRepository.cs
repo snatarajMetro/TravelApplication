@@ -53,18 +53,18 @@ namespace TravelApplication.DAL.Repositories
 
         public bool SubmitTravelRequest(SubmitTravelRequestData submitTravelRequestData)
         {
-            List<string> approvalOrderList = new List<string>();
-            approvalOrderList.Add(submitTravelRequestData.DepartmentHeadBadgeNumber);
-            approvalOrderList.Add(submitTravelRequestData.ExecutiveOfficerBadgeNumber);
-            approvalOrderList.Add(submitTravelRequestData.CEOForAPTABadgeNumber);
-            approvalOrderList.Add(submitTravelRequestData.CEOForInternationalBadgeNumber);
-            approvalOrderList.Add(submitTravelRequestData.TravelCoordinatorBadgeNumber);
+            List<BadgeInfo> approvalOrderList = new List<BadgeInfo>();
+            approvalOrderList.Add( new BadgeInfo() { BadgeId = submitTravelRequestData.DepartmentHeadBadgeNumber, Name = submitTravelRequestData.DepartmentHeadName });
+            approvalOrderList.Add(new BadgeInfo() { BadgeId = submitTravelRequestData.ExecutiveOfficerBadgeNumber, Name = submitTravelRequestData.ExecutiveOfficerName });
+            approvalOrderList.Add(new BadgeInfo() { BadgeId = submitTravelRequestData.CEOForAPTABadgeNumber, Name = submitTravelRequestData.CEOForAPTAName });
+            approvalOrderList.Add(new BadgeInfo() { BadgeId = submitTravelRequestData.CEOForInternationalBadgeNumber, Name = submitTravelRequestData.CEOForInternationalName });
+            approvalOrderList.Add(new BadgeInfo() { BadgeId = submitTravelRequestData.TravelCoordinatorBadgeNumber, Name = submitTravelRequestData.TravelCoordinatorName });
             try
             {
                 int count = 1;
                 foreach (var item in approvalOrderList)
                 {
-                        if (!string.IsNullOrEmpty(item))
+                        if (!string.IsNullOrEmpty(item.BadgeId))
                         {
                             // submit to approval 
                             using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
@@ -74,15 +74,17 @@ namespace TravelApplication.DAL.Repositories
                                 cmd.CommandText = @"INSERT INTO TRAVELREQUEST_APPROVAL (                                                  
                                                             TRAVELREQUESTID,
                                                             BADGENUMBER,
+                                                            APPROVERNAME,
                                                             APPROVALSTATUS,
                                                             APPROVALORDER
                                                         )
                                                         VALUES
-                                                            (:p1,:p2,:p3,:p4)";
+                                                            (:p1,:p2,:p3,:p4,:p5)";
                                 cmd.Parameters.Add(new OracleParameter("p1", submitTravelRequestData.TravelRequestId));
-                                cmd.Parameters.Add(new OracleParameter("p2", item));
-                                cmd.Parameters.Add(new OracleParameter("p3", Common.ApprovalStatus.Pending.ToString()));
-                                cmd.Parameters.Add(new OracleParameter("p4", count));
+                                cmd.Parameters.Add(new OracleParameter("p2", item.BadgeId));
+                                cmd.Parameters.Add(new OracleParameter("p3", item.Name));
+                                cmd.Parameters.Add(new OracleParameter("p4", Common.ApprovalStatus.Pending.ToString()));
+                                cmd.Parameters.Add(new OracleParameter("p5", count));
                                 var rowsUpdated = cmd.ExecuteNonQuery();
                             }
                             count++;
@@ -115,5 +117,16 @@ namespace TravelApplication.DAL.Repositories
             }
            
         }
+
+
+       
     }
+
+        public class BadgeInfo
+        {
+            public string  Name { get; set; }
+            public string  BadgeId { get; set; }
+        }
+
+       
 }
