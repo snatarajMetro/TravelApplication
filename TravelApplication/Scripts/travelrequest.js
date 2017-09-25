@@ -579,4 +579,29 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
         }
 
     }
+
+    // travel request fields
+    $scope.badgeNumber = 0;
+    $scope.travelRequestUserName = "";
+    $scope.division = "";
+    $scope.section = "";
+    $scope.organization = "";
+    $scope.meetingLocation = "";
+    $scope.meetingBeginDate = "";
+    $scope.meetingEndDate = "";
+    $scope.depatureDate = "";
+    $scope.returnDate = "";
+
+    $scope.showTravelRequestInEditMode = function () {
+
+        // get travel request data and set to scope variables
+    }
+
+    $scope.createTravelRequest = function () {
+
+        // Get user inputs
+        var badgeNumber = $scope.badgeNumber;
+
+    }
+
 });

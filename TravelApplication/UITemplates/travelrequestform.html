@@ -1,6 +1,6 @@
 ﻿<div id="travelrequestform">
     <div id="dataentry" class="main dataentrycontainer">
-        <div id="content" class="content">
+        <div id="content" class="content" ng-app="travelApp" ng-controller="travelAppCtrl">
             <div class="title">
                 <span>Travel Request Form</span>
             </div>
@@ -9,13 +9,13 @@
                     <div class="label2">
                         <span>Badge #</span><sup class="required">*</sup>
                     </div>
-                    <input type="text" placeholder="Badge Number" id="txtBadgeNumber" width="100" class="datainput" onblur="setUserName()" /> <br />
+                    <input type="text" placeholder="Badge Number" id="txtBadgeNumber" width="100" class="datainput" onblur="setUserName()" ng-model="badgeNumber" /> <br />
                 </div>
                 <div class="rowentry">
                     <div class="label2">
                         <span>Name</span><sup class="required">*</sup>
                     </div>
-                    <input type="text" placeholder="Name" id="txtName" width="100" class="datainput" /> <br />
+                    <input type="text" placeholder="Name" id="txtName" width="100" class="datainput" ng-model="travelRequestUserName" /> <br />
                 </div>
                 <div class="rowentry">
                     <div class="label2">
