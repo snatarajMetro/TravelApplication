@@ -41,12 +41,10 @@ namespace TravelApplication.DAL.Repositories
             {
                 client.Dispose();
             }
-
-            int count = 1;
+ 
             foreach (var item in result)
             {
-                heirarchichalPosition.Add(new HeirarchichalPosition() { BadgeNumber = count, Name = item.EmployeeName });
-                count +=1;
+                heirarchichalPosition.Add(new HeirarchichalPosition() { BadgeNumber = Convert.ToInt32(item.EmployeeBadgeNumber), Name = item.EmployeeName });                 
             }
             return heirarchichalPosition;
         }

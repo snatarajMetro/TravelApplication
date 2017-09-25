@@ -11,5 +11,7 @@ namespace TravelApplication.Models
         public string Position { get; set; }
         public string Department { get; set; }
         public string CostCode { get; set; }
+        public string EmployeeBadgeNumber { get; set; }
+
     }
 }
