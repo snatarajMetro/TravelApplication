@@ -71,10 +71,11 @@ namespace TravelApplication.Services
                                                     MEETINGENDDATETIME,
                                                     RETURNDATETIME,
                                                     CREATIONDATETIME,
-                                                    SELECTEDROLEID
+                                                    SELECTEDROLEID,
+                                                    STATUS
                                                 )
                                                 VALUES
-                                                    (:p2,:p3,:p4,:p5,:p6,:p7,:p8,:p9,:p10,:p11,:p12,:p13) returning TRAVELREQUESTID into :travelRequestId";
+                                                    (:p2,:p3,:p4,:p5,:p6,:p7,:p8,:p9,:p10,:p11,:p12,:p13,:p14) returning TRAVELREQUESTID into :travelRequestId";
                         cmd.Parameters.Add(new OracleParameter("p2", request.BadgeNumber));
                         cmd.Parameters.Add(new OracleParameter("p3", request.Name));
                         cmd.Parameters.Add(new OracleParameter("p4", request.Division));
@@ -87,6 +88,7 @@ namespace TravelApplication.Services
                         cmd.Parameters.Add(new OracleParameter("p11", request.ReturnDateTime));
                         cmd.Parameters.Add(new OracleParameter("p12", DateTime.Now));
                         cmd.Parameters.Add(new OracleParameter("p13", request.SelectedRoleId));
+                        cmd.Parameters.Add(new OracleParameter("p14", ApprovalStatus.New.ToString()));
                         cmd.Parameters.Add("travelRequestId", OracleDbType.Int32, ParameterDirection.ReturnValue);
                         var rowsUpdated = cmd.ExecuteNonQuery();
                         travelRequestId = Decimal.ToInt32(((Oracle.ManagedDataAccess.Types.OracleDecimal)(cmd.Parameters["travelRequestId"].Value)).Value);
@@ -280,17 +282,13 @@ namespace TravelApplication.Services
                                 RequiredApprovers = GetApproversListByTravelRequestId(Convert.ToInt32(dataReader["TravelRequestId"])),
                                 LastApproveredByUser = getLastApproverName(Convert.ToInt32(dataReader["TravelRequestId"])),
                                 LastApprovedDateTime = getLastApproverDateTime(Convert.ToInt32(dataReader["TravelRequestId"])),
-                                EditActionVisible = (Convert.ToInt32(dataReader["SELECTEDROLEID"]) == 1) || (Convert.ToInt32(dataReader["SELECTEDROLEID"]) == 2) ? true : false,
+                                EditActionVisible = EditActionEligible(Convert.ToInt32(dataReader["TravelRequestId"])) ? true : false,
                                 ViewActionVisible = true,
-                                ApproveActionVisible = (Convert.ToInt32(dataReader["SELECTEDROLEID"]) == 3) ? true : false,
+                                ApproveActionVisible = false,
                                 Status = dataReader["STATUS"].ToString()
                             });
                         }
                     }
-                    //else
-                    //{
-                    //    throw new Exception("Couldn't retrieve travel request");
-                    //}
                 }
                 return response;
             }
@@ -329,7 +327,7 @@ namespace TravelApplication.Services
                                 LastApprovedDateTime = getLastApproverDateTime(Convert.ToInt32(dataReader["TravelRequestId"])),
                                 EditActionVisible = false,
                                 ViewActionVisible = true,
-                                ApproveActionVisible = true,
+                                ApproveActionVisible = getApprovalSatus(Convert.ToInt32(dataReader["TravelRequestId"])) ? true : false,
                                 Status = dataReader["STATUS"].ToString()
                             });
                         }
@@ -515,6 +513,72 @@ namespace TravelApplication.Services
 
 
             return true;
+        }
+
+        public bool  getApprovalSatus(int travelRequestId)
+        {
+            bool result = true;
+            List<string> response = new List<string>();
+            using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+            {
+                string query = string.Format(@"SELECT
+	                                            APPROVALSTATUS
+                                            FROM
+	                                            TRAVELREQUEST_APPROVAL
+                                            WHERE
+	                                            TRAVELREQUESTID = {0} ", travelRequestId);
+
+                OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+                command.CommandText = query;
+                DbDataReader dataReader = command.ExecuteReader();
+                if (dataReader.HasRows)
+                {
+                    while (dataReader.Read())
+                    {
+                        response.Add(dataReader["APPROVALSTATUS"].ToString());
+                    }
+                }
+            }
+            foreach (var item in response)
+            {
+                if (item == ApprovalStatus.Pending.ToString() || item == ApprovalStatus.Approved.ToString())
+                {
+                    result =  false;
+                }
+            }
+            return result;
+        }
+
+        public bool EditActionEligible(int travelRequestId)
+        {
+            string response = "";
+            using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+            {
+                string query = string.Format(@"SELECT
+	                                            STATUS
+                                            FROM
+	                                            TRAVELREQUEST 
+                                            WHERE
+	                                            TRAVELREQUESTID = {0}  ", travelRequestId );
+
+                OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+                command.CommandText = query;
+                DbDataReader dataReader = command.ExecuteReader();
+                if (dataReader.HasRows)
+                {
+                    while (dataReader.Read())
+                    {
+                        response = dataReader["STATUS"].ToString();
+                    }
+                }
+            }
+
+            if (response == ApprovalStatus.New.ToString())
+            {
+                return true;
+            }
+            return false;
+            
         }
     }
 }
