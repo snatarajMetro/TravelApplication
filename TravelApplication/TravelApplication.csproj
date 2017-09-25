@@ -146,6 +146,7 @@
     <Compile Include="Controllers\MVC\LoginController.cs" />
     <Compile Include="Controllers\WebAPI\ApprovalController.cs" />
     <Compile Include="Controllers\WebAPI\DocumentsController.cs" />
+    <Compile Include="Controllers\WebAPI\EmailController.cs" />
     <Compile Include="Controllers\WebAPI\EstimatedExpenseController.cs" />
     <Compile Include="Controllers\WebAPI\FISController.cs" />
     <Compile Include="Controllers\WebAPI\LoginController.cs" />
@@ -186,10 +187,12 @@
     <Compile Include="DAL\Repositories\ITravelRequestRepository.cs" />
     <Compile Include="Services\ApprovalService.cs" />
     <Compile Include="Services\DocumentsService.cs" />
+    <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\EstimatedExpenseService.cs" />
     <Compile Include="Services\FISService.cs" />
     <Compile Include="Services\IApprovalService.cs" />
     <Compile Include="Services\IDocumentsService.cs" />
+    <Compile Include="Services\IEmailService.cs" />
     <Compile Include="Services\IEstimatedExpenseService.cs" />
     <Compile Include="Services\IFISService.cs" />
     <Compile Include="Services\ITravelRequestService.cs" />
