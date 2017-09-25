@@ -604,4 +604,16 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
 
     }
 
+    // load approve action
+    $scope.loadApproveAction = function () {
+
+        $.get('/uitemplates/approve.html')
+        .done(function (data) {
+            $('#approvetemplate').html($compile($(data).html())($scope));
+            $scope.$apply();
+
+        });
+
+    }
+
 });
