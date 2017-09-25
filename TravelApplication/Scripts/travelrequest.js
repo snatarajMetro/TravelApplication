@@ -411,11 +411,16 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
 
         // Department Head
         var departmentHeadBadgeNumber = $("#ddlDepartmentHead option:selected").val();
+        var departmentHeadName = "";
 
         if (departmentHeadBadgeNumber && departmentHeadBadgeNumber != '?') {
 
             if (departmentHeadBadgeNumber == '-1') {
-                departmentHeadBadgeNumber = $('#txtDepartmentHeadBadgeNumber').val();
+                departmentHeadBadgeNumber   = $('#txtDepartmentHeadBadgeNumber').val();
+                departmentHeadName          = $('#txtDepartmentHeadName').val();
+            }
+            else {
+                departmentHeadName = $("#ddlDepartmentHead option:selected").text();
             }
 
             if (departmentHeadBadgeNumber) {
@@ -426,11 +431,16 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
 
         // Executive Officer
         var executiveOfficerBadgeNumber = $("#ddlExecutiveOfficer option:selected").val();
+        var executiveOfficerName = "";
 
         if (executiveOfficerBadgeNumber && executiveOfficerBadgeNumber != '?') {
 
             if (executiveOfficerBadgeNumber == '-1') {
                 executiveOfficerBadgeNumber = $('#txtExecutiveOfficerBadgeNumber').val();
+                executiveOfficerName = $('#txtExecutiveOfficerName').val();
+            }
+            else {
+                executiveOfficerName = $("#ddlExecutiveOfficer option:selected").text();
             }
         }
         else {
@@ -439,11 +449,16 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
 
         // CEO (For International)
         var ceoForInternationalBadgeNumber = $("#ddlCEOForInternational option:selected").val();
+        var ceoForInternationalName = "";
 
         if (ceoForInternationalBadgeNumber && ceoForInternationalBadgeNumber != '?') {
 
             if (ceoForInternationalBadgeNumber == '-1') {
-                ceoForInternationalBadgeNumber = $('#txtCEOForInternationalName').val();
+                ceoForInternationalBadgeNumber = $('#txtCEOForInternationalBadgeNumber').val();
+                ceoForInternationalName         = $('#txtCEOForInternationalName').val();
+            }
+            else {
+                ceoForInternationalName = $("#ddlCEOForInternational option:selected").text();
             }
         }
         else {
@@ -452,11 +467,16 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
 
         // CEO (For APTA/CTA conference)
         var ceoForAPTABadgeNumber = $("#ddlCEOForAPTA option:selected").val();
+        var ceoForAPTAName = "";
 
         if (ceoForAPTABadgeNumber && ceoForAPTABadgeNumber != '?') {
 
             if (ceoForAPTABadgeNumber == '-1') {
-                ceoForAPTABadgeNumber = $('#txtCEOForAPTABadgeNumber').val();
+                ceoForAPTABadgeNumber   = $('#txtCEOForAPTABadgeNumber').val();
+                ceoForAPTAName          = $('#txtCEOForAPTAName').val();
+            }
+            else {
+                ceoForAPTAName = $("#ddlCEOForAPTA option:selected").text();
             }
         }
         else {
@@ -465,11 +485,16 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
 
         // Travel Co-ordinator
         var travelCoordinatorBadgeNumber = $("#ddlTravelCoordinator option:selected").val();
+        var travelCoordinatorName = "";
 
         if (travelCoordinatorBadgeNumber && travelCoordinatorBadgeNumber != '?') {
 
             if (travelCoordinatorBadgeNumber == '-1') {
-                travelCoordinatorBadgeNumber = $('#txtTravelCoordinatorBadgeNumber').val();
+                travelCoordinatorBadgeNumber    = $('#txtTravelCoordinatorBadgeNumber').val();
+                travelCoordinatorName           = $('#txtTravelCoordinatorName').val();
+            }
+            else {
+                travelCoordinatorName = $("#ddlTravelCoordinator option:selected").text();
             }
 
             if (travelCoordinatorBadgeNumber && canSubmit) {
@@ -503,10 +528,15 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 data: JSON.stringify({
                     "TravelRequestId": travelRequestId,
                     "DepartmentHeadBadgeNumber": departmentHeadBadgeNumber,
+                    "DepartmentHeadName": departmentHeadName,
                     "ExecutiveOfficerBadgeNumber": executiveOfficerBadgeNumber,
+                    "ExecutiveOfficerName": executiveOfficerName,
                     "CEOForInternationalBadgeNumber": ceoForInternationalBadgeNumber,
+                    "CEOForInternationalName": ceoForInternationalName,
                     "CEOForAPTABadgeNumber": ceoForAPTABadgeNumber,
+                    "CEOForAPTAName": ceoForAPTAName,
                     "TravelCoordinatorBadgeNumber": travelCoordinatorBadgeNumber,
+                    "TravelCoordinatorName": travelCoordinatorName,
                     "AgreedToTermsAndConditions": agreedToTermsAndConditions,
                     "SubmittedByUserName": submittedByUserName
                 }), 
