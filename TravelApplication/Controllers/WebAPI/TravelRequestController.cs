@@ -95,6 +95,48 @@ namespace TravelApplication.Controllers.WebAPI
             }
             return response;
         }
+
+        [HttpPost]
+        [Route("api/travelrequest/approve")]
+        public HttpResponseMessage Approve(int badgeNumber, int travelRequestNumber, string comments)
+        {
+            HttpResponseMessage response = null;
+
+            try
+            {
+                // TODO: Implement Approve API. Return true/false
+                var result = true;
+                response = Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Log the exception message
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Approve was not sucessfull. Please try again.");
+            }
+
+            return response;
+        }
+
+        [HttpPost]
+        [Route("api/travelrequest/reject")]
+        public HttpResponseMessage Reject(int badgeNumber, int travelRequestNumber, string comments)
+        {
+            HttpResponseMessage response = null;
+
+            try
+            {
+                // TODO: Implement Reject API. Return true/false
+                var result = true;
+                response = Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Log the exception message
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Reject was not sucessfull. Please try again.");
+            }
+
+            return response;
+        }
     }
 
 }
