@@ -373,9 +373,8 @@ a:hover
     font-size:15px;
     width:25px;
     color:black;
-    min-width:95px;
+    min-width:100px;
     font-weight:bold;
-    /*background-color:red;*/
 }
 
 .datainput {
