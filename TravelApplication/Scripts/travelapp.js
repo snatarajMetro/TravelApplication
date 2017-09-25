@@ -216,7 +216,7 @@ function setUserName() {
                 var result = JSON.parse(data);
 
                 $('#txtName').val(result.EmployeeFirstName + ' ' + result.EmployeeLastName);
-                $('#txtOrganization').val(result.Result.Department);
+                $('#txtOrganization').val(result.Department);
             },
             error: function (xhr, options, error) {
             }
