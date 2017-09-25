@@ -549,6 +549,10 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
 
                     // fade out in 5 seconds
                     $("#submitsuccess").fadeOut(fadeOutTimeInMilliseconds);
+
+                    // hide submit module and show action selection module
+                    $("#submittemplate").hide();
+                    $("#action").show();
                    
                 },
                 error: function (xhr, options, error) {
