@@ -98,14 +98,14 @@ namespace TravelApplication.Controllers.WebAPI
 
         [HttpPost]
         [Route("api/travelrequest/approve")]
-        public HttpResponseMessage Approve(int badgeNumber, int travelRequestNumber, string comments)
+        public HttpResponseMessage Approve(ApproveRequest approveRequest)
         {
             HttpResponseMessage response = null;
 
             try
             {
 
-                var result = travelRequestService.Approve(badgeNumber, travelRequestNumber, comments);
+                var result = travelRequestService.Approve(approveRequest.ApproverBadgeNumber, approveRequest.TravelRequestId, approveRequest.Comments);
                 response = Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)
@@ -119,14 +119,15 @@ namespace TravelApplication.Controllers.WebAPI
 
         [HttpPost]
         [Route("api/travelrequest/reject")]
-        public HttpResponseMessage Reject(int badgeNumber, int travelRequestNumber, string comments)
+        public HttpResponseMessage Reject(ApproveRequest approveRequest)
         {
             HttpResponseMessage response = null;
 
             try
             {
                 // TODO: Implement Reject API. Return true/false
-                var result = true;
+                var result = travelRequestService.Reject(approveRequest.ApproverBadgeNumber, approveRequest.TravelRequestId, approveRequest.Comments);
+
                 response = Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)

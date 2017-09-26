@@ -17,6 +17,12 @@ namespace TravelApplication.Services
             return result;
         }
 
+        public bool Reject(int badgeNumber, int travelRequestId, string comments)
+        {
+            var result = travelRequestRepo.Reject(badgeNumber, travelRequestId, comments);
+            return result;
+        }
+
         public async Task<EmployeeDetails> GetEmployeeDetails(int badgeNumber)
         {
             EmployeeDetails result =  await travelRequestRepo.GetEmployeeDetails(badgeNumber).ConfigureAwait(false);

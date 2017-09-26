@@ -32,5 +32,6 @@ namespace TravelApplication.Models
         public string LoginId { get; set; }
 
         public int SelectedRoleId { get; set; }
+        public int SubmittedByBadgeNumber { get; set; }
     }
 }
