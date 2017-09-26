@@ -14,8 +14,6 @@ $(document).ready(function () {
     scope.loadFIS();
     scope.loadCostCenters();
     scope.loadFileUpload();
-
-    //$('#submittemplate').show();
 });
 
 function closeinvaliduser() {
@@ -516,6 +514,7 @@ function viewexistingtravelrequests() {
     //reset estimated expense section
     var scope = angular.element('#existingtravelrequeststemplate').scope();
     scope.loadExistingTravelRequests();
+    scope.loadApproveAction();
 
     $('#existingtravelrequeststemplate').show();
 }
@@ -559,4 +558,125 @@ function setOtherUserName(source2, container) {
 
 function closesubmiterror() {
     $("#submiterror").hide();
+}
+
+function cancelAction() {
+    $('#approvetemplate').hide();
+    $('#rejecttemplate').hide();
+}
+
+function showApproveSection(container) {
+
+    var values = $(container).prop('alt').split(',');
+    
+    var travelRequestId = values[0];
+    var badgeNumber = values[1];
+
+    var scope = angular.element('#approvetemplate').scope();
+    scope.loadApproveAction(travelRequestId, badgeNumber);
+
+    $('#approvetemplate').show();
+}
+
+function approve() {
+
+    var travelRequestId = $('#travelRequestIdForAction').text();
+    var badgeNumber     = $('#badgeNumberToAction').text();
+    var comments        = $('#txtComments').val();
+
+    $.ajax({
+        type: "POST",
+        url: "api/travelrequest/approve",
+        data: JSON.stringify({ "TravelRequestId": travelRequestId, "BadgeNumber": badgeNumber, "Comments": comments }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+
+            $("#approvesuccess").fadeIn("slow");
+            $('#approvesuccessmessage').text('Travel request has been successfully approved.');
+
+            // fade out in 5 seconds
+            $("#approvesuccess").fadeOut(fadeOutTimeInMilliseconds);
+
+            $("#approvetemplate").fadeOut(3000);
+        },
+        error: function (xhr, options, error) {
+
+            if (xhr.status == 500) {
+                var errorMessage = xhr.responseText;
+
+                $("#approveerror").fadeIn("slow");
+                $('#approveerrormessage').text(errorMessage);
+
+                // fade out in 5 seconds
+                $("#approveerror").fadeOut(fadeOutTimeInMilliseconds);
+            }
+        }
+    });
+}
+
+function reject() {
+
+    var travelRequestId = $('#travelRequestIdForAction').text();
+    var badgeNumber     = $('#badgeNumberToAction').text();
+    var comments        = $('#txtComments').val();
+
+    $.ajax({
+        type: "POST",
+        url: "api/travelrequest/reject",
+        data: JSON.stringify({ "TravelRequestId": travelRequestId, "BadgeNumber": badgeNumber, "Comments": comments }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+
+            $("#rejectsuccess").fadeIn("slow");
+            $('#rejectsuccessmessage').text('Travel request has been successfully rejected.');
+
+            // fade out in 5 seconds
+            $("#rejectsuccess").fadeOut(fadeOutTimeInMilliseconds);
+
+            $("#rejecttemplate").fadeOut(3000);
+        },
+        error: function (xhr, options, error) {
+
+            if (xhr.status == 500) {
+                var errorMessage = xhr.responseText;
+
+                $("#rejecterror").fadeIn("slow");
+                $('#rejecterrormessage').text(errorMessage);
+
+                // fade out in 5 seconds
+                $("#rejecterror").fadeOut(fadeOutTimeInMilliseconds);
+            }
+        }
+    });
+}
+
+function closeapproveerror() {
+    $("#approveerror").hide();
+}
+
+function closeapprovesuccess() {
+    $("#approvesuccess").hide();
+}
+
+function closerejecterror() {
+    $("#rejecterror").hide();
+}
+
+function closerejectsuccess() {
+    $("#rejectsuccess").hide();
+}
+
+function showRejectSection(container) {
+
+    var values = $(container).prop('alt').split(',');
+
+    var travelRequestId = values[0];
+    var badgeNumber = values[1];
+
+    var scope = angular.element('#rejecttemplate').scope();
+    scope.loadRejectAction(travelRequestId, badgeNumber);
+
+    $('#rejecttemplate').show();
 }

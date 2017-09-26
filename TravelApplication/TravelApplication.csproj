@@ -521,6 +521,7 @@
     <Content Include="UITemplates\existingtravelrequests.html" />
     <Content Include="UITemplates\fileupload.html" />
     <Content Include="UITemplates\fis.html" />
+    <Content Include="UITemplates\reject.html" />
     <Content Include="UITemplates\roleselection.html" />
     <Content Include="UITemplates\submit.html" />
     <Content Include="UITemplates\travelrequestform.html" />

@@ -811,7 +811,7 @@ height:230px;
     font-size:15px;
     font-weight:bold;
     margin-bottom:5px;
-    width:165px;
+    width:250px;
     padding-top:5px;
 }
 
@@ -866,6 +866,7 @@ div.existingtravelrequestcontainer {
     margin-left:5px;
     width:25px;
     height:25px;
+    cursor:pointer;
 }
 
 .badgeNumberForSubmit {
@@ -936,4 +937,51 @@ div.existingtravelrequestcontainer {
     border-radius: 5px;
     float:left;
     position:relative;
+}
+
+div.actioncontainer {
+    position: absolute;
+    float:left;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 375px;
+    height: 215px;
+    margin: auto;
+    background-color: white;
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
+    box-shadow: 10px 10px 5px #3c3c3c;
+    border-radius: 3px;
+    border:solid 1px black;
+}
+
+.actioncomments {
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width:340px;
+    height:90px;
+    font-family:'Open Sans Condensed', sans-serif;
+    font-size:14px;
+    color:black;
+    margin-top:2px;
+}
+
+.actionbutton{
+    position: absolute;
+    margin-left:80px;
+    margin-top:132px;
+}
+
+.cancelbutton{
+    position: absolute;
+    margin-left:210px;
+    margin-top:132px;
+}
+
+.approve,
+.approve:hover{
+    background-color:dodgerblue;
 }

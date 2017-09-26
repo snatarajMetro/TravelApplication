@@ -28,5 +28,7 @@ namespace TravelApplication.Models
         public bool ApproveActionVisible { get; set; }
 
         public  string Status { get; set; }
+
+        public int BadgeNumber { get; set; }
     }
 }
