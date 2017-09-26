@@ -946,11 +946,11 @@ div.existingtravelrequestcontainer {
 }
 
 .dialogSuccessNew {
-    background-color:lightgray;
+    background-color:#d4edcc;
     color:black;
     /*width:310px;*/
     width:410px;
-    height:auto;
+    height:120px;
     margin:2px; 
     padding:10px;
     padding-right:20px;
@@ -1010,9 +1010,11 @@ div.actioncontainer {
     background-color:dodgerblue;
 }
 
-.ok{
-    margin-left:140px;
-    margin-top:10px;
+.ok,
+.ok:hover{
+    margin-left:146px;
+    margin-top:42px;
+    background-color:green
 }
 
 .successcontainerok {

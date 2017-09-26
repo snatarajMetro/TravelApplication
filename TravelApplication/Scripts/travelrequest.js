@@ -545,7 +545,10 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 success: function (data) {
 
                     $("#submitsuccess").fadeIn("slow");
-                    $('#submitsuccessmessage').text("Travel request has been successfully submitted. Travel request# is " + travelRequestId + ".");                
+                    $('#submitsuccessmessage').html("Travel request has been successfully submitted. Travel request# is <b>" + travelRequestId + "</b>.");
+
+                    $('#btnSubmit').prop("disabled", true);
+                    $('#btnBack').prop("disabled", true);
                 },
                 error: function (xhr, options, error) {
                     if (xhr.status == 500) {

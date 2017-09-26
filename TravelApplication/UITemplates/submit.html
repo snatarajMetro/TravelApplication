@@ -124,9 +124,9 @@
             <span class="dialog" id="submiterrormessage"></span>
             <a href="#" class="close-thick" onclick="return closesubmiterror();"></a>
         </div>
-        <div id="submitsuccess" class="main successcontainerok" style="float:left;display:none">
+        <div id="submitsuccess" class="main successcontainerok" style="float:left;">
             <div class="dialogSuccessNew">
-                <span id="submitsuccessmessage">"Travel request has been successfully submitted. Travel request# is 1234567.</span>
+                <span id="submitsuccessmessage"></span>
              <input class="btn btn-success signinbutton ok" type="button" id="btnOk" name="btnOk" value="Ok" onclick="showaction()" />
             </div>
         </div>
@@ -135,7 +135,7 @@
         </div>
         <div id="footer" class="footer estimatedexpense">
             <div class="footerback">
-                <input class="btn btn-success signinbutton" type="button" name="btnBack" value="Back" onclick="showuploadsection()" />
+                <input class="btn btn-success signinbutton" type="button" id="btnBack" name="btnBack" value="Back" onclick="showuploadsection()" />
             </div>
             <div class="saveandcontinue">
                 <input class="btn btn-success signinbutton" type="button" id="btnSubmit" name="btnSubmit" value="Submit" ng-click="submitRequest()" />
