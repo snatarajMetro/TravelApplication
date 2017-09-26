@@ -454,7 +454,7 @@ namespace TravelApplication.Services
             {
                 // Get the approval order 
                 var result = 0;
-                string query = string.Format(@"SELECT NVL(Max(1),0) as order FROM TRAVELREQUEST_APPROVAL WHERE TRAVELREQUESTID = {0} AND APPROVALDATETIME IS NULL ORDER BY APPROVALDATETIME DESC", travelRequestId);
+                string query = string.Format(@"SELECT NVL(Max(1),0) as order1 FROM TRAVELREQUEST_APPROVAL WHERE TRAVELREQUESTID = {0} AND APPROVALDATETIME IS NULL ORDER BY APPROVALDATETIME DESC", travelRequestId);
                 OracleCommand cmd1 = new OracleCommand(query, (OracleConnection)dbConn);
                 cmd1.CommandText = query;
                 DbDataReader dataReader = cmd1.ExecuteReader();
@@ -462,7 +462,7 @@ namespace TravelApplication.Services
                 {
                     while (dataReader.Read())
                     {
-                        result = Convert.ToInt32(dataReader["order"].ToString());
+                        result = Convert.ToInt32(dataReader["order1"].ToString());
                     }
                 }
 
@@ -498,15 +498,17 @@ namespace TravelApplication.Services
                                                     APPROVERCOMMENTS = :p1,
                                                     APPROVALSTATUS = :p2 ,
                                                     APPROVALDATETIME = :p3
-                                                    WHERE TRAVELREQUESTID = {0} AND BADGENUMBER = {1} returning APPROVALORDER into :approvalOrder", travelRequestId, badgeNumber);
+                                                    WHERE TRAVELREQUESTID = {0} AND BADGENUMBER = {1} ", travelRequestId, badgeNumber);
                 cmd.Parameters.Add(new OracleParameter("p1", comments));
                 cmd.Parameters.Add(new OracleParameter("p2", ApprovalStatus.Rejected.ToString()));
                 cmd.Parameters.Add(new OracleParameter("p3", DateTime.Now));
-                cmd.Parameters.Add("approvalOrder", OracleDbType.Int32, ParameterDirection.ReturnValue);
                 var rowsUpdated = cmd.ExecuteNonQuery();
-                approvalOrder = Decimal.ToInt32(((Oracle.ManagedDataAccess.Types.OracleDecimal)(cmd.Parameters["approvalOrder"].Value)).Value);
-  
-
+            }
+            using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+            {
+                //Update travel request _approval
+                OracleCommand cmd = new OracleCommand();
+                cmd.Connection = (OracleConnection)dbConn;
                 // update travel request for the latest status 
                 cmd.CommandText = string.Format(@"UPDATE  TRAVELREQUEST SET                                                  
                                                      STATUS = :p1 

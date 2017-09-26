@@ -263,9 +263,9 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 width: 100
             },
             {
-                name: 'Description',
+                name: 'Status',
                 width: 275,
-                cellTemplate: "<div class='ui-grid-cell-contents wrap' title='{{ row.entity.Description }}'>{{ row.entity.Description }}</div>"
+                cellTemplate: "<div class='ui-grid-cell-contents wrap' title='{{ row.entity.Status }}'>{{ row.entity.Status }}</div>"
             },
             {
                 field: 'SubmittedByUser',
@@ -545,7 +545,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 success: function (data) {
 
                     $("#submitsuccess").fadeIn("slow");
-                    $('#submitsuccessmessage').text("Travel request has been successfully submitted. Travel request# is <b>" + travelRequestId + "</b>.");                
+                    $('#submitsuccessmessage').text("Travel request has been successfully submitted. Travel request# is " + travelRequestId + ".");                
                 },
                 error: function (xhr, options, error) {
                     if (xhr.status == 500) {
