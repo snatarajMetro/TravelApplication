@@ -14,6 +14,7 @@ $(document).ready(function () {
     scope.loadFIS();
     scope.loadCostCenters();
     scope.loadFileUpload();
+
 });
 
 function closeinvaliduser() {
@@ -567,14 +568,11 @@ function cancelAction() {
 }
 
 function showApproveSection(container) {
-
-    var values = $(container).prop('alt').split(',');
     
-    var travelRequestId = values[0];
-    var badgeNumber = values[1];
+    var travelRequestId = $(container).prop('alt');
 
     var scope = angular.element('#approvetemplate').scope();
-    scope.loadApproveAction(travelRequestId, badgeNumber);
+    scope.loadApproveAction(travelRequestId);
 
     $('#approvetemplate').show();
 }
@@ -582,13 +580,13 @@ function showApproveSection(container) {
 function approve() {
 
     var travelRequestId = $('#travelRequestIdForAction').text();
-    var badgeNumber     = $('#badgeNumberToAction').text();
+    var badgeNumber     = $('#badgeNumber').text();
     var comments        = $('#txtComments').val();
 
     $.ajax({
         type: "POST",
         url: "api/travelrequest/approve",
-        data: JSON.stringify({ "TravelRequestId": travelRequestId, "BadgeNumber": badgeNumber, "Comments": comments }),
+        data: JSON.stringify({ "TravelRequestId": travelRequestId, "ApproverBadgeNumber": badgeNumber, "Comments": comments }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -619,13 +617,13 @@ function approve() {
 function reject() {
 
     var travelRequestId = $('#travelRequestIdForAction').text();
-    var badgeNumber     = $('#badgeNumberToAction').text();
+    var badgeNumber     = $('#badgeNumber').text();
     var comments        = $('#txtComments').val();
 
     $.ajax({
         type: "POST",
         url: "api/travelrequest/reject",
-        data: JSON.stringify({ "TravelRequestId": travelRequestId, "BadgeNumber": badgeNumber, "Comments": comments }),
+        data: JSON.stringify({ "TravelRequestId": travelRequestId, "ApproverBadgeNumber": badgeNumber, "Comments": comments }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -671,13 +669,10 @@ function closerejectsuccess() {
 
 function showRejectSection(container) {
 
-    var values = $(container).prop('alt').split(',');
-
-    var travelRequestId = values[0];
-    var badgeNumber = values[1];
+    var travelRequestId = $(container).prop('alt');
 
     var scope = angular.element('#rejecttemplate').scope();
-    scope.loadRejectAction(travelRequestId, badgeNumber);
+    scope.loadRejectAction(travelRequestId);
 
     $('#rejecttemplate').show();
 }

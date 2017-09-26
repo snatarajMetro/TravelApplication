@@ -255,7 +255,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
     // load existing travel requests
     $scope.loadExistingTravelRequests = function () {
 
-        var actionTemplate = '<div style="float:left;" ng-if="row.entity.ViewActionVisible == true"><img title="View" class="actionImage" src="/Images/view.png" /></div><div ng-if="row.entity.EditActionVisible == true"><img title="Edit" class="actionImage" src="/Images/edit.png" /></div> <div ng-if="row.entity.ApproveActionVisible == true"><img title="Approve" class="actionImage" src="/Images/approve.png" alt="{{row.entity.TravelRequestId}},{{row.entity.BadgeNumber}}" onclick="showApproveSection(this);" /><img title="Reject" class="actionImage" src="/Images/reject.jpg" alt="{{row.entity.TravelRequestId}},{{row.entity.BadgeNumber}}" onclick="showRejectSection(this);" /></div>';
+        var actionTemplate = '<div style="float:left;" ng-if="row.entity.ViewActionVisible == true"><img title="View" class="actionImage" src="/Images/view.png" /></div><div ng-if="row.entity.EditActionVisible == true"><img title="Edit" class="actionImage" src="/Images/edit.png" /></div> <div ng-if="row.entity.ApproveActionVisible == true"><img title="Approve" class="actionImage" src="/Images/approve.png" alt="{{row.entity.TravelRequestId}}" onclick="showApproveSection(this);" /><img title="Reject" class="actionImage" src="/Images/reject.jpg" alt="{{row.entity.TravelRequestId}}" onclick="showRejectSection(this);" /></div>';
 
         $scope.columns = [{
                 field: 'TravelRequestId',
@@ -597,14 +597,13 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
     }
 
     // load approve action
-    $scope.loadApproveAction = function (travelRequestId, badgeNumber) {
+    $scope.loadApproveAction = function (travelRequestId) {
 
         $.get('/uitemplates/approve.html')
         .done(function (data) {
             $('#approvetemplate').html($compile($(data).html())($scope));
 
             $('#travelRequestIdForAction').text(travelRequestId);
-            $('#badgeNumberToAction').text(badgeNumber);
             $scope.$apply();
 
             $('#txtComments').focus();
@@ -612,14 +611,13 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
     }
 
     // load reject action
-    $scope.loadRejectAction = function (travelRequestId, badgeNumber) {
+    $scope.loadRejectAction = function (travelRequestId) {
 
         $.get('/uitemplates/reject.html')
         .done(function (data) {
             $('#rejecttemplate').html($compile($(data).html())($scope));
 
             $('#travelRequestIdForAction').text(travelRequestId);
-            $('#badgeNumberToAction').text(badgeNumber);
             $scope.$apply();
 
             $('#txtComments').focus();
