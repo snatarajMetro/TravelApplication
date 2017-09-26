@@ -233,6 +233,8 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Images\approve.png" />
+    <Content Include="Images\approve1.png" />
+    <Content Include="Images\approve2.png" />
     <Content Include="Images\delete.png" />
     <Content Include="Images\delete2.png" />
     <Content Include="Images\download.png" />
@@ -243,6 +245,8 @@
     <Content Include="Images\New.png" />
     <Content Include="Images\newbg.png" />
     <Content Include="Images\reject.jpg" />
+    <Content Include="Images\reject1.png" />
+    <Content Include="Images\reject2.jpg" />
     <Content Include="Images\sn.png" />
     <Content Include="Images\view.png" />
     <Content Include="Images\wallpaper.png" />
