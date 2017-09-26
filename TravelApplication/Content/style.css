@@ -888,7 +888,7 @@ div.existingtravelrequestcontainer {
     border:solid 1px gray;
     padding-left:5px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    width:350px;
+    width:310px;
     height:30px;
     font-family:'Open Sans Condensed', sans-serif;
     font-size:15px;
@@ -896,7 +896,6 @@ div.existingtravelrequestcontainer {
 }
 
 .otherBadgeNumberContainer{
-    float:left;
     margin-left:5px;
 }
 
