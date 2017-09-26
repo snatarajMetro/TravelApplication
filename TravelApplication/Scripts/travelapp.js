@@ -1,5 +1,6 @@
 ﻿var userName = '';
 var fadeOutTimeInMilliseconds = 5000; // 5 seconds
+var selectedRoleId = 0;
 
 $(document).ready(function () {
 
@@ -15,6 +16,7 @@ $(document).ready(function () {
     scope.loadCostCenters();
     scope.loadFileUpload();
 
+    //viewexistingtravelrequests();
 });
 
 function closeinvaliduser() {
@@ -139,14 +141,25 @@ function actionselection() {
     }
     else {
         $("#signintemplate").hide();
-        $("#action").show();
 
         // set user name
         $("#userName2").text(userName);
 
+        selectedRoleId = $("#roles option:selected").val();
+
         // set role
         $("#roleName").text(userRole);
-        $("#selectedRoleId").text($("#roles option:selected").val());
+        $("#selectedRoleId").text(selectedRoleId);
+
+        // if Approver, show the exsiting request grid
+        if (selectedRoleId == 1)
+        {
+            viewexistingtravelrequests();
+        }
+        else {
+            // otherwise, show the action selection modal
+            $("#action").show();
+        }
     }
 }
 
@@ -157,14 +170,34 @@ function backtoroleselection() {
 }
 
 function backtoactionselection() {
+
     $("#travelrequesttemplate").hide();
     $("#estimatedexpensetemplate").hide();
     $("#existingtravelrequeststemplate").hide();
     $("#datatemplate").hide();
-    $("#action").show();
+
+    // if selected role is approver, take them back to role selection modal
+    if (selectedRoleId == 1)
+    {
+        $("#signintemplate").show();
+    }
+    else {
+        // else, take them to action selection modal
+        $("#action").show();
+    }
 }
 
 function logout() {
+
+    // reset
+    selectedRoleId = 0;
+    userName = "";
+
+    $("#selectedRoleId").text(selectedRoleId);
+    $('#txtBadgeNumber').text(0);
+    $('#travelRequestId').text(0);
+    $('#estimatedExpenseId').text(0);
+    
     $("#action").hide();
     $("#action").hide();
     $("#invaliduser").hide();
