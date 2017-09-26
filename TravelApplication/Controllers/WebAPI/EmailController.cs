@@ -12,7 +12,7 @@ namespace TravelApplication.Controllers.WebAPI
     {
         IEmailService emailService = new EmailService();
 
-        [HttpPost]
+        [HttpGet]
         [Route("api/email/sendemail")]
         public HttpResponseMessage Email(string fromAddress, string ToAddress, string Subject, string Body)
         {
