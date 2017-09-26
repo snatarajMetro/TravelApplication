@@ -488,6 +488,7 @@ function deletedocument(obj) {
 }
 
 function showsubmitsection() {
+
     // hide upload section
     $("#fileuploadtemplate").hide();
 
@@ -679,4 +680,9 @@ function showRejectSection(container) {
     scope.loadRejectAction(travelRequestId, badgeNumber);
 
     $('#rejecttemplate').show();
+}
+
+function showaction() {
+    $("#submittemplate").hide();
+    $("#action").show();
 }

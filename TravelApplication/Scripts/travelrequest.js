@@ -545,15 +545,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 success: function (data) {
 
                     $("#submitsuccess").fadeIn("slow");
-                    $('#submitsuccessmessage').text("Travel request has been successfully submited.");
-
-                    // fade out in 5 seconds
-                    $("#submitsuccess").fadeOut(fadeOutTimeInMilliseconds);
-
-                    // hide submit module and show action selection module
-                    $("#submittemplate").hide();
-                    $("#action").show();
-                   
+                    $('#submitsuccessmessage').text("Travel request has been successfully submitted. Travel request# is <b>" + travelRequestId + "</b>.");                
                 },
                 error: function (xhr, options, error) {
                     if (xhr.status == 500) {

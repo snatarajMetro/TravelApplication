@@ -926,7 +926,7 @@ div.existingtravelrequestcontainer {
     background-color:green;
     color:white;
     /*width:310px;*/
-    width:290px;
+    width:330px;
     height:auto;
     margin:2px; 
     padding:10px;
@@ -935,6 +935,24 @@ div.existingtravelrequestcontainer {
     font-family:'Open Sans Condensed', sans-serif;
     border: 1px solid #ccc;
     border-radius: 5px;
+    float:left;
+    position:relative;
+}
+
+.dialogSuccessNew {
+    background-color:lightgray;
+    color:black;
+    /*width:310px;*/
+    width:410px;
+    height:auto;
+    margin:2px; 
+    padding:10px;
+    padding-right:20px;
+    font-size:15px;
+    font-family:'Open Sans Condensed', sans-serif;
+    box-shadow: 10px 10px 5px #3c3c3c;
+    border-radius: 3px;
+    border:solid 1px black;
     float:left;
     position:relative;
 }
@@ -984,4 +1002,16 @@ div.actioncontainer {
 .approve,
 .approve:hover{
     background-color:dodgerblue;
+}
+
+.ok{
+    margin-left:140px;
+    margin-top:10px;
+}
+
+.successcontainerok {
+    position:absolute;
+    display:block;
+    bottom:50%;
+    left:35%;
 }

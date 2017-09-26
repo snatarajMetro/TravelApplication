@@ -124,9 +124,11 @@
             <span class="dialog" id="submiterrormessage"></span>
             <a href="#" class="close-thick" onclick="return closesubmiterror();"></a>
         </div>
-        <div id="submitsuccess" class="main successcontainer" style="display:none">
-            <span class="dialogSuccess" id="submitsuccessmessage"></span>
-            <a href="#" class="close-thick" onclick="return closesubmitsuccess();"></a>
+        <div id="submitsuccess" class="main successcontainerok" style="float:left;display:none">
+            <div class="dialogSuccessNew">
+                <span id="submitsuccessmessage">"Travel request has been successfully submitted. Travel request# is 1234567.</span>
+             <input class="btn btn-success signinbutton ok" type="button" id="btnOk" name="btnOk" value="Ok" onclick="showaction()" />
+            </div>
         </div>
         <div class="main requiredcontainer">
             <sub class="required">* required fields.</sub>
