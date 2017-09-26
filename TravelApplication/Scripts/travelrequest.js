@@ -260,37 +260,58 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
         $scope.columns = [{
                 field: 'TravelRequestId',
                 displayName: 'Travel Request Id',
-                width: 100
-            },
-            {
-                name: 'Status',
-                width: 275,
-                cellTemplate: "<div class='ui-grid-cell-contents wrap' title='{{ row.entity.Status }}'>{{ row.entity.Status }}</div>"
+                width: 117,
+                filter: {
+                    placeholder: '🔎 search here'
+                        }
             },
             {
                 field: 'SubmittedByUser',
                 name: 'Submitted By',
-                width: 100
+                width: 160,
+                filter: {
+                    placeholder: '🔎 search here'
+                }
             },
             {
                 field: 'SubmittedDateTime',
                 displayName: 'Submitted On',
-                width: 140
+                width: 110,
+                filter: {
+                    placeholder: '🔎 search here'
+                }
             },
             {
-                name: "Required Approvers",
-                cellTemplate: "<div class='ui-grid-cell-contents wrap' title='{{ row.entity.RequiredApprovers }}'>{{ row.entity.RequiredApprovers }}</div>",
-                width: 200
+                field: "RequiredApprovers",
+                displayName: "Required Approvers",
+                width: 330,
+                filter: {
+                    placeholder: '🔎 search here'
+                }
             },
             {
                 field: 'LastApproveredByUser',
                 displayName: 'Last Approvered By',
-                width: 110
+                width: 140,
+                filter: {
+                    placeholder: '🔎 search here'
+                }
             },
             {
                 field: 'LastApprovedDateTime',
                 displayName: 'Last Approved On',
-                width: 140
+                width: 110,
+                filter: {
+                    placeholder: '🔍 search here'
+                }
+            },
+            {
+                field: 'Status',
+                displayName: 'Status',
+                width: 90,
+                filter: {
+                    placeholder: '🔍 search here'
+                }
             },
             {
                 name: 'Actions',

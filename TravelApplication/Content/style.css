@@ -1023,3 +1023,9 @@ div.actioncontainer {
     bottom:50%;
     left:35%;
 }
+
+input.ui-grid-filter-input[type="text"] {
+   background-color:#f8f2f2;
+   font-family:'Open Sans Condensed', sans-serif;
+   font-size:12px;
+}
