@@ -31,6 +31,7 @@ namespace TravelApplication.DAL.Repositories
 
                     command.Dispose();
                     dbConn.Close();
+                    dbConn.Dispose();
                 }
             }
             catch (Exception ex)
@@ -69,6 +70,7 @@ namespace TravelApplication.DAL.Repositories
                 dataReader.Close();
                 command.Dispose();
                 dbConn.Close();
+                dbConn.Dispose();
 
                 return result;
             }
@@ -85,6 +87,10 @@ namespace TravelApplication.DAL.Repositories
                     OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
                     command.CommandText = query;
                     DbDataReader dataReader = command.ExecuteReader();
+                    command.Dispose();
+                    dataReader.Close();
+                    dbConn.Close();
+                    dbConn.Dispose();
                 }
             }
             catch (Exception ex)

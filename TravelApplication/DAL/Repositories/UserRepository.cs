@@ -57,7 +57,12 @@ namespace TravelApplication.DAL.Repositories
                 {
                     response = new UserResponse() { result = false };
                 }
+                dataReader.Close();
+                command.Dispose();
+                dbConn.Close();
+                dbConn.Dispose();
             }
+
             return response;
         }
 
@@ -81,7 +86,8 @@ namespace TravelApplication.DAL.Repositories
                     }
                     ur = new UserRole() { UserId = userId,  UserName= userName, Roles = items };
                 }
-
+                dataReader.Close();
+                command.Dispose();
                 dbConn.Close();
                 dbConn.Dispose();
                 return ur;

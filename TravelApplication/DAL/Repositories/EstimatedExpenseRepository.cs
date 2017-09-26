@@ -61,6 +61,9 @@ namespace TravelApplication.DAL.Repositories
                 {
                     throw new Exception("Couldn't retrieve travel request");
                 }
+                command.Dispose();
+                dbConn.Close();
+                dbConn.Dispose();
             }
             return response;
         }
@@ -127,6 +130,10 @@ namespace TravelApplication.DAL.Repositories
                         cmd.Parameters.Add("estimatedExpenseId", OracleDbType.Int32, ParameterDirection.ReturnValue);
                         var rowsUpdated = cmd.ExecuteNonQuery();
                         estimatedExpenseId = Decimal.ToInt32(((Oracle.ManagedDataAccess.Types.OracleDecimal)(cmd.Parameters["estimatedExpenseId"].Value)).Value);
+
+                        cmd.Dispose();
+                        dbConn.Close();
+                        dbConn.Dispose();
                     }
                 }
                 else
@@ -185,11 +192,11 @@ namespace TravelApplication.DAL.Repositories
                         cmd.Parameters.Add(new OracleParameter("p23", request.DateNeededBy));                         
                         var rowsUpdated = cmd.ExecuteNonQuery();
                         estimatedExpenseId = request.EstimatedExpenseId;
+                        cmd.Dispose();
+                        dbConn.Close();
+                        dbConn.Dispose();
                     }
                 }
-                dbConn.Close();
-                dbConn.Dispose();
-
             }
             catch (Exception ex)
             {

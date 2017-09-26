@@ -94,6 +94,10 @@ namespace TravelApplication.Services
                         cmd.Parameters.Add("travelRequestId", OracleDbType.Int32, ParameterDirection.ReturnValue);
                         var rowsUpdated = cmd.ExecuteNonQuery();
                         travelRequestId = Decimal.ToInt32(((Oracle.ManagedDataAccess.Types.OracleDecimal)(cmd.Parameters["travelRequestId"].Value)).Value);
+
+                        cmd.Dispose();
+                        dbConn.Close();
+                        dbConn.Dispose();
                     }
                 }
                 else
@@ -130,6 +134,9 @@ namespace TravelApplication.Services
                         cmd.Parameters.Add(new OracleParameter("p12", DateTime.Now));
                         var rowsUpdated = cmd.ExecuteNonQuery();
                         travelRequestId = request.TravelRequestId;
+                        cmd.Dispose();
+                        dbConn.Close();
+                        dbConn.Dispose();
                     }
                 }
                 dbConn.Close();
@@ -162,7 +169,8 @@ namespace TravelApplication.Services
                         userName = dataReader["LoginId"].ToString();
                     }
                 }
-
+                command.Dispose();
+                dataReader.Close();
                 dbConn.Close();
                 dbConn.Dispose();
                 return userName;
@@ -255,6 +263,10 @@ namespace TravelApplication.Services
                 {
                     throw new Exception("Couldn't retrieve travel request");
                 }
+                command.Dispose();
+                dataReader.Close();
+                dbConn.Close();
+                dbConn.Dispose();
             }
             return response;
         }
@@ -291,6 +303,10 @@ namespace TravelApplication.Services
                             });
                         }
                     }
+                    command.Dispose();
+                    dataReader.Close();
+                    dbConn.Close();
+                    dbConn.Dispose();
                 }
                 return response;
             }
@@ -334,10 +350,10 @@ namespace TravelApplication.Services
                             });
                         }
                     }
-                    //else
-                    //{
-                    //    throw new Exception("Couldn't retrieve travel request");
-                    //}
+                    command.Dispose();
+                    dataReader.Close();
+                    dbConn.Close();
+                    dbConn.Dispose();
                 }
                 return response;
             }
@@ -369,6 +385,10 @@ namespace TravelApplication.Services
                         response = dataReader["APPROVALDATETIME"].ToString();
                     }
                 }
+                command.Dispose();
+                dataReader.Close();
+                dbConn.Close();
+                dbConn.Dispose();
             }
             return response;
         }
@@ -399,6 +419,10 @@ namespace TravelApplication.Services
                         response = dataReader["APPROVERNAME"].ToString();
                     }
                 }
+                command.Dispose();
+                dataReader.Close();
+                dbConn.Close();
+                dbConn.Dispose();
             }
             return response;
         }
@@ -421,7 +445,11 @@ namespace TravelApplication.Services
                         }
                     }
                     response = string.Join(", ", result);
-                }
+                command.Dispose();
+                dataReader.Close();
+                dbConn.Close();
+                dbConn.Dispose();
+            }
            
             return response;
 
@@ -447,7 +475,8 @@ namespace TravelApplication.Services
                 cmd.Parameters.Add("approvalOrder", OracleDbType.Varchar2, ParameterDirection.ReturnValue);
                 var rowsUpdated = cmd.ExecuteNonQuery();
                 approvalOrderResult = cmd.Parameters["approvalOrder"].Value.ToString();
-              
+                dbConn.Close();
+                dbConn.Dispose();
             }
 
             using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
@@ -480,6 +509,10 @@ namespace TravelApplication.Services
                 }
 
                 var rowsUpdated1 = cmd1.ExecuteNonQuery();
+                cmd1.Dispose();
+                dataReader.Close();
+                dbConn.Close();
+                dbConn.Dispose();
             }
 
                 
@@ -503,6 +536,9 @@ namespace TravelApplication.Services
                 cmd.Parameters.Add(new OracleParameter("p2", ApprovalStatus.Rejected.ToString()));
                 cmd.Parameters.Add(new OracleParameter("p3", DateTime.Now));
                 var rowsUpdated = cmd.ExecuteNonQuery();
+                cmd.Dispose();
+                dbConn.Close();
+                dbConn.Dispose();
             }
             using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
             {
@@ -517,6 +553,10 @@ namespace TravelApplication.Services
                 cmd.Parameters.Add(new OracleParameter("p1", ApprovalStatus.Rejected.ToString()));
                 
                 var rowsUpdated1 = cmd.ExecuteNonQuery();
+
+                cmd.Dispose();
+                dbConn.Close();
+                dbConn.Dispose();
             }
 
 
@@ -546,6 +586,10 @@ namespace TravelApplication.Services
                         response.Add(dataReader["APPROVALSTATUS"].ToString());
                     }
                 }
+                command.Dispose();
+                dataReader.Close();
+                dbConn.Close();
+                dbConn.Dispose();
             }
             foreach (var item in response)
             {
@@ -579,6 +623,10 @@ namespace TravelApplication.Services
                         response = dataReader["STATUS"].ToString();
                     }
                 }
+                command.Dispose();
+                dataReader.Close();
+                dbConn.Close();
+                dbConn.Dispose();
             }
 
             if (response == ApprovalStatus.New.ToString())

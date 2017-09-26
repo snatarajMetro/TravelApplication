@@ -83,8 +83,12 @@ namespace TravelApplication.DAL.Repositories
                                 cmd.Parameters.Add(new OracleParameter("p4", Common.ApprovalStatus.Pending.ToString()));
                                 cmd.Parameters.Add(new OracleParameter("p5", count));
                                 var rowsUpdated = cmd.ExecuteNonQuery();
-                            }
-                            count++;
+                        cmd.Dispose();
+                        dbConn.Close();
+                        dbConn.Dispose();
+                    }
+
+                    count++;
                         }
                 }
 
@@ -104,32 +108,36 @@ namespace TravelApplication.DAL.Repositories
                 cmd.Parameters.Add(new OracleParameter("p3", Common.ApprovalStatus.Pending.ToString()));
                 cmd.Parameters.Add(new OracleParameter("p4", (submitTravelRequestData.AgreedToTermsAndConditions)?"Y":"N"));
                 var rowsUpdated = cmd.ExecuteNonQuery();
+                cmd.Dispose();
+                dbConn.Close();
+                dbConn.Dispose();
             }
+          
 
-         /*   string emailAddress = getEmailAddressByBadgeNumber(submitTravelRequestData.DepartmentHeadBadgeNumber);
-            var client = new HttpClient();
-            try
-            {
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            /*   string emailAddress = getEmailAddressByBadgeNumber(submitTravelRequestData.DepartmentHeadBadgeNumber);
+               var client = new HttpClient();
+               try
+               {
+                   client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                var endpointUrl = string.Format("/api/email/sendemail");
-                HttpResponseMessage response = client.GetAsync(endpointUrl);
+                   var endpointUrl = string.Format("/api/email/sendemail");
+                   HttpResponseMessage response = client.GetAsync(endpointUrl);
 
-                if (response.IsSuccessStatusCode)
-                {
+                   if (response.IsSuccessStatusCode)
+                   {
 
-                    costCenters = await response.Content.ReadAsAsync<List<CostCenter>>();
-                }
-            }
-            catch (Exception ex)
-            {
-                // TODO : Log the exception
-                throw new Exception("Unable to get the badge information from FIS service");
-            }
-            finally
-            {
-                client.Dispose();
-            }*/
+                       costCenters = await response.Content.ReadAsAsync<List<CostCenter>>();
+                   }
+               }
+               catch (Exception ex)
+               {
+                   // TODO : Log the exception
+                   throw new Exception("Unable to get the badge information from FIS service");
+               }
+               finally
+               {
+                   client.Dispose();
+               }*/
 
             return true;
     }
@@ -150,7 +158,12 @@ namespace TravelApplication.DAL.Repositories
                     {
                          result = dataReader["EMAIL"].ToString();
                     }
-                }                 
+                }
+
+                dataReader.Close();
+                command.Dispose();
+                dbConn.Close();
+                dbConn.Dispose();
             }
 
             return result;
