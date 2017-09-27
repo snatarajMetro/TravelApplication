@@ -170,6 +170,7 @@
     <Compile Include="Models\ApproveRequest.cs" />
     <Compile Include="Models\BootstrapTableJSONModel.cs" />
     <Compile Include="Models\CostCenter.cs" />
+    <Compile Include="Models\Email.cs" />
     <Compile Include="Models\EmployeeDetails.cs" />
     <Compile Include="Models\EstimatedExpense.cs" />
     <Compile Include="Models\HeirarchichalPosition.cs" />

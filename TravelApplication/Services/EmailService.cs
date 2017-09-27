@@ -55,6 +55,7 @@ namespace TravelApplication.Services
                 emailMessage.From = new MailAddress(sendFrom);
                 emailMessage.Subject = subject;
                 emailMessage.Body = body;
+                emailMessage.IsBodyHtml = true;
 
                 // To add cc email address if exists
                 if (!string.IsNullOrEmpty(cc))
