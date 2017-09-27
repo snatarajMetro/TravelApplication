@@ -624,13 +624,17 @@ function approve() {
         dataType: "json",
         success: function (data) {
 
-            $("#approvesuccess").fadeIn("slow");
+            $("#approvesuccess").fadeIn("fast");
             $('#approvesuccessmessage').text('Travel request has been successfully approved.');
 
             // fade out in 5 seconds
-            $("#approvesuccess").fadeOut(fadeOutTimeInMilliseconds);
+            $("#approvesuccess").fadeOut("slow");
 
-            $("#approvetemplate").fadeOut(3000);
+            $("#approvetemplate").fadeOut("slow");
+
+            // refresh the existing request grid
+            var scope = angular.element('#existingtravelrequeststemplate').scope();
+            scope.refreshExistingRequest();
         },
         error: function (xhr, options, error) {
 
@@ -661,13 +665,18 @@ function reject() {
         dataType: "json",
         success: function (data) {
 
-            $("#rejectsuccess").fadeIn("slow");
+            $("#rejectsuccess").fadeIn("fast");
             $('#rejectsuccessmessage').text('Travel request has been successfully rejected.');
 
             // fade out in 5 seconds
-            $("#rejectsuccess").fadeOut(fadeOutTimeInMilliseconds);
+            $("#rejectsuccess").fadeOut("slow");
 
-            $("#rejecttemplate").fadeOut(3000);
+            $("#rejecttemplate").fadeOut("slow");
+
+            // refresh the existing request grid
+            var scope = angular.element('#existingtravelrequeststemplate').scope();
+            scope.refreshExistingRequest();
+
         },
         error: function (xhr, options, error) {
 

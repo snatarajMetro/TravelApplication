@@ -356,6 +356,29 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
         });
     }
 
+    // Refresh the existing request grid
+    $scope.refreshExistingRequest = function () {
+
+        var badgeNumber     = $("#badgeNumber").text();
+        var selectedRoleId  = $("#selectedRoleId").text();
+        var url = "api/travelrequests?badgeNumber=" + badgeNumber + "&roleId=" + selectedRoleId;
+
+        $.get(url)
+       .done(function (data) {
+
+           $scope.existingRequestsGridOptions.data = data;
+
+           angular.forEach($scope.existingRequestsGridOptions.data, function (value, index) {
+
+               if (value.SubmittedByUser == null || value.SubmittedByUser == '') {
+                   $scope.columns[2].visible = false;
+               }
+           })
+
+           $scope.$apply();
+       });
+    }
+
     // load data for 1st four approvers dropdown
     $scope.loadCommonApprovers = function (badgeNumber) {
 
