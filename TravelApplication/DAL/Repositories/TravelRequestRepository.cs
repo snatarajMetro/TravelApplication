@@ -565,16 +565,26 @@ namespace TravelApplication.Services
 
         public bool  getApprovalSatus(int travelRequestId , int approverBadgeNumber)
         {
-            bool result = true;
-            List<string> response = new List<string>();
+            bool result = false;
+            int response = 0;
             using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
             {
                 string query = string.Format(@"SELECT
-	                                            APPROVALSTATUS
-                                            FROM
-	                                            TRAVELREQUEST_APPROVAL
-                                            WHERE
-	                                            TRAVELREQUESTID = {0} ANd BADGENUMBER = {1}", travelRequestId, approverBadgeNumber);
+	                                                *
+                                                FROM
+	                                                (
+		                                                SELECT
+			                                                BadgeNumber
+		                                                FROM
+			                                                TRAVELREQUEST_APPROVAL
+		                                                WHERE
+			                                                TRAVELREQUESTID = {0}
+		                                                AND APPROVALDATETIME IS NULL
+		                                                ORDER BY
+			                                                APPROVALORDER
+	                                                )
+                                                WHERE
+	                                                ROWNUM <= 1", travelRequestId);
 
                 OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
                 command.CommandText = query;
@@ -583,7 +593,7 @@ namespace TravelApplication.Services
                 {
                     while (dataReader.Read())
                     {
-                        response.Add(dataReader["APPROVALSTATUS"].ToString());
+                        response = Convert.ToInt32(dataReader["BADGENUMBER"].ToString());
                     }
                 }
                 command.Dispose();
@@ -591,13 +601,12 @@ namespace TravelApplication.Services
                 dbConn.Close();
                 dbConn.Dispose();
             }
-            foreach (var item in response)
+           
+            if ( response == approverBadgeNumber)
             {
-                if ( item == ApprovalStatus.Approved.ToString())
-                {
-                    result =  false;
-                }
+                result =  true;
             }
+
             return result;
         }
 
