@@ -345,7 +345,7 @@ namespace TravelApplication.Services
                                 LastApprovedDateTime = getLastApproverDateTime(Convert.ToInt32(dataReader["TravelRequestId"])),
                                 EditActionVisible = false,
                                 ViewActionVisible = true,
-                                ApproveActionVisible = getApprovalSatus(Convert.ToInt32(dataReader["TravelRequestId"])) ? true : false,
+                                ApproveActionVisible = getApprovalSatus(Convert.ToInt32(dataReader["TravelRequestId"]), submittedBadgeNumber) ? true : false,
                                 Status = dataReader["STATUS"].ToString()
                             });
                         }
@@ -563,7 +563,7 @@ namespace TravelApplication.Services
             return true;
         }
 
-        public bool  getApprovalSatus(int travelRequestId)
+        public bool  getApprovalSatus(int travelRequestId , int approverBadgeNumber)
         {
             bool result = true;
             List<string> response = new List<string>();
@@ -574,7 +574,7 @@ namespace TravelApplication.Services
                                             FROM
 	                                            TRAVELREQUEST_APPROVAL
                                             WHERE
-	                                            TRAVELREQUESTID = {0} ", travelRequestId);
+	                                            TRAVELREQUESTID = {0} ANd BADGENUMBER = {1}", travelRequestId, approverBadgeNumber);
 
                 OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
                 command.CommandText = query;
