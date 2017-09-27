@@ -152,7 +152,7 @@ function actionselection() {
         $("#selectedRoleId").text(selectedRoleId);
 
         // if Approver, show the exsiting request grid
-        if (selectedRoleId == 1)
+        if (selectedRoleId == 3)
         {
             viewexistingtravelrequests();
         }
@@ -177,7 +177,7 @@ function backtoactionselection() {
     $("#datatemplate").hide();
 
     // if selected role is approver, take them back to role selection modal
-    if (selectedRoleId == 1)
+    if (selectedRoleId == 3)
     {
         $("#signintemplate").show();
     }
