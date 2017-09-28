@@ -717,6 +717,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 }
                 
                 $("#txtBadgeNumber").prop("readonly", true);
+                $("#txtBadgeNumber").prop("style", "background-color:lightgray;");
             });
 
             

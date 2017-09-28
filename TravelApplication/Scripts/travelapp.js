@@ -181,6 +181,11 @@ function backtoactionselection() {
     {
         $("#signintemplate").show();
     }
+    else if ($('#travelRequestId').text() != 0) {
+        $('#travelRequestId').text(0);
+        $("#travelrequesttemplate").hide();
+        $("#existingtravelrequeststemplate").show();
+    }
     else {
         // else, take them to action selection modal
         $("#action").show();

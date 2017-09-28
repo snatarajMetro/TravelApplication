@@ -63,7 +63,24 @@ namespace TravelApplication.Controllers.WebAPI
             HttpResponseMessage response = null;
             try
             {
-                TravelRequest result = travelRequestService.GetTravelRequestDetail(travelRequestId);
+                //TravelRequest result = travelRequestService.GetTravelRequestDetail(travelRequestId);
+
+                TravelRequest result = new TravelRequest()
+                {
+                    BadgeNumber                 = 10005,
+                    DepartureDateTime           = DateTime.Now,
+                    MeetingBeginDateTime        = DateTime.Now.AddDays(3),
+                    MeetingEndDateTime          = DateTime.Now.AddDays(4),
+                    MeetingLocation             = "Downtown LA",
+                    Organization                = "LA Metro",
+                    ReturnDateTime              = DateTime.Now.AddDays(4),
+                    SubmittedByBadgeNumber      = 10005,
+                    SubmittedDateTime           = DateTime.Now,
+                    TravelRequestId             = travelRequestId,
+                    Name                        = "Nataraj.S",
+                    Division                    = "Development",
+                    Section                     = "IT"                  
+                };
                 response = Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)
