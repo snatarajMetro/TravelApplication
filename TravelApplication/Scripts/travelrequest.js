@@ -255,7 +255,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
     // load existing travel requests
     $scope.loadExistingTravelRequests = function () {
 
-        var actionTemplate = '<div style="float:left;" ng-if="row.entity.ViewActionVisible == true"><img title="View" class="actionImage" src="/Images/view.png" /></div><div ng-if="row.entity.EditActionVisible == true"><img title="Edit" class="actionImage" src="/Images/edit.png" /></div> <div ng-if="row.entity.ApproveActionVisible == true"><img title="Approve" class="actionImage" src="/Images/approve1.png" alt="{{row.entity.TravelRequestId}}" onclick="showApproveSection(this);" /><img title="Reject" class="actionImage2" src="/Images/reject1.png" alt="{{row.entity.TravelRequestId}}" onclick="showRejectSection(this);" /></div>';
+        var actionTemplate = '<div style="float:left;" ng-if="row.entity.ViewActionVisible == true"><img title="View" class="actionImage" src="/Images/view.png" /></div><div ng-if="row.entity.EditActionVisible == true"><img title="Edit" class="actionImage" src="/Images/edit.png" alt="{{row.entity.TravelRequestId}}" onclick="editTravelRequest(this);" /></div> <div ng-if="row.entity.ApproveActionVisible == true"><img title="Approve" class="actionImage" src="/Images/approve1.png" alt="{{row.entity.TravelRequestId}}" onclick="showApproveSection(this);" /><img title="Reject" class="actionImage2" src="/Images/reject1.png" alt="{{row.entity.TravelRequestId}}" onclick="showRejectSection(this);" /></div>';
 
         $scope.columns = [{
                 field: 'TravelRequestId',
@@ -671,4 +671,57 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
         });
     }
 
+    // load travel request modal in edit mode
+    $scope.loadTravelRequestForEdit = function (travelRequestId) {
+
+        $('#travelrequesttemplate').html('');
+
+        // get the data from api
+        $.get('api/travelrequest/' + travelRequestId)
+        .done(function (data) {
+
+            $scope.TravelRequest = data;
+
+            //reset travel request form section
+            $.get('/uitemplates/travelrequestform.html')
+            .done(function (data) {
+                $('#travelrequesttemplate').html($compile($(data).html())($scope));
+                $scope.$apply();
+
+                $('#travelRequestIdForDisplay').html("Travel Request #<b>" + travelRequestId.toString() + "</b>");
+                $('#txtBadgeNumber').val($scope.TravelRequest.BadgeNumber);
+                $('#txtName').val($scope.TravelRequest.Name);
+                $('#txtDivision').val($scope.TravelRequest.Division);
+                $('#txtSection').val($scope.TravelRequest.Section);
+                $('#txtOrganization').val($scope.TravelRequest.Organization);
+                $('#txtMeetingLocation').val($scope.TravelRequest.MeetingLocation);
+
+                if ($scope.TravelRequest.MeetingBeginDateTime.substring(0, 10) != '0001-01-01')
+                {
+                    $('#txtMeetingBeginDate').val($scope.TravelRequest.MeetingBeginDateTime.substring(0,10));
+                }
+
+                if ($scope.TravelRequest.MeetingEndDateTime.substring(0, 10) != '0001-01-01') {
+
+                    $('#txtMeetingEndDate').val($scope.TravelRequest.MeetingEndDateTime.substring(0, 10));
+                }
+
+                if ($scope.TravelRequest.DepartureDateTime.substring(0, 10) != '0001-01-01') {
+
+                    $('#txtDepartureDate').val($scope.TravelRequest.DepartureDateTime.substring(0, 10));
+                }
+
+                if ($scope.TravelRequest.ReturnDateTime.substring(0, 10) != '0001-01-01') {
+
+                    $('#txtReturnDate').val($scope.TravelRequest.ReturnDateTime.substring(0, 10));
+                }
+                
+                $("#txtBadgeNumber").prop("readonly", true);
+            });
+
+            
+            
+           // $('').val();
+        });
+    }
 });

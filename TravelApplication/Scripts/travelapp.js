@@ -723,3 +723,16 @@ function showaction() {
     $("#submittemplate").hide();
     $("#action").show();
 }
+
+function editTravelRequest(container) {
+
+    $('#existingtravelrequeststemplate').hide();
+
+    var travelRequestId = $(container).prop('alt');
+    var scope = angular.element('#travelrequesttemplate').scope();
+    scope.loadTravelRequestForEdit(travelRequestId);
+
+    $('#travelRequestId').text(travelRequestId);
+
+    $('#travelrequesttemplate').show();
+}
