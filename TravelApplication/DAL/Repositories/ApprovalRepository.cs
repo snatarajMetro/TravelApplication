@@ -57,15 +57,17 @@ namespace TravelApplication.DAL.Repositories
             approvalOrderList.Add(new BadgeInfo() { BadgeId = submitTravelRequestData.CEOForAPTABadgeNumber, Name = submitTravelRequestData.CEOForAPTAName });
             approvalOrderList.Add(new BadgeInfo() { BadgeId = submitTravelRequestData.CEOForInternationalBadgeNumber, Name = submitTravelRequestData.CEOForInternationalName });
             approvalOrderList.Add(new BadgeInfo() { BadgeId = submitTravelRequestData.TravelCoordinatorBadgeNumber, Name = submitTravelRequestData.TravelCoordinatorName });
-            
+
+            try
+            {
+
+            dbConn = ConnectionFactory.GetOpenDefaultConnection();
                 int count = 1;
                 foreach (var item in approvalOrderList)
                 {
                         if (!string.IsNullOrEmpty(item.BadgeId))
                         {
                             // submit to approval 
-                            using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
-                            {
                                 OracleCommand cmd = new OracleCommand();
                                 cmd.Connection = (OracleConnection)dbConn;
                                 cmd.CommandText = @"INSERT INTO TRAVELREQUEST_APPROVAL (                                                  
@@ -83,71 +85,73 @@ namespace TravelApplication.DAL.Repositories
                                 cmd.Parameters.Add(new OracleParameter("p4", Common.ApprovalStatus.Pending.ToString()));
                                 cmd.Parameters.Add(new OracleParameter("p5", count));
                                 var rowsUpdated = cmd.ExecuteNonQuery();
-                        cmd.Dispose();
-                        dbConn.Close();
-                        dbConn.Dispose();
-                    }
-
-                    count++;
+                                cmd.Dispose();                                                                
+                                count++;
                         }
                 }
-
-            using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
-            {
-                OracleCommand cmd = new OracleCommand();
-                cmd.Connection = (OracleConnection)dbConn;
-                cmd.CommandText = string.Format(@"UPDATE TRAVELREQUEST SET                                                 
+                OracleCommand cmd1 = new OracleCommand();
+                cmd1.Connection = (OracleConnection)dbConn;
+                cmd1.CommandText = string.Format(@"UPDATE TRAVELREQUEST SET                                                 
                                                        SUBMITTEDBYUSERNAME = :p1 ,
                                                         SUBMITTEDDATETIME = :p2,
                                                         STATUS = :p3,
                                                         AGREE = :p4
                                                    WHERE TRAVELREQUESTID = {0}", submitTravelRequestData.TravelRequestId);
 
-                cmd.Parameters.Add(new OracleParameter("p1", submitTravelRequestData.SubmittedByUserName));
-                cmd.Parameters.Add(new OracleParameter("p2", DateTime.Now));
-                cmd.Parameters.Add(new OracleParameter("p3", Common.ApprovalStatus.Pending.ToString()));
-                cmd.Parameters.Add(new OracleParameter("p4", (submitTravelRequestData.AgreedToTermsAndConditions)?"Y":"N"));
-                var rowsUpdated = cmd.ExecuteNonQuery();
-                cmd.Dispose();
+                cmd1.Parameters.Add(new OracleParameter("p1", submitTravelRequestData.SubmittedByUserName));
+                cmd1.Parameters.Add(new OracleParameter("p2", DateTime.Now));
+                cmd1.Parameters.Add(new OracleParameter("p3", Common.ApprovalStatus.Pending.ToString()));
+                cmd1.Parameters.Add(new OracleParameter("p4", (submitTravelRequestData.AgreedToTermsAndConditions)?"Y":"N"));
+                var rowsUpdated1 = cmd1.ExecuteNonQuery();
+                cmd1.Dispose();
                 dbConn.Close();
                 dbConn.Dispose();
+
+
+                string link = string.Format("<a href=\"http://localhost:2462/\">here</a>");
+                string subject = string.Format(@"Travel Request Approval for Id - {0} ", submitTravelRequestData.TravelRequestId);
+                string body = string.Format(@"Please visit Travel application website "+link+ " to Approve/Reject for travel request Id : {0}", submitTravelRequestData.TravelRequestId);
+                sendEmail(submitTravelRequestData.DepartmentHeadBadgeNumber, body,subject);
+                return true;
+
             }
-          
+            catch (Exception ex)
+            {
 
-            /*   string emailAddress = getEmailAddressByBadgeNumber(submitTravelRequestData.DepartmentHeadBadgeNumber);
-               var client = new HttpClient();
-               try
-               {
-                   client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                throw new Exception(ex.Message);
+            }
 
-                   var endpointUrl = string.Format("/api/email/sendemail");
-                   HttpResponseMessage response = client.GetAsync(endpointUrl);
+        }
 
-                   if (response.IsSuccessStatusCode)
-                   {
+        public void sendEmail(string departmentHeadBadgeNumber,string body, string subject)
+        {
+            try
+            {
+                var email = new Email()
+                {
+                    FromAddress = "natarajs@metro.net",
+                    ToAddress = getEmailAddressByBadgeNumber(departmentHeadBadgeNumber),
+                    Body = body,
+                    Subject = subject
+                };
+                var endpointUrl = "http://localhost:2462/api/email/sendemail";
+                var client = new HttpClient();
+                var response = client.PostAsJsonAsync(endpointUrl, email).ConfigureAwait(false);
+            }
+            catch (Exception ex )
+            {
 
-                       costCenters = await response.Content.ReadAsAsync<List<CostCenter>>();
-                   }
-               }
-               catch (Exception ex)
-               {
-                   // TODO : Log the exception
-                   throw new Exception("Unable to get the badge information from FIS service");
-               }
-               finally
-               {
-                   client.Dispose();
-               }*/
-
-            return true;
-    }
+                throw new Exception(ex.Message);
+            }
+            
+        }
 
         private string getEmailAddressByBadgeNumber(string departmentHeadBadgeNumber)
         {
             string result = string.Empty;
             using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
             {
-                string query = string.Format("select EMAIL from ROLES where BadgeNumber = {0}  ", departmentHeadBadgeNumber);
+                string query = string.Format("select EMAIL from USERS where BadgeNumber = {0}  ", departmentHeadBadgeNumber);
                 OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
                 command.CommandText = query;
                 DbDataReader dataReader = command.ExecuteReader();
