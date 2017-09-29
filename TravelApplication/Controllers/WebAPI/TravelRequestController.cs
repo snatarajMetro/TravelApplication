@@ -179,7 +179,7 @@ namespace TravelApplication.Controllers.WebAPI
 
         [HttpGet]
         [Route("api/travelrequestNew/{travelRequestId}")]
-        public HttpResponseMessage GetTravelRequestDetailsNew(int travelRequestId)
+        public HttpResponseMessage GetTravelRequestDetailsNew(string travelRequestId)
         {
             HttpResponseMessage response = null;
             try

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,6 @@ namespace TravelApplication.DAL.Repositories
     {
         Task<int> SaveEstimatedExpenseRequest(EstimatedExpense request);
         EstimatedExpense GetTravelRequestDetail(int travelRequestId);
-        EstimatedExpense GetTravelRequestDetailNew(int travelRequestId);
+        EstimatedExpense GetTravelRequestDetailNew(DbConnection dbConn, string travelRequestId);
     }
 }

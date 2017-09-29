@@ -76,5 +76,43 @@ namespace TravelApplication.Controllers.WebAPI
             return response;
         }
 
+        [HttpPost]
+        [Route("api/approval/submitNew")]
+        public HttpResponseMessage SubmitTravelRequestNew(SubmitTravelRequest submitTravelRequest)
+        {
+            HttpResponseMessage response = null;
+
+            try
+            {
+                var result = approvalService.SubmitTravelRequestNew(submitTravelRequest);
+                response = Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Log the exception message
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Travel request was not successfully submited. Please try again.");
+            }
+
+            return response;
+        }
+
+        [HttpGet]
+        [Route("api/approval/approverDetails{travelRequestId")]
+        public HttpResponseMessage GetapproverDetails(string travelRequestId)
+        {
+            HttpResponseMessage response = null;
+            try
+            {
+                SubmitTravelRequest  result = approvalService.GetapproverDetails(travelRequestId);
+                response = Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Log the exception message
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrieve cost centers from FIS  " + ex.Message);
+
+            }
+            return response;
+        }
     }
 }

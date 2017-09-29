@@ -69,7 +69,7 @@ namespace TravelApplication.Services
 
         }
 
-        public TravelRequestInput GetTravelRequestDetailNew(int travelRequestId)
+        public TravelRequestInput GetTravelRequestDetailNew(string travelRequestId)
         {
             TravelRequestInput result = travelRequestRepo.GetTravelRequestDetailNew(travelRequestId);
             return result;

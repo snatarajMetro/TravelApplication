@@ -13,5 +13,6 @@ namespace TravelApplication.DAL.Repositories
         bool SubmitTravelRequest(SubmitTravelRequestData submitTravelRequestData);
         void sendEmail(string departmentHeadBadgeNumber, string body, string subject);
         bool SubmitTravelRequestNew(SubmitTravelRequest submitTravelRequest);
+        SubmitTravelRequest GetApproverDetails(string travelRequestId);
     }
 }

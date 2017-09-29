@@ -172,6 +172,122 @@ namespace TravelApplication.DAL.Repositories
 
             return result;
         }
+
+        public bool SubmitTravelRequestNew(SubmitTravelRequest submitTravelRequest)
+        {
+            try
+            {
+                using(dbConn = ConnectionFactory.GetOpenDefaultConnection())
+                    {
+                    foreach (var item in submitTravelRequest.HeirarchichalApprovalRequest.ApproverList)
+                    {
+                        if ( item.ApproverBadgeNumber != 0)
+                        {
+
+                            // submit to approval 
+                            OracleCommand cmd = new OracleCommand();
+                            cmd.Connection = (OracleConnection)dbConn;
+                            cmd.CommandText = @"INSERT INTO TRAVELREQUEST_APPROVAL (                                                  
+                                                            TRAVELREQUESTID,
+                                                            BADGENUMBER,
+                                                            APPROVERNAME,
+                                                            APPROVALSTATUS,
+                                                            APPROVALORDER
+                                                        )
+                                                        VALUES
+                                                            (:p1,:p2,:p3,:p4,:p5)";
+                            cmd.Parameters.Add(new OracleParameter("p1", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId));
+                            cmd.Parameters.Add(new OracleParameter("p2", item.ApproverBadgeNumber));
+                            cmd.Parameters.Add(new OracleParameter("p3", item.ApproverName));
+                            cmd.Parameters.Add(new OracleParameter("p4", Common.ApprovalStatus.Pending.ToString()));
+                            cmd.Parameters.Add(new OracleParameter("p5", item.ApprovalOrder));
+                            var rowsUpdated = cmd.ExecuteNonQuery();
+                            cmd.Dispose();
+                        }
+                    }
+                    OracleCommand cmd1 = new OracleCommand();
+                    cmd1.Connection = (OracleConnection)dbConn;
+                    cmd1.CommandText = string.Format(@"UPDATE TRAVELREQUEST SET                                                 
+                                                       SUBMITTEDBYUSERNAME = :p1 ,
+                                                        SUBMITTEDDATETIME = :p2,
+                                                        STATUS = :p3,
+                                                        AGREE = :p4
+                                                   WHERE TRAVELREQUESTID = {0}", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
+
+                    cmd1.Parameters.Add(new OracleParameter("p1", submitTravelRequest.HeirarchichalApprovalRequest.SubmittedByUserName));
+                    cmd1.Parameters.Add(new OracleParameter("p2", DateTime.Now));
+                    cmd1.Parameters.Add(new OracleParameter("p3", Common.ApprovalStatus.Pending.ToString()));
+                    cmd1.Parameters.Add(new OracleParameter("p4", (submitTravelRequest.HeirarchichalApprovalRequest.AgreedToTermsAndConditions) ? "Y" : "N"));
+                    var rowsUpdated1 = cmd1.ExecuteNonQuery();
+                    cmd1.Dispose();
+                    dbConn.Close();
+                    dbConn.Dispose();
+
+
+                    string link = string.Format("<a href=\"http://localhost:2462/\">here</a>");
+                    string subject = string.Format(@"Travel Request Approval for Id - {0} ", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
+                    string body = string.Format(@"Please visit Travel application website " + link + " to Approve/Reject for travel request Id : {0}", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
+                    sendEmail(submitTravelRequest.HeirarchichalApprovalRequest.ApproverList[0].ApproverBadgeNumber.ToString(), body, subject);
+                    return true;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public SubmitTravelRequest GetApproverDetails(string travelRequestId)
+        {
+            SubmitTravelRequest response = new Models.SubmitTravelRequest();
+            HeirarchichalApprovalRequest heirarchichalApprovalRequest = new HeirarchichalApprovalRequest();
+            List<HeirarchichalOrder> approverList = new List<HeirarchichalOrder>();
+            using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+            {
+
+                //Get the approvers data
+                string query = string.Format("Select * from TRAVELREQUEST_APPROVAL where TRAVELREQUESTID = {0} ", travelRequestId);
+                OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+                command.CommandText = query;
+                DbDataReader dataReader = command.ExecuteReader();
+                if (dataReader.HasRows)
+                {
+                    while (dataReader.Read())
+                    {
+                        approverList.Add(new HeirarchichalOrder()
+                        {
+                            ApproverBadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]),
+                            ApproverName = dataReader["APPROVERNAME"].ToString(),
+                            ApprovalOrder = Convert.ToInt32(dataReader["APPROVALORDER"])
+                        });
+                    }
+                }
+                //Get the submission data from travel request
+
+                string query1 = string.Format("Select SubmittedByUserName, SubmittedDatetime ,AGREE from TRAVELREQUEST where TRAVELREQUESTID = {0} ", travelRequestId);
+                OracleCommand command1 = new OracleCommand(query, (OracleConnection)dbConn);
+                command1.CommandText = query;
+                DbDataReader dataReader1 = command.ExecuteReader();
+                if (dataReader1.HasRows)
+                {
+                    while (dataReader1.Read())
+                    {
+                        heirarchichalApprovalRequest.SubmittedByUserName = dataReader1["SubmittedByUserName"].ToString();
+                        heirarchichalApprovalRequest.SubmittedDatetime = Convert.ToDateTime(dataReader["SubmittedDateTime"]);
+                        heirarchichalApprovalRequest.AgreedToTermsAndConditions = (dataReader["Agree"].ToString() == "Y") ? true : false;
+                    }
+                }
+                command.Dispose();
+                dataReader.Close();
+                heirarchichalApprovalRequest.ApproverList = approverList;
+                dbConn.Close();
+                dbConn.Dispose();
+            }
+            response.HeirarchichalApprovalRequest = heirarchichalApprovalRequest;
+            return response;
+        }
     }
 
         public class BadgeInfo

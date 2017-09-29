@@ -13,5 +13,6 @@ namespace TravelApplication.Services
         List<HeirarchichalPosition> GetTAAprovers();
         bool SubmitTravelRequest(SubmitTravelRequestData submitTravelRequestData);
         bool SubmitTravelRequestNew(SubmitTravelRequest submitTravelRequest);
+        SubmitTravelRequest GetapproverDetails(string travelRequestId);
     }
 }

@@ -207,7 +207,7 @@ namespace TravelApplication.DAL.Repositories
             return estimatedExpenseId;
         }
 
-        public EstimatedExpense GetTravelRequestDetailNew(DbConnection dbConn, int travelRequestId)
+        public EstimatedExpense GetTravelRequestDetailNew(DbConnection dbConn, string travelRequestId)
         {
             EstimatedExpense response = null;
             string query = string.Format("Select * from TRAVELREQUEST_ESTIMATEDEXPENSE where TRAVELREQUESTID= {0}", travelRequestId);

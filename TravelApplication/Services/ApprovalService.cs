@@ -11,6 +11,13 @@ namespace TravelApplication.Services
     public class ApprovalService : IApprovalService
     {
         IApprovalRepository approvalRepository = new ApprovalRepository();
+
+        public SubmitTravelRequest GetapproverDetails(string travelRequestId)
+        {
+            SubmitTravelRequest result = approvalRepository.GetApproverDetails(travelRequestId);
+            return result;
+        }
+
         public async Task<List<HeirarchichalPosition>> GetHeirarchichalPositions(int badgeNumber)
         {
             List<HeirarchichalPosition> result = await approvalRepository.GetHeirarchichalPositions(badgeNumber).ConfigureAwait(false);
@@ -31,6 +38,12 @@ namespace TravelApplication.Services
         public bool SubmitTravelRequest(SubmitTravelRequestData submitTravelRequestData)
         {
             var result = approvalRepository.SubmitTravelRequest(submitTravelRequestData);
+            return result;
+        }
+
+        public bool SubmitTravelRequestNew(SubmitTravelRequest submitTravelRequest)
+        {
+            var result = approvalRepository.SubmitTravelRequestNew(submitTravelRequest);
             return result;
         }
     }

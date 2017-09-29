@@ -220,7 +220,7 @@ namespace TravelApplication.Services
             }
         }
 
-        public TravelRequest GetTravelRequestDetailOLD(int travelRequestId)
+        public TravelRequest GetTravelRequestDetail(int travelRequestId)
         {
             TravelRequest response = null;
             using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
@@ -260,7 +260,7 @@ namespace TravelApplication.Services
             return response;
         }
 
-        public TravelRequest GetTravelRequestDetail(DbConnection dbConn, int travelRequestId)
+        public TravelRequest GetTravelRequestDetail(DbConnection dbConn, string travelRequestId)
         {
             TravelRequest response = null;
                 string query = string.Format("Select * from TRAVELREQUEST where TRAVELREQUESTID= {0}", travelRequestId);
@@ -913,7 +913,7 @@ namespace TravelApplication.Services
             return estimatedExpenseId;
         }
 
-        public TravelRequestInput GetTravelRequestDetailNew(int travelRequestId)
+        public TravelRequestInput GetTravelRequestDetailNew(string travelRequestId)
         {
             TravelRequest travelRequest = null;
             EstimatedExpense estimatedExpense = null;
@@ -939,6 +939,6 @@ namespace TravelApplication.Services
                 throw;
             }
             return travelRequestInput;
-           
+        }
     }
 }
