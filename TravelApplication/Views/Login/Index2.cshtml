@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "Travel Request / Athourization";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<div id="main" class="main">
+    <div id="travelRequestIdSection">
+        <span id="travelRequestId">0</span>
+        <span id="badgeNumber">0</span>
+        <span id="selectedRoleId">0</span>
+        <span id="estimatedExpenseId">0</span>
+    </div>
+    <div id="signin" class="main signincontainer">
+        <div id="inputs" class="main">
+            <span class="signin">Sign in</span>
+        </div>
+        <div class="main label">
+            <input type="text" width="100" name="txtEmail" id="txtEmail" placeholder="Username" class="datainput" />
+        </div>
+        <div class="main label">
+            <input type="password" width="100" id="txtPassword" name="txtPassword" placeholder="Password" class="datainput" />
+        </div>
+        <div id="invaliduser" class="main errorcontainer" style="display:none">
+            <div class="dialog">Invalid username and/or password. Please try again.</div>
+            <a href="#" class="close-thick" onclick="return closeinvaliduser();"></a>
+        </div>
+        <div>
+            <div class="signinbutton2">
+                <input class="btn btn-success signinbutton" type="button" name="btnSignIn" value="Sign in" onclick="signIn()" /><br />
+            </div>
+        </div>
+    </div>
+    <div id="action" class="main actioncontainer" style="display:none">
+        <div id="inputs">
+            <span class="username"><b>Hello,</b>&nbsp;</span>
+            <span class="" id="userName2"></span>
+        </div>
+        <div class="main selectrole">
+            <span>What would you like to do as a</span>
+            <span class="roleName" id="roleName"></span>&nbsp;?
+        </div>
+        <div id="roleselection" class="main roles">
+            <div>
+                <div class="action1" onclick="viewexistingtravelrequests();">
+                    <img style="padding:0px;" src="~/Images/View.png" width="30" height="30" />
+                    <span onclick="">View existing travel requests</span>
+                </div>
+                <div class="action2" onclick="createnewrequest()">
+                    <img style="padding:0px;" src="~/Images/New.png" width="30" height="30" />
+                    <span>Create new travel request</span>
+                </div>
+            </div>
+        </div>
+        <div class="main button2">
+            <div class="main backsection2">
+                <input class="btn btn-success signinbutton" type="button" name="btnBack" value="Back" onclick="backtoroleselection()" />
+            </div>
+        </div>
+    </div>
+    <div id="signintemplate"
+         class="main signincontainer"
+         style="display:none">
+    </div>
+</div>

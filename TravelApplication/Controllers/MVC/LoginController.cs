@@ -14,6 +14,11 @@ namespace TravelApplication.Controllers.MVC
             return View();
         }
 
+        public ActionResult Index2()
+        {
+            return View();
+        }
+
         //public ActionResult Upload(int travelRequestId, int badgeNumber)
         //{
         //    bool isSavedSuccessfully = true;
@@ -24,7 +29,7 @@ namespace TravelApplication.Controllers.MVC
         //        foreach (string fileName in Request.Files)
         //        {
         //            HttpPostedFileBase file = Request.Files[fileName];
-                    
+
         //            fName = file.FileName;
         //        }
 

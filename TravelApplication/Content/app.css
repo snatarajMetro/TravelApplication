@@ -1,0 +1,282 @@
+﻿body{
+    /*font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;*/
+}
+.appbackground {
+    background-image: url("/images/sn.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+div.main {
+    display:block;
+    margin-top:2px;
+}
+
+.logotitle,
+.logotitle:hover {
+    color:#fff;
+    float: left;
+    height: 50px;
+    padding: 15px 15px;
+    font-size: 18px;
+    line-height: 20px;
+}
+
+a
+{
+    color:dodgerblue;
+    text-decoration:none;
+}
+
+a:hover
+{
+    color:black;
+    text-decoration:none;
+}
+
+div.signincontainer {
+    position: absolute;
+    float:left;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 500px;
+    height: 250px;
+    margin: auto;
+    background-color: white;
+    box-shadow: 10px 10px 5px #3c3c3c;
+    border-radius: 3px;
+    border:solid 1px black;
+}
+
+.signin {
+    padding-left:18px;
+    /*font-weight:bold;*/
+    font-size:20px;
+}
+
+.datainput {
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    padding-left:5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width:375px;
+    height:35px;
+    font-size:15px;
+    color:black;
+    margin-top:5px;
+    margin-bottom:10px;
+}
+
+.datainputerror {
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px red;
+    padding-left:5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width:375px;
+    height:35px;
+    font-size:15px;
+    color:black;
+    margin-top:5px;
+    margin-bottom:10px;
+}
+
+.label {
+    padding-top:10px;
+    float:left;
+    margin-left:15px;
+}
+
+.errorcontainer {
+    position:absolute;
+    display:block;
+    top:0;
+    right:0;
+}
+
+.close-thick,
+.close-thick:hover {
+    color:white;
+    font:14px/100% arial, sans-serif;
+    position:absolute;
+    right:5px;
+    text-decoration:none;
+    text-shadow: 0 1px 0 #fff;
+    top:3px;
+    text-wrap:normal;
+}
+
+.close-thick:after {
+    content:'❌';
+}
+
+.dialog {
+    background-color:#c44c4c;
+    color:white;
+    width:290px;
+    height:auto;
+    margin:2px; 
+    padding:10px;
+    padding-right:20px;
+    font-size:15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    float:left;
+    position:relative;
+}
+
+.signinbutton,
+.signinbutton:hover,
+.signinbutton:focus,
+.signinbutton:active
+{
+    color:white;
+    width:auto;
+    min-width:100px;
+    cursor:pointer;
+    background-color:dodgerblue;
+    border-color: #53A3CD;
+}
+
+.btn-success
+{
+    background-color:dodgerblue !important;
+}
+.register
+{
+    font-size:10px;
+    margin-top:5px;
+    text-align:center;
+}
+
+.signinbutton2{
+    position: absolute;
+    margin-left:195px;
+    margin-top:150px;
+}
+
+.username {
+    padding-left:38px;
+    padding-top:0px;
+    font-size:20px;
+}
+
+.selectrole {
+    padding-left:38px;
+    padding-top:10px;
+}
+
+.roles {
+    padding-left:38px;
+    height:96px;
+}
+
+.availableroles {
+    font-size:15px;
+    width:185px;
+    height:30px;
+    float:left;
+    margin-top:3px;
+    margin-bottom:3px;
+
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.button {
+    padding-top:40px;
+    float:right;
+    padding-right:62px;
+}
+
+.backsection
+{
+    float:left;
+    padding-right:150px;
+    padding-left:30px;
+}
+
+.action1
+{
+    float:left;
+    margin-top:10px;
+    padding:10px;
+    width:235px;
+    height:50px;
+    box-shadow: 5px 5px 5px #3c3c3c;
+    border-radius: 3px;
+    border:solid 1px black;
+}
+
+.action2
+{
+    float:left;
+    margin-top:10px;
+    margin-left:20px;
+    padding:10px;
+    font-size:15px;
+    width:235px;
+    height:50px;
+    box-shadow: 5px 5px 5px #3c3c3c;
+    border-radius: 3px;
+    border:solid 1px black;
+}
+
+.action1:hover {
+border-radius:2px;
+border:1px solid;
+border-color:dodgerblue;
+cursor:pointer;
+}
+
+.action2:hover {
+border-radius:2px;
+border:1px solid;
+border-color:dodgerblue;
+cursor:pointer;
+}
+
+div.actioncontainer {
+    position: absolute;
+    float:left;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 550px;
+    height: 250px;
+    margin: auto;
+    background-color: white;
+    box-shadow: 10px 10px 5px #3c3c3c;
+    border-radius: 3px;
+    border:solid 1px black;
+}
+
+.backsection2
+{
+    float:left;
+    margin-left:200px;
+}
+
+.button2 {
+    padding-top:40px;
+    float:left;
+    height:100px;
+    padding-left:28px;
+}
+
+.logout{
+    float:right;
+    color:white;
+    padding:10px;
+    padding-right:10px;
+    display:none;
+    cursor:pointer;
+}
