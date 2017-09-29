@@ -649,12 +649,12 @@ namespace TravelApplication.Services
 
         public  string SaveTravelRequestNew(DbConnection dbConn , TravelRequest travelRequest)
         {
-            string travelRequestId = string.Empty;
+            string travelRequestIdNew = string.Empty;
             try
             {
                 var loginId = getUserName(dbConn, travelRequest.UserId);
                 travelRequest.LoginId = loginId;
-                    if (string.IsNullOrEmpty(travelRequest.TravelRequestId))
+                    if (string.IsNullOrEmpty(travelRequest.TravelRequestIdNew))
                     {
                         OracleCommand cmd = new OracleCommand();
                         cmd.Connection = (OracleConnection)dbConn;
@@ -692,7 +692,7 @@ namespace TravelApplication.Services
                         cmd.Parameters.Add(new OracleParameter("p14", travelRequest.SubmittedByBadgeNumber));
                         cmd.Parameters.Add("travelRequestId", OracleDbType.Int32, ParameterDirection.ReturnValue);
                         var rowsUpdated = cmd.ExecuteNonQuery();
-                        travelRequestId = cmd.Parameters["travelRequestId"].Value.ToString();
+                        travelRequestIdNew = cmd.Parameters["travelRequestId"].Value.ToString();
                         cmd.Dispose();
                     }
                     else
@@ -724,7 +724,7 @@ namespace TravelApplication.Services
                         cmd.Parameters.Add(new OracleParameter("p11", travelRequest.ReturnDateTime));
                         cmd.Parameters.Add(new OracleParameter("p12", DateTime.Now));
                         var rowsUpdated = cmd.ExecuteNonQuery();
-                        travelRequestId = travelRequest.TravelRequestId;
+                        travelRequestIdNew = travelRequest.TravelRequestId.ToString();
                         cmd.Dispose();
                     }
             }
@@ -735,7 +735,7 @@ namespace TravelApplication.Services
                 throw new Exception("Couldn't insert/update record into Travel Request - " + ex.Message);
             }
 
-            return travelRequestId;
+            return travelRequestIdNew;
         }
 
         public int SaveEstimatedExpenseRequestNew(DbConnection dbConn, EstimatedExpense request)
@@ -876,5 +876,7 @@ namespace TravelApplication.Services
 
             return estimatedExpenseId;
         }
+
+ 
     }
 }

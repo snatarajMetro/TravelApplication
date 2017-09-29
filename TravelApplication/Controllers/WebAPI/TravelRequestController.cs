@@ -163,7 +163,7 @@ namespace TravelApplication.Controllers.WebAPI
             HttpResponseMessage response = null;
             try
             {
-                var result = travelRequestService.SaveTravelRequestInput(travelRequest).Result;
+                var result = travelRequestService.SaveTravelRequestInput(travelRequest);
                 var data = new JavaScriptSerializer().Serialize(result);
 
                 response = Request.CreateResponse(HttpStatusCode.OK, data);

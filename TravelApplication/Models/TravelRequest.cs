@@ -8,8 +8,9 @@ namespace TravelApplication.Models
 {
     public class TravelRequest
     {
-        public string TravelRequestId { get; set; }
+        public int TravelRequestId { get; set; }
 
+        public string TravelRequestIdNew { get; set; }
         public int UserId { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter the badge number")]

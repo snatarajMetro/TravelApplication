@@ -55,11 +55,11 @@ namespace TravelApplication.Services
             
         }
 
-        public async Task<bool> SaveTravelRequestInput(TravelRequestInput travelRequest)
+        public  bool SaveTravelRequestInput(TravelRequestInput travelRequest)
         {
             try
             {
-                bool result = await travelRequestRepo.SaveTravelRequestInput(travelRequest).ConfigureAwait(false);
+                bool result =   travelRequestRepo.SaveTravelRequestInput(travelRequest);
                 return result;
             }
             catch (Exception ex)
