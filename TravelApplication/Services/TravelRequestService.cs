@@ -68,5 +68,11 @@ namespace TravelApplication.Services
             }
 
         }
+
+        public TravelRequestInput GetTravelRequestDetailNew(int travelRequestId)
+        {
+            TravelRequestInput result = travelRequestRepo.GetTravelRequestDetailNew(travelRequestId);
+            return result;
+        }
     }
 }

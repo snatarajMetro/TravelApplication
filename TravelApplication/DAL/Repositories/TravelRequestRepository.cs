@@ -16,6 +16,8 @@ namespace TravelApplication.Services
     public class TravelRequestRepository :  ApprovalRepository, ITravelRequestRepository
     {
         private DbConnection dbConn;
+        EstimatedExpenseRepository estimatedExpenseRepository = new EstimatedExpenseRepository();
+
 
         public async Task<EmployeeDetails> GetEmployeeDetails(int badgeNumber)
         {
@@ -218,7 +220,7 @@ namespace TravelApplication.Services
             }
         }
 
-        public TravelRequest GetTravelRequestDetail(int travelRequestId)
+        public TravelRequest GetTravelRequestDetailOLD(int travelRequestId)
         {
             TravelRequest response = null;
             using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
@@ -258,6 +260,40 @@ namespace TravelApplication.Services
             return response;
         }
 
+        public TravelRequest GetTravelRequestDetail(DbConnection dbConn, int travelRequestId)
+        {
+            TravelRequest response = null;
+                string query = string.Format("Select * from TRAVELREQUEST where TRAVELREQUESTID= {0}", travelRequestId);
+                OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+                command.CommandText = query;
+                DbDataReader dataReader = command.ExecuteReader();
+                if (dataReader.HasRows)
+                {
+                    while (dataReader.Read())
+                    {
+                        response = new TravelRequest()
+                        {
+                            BadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]),
+                            Name = dataReader["NAME"].ToString(),
+                            Division = dataReader["DIVISION"].ToString(),
+                            Section = dataReader["SECTION"].ToString(),
+                            Organization = dataReader["ORGANIZATION"].ToString(),
+                            MeetingLocation = dataReader["MEETINGLOCATION"].ToString(),
+                            MeetingBeginDateTime = Convert.ToDateTime(dataReader["MEETINGBEGINDATETIME"]),
+                            MeetingEndDateTime = Convert.ToDateTime(dataReader["MEETINGENDDATETIME"]),
+                            DepartureDateTime = Convert.ToDateTime(dataReader["DEPARTUREDATETIME"]),
+                            ReturnDateTime = Convert.ToDateTime(dataReader["RETURNDATETIME"])
+                        };
+                    }
+                }
+                else
+                {
+                    throw new Exception("Couldn't retrieve travel request");
+                }
+                command.Dispose();
+                dataReader.Close();
+                return response;
+        }
         public List<TravelRequestDetails> GetTravelRequestList(int submittedBadgeNumber, int selectedRoleId)
         {
             List<TravelRequestDetails> response = new List<TravelRequestDetails>();
@@ -877,6 +913,32 @@ namespace TravelApplication.Services
             return estimatedExpenseId;
         }
 
- 
+        public TravelRequestInput GetTravelRequestDetailNew(int travelRequestId)
+        {
+            TravelRequest travelRequest = null;
+            EstimatedExpense estimatedExpense = null;
+            TravelRequestInput travelRequestInput = null;
+            try
+            {
+                using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+                {
+                    travelRequest = GetTravelRequestDetail(dbConn, travelRequestId);
+                    estimatedExpense = estimatedExpenseRepository.GetTravelRequestDetailNew(dbConn, travelRequestId);
+                    dbConn.Close();
+                    dbConn.Dispose();
+                }
+                travelRequestInput = new TravelRequestInput()
+                {
+                    TravelRequestData = travelRequest,
+                    EstimatedExpenseData = estimatedExpense
+                };
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return travelRequestInput;
+           
     }
 }

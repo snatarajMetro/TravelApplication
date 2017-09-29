@@ -9,7 +9,8 @@ namespace TravelApplication.Models
     {
         public TravelRequest TravelRequestData { get; set; }
         public EstimatedExpense EstimatedExpenseData { get; set; }
+
         //public FIS FISData { get; set; }
-        //  public SubmitTravelRequestData submitData { get; set; }
+      
     }
 }

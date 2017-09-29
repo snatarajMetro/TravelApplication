@@ -176,6 +176,25 @@ namespace TravelApplication.Controllers.WebAPI
             }
             return response;
         }
+
+        [HttpGet]
+        [Route("api/travelrequestNew/{travelRequestId}")]
+        public HttpResponseMessage GetTravelRequestDetailsNew(int travelRequestId)
+        {
+            HttpResponseMessage response = null;
+            try
+            {
+                TravelRequestInput result = travelRequestService.GetTravelRequestDetailNew(travelRequestId);
+                response = Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Log the exception message
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrive travel request details for the given travel request Id : " + ex.Message);
+
+            }
+            return response;
+        }
     }
 
 }

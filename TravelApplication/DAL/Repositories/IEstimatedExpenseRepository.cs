@@ -11,5 +11,6 @@ namespace TravelApplication.DAL.Repositories
     {
         Task<int> SaveEstimatedExpenseRequest(EstimatedExpense request);
         EstimatedExpense GetTravelRequestDetail(int travelRequestId);
+        EstimatedExpense GetTravelRequestDetailNew(int travelRequestId);
     }
 }

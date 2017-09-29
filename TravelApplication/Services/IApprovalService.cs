@@ -12,5 +12,6 @@ namespace TravelApplication.Services
         Task<List<HeirarchichalPosition>> GetHeirarchichalPositions(int badgeNumber);
         List<HeirarchichalPosition> GetTAAprovers();
         bool SubmitTravelRequest(SubmitTravelRequestData submitTravelRequestData);
+        bool SubmitTravelRequestNew(SubmitTravelRequest submitTravelRequest);
     }
 }
