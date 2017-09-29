@@ -607,5 +607,274 @@ namespace TravelApplication.Services
             return false;
             
         }
+
+        public bool SaveTravelRequestInput(TravelRequestInput travelRequest)
+        {
+            string travelRequestId = string.Empty;
+            int estimatedExpenseId = 0;
+            try
+            {
+                //Validate basic information
+                ValidateTravelRequestInfo(travelRequest.TravelRequestData);
+                using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+                {
+                    // Insert or update travel request
+                    travelRequestId = SaveTravelRequestNew(dbConn, travelRequest.TravelRequestData);
+                    if (string.IsNullOrEmpty(travelRequestId))
+                    {
+                        throw new Exception("Couldn't save/update travel request information");
+                    }
+
+                    // Insert or update estimated expense
+                    estimatedExpenseId = SaveEstimatedExpenseRequestNew(dbConn, travelRequest.EstimatedExpenseData);
+                    if(estimatedExpenseId == 0)
+                    {
+                        throw new Exception("Couldn't save/update estimated expense information");
+                    }
+                    // Insert or update FIS expense
+
+                    return true;
+
+                }
+                dbConn.Close();
+                dbConn.Dispose();
+            }
+            catch (Exception ex)
+            {
+
+                //TODO : log the exception 
+                throw new Exception("Couldn't save record into Travel Request - " + ex.Message);
+            }
+        }
+
+        public  string SaveTravelRequestNew(DbConnection dbConn , TravelRequest travelRequest)
+        {
+            string travelRequestId = string.Empty;
+            try
+            {
+                var loginId = getUserName(dbConn, travelRequest.UserId);
+                travelRequest.LoginId = loginId;
+                    if (string.IsNullOrEmpty(travelRequest.TravelRequestId))
+                    {
+                        OracleCommand cmd = new OracleCommand();
+                        cmd.Connection = (OracleConnection)dbConn;
+                        cmd.CommandText = @"INSERT INTO TRAVELREQUEST (                                                  
+                                                    BADGENUMBER,
+                                                    NAME,
+                                                    DIVISION,
+                                                    SECTION,
+                                                    ORGANIZATION,
+                                                    MEETINGLOCATION,
+                                                    MEETINGBEGINDATETIME,
+                                                    DEPARTUREDATETIME,
+                                                    MEETINGENDDATETIME,
+                                                    RETURNDATETIME,
+                                                    CREATIONDATETIME,
+                                                    SELECTEDROLEID,
+                                                    STATUS,
+                                                    SUBMITTEDBYBADGENUMBER
+                                                )
+                                                VALUES
+                                                    (:p2,:p3,:p4,:p5,:p6,:p7,:p8,:p9,:p10,:p11,:p12,:p13,:p14,:P15) returning TRAVELREQUESTID into :travelRequestId";
+                        cmd.Parameters.Add(new OracleParameter("p2", travelRequest.BadgeNumber));
+                        cmd.Parameters.Add(new OracleParameter("p3", travelRequest.Name));
+                        cmd.Parameters.Add(new OracleParameter("p4", travelRequest.Division));
+                        cmd.Parameters.Add(new OracleParameter("p5", travelRequest.Section));
+                        cmd.Parameters.Add(new OracleParameter("p6", travelRequest.Organization));
+                        cmd.Parameters.Add(new OracleParameter("p7", travelRequest.MeetingLocation));
+                        cmd.Parameters.Add(new OracleParameter("p8", travelRequest.MeetingBeginDateTime));
+                        cmd.Parameters.Add(new OracleParameter("p9", travelRequest.DepartureDateTime));
+                        cmd.Parameters.Add(new OracleParameter("p10", travelRequest.MeetingEndDateTime));
+                        cmd.Parameters.Add(new OracleParameter("p11", travelRequest.ReturnDateTime));
+                        cmd.Parameters.Add(new OracleParameter("p12", DateTime.Now));
+                        cmd.Parameters.Add(new OracleParameter("p13", travelRequest.SelectedRoleId));
+                        cmd.Parameters.Add(new OracleParameter("p14", ApprovalStatus.New.ToString()));
+                        cmd.Parameters.Add(new OracleParameter("p14", travelRequest.SubmittedByBadgeNumber));
+                        cmd.Parameters.Add("travelRequestId", OracleDbType.Int32, ParameterDirection.ReturnValue);
+                        var rowsUpdated = cmd.ExecuteNonQuery();
+                        travelRequestId = cmd.Parameters["travelRequestId"].Value.ToString();
+                        cmd.Dispose();
+                    }
+                    else
+                    {
+                        OracleCommand cmd = new OracleCommand();
+                        cmd.Connection = (OracleConnection)dbConn;
+                        cmd.CommandText = string.Format(@"UPDATE  TRAVELREQUEST SET                                                  
+                                                BADGENUMBER = :p2,
+                                                NAME = :p3,
+                                                DIVISION  = :p4,
+                                                SECTION  = :p5,
+                                                ORGANIZATION  = :p6,
+                                                MEETINGLOCATION  = :p7,
+                                                MEETINGBEGINDATETIME  = :p8,
+                                                DEPARTUREDATETIME  = :p9,
+                                                MEETINGENDDATETIME  = :p10,
+                                                RETURNDATETIME  = :p11,
+                                                LASTUPDATEDDATETIME  = :p12
+                                                WHERE TRAVELREQUESTID = {0}", travelRequest.TravelRequestId);
+                        cmd.Parameters.Add(new OracleParameter("p2", travelRequest.BadgeNumber));
+                        cmd.Parameters.Add(new OracleParameter("p3", travelRequest.Name));
+                        cmd.Parameters.Add(new OracleParameter("p4", travelRequest.Division));
+                        cmd.Parameters.Add(new OracleParameter("p5", travelRequest.Section));
+                        cmd.Parameters.Add(new OracleParameter("p6", travelRequest.Organization));
+                        cmd.Parameters.Add(new OracleParameter("p7", travelRequest.MeetingLocation));
+                        cmd.Parameters.Add(new OracleParameter("p8", travelRequest.MeetingBeginDateTime));
+                        cmd.Parameters.Add(new OracleParameter("p9", travelRequest.DepartureDateTime));
+                        cmd.Parameters.Add(new OracleParameter("p10", travelRequest.MeetingEndDateTime));
+                        cmd.Parameters.Add(new OracleParameter("p11", travelRequest.ReturnDateTime));
+                        cmd.Parameters.Add(new OracleParameter("p12", DateTime.Now));
+                        var rowsUpdated = cmd.ExecuteNonQuery();
+                        travelRequestId = travelRequest.TravelRequestId;
+                        cmd.Dispose();
+                    }
+            }
+            catch (Exception ex)
+            {
+
+                //TODO : log the exception 
+                throw new Exception("Couldn't insert/update record into Travel Request - " + ex.Message);
+            }
+
+            return travelRequestId;
+        }
+
+        public int SaveEstimatedExpenseRequestNew(DbConnection dbConn, EstimatedExpense request)
+        {
+            int estimatedExpenseId = 0;
+            try
+            {
+                if (request.EstimatedExpenseId == 0)
+                {
+                    using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+                    {
+                        OracleCommand cmd = new OracleCommand();
+                        cmd.Connection = (OracleConnection)dbConn;
+                        cmd.CommandText = @"INSERT INTO TRAVELREQUEST_ESTIMATEDEXPENSE(
+                        TRAVELREQUESTID,
+                        ADVANCELODGING,
+                        ADVANCEAIRFARE,
+						ADVANCEREGISTRATION,
+						ADVANCEMEALS,
+						ADVANCECARRENTAL,
+						ADVANCEMISCELLANEOUS,
+						ADVANCETOTAL,
+                        TOTALESTIMATEDLODGE,
+                        TOTALESTIMATEDAIRFARE,
+						TOTALESTIMATEDREGISTRATION,
+						TOTALESTIMATEDMEALS,
+						TOTALESTIMATEDCARRENTAL,
+						TOTALESTIMATEDMISCELLANEOUS,
+						TOTALESTIMATEDTOTAL,
+                        HOTELNAMEANDADDRESS,
+						SCHEDULE,
+						PAYABLETOANDADDRESS,
+						NOTE,
+						AGENCYNAMEANDRESERVATION,
+						SHUTTLE,
+						CASHADVANCE,
+						DATENEEDEDBY					 
+						 ) VALUES (:p1 ,:p2,:p3,:p4,:p5,:p6,:p7,:p8,:p9,:p10,:p11,:p12,:p13,:p14,:p15,:p16,:p17,:p18,:p19,:p20,:p21,:p22,:p23 ) returning ESTIMATEDEXPENSEID into : estimatedExpenseId ";
+                        cmd.Parameters.Add(new OracleParameter("p1", request.TravelRequestId));
+                        cmd.Parameters.Add(new OracleParameter("p2", request.AdvanceLodging));
+                        cmd.Parameters.Add(new OracleParameter("p3", request.AdvanceAirFare));
+                        cmd.Parameters.Add(new OracleParameter("p4", request.AdvanceRegistration));
+                        cmd.Parameters.Add(new OracleParameter("p5", request.AdvanceMeals));
+                        cmd.Parameters.Add(new OracleParameter("p6", request.AdvanceCarRental));
+                        cmd.Parameters.Add(new OracleParameter("p7", request.AdvanceMiscellaneous));
+                        cmd.Parameters.Add(new OracleParameter("p8", request.AdvanceTotal));
+                        cmd.Parameters.Add(new OracleParameter("p9", request.TotalEstimatedLodge));
+                        cmd.Parameters.Add(new OracleParameter("p10", request.TotalEstimatedAirFare));
+                        cmd.Parameters.Add(new OracleParameter("p11", request.TotalEstimatedRegistration));
+                        cmd.Parameters.Add(new OracleParameter("p12", request.TotalEstimatedMeals));
+                        cmd.Parameters.Add(new OracleParameter("p13", request.TotalEstimatedCarRental));
+                        cmd.Parameters.Add(new OracleParameter("p14", request.TotalEstimatedMiscellaneous));
+                        cmd.Parameters.Add(new OracleParameter("p15", request.TotalEstimatedTotal));
+                        cmd.Parameters.Add(new OracleParameter("p16", request.HotelNameAndAddress));
+                        cmd.Parameters.Add(new OracleParameter("p17", request.Schedule));
+                        cmd.Parameters.Add(new OracleParameter("p18", request.PayableToAndAddress));
+                        cmd.Parameters.Add(new OracleParameter("p19", request.Note));
+                        cmd.Parameters.Add(new OracleParameter("p20", request.AgencyNameAndReservation));
+                        cmd.Parameters.Add(new OracleParameter("p21", request.Shuttle));
+                        cmd.Parameters.Add(new OracleParameter("p22", request.CashAdvance));
+                        cmd.Parameters.Add(new OracleParameter("p23", request.DateNeededBy));
+                        cmd.Parameters.Add("estimatedExpenseId", OracleDbType.Int32, ParameterDirection.ReturnValue);
+                        var rowsUpdated = cmd.ExecuteNonQuery();
+                        estimatedExpenseId = Decimal.ToInt32(((Oracle.ManagedDataAccess.Types.OracleDecimal)(cmd.Parameters["estimatedExpenseId"].Value)).Value);
+
+                        cmd.Dispose();
+                        dbConn.Close();
+                        dbConn.Dispose();
+                    }
+                }
+                else
+                {
+                    using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+                    {
+                        OracleCommand cmd = new OracleCommand();
+                        cmd.Connection = (OracleConnection)dbConn;
+                        cmd.CommandText = string.Format(@"UPDATE  TRAVELREQUEST_ESTIMATEDEXPENSE SET
+                        TRAVELREQUESTID = :p1,
+                        ADVANCELODGING = :p2,
+                        ADVANCEAIRFARE = :p3,
+						ADVANCEREGISTRATION = :p4,
+						ADVANCEMEALS = :p5,
+						ADVANCECARRENTAL = :p6,
+						ADVANCEMISCELLANEOUS = :p7,
+						ADVANCETOTAL = :p8,
+                        TOTALESTIMATEDLODGE = :p9,
+                        TOTALESTIMATEDAIRFARE = :p10,
+						TOTALESTIMATEDREGISTRATION = :p11,
+						TOTALESTIMATEDMEALS = :p12,
+						TOTALESTIMATEDCARRENTAL = :p13,
+						TOTALESTIMATEDMISCELLANEOUS = :p14,
+						TOTALESTIMATEDTOTAL = :p15,
+                        HOTELNAMEANDADDRESS = :p16,
+						SCHEDULE = :p17,
+						PAYABLETOANDADDRESS = :p18,
+						NOTE = :p19,
+						AGENCYNAMEANDRESERVATION = :p20,
+						SHUTTLE = :p21,
+						CASHADVANCE = :p22,
+						DATENEEDEDBY  = :p23
+                        WHERE TRAVELREQUESTID = {0}", request.TravelRequestId);
+                        cmd.Parameters.Add(new OracleParameter("p1", request.TravelRequestId));
+                        cmd.Parameters.Add(new OracleParameter("p2", request.AdvanceLodging));
+                        cmd.Parameters.Add(new OracleParameter("p3", request.AdvanceAirFare));
+                        cmd.Parameters.Add(new OracleParameter("p4", request.AdvanceRegistration));
+                        cmd.Parameters.Add(new OracleParameter("p5", request.AdvanceMeals));
+                        cmd.Parameters.Add(new OracleParameter("p6", request.AdvanceCarRental));
+                        cmd.Parameters.Add(new OracleParameter("p7", request.AdvanceMiscellaneous));
+                        cmd.Parameters.Add(new OracleParameter("p8", request.AdvanceTotal));
+                        cmd.Parameters.Add(new OracleParameter("p9", request.TotalEstimatedLodge));
+                        cmd.Parameters.Add(new OracleParameter("p10", request.TotalEstimatedAirFare));
+                        cmd.Parameters.Add(new OracleParameter("p11", request.TotalEstimatedRegistration));
+                        cmd.Parameters.Add(new OracleParameter("p12", request.TotalEstimatedMeals));
+                        cmd.Parameters.Add(new OracleParameter("p13", request.TotalEstimatedCarRental));
+                        cmd.Parameters.Add(new OracleParameter("p14", request.TotalEstimatedMiscellaneous));
+                        cmd.Parameters.Add(new OracleParameter("p15", request.TotalEstimatedTotal));
+                        cmd.Parameters.Add(new OracleParameter("p16", request.HotelNameAndAddress));
+                        cmd.Parameters.Add(new OracleParameter("p17", request.Schedule));
+                        cmd.Parameters.Add(new OracleParameter("p18", request.PayableToAndAddress));
+                        cmd.Parameters.Add(new OracleParameter("p19", request.Note));
+                        cmd.Parameters.Add(new OracleParameter("p20", request.AgencyNameAndReservation));
+                        cmd.Parameters.Add(new OracleParameter("p21", request.Shuttle));
+                        cmd.Parameters.Add(new OracleParameter("p22", request.CashAdvance));
+                        cmd.Parameters.Add(new OracleParameter("p23", request.DateNeededBy));
+                        var rowsUpdated = cmd.ExecuteNonQuery();
+                        estimatedExpenseId = request.EstimatedExpenseId;
+                        cmd.Dispose();
+                        dbConn.Close();
+                        dbConn.Dispose();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Could not save estimated expense successfully");
+            }
+
+            return estimatedExpenseId;
+        }
     }
 }

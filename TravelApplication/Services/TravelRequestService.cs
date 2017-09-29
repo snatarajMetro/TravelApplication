@@ -55,6 +55,18 @@ namespace TravelApplication.Services
             
         }
 
-      
+        public async Task<bool> SaveTravelRequestInput(TravelRequestInput travelRequest)
+        {
+            try
+            {
+                bool result = await travelRequestRepo.SaveTravelRequestInput(travelRequest).ConfigureAwait(false);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
     }
 }

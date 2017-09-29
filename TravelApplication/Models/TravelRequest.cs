@@ -8,7 +8,7 @@ namespace TravelApplication.Models
 {
     public class TravelRequest
     {
-        public int TravelRequestId { get; set; }
+        public string TravelRequestId { get; set; }
 
         public int UserId { get; set; }
 

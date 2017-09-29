@@ -63,24 +63,24 @@ namespace TravelApplication.Controllers.WebAPI
             HttpResponseMessage response = null;
             try
             {
-                //TravelRequest result = travelRequestService.GetTravelRequestDetail(travelRequestId);
+                TravelRequest result = travelRequestService.GetTravelRequestDetail(travelRequestId);
 
-                TravelRequest result = new TravelRequest()
-                {
-                    BadgeNumber                 = 10005,
-                    DepartureDateTime           = DateTime.Now,
-                    MeetingBeginDateTime        = DateTime.Now.AddDays(3),
-                    MeetingEndDateTime          = DateTime.Now.AddDays(4),
-                    MeetingLocation             = "Downtown LA",
-                    Organization                = "LA Metro",
-                    ReturnDateTime              = DateTime.Now.AddDays(4),
-                    SubmittedByBadgeNumber      = 10005,
-                    SubmittedDateTime           = DateTime.Now,
-                    TravelRequestId             = travelRequestId,
-                    Name                        = "Nataraj.S",
-                    Division                    = "Development",
-                    Section                     = "IT"                  
-                };
+                //TravelRequest result = new TravelRequest()
+                //{
+                //    BadgeNumber                 = 10005,
+                //    DepartureDateTime           = DateTime.Now,
+                //    MeetingBeginDateTime        = DateTime.Now.AddDays(3),
+                //    MeetingEndDateTime          = DateTime.Now.AddDays(4),
+                //    MeetingLocation             = "Downtown LA",
+                //    Organization                = "LA Metro",
+                //    ReturnDateTime              = DateTime.Now.AddDays(4),
+                //    SubmittedByBadgeNumber      = 10005,
+                //    SubmittedDateTime           = DateTime.Now,
+                //    TravelRequestId             = travelRequestId,
+                //    Name                        = "Nataraj.S",
+                //    Division                    = "Development",
+                //    Section                     = "IT"                  
+                //};
                 response = Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)
@@ -153,6 +153,27 @@ namespace TravelApplication.Controllers.WebAPI
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Reject was not sucessfull. Please try again.");
             }
 
+            return response;
+        }
+
+        [HttpPost]
+        [Route("api/travelrequest/saveNew")]
+        public HttpResponseMessage Save(TravelRequestInput travelRequest)
+        {
+            HttpResponseMessage response = null;
+            try
+            {
+                var result = travelRequestService.SaveTravelRequestInput(travelRequest).Result;
+                var data = new JavaScriptSerializer().Serialize(result);
+
+                response = Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Log the exception message
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't save travel request : " + ex.Message);
+
+            }
             return response;
         }
     }
