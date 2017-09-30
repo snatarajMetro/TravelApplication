@@ -64,11 +64,10 @@ div.signincontainer {
     border:solid 1px gray;
     padding-left:5px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    width:375px;
+    width:150px;
     height:35px;
     font-size:15px;
     color:black;
-    margin-top:5px;
     margin-bottom:10px;
 }
 
@@ -83,6 +82,32 @@ div.signincontainer {
     font-size:15px;
     color:black;
     margin-top:5px;
+    margin-bottom:10px;
+}
+
+.datainputname {
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    padding-left:5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width:350px;
+    height:35px;
+    font-size:15px;
+    color:black;
+    margin-bottom:10px;
+}
+
+.datainputdate {
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    padding-left:5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width:140px;
+    height:35px;
+    font-size:15px;
+    color:black;
     margin-bottom:10px;
 }
 
@@ -317,10 +342,11 @@ div.existingtravelrequestcontainer {
     margin-left:20px;
 }
 
-.title{
-    font-size:25px;
+.pagetitle{
+    font-size:20px;
     padding-bottom:5px;
-    padding-left:5px;
+    padding-left:70px;
+    color:#0728ea;
 }
 
 .existingTravelRequestsGrid{
@@ -363,4 +389,111 @@ div.travelrequestcontainer {
     right:0;
     bottom:0;
     padding-bottom:5px;
+}
+
+div.dataentry{
+    background-color: white;
+    box-shadow: 10px 10px 5px #3c3c3c;
+    border-radius: 3px;
+    border:solid 1px black;
+    margin-left:75px;
+    margin-right:100px;
+    /*height:200px;*/
+
+    justify-content: space-between;
+  flex-direction: column;
+  /*height: 100vh;*/
+  display: flex;
+}
+
+.actionbutton{
+    /*float:right;*/
+    /*bottom:30px;
+    left:70px;
+    position:relative;*/
+    justify-content:flex-end;
+    display:flex;
+    padding:10px;
+}
+
+.backbutton,
+.backbutton:hover,
+.backbutton:focus,
+.backbutton:active
+{
+    color:white;
+    width:auto;
+    min-width:100px;
+    cursor:pointer;
+    background-color:dodgerblue;
+    border-color: #53A3CD;
+    margin-right:10px;
+}
+
+.rowentry{
+    padding:10px;
+    /*float:left;*/
+}
+
+.label2 {
+    font-size:15px;
+    width:25px;
+    color:black;
+    min-width:100px;
+    font-weight:bold;
+}
+
+.label3 {
+    font-size:15px;
+    width:150px;
+    color:black;
+
+    font-weight:bold;
+}
+
+.required{
+    color:red;
+    font-weight:bold;
+}
+
+.rowentry2{
+    padding:10px;
+}
+
+.column{
+    display:flex;
+    flex-direction:column;
+    padding-left:10px;
+    padding-right:10px;
+}
+
+.row{
+    display:flex;
+    flex-direction:row;
+    padding-left:15px;
+    margin-top:5px;
+}
+
+.usersection{
+    display:block;
+}
+
+.estimatedexpensesection{
+    display:block;
+    background-color:aqua;
+    margin-top:20px;
+}
+
+.purposedatainput {
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width:320px;
+    height:45px;
+    font-family:'Open Sans Condensed', sans-serif;
+    font-size:14px;
+    color:black;
+    margin-top:2px;
+    height:60px;
 }

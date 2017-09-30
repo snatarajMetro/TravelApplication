@@ -1,16 +1,144 @@
 ﻿<div id="travelrequestform">
     <div id="dataentry" class="main travelrequestcontainer">
         <div id="content" class="content">
-            <div class="title">
+            <div class="pagetitle">
                 <span id="travelRequestIdForDisplay">Travel Request Form</span>
             </div>
         </div>
-        <div id="footer" class="footer">
-            <!--<div class="footerback">
+        <div class="dataentry">
+            <div class="dataentrysection1" ng-app="travelApp" ng-controller="travelAppCtrl">
+                <div class="usersection">
+                    <div class="row">
+                        <div class="column">
+                            <div class="label2">
+                                <span>Badge #</span><sup class="required">*</sup>
+                            </div>
+                            <input type="text" placeholder="Badge Number" id="txtBadgeNumber" width="100" class="datainput" onblur="setUserName()" />
+                        </div>
+                        <div class="column">
+                            <div class="label2">
+                                <span>Name</span><sup class="required">*</sup>
+                            </div>
+                            <input type="text" placeholder="Name" id="txtName" width="100" class="datainputname" />
+                        </div>
+                        <div class="column">
+                            <div class="label2">
+                                <span>Division</span><sup class="required">*</sup>
+                            </div>
+                            <input type="text" placeholder="Division" id="txtDivision" width="100" class="datainput" />
+                        </div>
+                        <div class="column">
+                            <div class="label2">
+                                <span>Section</span><sup class="required">*</sup>
+                            </div>
+                            <input type="text" placeholder="Section" id="txtSection" width="100" class="datainput" />
+                        </div>
+                        <div class="column">
+                            <div class="label2">
+                                <span>Date</span><sup class="required">*</sup>
+                            </div>
+                            <input type="date" placeholder="Date" id="txtToday" width="100" class="datainputdate" />
+                        </div>
+                    </div>
+                    <div style="display:flex;flex-direction:row">
+                        <div class="column">
+                            <div class="label2">
+                                <span>Organization</span><sup class="required">*</sup>
+                            </div>
+                            <input type="text" placeholder="Organization" id="txtOrganization" width="100" class="datainputname" />
+                        </div>
+                        <div class="column">
+                            <div class="label3">
+                                <span>Meeting Location</span><sup class="required">*</sup>
+                            </div>
+                            <input type="text" placeholder="Meeting Location" id="txtMeetingLocation" width="100" class="datainputname" />
+                        </div>
+                    </div>
+                    <div style="display:flex;flex-direction:row">
+                        <div class="column">
+                            <div class="label3">
+                                <span>Meeting Begins</span><sup class="required">*</sup>
+                            </div>
+                            <input type="date" placeholder="Meeting Begin Date" id="txtMeetingBeginDate" width="100" class="datainputdate" />
+                        </div>
+                        <div class="column">
+                            <div class="label3">
+                                <span>Meeting Ends</span><sup class="required">*</sup>
+                            </div>
+                            <input type="date" placeholder="Meeting End Date" id="txtMeetingEndDate" width="100" class="datainputdate" />
+                        </div>
+                        <div class="column">
+                            <div class="label3">
+                                <span>Departure Date</span><sup class="required">*</sup>
+                            </div>
+                            <input type="date" placeholder="Departure Date" id="txtDepartureDate" width="100" class="datainputdate" />
+                        </div>
+                        <div class="column">
+                            <div class="label3">
+                                <span>Return Date</span><sup class="required">*</sup>
+                            </div>
+                            <input type="date" placeholder="Return Date" id="txtReturnDate" width="100" class="datainputdate" />
+                        </div>
+                    </div>
+                    <div style="display:flex;flex-direction:row">
+                        <div class="column">
+                            <div class="label2">
+                                <span>Purpose</span>
+                            </div>
+                            <textarea placeholder="Purpose" id="txtPurpose" width="100" class="purposedatainput" />
+                        </div>
+                    </div>
+                    </div>
+                <div class="estimatedexpensesection">
+                    <div class="row">
+                        <div class="column">
+                            <div class="label2">
+                                <span>Badge2 #</span><sup class="required">*</sup>
+                            </div>
+                            <input type="text" placeholder="Badge Number" id="txtBadgeNumber" width="100" class="datainput" onblur="setUserName()" />
+                        </div>
+                        <div class="column">
+                            <div class="label2">
+                                <span>Name2</span><sup class="required">*</sup>
+                            </div>
+                            <input type="text" placeholder="Name" id="txtName" width="100" class="datainputname" />
+                        </div>
+                    </div>
+                </div>
+                <div style="background-color:yellow;display:block;">
+                    section 3
+                </div>
+                <!--<div style="background-color:red;display:block;">
+                <div class="rowentry2">
+                    <div class="label2">
+                        <span>Organization</span><sup class="required">*</sup>
+                    </div>
+                    <input type="text" placeholder="Organization" id="txtOrganization" width="100" class="datainput" />
+                </div>
+                <div class="rowentry">
+                    <div class="label2">
+                        <span>Organization2</span><sup class="required">*</sup>
+                    </div>
+                    <input type="text" placeholder="Organization" id="txtOrganization" width="100" class="datainput" />
+                </div>
+            </div>-->
+            </div>
+            <div class="dataentrysection1" ng-app="travelApp" ng-controller="travelAppCtrl">
+                <div style="background-color:brown;display:block;">
+                    estimated expenses
+                </div>
+            </div>
+            <div class="actionbutton">
+                <input class="btn backbutton" type="button" name="btnBack" value="Back" onclick="backtoactionselection()" />
+                <input class="btn signinbutton" type="button" name="btnNext" value="Save and Continue" onclick="savedataentry()" />
+            </div>
+            <div id="footer" class="footer">
+                <!--<div class="footerback">
                 <input class="btn btn-success signinbutton" type="button" name="btnBack" value="Back" onclick="backtoactionselection()" />
             </div>-->
-            <div class="saveandcontinue">
+                <!--<div class="saveandcontinue">
                 <input class="btn btn-success signinbutton" type="button" name="btnNext" value="Save and Continue" onclick="savedataentry()" />
+            </div>-->
             </div>
         </div>
     </div>
