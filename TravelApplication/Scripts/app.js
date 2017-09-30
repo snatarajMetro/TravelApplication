@@ -6,6 +6,8 @@ $(document).ready(function () {
 
     $("#txtEmail").focus();
 
+    //createnewrequest();
+
 });
 
 function closeinvaliduser() {
@@ -150,6 +152,9 @@ function backtoroleselection() {
 
 function createnewrequest() {
     $("#action").hide();
+    $("#signin").hide();
+    $("#signintemplate").hide();
+    
 
     //reset travel request form section
     $.get('/uitemplates/travelrequest.html')

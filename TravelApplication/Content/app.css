@@ -336,3 +336,31 @@ input.ui-grid-filter-input[type="text"] {
    background-color:#f8f2f2;
    font-size:11px;
 }
+
+div.travelrequestcontainer {
+    position: absolute;
+    float:left;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    /*margin: auto;*/
+    background-color: white;
+    box-shadow: 10px 10px 5px #3c3c3c;
+    /*border-radius: 3px;
+    border:solid 1px black;*/
+    margin-top:25px;
+}
+
+.saveandcontinue{
+    float:left;
+    padding-right:10px;
+}
+
+.footer {
+    position:absolute;
+    right:0;
+    bottom:0;
+    padding-bottom:5px;
+}
