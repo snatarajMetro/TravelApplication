@@ -29,6 +29,8 @@ function logout() {
     $("#logout").hide();
     $('#signintemplate').hide();
     $("#signin").show();
+    $("#existingtravelrequeststemplate").hide();
+    $("#travelrequesttemplate").hide();
 
     $("#txtEmail").focus();
 }
@@ -144,4 +146,48 @@ function backtoroleselection() {
     $("#signin").hide();
     $("#action").hide();
     $('#signintemplate').show();
+}
+
+function createnewrequest() {
+    $("#action").hide();
+
+    //reset travel request form section
+    $.get('/uitemplates/travelrequest.html')
+        .done(function (data) {
+            $('#travelrequesttemplate').html($(data).html());
+            $('#travelrequesttemplate').show();
+            
+        });
+}
+
+function viewexistingtravelrequests() {
+    $("#action").hide();
+
+    //reset estimated expense section
+    var scope = angular.element('#existingtravelrequeststemplate').scope();
+    scope.loadExistingTravelRequests();
+    scope.loadApproveAction();
+
+    $('#existingtravelrequeststemplate').show();
+}
+
+function backtoactionselection() {
+
+    $("#travelrequesttemplate").hide();
+    $("#estimatedexpensetemplate").hide();
+    $("#existingtravelrequeststemplate").hide();
+
+    // if selected role is approver, take them back to role selection modal
+    if (selectedRoleId == 3) {
+        $("#signintemplate").show();
+    }
+    else if ($('#travelRequestId').text() != 0) {
+        $('#travelRequestId').text(0);
+        $("#travelrequesttemplate").hide();
+        $("#existingtravelrequeststemplate").show();
+    }
+    else {
+        // else, take them to action selection modal
+        $("#action").show();
+    }
 }
