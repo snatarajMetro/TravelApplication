@@ -97,7 +97,7 @@ namespace TravelApplication.Controllers.WebAPI
         }
 
         [HttpGet]
-        [Route("api/approval/approverDetails{travelRequestId")]
+        [Route("api/approval/approverDetails/{travelRequestId}")]
         public HttpResponseMessage GetapproverDetails(string travelRequestId)
         {
             HttpResponseMessage response = null;
