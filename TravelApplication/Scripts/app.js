@@ -1,13 +1,15 @@
 ﻿var userName = '';
 var fadeOutTimeInMilliseconds = 5000; // 5 seconds
 var selectedRoleId = 0;
+var isInternetExplorer = false;
 
 $(document).ready(function () {
 
     $("#txtEmail").focus();
 
-    //createnewrequest();
+    isInternetExplorer = (navigator.userAgent && navigator.userAgent.search("Trident") >= 0);
 
+    //createnewrequest();
 });
 
 function closeinvaliduser() {
@@ -195,4 +197,123 @@ function backtoactionselection() {
         // else, take them to action selection modal
         $("#action").show();
     }
+}
+
+function removeplaceholder(input) {
+
+    if (isInternetExplorer) {
+
+        var ph = $(input).attr('placeholder');
+
+        if (ph) {
+            $(input).val("");
+            $(input).prop("placeholder", "");
+        }
+    }
+}
+
+function resetplaceholder(input,placeholdertext) {
+    
+    if (isInternetExplorer) {
+
+        if (!$(input).val()) {
+            $(input).prop("placeholder", placeholdertext);
+        }
+    }
+}
+
+function addPlaceHolder(input) {
+
+    if (!Modernizr.input.placeholder) {
+        input.focus(function () {
+            if ($(this).val() == $(this).attr('placeholder')) {
+                $(this).val('');
+                $(this).removeClass('placeholder');
+            }
+        }).blur(function () {
+            if ($(this).val() == '' || $(this).val() == $(this).attr('placeholder')) {
+                $(this).addClass('placeholder');
+                $(this).val($(this).attr('placeholder'));
+            }
+        }).blur();
+        $(input).parents('form').submit(function () {
+            $(this).find(input).each(function () {
+                if ($(this).val() == $(this).attr('placeholder')) {
+                    $(this).val('');
+                }
+            })
+        });
+    }
+}
+
+function savedataentry()
+{
+    // Get user inputs
+    var badgeNumber = $('#txtBadgeNumber').val();
+    var name = $('#txtName').val();
+    var division = $('#txtDivision').val();
+    var section = $('#txtSection').val();
+    var organization = $('#txtOrganization').val();
+    var meetingLocation = $('#txtMeetingLocation').val();
+    var meetingBeginDate = $('#txtMeetingBeginDate').val();
+    var meetingEndDate = $('#txtMeetingEndDate').val();
+    var departureDate = $('#txtDepartureDate').val();
+    var returnDate = $('#txtReturnDate').val();
+    var userId = "";
+    var travelRequestId = $('#travelRequestId').text();
+    var selectedRoleId = $("#selectedRoleId").text();
+    var purpose = $('#txtPurpose').val();
+    var today = $('#txtToday').val();
+
+    $.ajax({
+        type: "POST",
+        url: "/api/travelrequest/savenew",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            "TravelRequestData": {
+                'TravelRequestId': travelRequestId,
+                'BadgeNumber': badgeNumber,
+                'Name': name,
+                'Division': division,
+                'Section': section,
+                'Organization': organization,
+                'MeetingLocation': meetingLocation,
+                'MeetingBeginDateTime': meetingBeginDate,
+                'DepartureDateTime': departureDate,
+                'MeetingEndDateTime': meetingEndDate,
+                'ReturnDateTime': returnDate,
+                'UserId': userId,
+                'SelectedRoleId': selectedRoleId,
+                'Purpose': purpose,
+                'Today': today
+            }
+        }),
+        success: function (data) {
+            var result = JSON.parse(data);
+            //$('#travelRequestId').text(result);
+            $('#badgeNumber').text(badgeNumber);
+
+            alert('success');
+
+            //show estimated expense section
+            //$('#travelrequesttemplate').hide();
+            //$('#estimatedexpensetemplate').show();
+            //$("#txtAdvLodge").focus();
+        },
+        error: function (xhr, options, error) {
+
+            if (xhr.status == 500) {
+                var errorMessage = xhr.responseText;
+
+                $("#travelrequesterror").fadeIn("slow");
+                $('#travelrequesterrormessage').text(errorMessage);
+
+                // fade out in 5 seconds
+                $("#travelrequesterror").fadeOut(fadeOutTimeInMilliseconds);
+            }
+
+            $('#travelRequestId').text(0);
+            $('#badgeNumber').text(0);
+        }
+    });
 }
