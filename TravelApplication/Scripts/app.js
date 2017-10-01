@@ -265,6 +265,42 @@ function savedataentry()
     var purpose = $('#txtPurpose').val();
     var today = $('#txtToday').val();
 
+    // Get estimated expenses
+    var advLodge = $('#txtAdvLodge').val();
+    var totalEstimatedLodge = $('#txtTotalEstimatedLodge').val();
+    var hotelNameAndAddress = $('#txtHotelNameAndAddress').val();
+    var hotelNotes = $('#txtHotelNotes').val();
+
+    var advAirfare = $('#txtAdvAirfare').val();
+    var totalEstimatedAirfare = $('#txtTotalEstimatedAirfare').val();
+    var schedule = $('#txtSchedule').val();
+    var flightSpecifics = $('#txtFlightSpecifics').val();
+
+    var advRegistration = $('#txtAdvRegistration').val();
+    var totalEstimatedRegistration = $('#txtTotalEstimatedRegistration').val();
+    var payableTo = $('#txtPayableTo').val();
+    var paidViaPCard = $('#txtPaidViaPCard').val();
+
+    var advMeals = $('#txtAdvMeals').val();
+    var totalEstimatedMeals = $('#txtTotalEstimatedMeals').val();
+    var mealNotes1 = $('#txtMealNotes1').val();
+    var mealNotes2 = $('#txtMealNotes2').val();
+
+    var advCarRental = $('#txtAdvCarRental').val();
+    var totalEstimatedCarRental = $('#txtTotalEstimatedCarRental').val();
+    var agencyName = $('#txtAgencyName').val();
+    var carRentalNotes = $('#txtCarRentalNotes').val();
+
+    var advMiscellaneous = $('#txtAdvMiscellaneous').val();
+    var totalEstimatedMiscellaneous = $('#txtTotalEstimatedMiscellaneous').val();
+    var shuttle = $('#txtShuttle').val();
+    var mileageAndParking = $('#txtMileageAndParking').val();
+    
+    var advanceTotal = $('#txtAdvanceTotal').val();
+    var estimatedTotal = $('#txtEstimatedTotal').val();
+    var cashAdvanceRequested = $('#txtCashAdvanceRequested').val();
+    var dateNeededBy = $('#txtDateNeededBy').val();
+
     $.ajax({
         type: "POST",
         url: "/api/travelrequest/savenew",
@@ -286,6 +322,38 @@ function savedataentry()
                 'SelectedRoleId': selectedRoleId,
                 'Purpose': purpose,
                 'Today': today
+            },
+            "EstimatedExpenseData": {
+                'EstimatedExpenseId': 0,
+                'TravelRequestId': travelRequestId,
+                'AdvanceLodging': advLodge,
+                'TotalEstimatedLodge': totalEstimatedLodge,
+                'HotelNameAndAddress': hotelNameAndAddress,
+                'HotealNotes': hotelNotes,
+                'AdvanceAirFare': advAirfare,
+                'TotalEstimatedAirfare': totalEstimatedAirfare,
+                'Schedule': schedule,
+                'FlightSpecifics':flightSpecifics,
+                'AdvanceRegistration': advRegistration,
+                'TotalEstimatedRegistration': totalEstimatedRegistration,
+                'PayableToAndAddress': payableTo,
+                'PaidViaPCard':paidViaPCard,
+                'AdvanceMeals': advMeals,
+                'TotalEstimatedMeals': totalEstimatedMeals,
+                'MealNotes1':mealNotes1,
+                'MealNotes2': mealNotes2,
+                'AdvanceCarRental': advCarRental,
+                'TotalEstimatedCarRental': totalEstimatedCarRental,
+                'AgencyNameAndReservation': agencyName,
+                'CarRentalNotes':carRentalNotes,
+                'AdvanceMiscellaneous': advMiscellaneous,
+                'TotalEstimatedMiscellaneous': totalEstimatedMiscellaneous,
+                'Shuttle': shuttle,
+                'MileageAndParking': mileageAndParking,
+                'AdvanceTotal': advanceTotal,
+                'TotalEstimatedTotal': estimatedTotal,
+                'CashAdvance': cashAdvanceRequested,
+                'DateNeededBy': dateNeededBy
             }
         }),
         success: function (data) {
@@ -316,4 +384,26 @@ function savedataentry()
             $('#badgeNumber').text(0);
         }
     });
+}
+
+function setUserName() {
+
+    var badgeNumber = $('#txtBadgeNumber').val();
+
+    if (badgeNumber) {
+        $.ajax({
+            type: "GET",
+            url: "/api/travelrequest/employee/" + badgeNumber,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                var result = JSON.parse(data);
+
+                $('#txtName').val(result.EmployeeFirstName + ' ' + result.EmployeeLastName);
+                $('#txtOrganization').val(result.Department);
+            },
+            error: function (xhr, options, error) {
+            }
+        });
+    }
 }

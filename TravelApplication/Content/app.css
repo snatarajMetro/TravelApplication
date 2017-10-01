@@ -65,7 +65,7 @@ div.signincontainer {
     padding-left:5px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     width:150px;
-    height:35px;
+    height:30px;
     font-size:15px;
     color:black;
     margin-bottom:10px;
@@ -92,7 +92,7 @@ div.signincontainer {
     padding-left:5px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     width:350px;
-    height:35px;
+    height:30px;
     font-size:15px;
     color:black;
     margin-bottom:10px;
@@ -105,7 +105,7 @@ div.signincontainer {
     padding-left:5px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     width:140px;
-    height:35px;
+    height:30px;
     font-size:15px;
     color:black;
     margin-bottom:10px;
@@ -345,7 +345,6 @@ div.existingtravelrequestcontainer {
 .pagetitle{
     font-size:20px;
     padding-bottom:5px;
-    padding-left:70px;
     color:#0728ea;
 }
 
@@ -370,7 +369,7 @@ div.travelrequestcontainer {
     bottom: 0;
     left: 0;
     right: 0;
-
+    height:0px;
     /*margin: auto;*/
     background-color: white;
     box-shadow: 10px 10px 5px #3c3c3c;
@@ -490,6 +489,7 @@ div.dataentry{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     width:320px;
     height:45px;
+
     font-size:14px;
     color:black;
     margin-top:2px;
@@ -632,3 +632,17 @@ input.datainputname:-ms-input-placeholder {
     font-size:12px;
     min-width:170px;
 }*/
+
+.generaldatainputdate {
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width:250px;
+    height:50px;
+    /*font-family:'Open Sans Condensed', sans-serif;*/
+    font-size:12px;
+    color:black;
+    margin-top:2px;
+    padding-left:5px;
+}
