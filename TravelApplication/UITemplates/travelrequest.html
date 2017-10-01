@@ -291,6 +291,37 @@
                                     </div>
                                     <div class="tablerow">
                                         <div class="tablecell">
+                                            <select class="inputdropdown2" id="ddlCostCenter2"
+                                                    ng-model="ddlCostCenter2"
+                                                    ng-options="costcenter.CostCenterValue for costcenter in CostCenters track by costcenter.Name"
+                                                    ng-change="getProjects('ddlCostCenter2', ddlCostCenter2)"></select>
+                                        </div>
+                                        <div class="spacer"></div>
+                                        <div class="tablecell">
+                                            <input type="text" placeholder="" id="txtLineItem2" class="inputtext2" />
+                                        </div>
+                                        <div class="spacer"></div>
+                                        <div class="tablecell">
+                                            <select class="inputdropdown2" id="project2"
+                                                    ng-model="ddlProjects2"
+                                                    ng-options="project.Name for project in projects2 track by project.Id"></select>
+                                        </div>
+                                        <div class="spacer"></div>
+                                        <div class="tablecell">
+                                            <input type="number" min="0.00" max="99999999.99" step="0.01" placeholder="0.00" id="txtTask2" class="inputnumberfis2" />
+                                        </div>
+                                        <div class="spacer"></div>
+                                        <div class="tablecell">
+                                            <input type="number" min="0.00" max="99999999.99" step="0.01"
+                                                   placeholder="0.00"
+                                                   id="txtAmount2"
+                                                   class="inputnumberfis2"
+                                                   ng-model="totalFISAmount2"
+                                                   ng-change="updateTotalFISAmount()" />
+                                        </div>
+                                    </div>
+                                    <!--<div class="tablerow">
+                                        <div class="tablecell">
                                             <select class="inputdropdown2" id="ddlCostCenter1"
                                                     ng-model="ddlCostCenter1"
                                                     ng-options="costcenter.CostCenterValue for costcenter in CostCenters track by costcenter.Name"
@@ -381,38 +412,7 @@
                                                    ng-model="totalFISAmount1"
                                                    ng-change="updateTotalFISAmount()" />
                                         </div>
-                                    </div>
-                                    <div class="tablerow">
-                                        <div class="tablecell">
-                                            <select class="inputdropdown2" id="ddlCostCenter1"
-                                                    ng-model="ddlCostCenter1"
-                                                    ng-options="costcenter.CostCenterValue for costcenter in CostCenters track by costcenter.Name"
-                                                    ng-change="getProjects('ddlCostCenter1', ddlCostCenter1)"></select>
-                                        </div>
-                                        <div class="spacer"></div>
-                                        <div class="tablecell">
-                                            <input type="text" placeholder="" id="txtLineItem1" class="inputtext2" />
-                                        </div>
-                                        <div class="spacer"></div>
-                                        <div class="tablecell">
-                                            <select class="inputdropdown2" id="project1"
-                                                    ng-model="ddlProjects1"
-                                                    ng-options="project.Name for project in projects1 track by project.Id"></select>
-                                        </div>
-                                        <div class="spacer"></div>
-                                        <div class="tablecell">
-                                            <input type="number" min="0.00" max="99999999.99" step="0.01" placeholder="0.00" id="txtTask1" class="inputnumberfis2" />
-                                        </div>
-                                        <div class="spacer"></div>
-                                        <div class="tablecell">
-                                            <input type="number" min="0.00" max="99999999.99" step="0.01"
-                                                   placeholder="0.00"
-                                                   id="txtAmount1"
-                                                   class="inputnumberfis2"
-                                                   ng-model="totalFISAmount1"
-                                                   ng-change="updateTotalFISAmount()" />
-                                        </div>
-                                    </div>
+                                    </div>-->
                                 </div>
                              </div>
                           </div>

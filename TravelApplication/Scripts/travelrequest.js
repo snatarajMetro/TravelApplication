@@ -140,6 +140,14 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
         });
     }
 
+    $scope.loadTravelRequest = function () {
+        $.get('/uitemplates/travelrequest.html')
+        .done(function (data) {
+            $('#travelrequesttemplate').html($compile($(data).html())($scope));
+            $scope.$apply();
+        });
+    }
+
     // load cost centers and projects
     $scope.loadCostCenters = function () {
         $scope.Projects = {};

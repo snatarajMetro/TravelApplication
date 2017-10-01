@@ -9,7 +9,7 @@ $(document).ready(function () {
 
     isInternetExplorer = (navigator.userAgent && navigator.userAgent.search("Trident") >= 0);
 
-    //createnewrequest();
+    createnewrequest();
 });
 
 function closeinvaliduser() {
@@ -159,12 +159,20 @@ function createnewrequest() {
     
 
     //reset travel request form section
-    $.get('/uitemplates/travelrequest.html')
-        .done(function (data) {
-            $('#travelrequesttemplate').html($(data).html());
-            $('#travelrequesttemplate').show();
+    //$.get('/uitemplates/travelrequest.html')
+    //    .done(function (data) {
+    //        $('#travelrequesttemplate').html($(data).html());
+    //        $('#travelrequesttemplate').show();
             
-        });
+    //    });
+
+    //load travel request section
+    var scope = angular.element('#travelrequesttemplate').scope();
+    scope.loadTravelRequest();
+    $('#travelrequesttemplate').show();
+
+    //scope.loadFIS();
+    scope.loadCostCenters();
 }
 
 function viewexistingtravelrequests() {
@@ -343,7 +351,23 @@ function savedataentry()
                 'TotalEstimatedTotal': estimatedTotal,
                 'CashAdvance': cashAdvanceRequested,
                 'DateNeededBy': dateNeededBy
-            }
+            },
+            "FISData": [
+                {
+                    "CostCenterId": $("#ddlCostCenter1 option:selected").val(),
+                    "LineItem":$('#txtLineItem1').val(),
+                    "ProjectId": $("#project1 option:selected").val(),
+                    "Task": $('#txtTask1').val(),
+                    "Amount": $('#txtAmount1').val(),
+                },
+                {
+                    "CostCenterId": $("#ddlCostCenter2 option:selected").val(),
+                    "LineItem": $('#txtLineItem2').val(),
+                    "ProjectId": $("#project2 option:selected").val(),
+                    "Task": $('#txtTask2').val(),
+                    "Amount": $('#txtAmount2').val(),
+                }
+            ]
         }),
         success: function (data) {
             var result = JSON.parse(data);
