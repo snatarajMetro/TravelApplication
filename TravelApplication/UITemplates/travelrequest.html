@@ -6,7 +6,7 @@
             </div>
         </div>
         <div class="dataentry">
-            <div class="dataentrysection1" ng-app="travelApp" ng-controller="travelAppCtrl">
+            <div id="dataentrysection">
                 <div class="usersection">
                     <div class="row">
                         <div class="column">
@@ -85,61 +85,173 @@
                             <div class="label2">
                                 <span>Purpose</span>
                             </div>
-                            <textarea placeholder="Purpose" id="txtPurpose" width="100" class="purposedatainput" />
+                            <textarea placeholder="Purpose" id="txtPurpose" width="100" class="purposedatainput" onfocus="removeplaceholder(this);" onblur="resetplaceholder(this,'Purpose');" />
                         </div>
                     </div>
                     </div>
                 <div class="estimatedexpensesection">
-                    <div class="row">
-                        <div class="column">
-                            <div class="label2">
-                                <span>Badge2 #</span><sup class="required">*</sup>
+                    <div class="title">
+                        <span>Estimated Expenses</span>
+                    </div>
+                    <div class="expensesection1">
+                        <div class="tablecontainer">
+                            <div class="tableheading">
+                                <div class="tablehead">Expense Items</div>
+                                <div class="spacer"></div>
+                                <div class="tablehead">Advance Needed</div>
+                                <div class="spacer"></div>
+                                <div class="tablehead">Total Estimated Cost</div>
+                                <div class="spacer"></div>
+                                <div class="tablehead">Fill in all information as indicated</div>
+                                <div class="tablehead"></div>
+                                <!--<div class="spacer"></div>-->
                             </div>
-                            <input type="text" placeholder="Badge Number" id="txtBadgeNumber" width="100" class="datainput" onblur="setUserName()" />
-                        </div>
-                        <div class="column">
-                            <div class="label2">
-                                <span>Name2</span><sup class="required">*</sup>
+                            <div class="tablebody" ng-app="travelApp" ng-controller="travelAppCtrl">
+                                <div class="tablerow">
+                                    <div class="tablecellheader expenserowtitle">Lodging (Per Night)</div>
+                                    <div class="spacer"></div>
+                                    <div class="tablecell">
+                                        <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAdvLodge" class="inputnumber" ng-model="advanceLodgingAmount" ng-change="updateTotalAdvanceAmount()" />
+                                    </div>
+                                    <div class="spacer"></div>
+                                    <div class="tablecell">
+                                        <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAdvLodge" class="inputnumber" ng-model="advanceLodgingAmount" ng-change="updateTotalAdvanceAmount()" />
+                                    </div>
+                                    <div class="spacer"></div>
+                                    <div class="tablecell">
+                                        <textarea placeholder="Hotel Name and Address" id="txtHotelNameAndAddress" width="100" class="generaldatainput" />
+                                    </div>
+                                    <!--<div class="spacer"></div>-->
+                                    <div class="tablecell">
+                                        <textarea placeholder="Notes about the hotel" id="txtHotelNameAndAddress" width="100" class="generaldatainput2" />
+                                    </div>
+                                </div>
+                                <div class="tablerow">
+                                    <div class="tablecellheader expenserowtitle">Airfare (Prepaid)</div>
+                                    <div class="spacer"></div>
+                                    <div class="tablecell">
+                                        <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAdvLodge" class="inputnumber" ng-model="advanceLodgingAmount" ng-change="updateTotalAdvanceAmount()" />
+                                    </div>
+                                    <div class="spacer"></div>
+                                    <div class="tablecell">
+                                        <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAdvLodge" class="inputnumber" ng-model="advanceLodgingAmount" ng-change="updateTotalAdvanceAmount()" />
+                                    </div>
+                                    <div class="spacer"></div>
+                                    <div class="tablecell">
+                                        <textarea placeholder="Schedule" id="txtHotelNameAndAddress" width="100" class="generaldatainput" />
+                                    </div>
+                                    <!--<div class="spacer"></div>-->
+                                    <div class="tablecell">
+                                        <textarea placeholder="Specifics about the flight" id="txtHotelNameAndAddress" width="100" class="generaldatainput2" />
+                                    </div>
+                                </div>
+                                <div class="tablerow">
+                                    <div class="tablecellheader expenserowtitle">Registration (Prepaid)</div>
+                                    <div class="spacer"></div>
+                                    <div class="tablecell">
+                                        <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAdvLodge" class="inputnumber" ng-model="advanceLodgingAmount" ng-change="updateTotalAdvanceAmount()" />
+                                    </div>
+                                    <div class="spacer"></div>
+                                    <div class="tablecell">
+                                        <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAdvLodge" class="inputnumber" ng-model="advanceLodgingAmount" ng-change="updateTotalAdvanceAmount()" />
+                                    </div>
+                                    <div class="spacer"></div>
+                                    <div class="tablecell">
+                                        <textarea placeholder="Payable to and Address" id="txtHotelNameAndAddress" width="100" class="generaldatainput" />
+                                    </div>
+                                    <!--<div class="spacer"></div>-->
+                                    <div class="tablecell">
+                                        <textarea placeholder="Paid via P-Card" id="txtHotelNameAndAddress" width="100" class="generaldatainput2" />
+                                    </div>
+                                </div>
+                                <div class="tablerow">
+                                    <div class="tablecellheader expenserowtitle">Meals</div>
+                                    <div class="spacer"></div>
+                                    <div class="tablecell">
+                                        <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAdvLodge" class="inputnumber" ng-model="advanceLodgingAmount" ng-change="updateTotalAdvanceAmount()" />
+                                    </div>
+                                    <div class="spacer"></div>
+                                    <div class="tablecell">
+                                        <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAdvLodge" class="inputnumber" ng-model="advanceLodgingAmount" ng-change="updateTotalAdvanceAmount()" />
+                                    </div>
+                                    <div class="spacer"></div>
+                                    <div class="tablecell">
+                                        <textarea placeholder="Note any meals inc. in Conf. or other Reg. fees" id="txtHotelNameAndAddress" width="100" class="generaldatainput" />
+                                    </div>
+                                    <div class="tablecell">
+                                        <textarea placeholder="Notes like $71 x 2 days, $53.75 x 2 days; some meals included, including??? n" id="txtHotelNameAndAddress" width="100" class="generaldatainput2" />
+                                    </div>
+                                </div>
+                                <div class="tablerow">
+                                    <div class="tablecellheader expenserowtitle">Car Rental</div>
+                                    <div class="spacer"></div>
+                                    <div class="tablecell">
+                                        <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAdvLodge" class="inputnumber" ng-model="advanceLodgingAmount" ng-change="updateTotalAdvanceAmount()" />
+                                    </div>
+                                    <div class="spacer"></div>
+                                    <div class="tablecell">
+                                        <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAdvLodge" class="inputnumber" ng-model="advanceLodgingAmount" ng-change="updateTotalAdvanceAmount()" />
+                                    </div>
+                                    <div class="spacer"></div>
+                                    <div class="tablecell">
+                                        <textarea placeholder="Agency Name Reservation #" id="txtHotelNameAndAddress" width="100" class="generaldatainput" />
+                                    </div>
+                                    <div class="tablecell">
+                                        <textarea placeholder="" id="txtHotelNameAndAddress" width="100" class="generaldatainput2" />
+                                    </div>
+                                </div>
+                                <div class="tablerow">
+                                    <div class="tablecellheader expenserowtitle">Miscellaneous</div>
+                                    <div class="spacer"></div>
+                                    <div class="tablecell">
+                                        <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAdvLodge" class="inputnumber" ng-model="advanceLodgingAmount" ng-change="updateTotalAdvanceAmount()" />
+                                    </div>
+                                    <div class="spacer"></div>
+                                    <div class="tablecell">
+                                        <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAdvLodge" class="inputnumber" ng-model="advanceLodgingAmount" ng-change="updateTotalAdvanceAmount()" />
+                                    </div>
+                                    <div class="spacer"></div>
+                                    <div class="tablecell">
+                                        <textarea placeholder="Shuttle, taxi, etc." id="txtHotelNameAndAddress" width="100" class="generaldatainput" />
+                                    </div>
+                                    <div class="tablecell">
+                                        <textarea placeholder="Mileage and Parking at airport, etc." id="txtHotelNameAndAddress" width="100" class="generaldatainput2" />
+                                    </div>
+                                </div>
+                                <div class="tablerow">
+                                    <div class="tablecellheader expenserowtitle">Totals</div>
+                                    <div class="spacer"></div>
+                                    <div class="tablecell">
+                                        <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAdvLodge" class="inputnumber" ng-model="advanceLodgingAmount" ng-change="updateTotalAdvanceAmount()" />
+                                    </div>
+                                    <div class="spacer"></div>
+                                    <div class="tablecell">
+                                        <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAdvLodge" class="inputnumber" ng-model="advanceLodgingAmount" ng-change="updateTotalAdvanceAmount()" />
+                                    </div>
+                                    <div class="spacer"></div>
+                                    <div class="tablecell">
+                                        <textarea placeholder="ShuttleCash Advance Requested: $" id="txtHotelNameAndAddress" width="100" class="generaldatainput" />
+                                    </div>
+                                    <div class="tablecell">
+                                        <textarea placeholder="Date needed by" id="txtHotelNameAndAddress" width="100" class="generaldatainput2" />
+                                    </div>
+                                </div>
                             </div>
-                            <input type="text" placeholder="Name" id="txtName" width="100" class="datainputname" />
                         </div>
+                        <!--</div>-->
+                        <!--<div style="background-color:yellow;display:block;">
+                            section 3
+                        </div>-->
+                    </div>
+                    <!--<div class="dataentrysection1" ng-app="travelApp" ng-controller="travelAppCtrl">
+                        <div style="background-color:brown;display:block;">
+                            estimated expenses
+                        </div>
+                    </div>-->
+                    <div class="actionbutton">
+                        <input class="btn backbutton" type="button" name="btnBack" value="Back" onclick="backtoactionselection()" />
+                        <input class="btn signinbutton" type="button" name="btnNext" value="Save and Continue" onclick="savedataentry()" />
                     </div>
                 </div>
-                <div style="background-color:yellow;display:block;">
-                    section 3
-                </div>
-                <!--<div style="background-color:red;display:block;">
-                <div class="rowentry2">
-                    <div class="label2">
-                        <span>Organization</span><sup class="required">*</sup>
-                    </div>
-                    <input type="text" placeholder="Organization" id="txtOrganization" width="100" class="datainput" />
-                </div>
-                <div class="rowentry">
-                    <div class="label2">
-                        <span>Organization2</span><sup class="required">*</sup>
-                    </div>
-                    <input type="text" placeholder="Organization" id="txtOrganization" width="100" class="datainput" />
-                </div>
-            </div>-->
-            </div>
-            <div class="dataentrysection1" ng-app="travelApp" ng-controller="travelAppCtrl">
-                <div style="background-color:brown;display:block;">
-                    estimated expenses
-                </div>
-            </div>
-            <div class="actionbutton">
-                <input class="btn backbutton" type="button" name="btnBack" value="Back" onclick="backtoactionselection()" />
-                <input class="btn signinbutton" type="button" name="btnNext" value="Save and Continue" onclick="savedataentry()" />
-            </div>
-            <div id="footer" class="footer">
-                <!--<div class="footerback">
-                <input class="btn btn-success signinbutton" type="button" name="btnBack" value="Back" onclick="backtoactionselection()" />
-            </div>-->
-                <!--<div class="saveandcontinue">
-                <input class="btn btn-success signinbutton" type="button" name="btnNext" value="Save and Continue" onclick="savedataentry()" />
-            </div>-->
-            </div>
-        </div>
     </div>
 </div>

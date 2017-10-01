@@ -480,7 +480,6 @@ div.dataentry{
 
 .estimatedexpensesection{
     display:block;
-    background-color:aqua;
     margin-top:20px;
 }
 
@@ -491,9 +490,145 @@ div.dataentry{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     width:320px;
     height:45px;
-    font-family:'Open Sans Condensed', sans-serif;
     font-size:14px;
     color:black;
     margin-top:2px;
     height:60px;
 }
+
+.title{
+    font-size:15px;
+    font-weight:bold;
+    padding-bottom:5px;
+    padding-left:5px;
+}
+
+.tablecontainer{
+    display:table;
+    /*min-width:950px;*/
+    font-size:15px;
+    padding:0px;
+    margin-left:10px;
+    /*margin-right:auto;*/
+}
+
+.tableheading{
+display:table-header-group;
+}
+
+.tablehead{
+    display:table-cell;
+    background-color:blue;
+    text-align:center;
+    min-width:90px;
+    color:white;
+    padding-left:10px;
+    padding-right:10px;
+}
+
+.tableheadgeneral{
+    display:table-cell;
+    background-color:blue;
+    text-align:center;
+    width:290px;
+    color:white;
+    padding-left:10px;
+    padding-right:10px;
+}
+.tableheadtopleft{
+    display:table-cell;
+    /*background-color:#f3f3f3;*/
+    background-color:white;
+    text-align:center;
+    min-width:120px;
+}
+
+.tablerow{
+    display:table-row;
+}
+
+.tablebody{
+    display:table-row-group;
+}
+
+.tablecell{
+    display:table-cell;
+    vertical-align:top;
+}
+.tablecellheader{
+    display:table-cell;
+    vertical-align:middle;
+    padding-right:4px;
+    text-align:right;
+}
+
+.spacer{
+    background-color:white;
+    width:2px;
+}
+
+.inputnumber{
+    /*width:120px;*/
+    height:48px;
+    float:left;
+    margin-top:3px;
+    margin-bottom:3px;
+    text-align:right;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.expenserowtitle{
+    padding-left:10px;
+    padding-top:3px;
+    font-size:15px;
+    /*font-weight:bold;*/
+    margin-bottom:10px;
+    vertical-align:middle;
+}
+
+.generaldatainput {
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width:250px;
+    height:50px;
+    /*font-family:'Open Sans Condensed', sans-serif;*/
+    font-size:12px;
+    color:black;
+    margin-top:2px;
+    padding-left:5px;
+}
+
+.generaldatainput2 {
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width:250px;
+    height:50px;
+    /*font-family:'Open Sans Condensed', sans-serif;*/
+    font-size:12px;
+    color:black;
+    margin-top:2px;
+    margin-left:2px;
+}
+
+/*input.datainput:-ms-input-placeholder,
+input.datainputdate:-ms-input-placeholder,
+input.datainputname:-ms-input-placeholder { 
+    color: gray;
+    font-size:12px;
+}*/
+
+
+
+/*input.inputnumber:-ms-input-placeholder {
+     
+    color: gray;
+    font-size:12px;
+    min-width:170px;
+}*/
