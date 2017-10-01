@@ -167,6 +167,7 @@ div.signincontainer {
     cursor:pointer;
     background-color:dodgerblue;
     border-color: #53A3CD;
+    margin-right:20px;
 }
 
 .btn-success
@@ -470,7 +471,7 @@ div.dataentry{
 .row{
     display:flex;
     flex-direction:row;
-    padding-left:15px;
+    padding-left:45px;
     margin-top:5px;
 }
 
@@ -488,12 +489,10 @@ div.dataentry{
     border:solid 1px gray;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     width:320px;
-    height:45px;
-
+    height:30px;
     font-size:14px;
     color:black;
     margin-top:2px;
-    height:60px;
 }
 
 .title{
@@ -525,6 +524,20 @@ display:table-header-group;
     color:white;
     padding-left:10px;
     padding-right:10px;
+    min-height:30px;
+    vertical-align:middle;
+}
+
+.tablehead3{
+    display:table-cell;
+    background-color:blue;
+    text-align:center;
+    min-width:490px;
+    color:white;
+    padding-left:10px;
+    padding-right:10px;
+    min-height:30px;
+    vertical-align:middle;
 }
 
 .tableheadgeneral{
@@ -570,7 +583,7 @@ display:table-header-group;
 
 .inputnumber{
     /*width:120px;*/
-    height:48px;
+    height:30px;
     float:left;
     margin-top:3px;
     margin-bottom:3px;
@@ -596,7 +609,7 @@ display:table-header-group;
     border:solid 1px gray;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     width:250px;
-    height:50px;
+    height:30px;
     /*font-family:'Open Sans Condensed', sans-serif;*/
     font-size:12px;
     color:black;
@@ -610,7 +623,7 @@ display:table-header-group;
     border:solid 1px gray;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     width:250px;
-    height:50px;
+    height:30px;
     /*font-family:'Open Sans Condensed', sans-serif;*/
     font-size:12px;
     color:black;
@@ -625,11 +638,102 @@ input.datainputname:-ms-input-placeholder {
     font-size:12px;
 }
 
+.fiscontainer{
+width:950px;
+}
 
+.inputdropdown{
+    width:185px;
+    float:left;
+    margin-top:3px;
+    margin-bottom:3px;
 
-/*input.inputnumber:-ms-input-placeholder {
-     
-    color: gray;
-    font-size:12px;
-    min-width:170px;
-}*/
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.tablecell2{
+    display:table-cell;
+}
+
+.expenserowtitle2{
+    padding-left:10px;
+    font-family:'Open Sans Condensed', sans-serif;
+    font-size:15px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.tableheadtopleftfis{
+    display:table-cell;
+    /*background-color:#f3f3f3;*/
+    background-color:white;
+    /*text-align:center;*/
+    min-width:50px;
+}
+
+.tablehead2{
+    display:table-cell;
+    background-color:black;
+    text-align:center;
+    /*min-width:120px*/
+    color:white;
+}
+
+.fiscontainer2{
+width:250px;
+}
+
+.tablecontainer2{
+      display:table;
+    /*min-width:950px;*/
+    font-size:15px;
+    padding:0px;
+    margin-left:170px;
+    /*margin-right:auto;*/
+
+}
+
+.inputdropdown2 {
+    width:250px;
+    float:left;
+    margin-top:3px;
+    margin-bottom:3px;
+    height:30px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    
+}
+
+.inputtext2{
+    width:185px;
+    float:left;
+    margin-top:3px;
+    margin-bottom:3px;
+    height:30px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.inputnumberfis2{
+    width:185px;
+    float:left;
+    margin-top:3px;
+    margin-bottom:3px;
+    text-align:right;
+    height:30px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.fiswidth{
+    width:500px;
+}
