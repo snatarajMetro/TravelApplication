@@ -93,14 +93,6 @@
                                 <input type="date" placeholder="" id="txtReturnDate" width="100" class="datainputdate" />
                             </div>
                         </div>
-                        <!--<div class="row" style="display:flex;flex-direction:row">
-                            <div class="column">
-                                <div class="label2">
-                                    <span>Purpose</span>
-                                </div>
-                                <textarea placeholder="" id="txtPurpose" width="100" class="purposedatainput" />
-                            </div>
-                        </div>-->
                     </div>
                 <hr style="padding:0px;margin-top:10px;margin-bottom:10px;" />
                 <div class="estimatedexpensesection row">
@@ -132,11 +124,8 @@
                                     </div>
                                     <div class="spacer"></div>
                                     <div class="tablecellheader expenserowtitle">Hotel Name and Address</div>
-                                    <!--<div class="tablecell">
-                                        <textarea placeholder="Hotel Name and Address" id="txtHotelNameAndAddress" width="100" class="generaldatainput" onfocus="removeplaceholder(this);" onblur="resetplaceholder(this,'Hotel Name and Address');"></textarea>
-                                    </div>-->
                                     <div class="tablecell">
-                                        <textarea placeholder="" id="txtHotelNotes" width="100" class="generaldatainput2"></textarea>
+                                        <textarea placeholder="" id="txtHotelNameAndAddress" width="100" class="generaldatainput2"></textarea>
                                     </div>
                                 </div>
                                 <div class="tablerow">
@@ -151,10 +140,6 @@
                                     </div>
                                     <div class="spacer"></div>
                                     <div class="tablecellheader expenserowtitle">Schedule</div>
-                                    <!--<div class="tablecell">
-                                        <textarea placeholder="Schedule" id="txtSchedule" width="100" class="generaldatainput" onfocus="removeplaceholder(this);" onblur="resetplaceholder(this,'Schedule');"></textarea>
-                                    </div>-->
-                                    <!--<div class="spacer"></div>-->
                                     <div class="tablecell">
                                         <textarea placeholder="" id="txtSchedule" width="100" class="generaldatainput2"></textarea>
                                     </div>
@@ -171,9 +156,6 @@
                                     </div>
                                     <div class="spacer"></div>
                                     <div class="tablecellheader expenserowtitle">Payable to and Address</div>
-                                    <!--<div class="tablecell">
-                                        <textarea placeholder="Payable to and Address" id="txtPayableTo" width="100" class="generaldatainput" onfocus="removeplaceholder(this);" onblur="resetplaceholder(this,'Payable to and Address');"></textarea>
-                                    </div>-->
                                     <div class="tablecell">
                                         <textarea placeholder="" id="txtPayableTo" width="100" class="generaldatainput2"></textarea>
                                     </div>
@@ -190,11 +172,8 @@
                                     </div>
                                     <div class="spacer"></div>
                                     <div class="tablecellheader expenserowtitle">Notes</div>
-                                    <!--<div class="tablecell">
-                                        <textarea placeholder="Note any meals inc. in Conf. or other Reg. fees" id="txtMealNotes1" width="100" class="generaldatainput" onfocus="removeplaceholder(this);" onblur="resetplaceholder(this,'Note any meals inc. in Conf. or other Reg. fees');"></textarea>
-                                    </div>-->
                                     <div class="tablecell">
-                                        <textarea placeholder="" id="txtMealNotes1" width="100" class="generaldatainput2" ></textarea>
+                                        <textarea placeholder="" id="txtNotes" width="100" class="generaldatainput2" ></textarea>
                                     </div>
                                 </div> 
                                 <div class="tablerow">
@@ -209,9 +188,6 @@
                                     </div>
                                     <div class="spacer"></div>
                                     <div class="tablecellheader expenserowtitle">Agency Name and Reservation #</div>
-                                    <!--<div class="tablecell">
-                                        <textarea placeholder="Agency Name Reservation #" id="txtAgencyName" width="100" class="generaldatainput" onfocus="removeplaceholder(this);" onblur="resetplaceholder(this,'Agency Name Reservation #');"></textarea>
-                                    </div>-->
                                     <div class="tablecell">
                                         <textarea placeholder="" id="txtAgencyName" width="100" class="generaldatainput2" ></textarea>
                                     </div>
@@ -228,9 +204,6 @@
                                     </div>
                                     <div class="spacer"></div>
                                     <div class="tablecellheader expenserowtitle">Shuttle, taxi etc.</div>
-                                    <!--<div class="tablecell">
-                                        <textarea placeholder="Shuttle, taxi, etc." id="txtShuttle" width="100" class="generaldatainput" onfocus="removeplaceholder(this);" onblur="resetplaceholder(this,'Shuttle, taxi, etc.');"></textarea>
-                                    </div>-->
                                     <div class="tablecell">
                                         <textarea placeholder="" id="txtShuttle" width="100" class="generaldatainput2" />
                                     </div>
@@ -247,24 +220,16 @@
                                     </div>
                                     <div class="spacer"></div>
                                     <div class="tablecellheader expenserowtitle">Cash Advance Requested $</div>
-                                    <!--<div class="tablecell">
-                                        <textarea placeholder="Cash Advance Requested: $" id="txtCashAdvanceRequested" width="100" class="generaldatainput" onfocus="removeplaceholder(this);" onblur="resetplaceholder(this,'Cash Advance Requested: $');"></textarea>
-                                    </div>-->
                                     <div class="tablecell">
-                                        <!--<textarea placeholder="Date needed by" id="txtDateNeededBy" width="100" class="generaldatainput2" onfocus="removeplaceholder(this);" onblur="resetplaceholder(this,'Date needed by');"></textarea>-->
                                         <textarea placeholder="" id="txtCashAdvanceRequested" width="100" class="generaldatainput"></textarea>
                                     </div>
                                 </div>
                                 <div class="tablerow">
                                     <div class="tablecellheader expenserowtitle"></div>
                                     <div class="spacer"></div>
-                                    <div class="tablecell">
-                                        <!--<input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAdvanceTotal" class="inputnumber" />-->
-                                    </div>
+                                    <div class="tablecell"></div>
                                     <div class="spacer"></div>
-                                    <div class="tablecell">
-                                        <!--<input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtEstimatedTotal" class="inputnumber" />-->
-                                    </div>
+                                    <div class="tablecell"></div>
                                     <div class="spacer"></div>
                                     <div class="tablecellheader expenserowtitle">Date Needed by</div>
                                     <div class="tablecell">
@@ -274,11 +239,6 @@
                             </div>
                         </div>
                     </div>
-                    <!--<div class="dataentrysection1" ng-app="travelApp" ng-controller="travelAppCtrl">
-                        <div style="background-color:brown;display:block;">
-                            estimated expenses
-                        </div>
-                    </div>-->
                     <hr style="padding:0px;margin-top:10px;margin-bottom:10px;" />
                     <div class="estimatedexpensesection" >
                         <div class="title">
