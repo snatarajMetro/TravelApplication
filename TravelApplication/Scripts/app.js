@@ -21,7 +21,7 @@ $(document).ready(function () {
 
     //createnewrequest();
 
-    ////var scope = angular.element('#fileuploadtemplate').scope();
+    //var scope = angular.element('#fileuploadtemplate').scope();
     //$("#travelrequesttemplate").hide();
     //$("#fileuploadtemplate").show();
 
@@ -497,4 +497,13 @@ function backtotravelrequestsection()
     $("#fileuploadtemplate").hide();
     $("#travelrequesttemplate").show();
 
+}
+
+function showaction() {
+
+    $("#submitsuccess").hide();
+    $('#btnSubmit').prop("disabled", false);
+    $('#btnBack').prop("disabled", false);
+    $("#fileuploadtemplate").hide();
+    $("#action").show();
 }

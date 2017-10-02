@@ -694,6 +694,194 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
 
     }
 
+    $scope.submitRequest2 = function () {
+
+        var canSubmit = false;
+        var travelRequestId = $('#travelRequestId').text();
+        var badgeNumber = $('#badgeNumber').text();
+
+        // Department Head
+        var departmentHeadBadgeNumber = $("#ddlDepartmentHead option:selected").val();
+        var departmentHeadName = "";
+
+        if (departmentHeadBadgeNumber && departmentHeadBadgeNumber != '?') {
+
+            if (departmentHeadBadgeNumber == '-1') {
+                departmentHeadBadgeNumber = $('#txtDepartmentHeadBadgeNumber').val();
+                departmentHeadName = $('#txtDepartmentHeadName').val();
+            }
+            else {
+                departmentHeadName = $("#ddlDepartmentHead option:selected").text();
+            }
+
+            if (departmentHeadBadgeNumber) {
+
+                canSubmit = true;
+            }
+        }
+
+        // Executive Officer
+        var executiveOfficerBadgeNumber = $("#ddlExecutiveOfficer option:selected").val();
+        var executiveOfficerName = "";
+
+        if (executiveOfficerBadgeNumber && executiveOfficerBadgeNumber != '?') {
+
+            if (executiveOfficerBadgeNumber == '-1') {
+                executiveOfficerBadgeNumber = $('#txtExecutiveOfficerBadgeNumber').val();
+                executiveOfficerName = $('#txtExecutiveOfficerName').val();
+            }
+            else {
+                executiveOfficerName = $("#ddlExecutiveOfficer option:selected").text();
+            }
+        }
+        else {
+            executiveOfficerBadgeNumber = "";
+        }
+
+        // CEO (For International)
+        var ceoForInternationalBadgeNumber = $("#ddlCEOForInternational option:selected").val();
+        var ceoForInternationalName = "";
+
+        if (ceoForInternationalBadgeNumber && ceoForInternationalBadgeNumber != '?') {
+
+            if (ceoForInternationalBadgeNumber == '-1') {
+                ceoForInternationalBadgeNumber = $('#txtCEOForInternationalBadgeNumber').val();
+                ceoForInternationalName = $('#txtCEOForInternationalName').val();
+            }
+            else {
+                ceoForInternationalName = $("#ddlCEOForInternational option:selected").text();
+            }
+        }
+        else {
+            ceoForInternationalBadgeNumber = "";
+        }
+
+        // CEO (For APTA/CTA conference)
+        var ceoForAPTABadgeNumber = $("#ddlCEOForAPTA option:selected").val();
+        var ceoForAPTAName = "";
+
+        if (ceoForAPTABadgeNumber && ceoForAPTABadgeNumber != '?') {
+
+            if (ceoForAPTABadgeNumber == '-1') {
+                ceoForAPTABadgeNumber = $('#txtCEOForAPTABadgeNumber').val();
+                ceoForAPTAName = $('#txtCEOForAPTAName').val();
+            }
+            else {
+                ceoForAPTAName = $("#ddlCEOForAPTA option:selected").text();
+            }
+        }
+        else {
+            ceoForAPTABadgeNumber = "";
+        }
+
+        // Travel Co-ordinator
+        var travelCoordinatorBadgeNumber = $("#ddlTravelCoordinator option:selected").val();
+        var travelCoordinatorName = "";
+
+        if (travelCoordinatorBadgeNumber && travelCoordinatorBadgeNumber != '?') {
+
+            if (travelCoordinatorBadgeNumber == '-1') {
+                travelCoordinatorBadgeNumber = $('#txtTravelCoordinatorBadgeNumber').val();
+                travelCoordinatorName = $('#txtTravelCoordinatorName').val();
+            }
+            else {
+                travelCoordinatorName = $("#ddlTravelCoordinator option:selected").text();
+            }
+
+            if (travelCoordinatorBadgeNumber && canSubmit) {
+                canSubmit = true;
+            }
+        }
+        else {
+            canSubmit = false;
+        }
+
+        // Agree checkbox
+        var agreedToTermsAndConditions = $('#cbAgree').prop('checked');
+
+        if (!agreedToTermsAndConditions) {
+            canSubmit = false;
+        }
+
+        // Submitted by user name
+        var submittedByUserName = $('#txtSubmittedByUserName').val().trim();
+        if (!submittedByUserName) {
+            canSubmit = false;
+        }
+
+        if (canSubmit) {
+            $.ajax({
+                type: "POST",
+                url: "/api/approval/submitnew",
+                data: JSON.stringify({
+                    "HeirarchichalApprovalRequest":{
+                        "TravelRequestId": travelRequestId,
+                        "BadgeNumber": badgeNumber,
+                        "AgreedToTermsAndConditions": agreedToTermsAndConditions,
+                        "SubmittedByUserName": submittedByUserName,
+                        "ApproverList": [
+                            {
+                                "ApproverName": departmentHeadName,
+                                "ApproverBadgeNumber": departmentHeadBadgeNumber,
+                                "ApprovalOrder":1
+                            },
+                            {
+                                "ApproverName": executiveOfficerName,
+                                "ApproverBadgeNumber": executiveOfficerBadgeNumber,
+                                "ApprovalOrder": 2
+                            },
+                            {
+                                "ApproverName": ceoForInternationalName,
+                                "ApproverBadgeNumber": ceoForInternationalBadgeNumber,
+                                "ApprovalOrder": 3
+                            },
+                            {
+                                "ApproverName": ceoForAPTAName,
+                                "ApproverBadgeNumber": ceoForAPTABadgeNumber,
+                                "ApprovalOrder": 4
+                            },
+                            {
+                                "ApproverName": travelCoordinatorName,
+                                "ApproverBadgeNumber": travelCoordinatorBadgeNumber,
+                                "ApprovalOrder": 5
+                            }
+                        ]
+                    }
+                }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+
+                    $("#submitsuccess").fadeIn("slow");
+                    $('#submitsuccessmessage').html("Travel request has been successfully submitted. Travel request# is <b>" + travelRequestId + "</b>.");
+
+                    $('#btnSubmit').prop("disabled", true);
+                    $('#btnBack').prop("disabled", true);
+                },
+                error: function (xhr, options, error) {
+                    if (xhr.status == 500) {
+
+                        var errorMessage = xhr.responseText;
+
+                        $("#submiterror").fadeIn("slow");
+                        $('#submiterrormessage').text(errorMessage);
+
+                        // fade out in 5 seconds
+                        $("#submiterror").fadeOut(fadeOutTimeInMilliseconds);
+                    }
+                }
+            });
+        }
+        else {
+            $("#submiterror").fadeIn("slow");
+            $('#submiterrormessage').text("Some of the required fields are missing. Please try again.");
+
+            // fade out in 5 seconds
+            $("#submiterror").fadeOut(fadeOutTimeInMilliseconds);
+        }
+
+    }
+
     // travel request fields
     $scope.badgeNumber = 0;
     $scope.travelRequestUserName = "";

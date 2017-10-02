@@ -224,6 +224,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dropzone.css" />
     <Content Include="Content\fileDropZone.css" />
+    <Content Include="Content\font.css" />
     <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

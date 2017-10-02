@@ -150,11 +150,11 @@
                         </div>
                         </div>
                         <div class="row">
-                            <div id="submiterror" class="main errorcontainer" style="display:none">
-                                <span class="dialog" id="submiterrormessage"></span>
+                            <div id="submiterror" class="main errorcontainer2" style="display:none;">
+                                <span class="dialog" id="submiterrormessage">error</span>
                                 <a href="#" class="close-thick" onclick="return closesubmiterror();"></a>
                             </div>
-                            <div id="submitsuccess" class="main successcontainerok" style="float:left;display:none">
+                            <div id="submitsuccess" class="main successcontainerok" style="float:left;display:none;">
                                 <div class="dialogSuccessNew">
                                     <span id="submitsuccessmessage"></span>
                                     <input class="btn btn-success signinbutton ok" type="button" id="btnOk" name="btnOk" value="Ok" onclick="showaction()" />
@@ -169,8 +169,8 @@
                                 <sub class="required">* required fields.</sub>
                             </div>
                             <div class="actionbutton">
-                                <input class="btn backbutton" type="button" name="btnBack" value="Back" onclick="backtotravelrequestsection()" />
-                                <input class="btn signinbutton" type="button" name="btnNext" value="Submit" onclick="savedataentry()" />
+                                <input class="btn backbutton" type="button" id="btnBack" value="Back" onclick="backtotravelrequestsection()" />
+                                <input class="btn signinbutton" type="button" id="btnSubmit" value="Submit" ng-click="submitRequest2()" />
                             </div>
                         </div>
                     </div>
