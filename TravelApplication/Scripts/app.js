@@ -5,21 +5,26 @@ var isInternetExplorer = false;
 
 $(document).ready(function () {
 
-    $("#txtEmail").focus();
+    //$("#txtEmail").focus();
 
     isInternetExplorer = (navigator.userAgent && navigator.userAgent.search("Trident") >= 0);
 
-    //$('#signin').hide();
+    $('#signin').hide();
 
     scope = angular.element('#fileuploadtemplate').scope();
     scope.loadFIS();
     scope.loadCostCenters();
 
     scope.loadFileUpload2();
+
+    //viewexistingtravelrequests();
+
+    //showApproveSection();
+
     //scope.loadCommonApprovers($('#badgeNumber').text());
     //scope.loadTravelCoordinators();
 
-    //createnewrequest();
+    createnewrequest();
 
     //var scope = angular.element('#fileuploadtemplate').scope();
     //$("#travelrequesttemplate").hide();
@@ -506,4 +511,128 @@ function showaction() {
     $('#btnBack').prop("disabled", false);
     $("#fileuploadtemplate").hide();
     $("#action").show();
+}
+
+function cancelAction() {
+    $('#approvetemplate').hide();
+    $('#rejecttemplate').hide();
+}
+
+function showApproveSection(container) {
+
+    var travelRequestId = $(container).prop('alt');
+
+    var scope = angular.element('#approvetemplate').scope();
+    scope.loadApproveAction(travelRequestId);
+
+    $('#approvetemplate').show();
+}
+
+function approve() {
+
+    var travelRequestId = $('#travelRequestIdForAction').text();
+    var badgeNumber = $('#badgeNumber').text();
+    var comments = $('#txtComments').val();
+
+    $.ajax({
+        type: "POST",
+        url: "api/travelrequest/approve",
+        data: JSON.stringify({ "TravelRequestId": travelRequestId, "ApproverBadgeNumber": badgeNumber, "Comments": comments }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+
+            $("#approvesuccess").fadeIn("fast");
+            $('#approvesuccessmessage').text('Travel request has been successfully approved.');
+
+            // fade out in 5 seconds
+            $("#approvesuccess").fadeOut("slow");
+
+            $("#approvetemplate").fadeOut("slow");
+
+            // refresh the existing request grid
+            var scope = angular.element('#existingtravelrequeststemplate').scope();
+            scope.refreshExistingRequest();
+        },
+        error: function (xhr, options, error) {
+
+            if (xhr.status == 500) {
+                var errorMessage = xhr.responseText;
+
+                $("#approveerror").fadeIn("slow");
+                $('#approveerrormessage').text(errorMessage);
+
+                // fade out in 5 seconds
+                $("#approveerror").fadeOut(fadeOutTimeInMilliseconds);
+            }
+        }
+    });
+}
+
+function reject() {
+
+    var travelRequestId = $('#travelRequestIdForAction').text();
+    var badgeNumber = $('#badgeNumber').text();
+    var comments = $('#txtComments').val();
+
+    $.ajax({
+        type: "POST",
+        url: "api/travelrequest/reject",
+        data: JSON.stringify({ "TravelRequestId": travelRequestId, "ApproverBadgeNumber": badgeNumber, "Comments": comments }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+
+            $("#rejectsuccess").fadeIn("fast");
+            $('#rejectsuccessmessage').text('Travel request has been successfully rejected.');
+
+            // fade out in 5 seconds
+            $("#rejectsuccess").fadeOut("slow");
+
+            $("#rejecttemplate").fadeOut("slow");
+
+            // refresh the existing request grid
+            var scope = angular.element('#existingtravelrequeststemplate').scope();
+            scope.refreshExistingRequest();
+
+        },
+        error: function (xhr, options, error) {
+
+            if (xhr.status == 500) {
+                var errorMessage = xhr.responseText;
+
+                $("#rejecterror").fadeIn("slow");
+                $('#rejecterrormessage').text(errorMessage);
+
+                // fade out in 5 seconds
+                $("#rejecterror").fadeOut(fadeOutTimeInMilliseconds);
+            }
+        }
+    });
+}
+
+function closeapproveerror() {
+    $("#approveerror").hide();
+}
+
+function closeapprovesuccess() {
+    $("#approvesuccess").hide();
+}
+
+function closerejecterror() {
+    $("#rejecterror").hide();
+}
+
+function closerejectsuccess() {
+    $("#rejectsuccess").hide();
+}
+
+function showRejectSection(container) {
+
+    var travelRequestId = $(container).prop('alt');
+
+    var scope = angular.element('#rejecttemplate').scope();
+    scope.loadRejectAction(travelRequestId);
+
+    $('#rejecttemplate').show();
 }
