@@ -173,6 +173,7 @@
     <Compile Include="Models\Email.cs" />
     <Compile Include="Models\EmployeeDetails.cs" />
     <Compile Include="Models\EstimatedExpense.cs" />
+    <Compile Include="Models\FIS.cs" />
     <Compile Include="Models\HeirarchichalApprovalRequest.cs" />
     <Compile Include="Models\HeirarchichalPosition.cs" />
     <Compile Include="Models\PageConfigModel.cs" />
