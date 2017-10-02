@@ -131,6 +131,73 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
         });
     }
 
+    
+    //set fileupload section
+    $scope.loadFileUpload2 = function () {
+
+        var travelRequestId = $('#travelRequestId').text();
+
+        // load supporting document grid
+        $scope.loadSupportingDocuments(travelRequestId);
+
+        $.get('/uitemplates/uploadandsubmit.html')
+        .done(function (data) {
+            $('#fileuploadtemplate').html($compile($(data).html())($scope));
+            $scope.$apply();
+
+            Dropzone.autoDiscover = false;
+
+            $("#supportingDocumentZone").dropzone({
+                url: "api/documents/upload",
+                thumbnailWidth: 10,
+                thumbnailHeight: 10,
+                maxFilesize: 5, // MB
+                addRemoveLinks: true,
+                acceptedFiles: ".jpeg,.png,.gif,.txt,.pdf,.docx,.xlxs",
+                init: function () {
+                    var self = this;
+                    // config
+                    self.options.addRemoveLinks = true;
+                    self.options.dictRemoveFile = "Delete";
+
+                    // on file added
+                    self.on("addedfile", function (progress) {
+                        var travelRequestId = $('#travelRequestId').text();
+                        var badgeNumber = $('#badgeNumber').text();
+                        var uploadUrl = "/api/documents/upload?travelRequestId=" + travelRequestId + "&badgeNumber=" + badgeNumber;
+                        self.options.url = uploadUrl;
+                    });
+
+                    // on file added
+                    self.on("success", function (file, response) {
+                        this.removeFile(file);
+                    });
+
+                    // File upload Progress
+                    self.on("totaluploadprogress", function (progress) {
+                        $('.roller').width(progress + '%');
+                    });
+
+                    self.on("queuecomplete", function (progress) {
+                        $('.meter').delay(999).slideUp(999);
+
+                        var travelRequestId = $('#travelRequestId').text();
+
+                        // reload supporting document grid
+                        $scope.loadSupportingDocuments(travelRequestId);
+                    });
+                },
+                success: function (file, response) {
+                    var imgName = response;
+                    file.previewElement.classList.add("dz-success");
+                },
+                error: function (file, response) {
+                    file.previewElement.classList.add("dz-error");
+                }
+            });
+        });
+    }
+
     //set fis section
     $scope.loadFIS = function () {
         $.get('/uitemplates/fis.html')

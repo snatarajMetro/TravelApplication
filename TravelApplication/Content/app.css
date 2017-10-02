@@ -1,6 +1,8 @@
 ﻿body{
     /*font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;*/
-    font-family:'Roboto', sans-serif;
+    /*font-family:'Roboto', sans-serif;*/
+        font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+        /*font-family:'Times New Roman';*/
 }
 .appbackground {
     background-image: url("/images/sn.png");
@@ -13,6 +15,7 @@
 div.main {
     display:block;
     margin-top:2px;
+    
 }
 
 .logotitle,
@@ -345,9 +348,13 @@ div.existingtravelrequestcontainer {
 }
 
 .pagetitle{
-    font-size:20px;
+    font-size:18px;
     padding-bottom:2px;
-    color:#0728ea;
+    background-color:#064468;
+    color:white;
+    width:990px;
+    padding-left:5px;
+
 }
 
 .existingTravelRequestsGrid{
@@ -415,6 +422,7 @@ div.dataentry{
     justify-content:flex-end;
     display:flex;
     padding:10px;
+    margin-top:20px;
 }
 
 .backbutton,
@@ -508,7 +516,8 @@ div.dataentry{
     /*min-width:950px;*/
     font-size:15px;
     padding:0px;
-    margin-left:10px;
+    margin-left:0px;
+    margin-top:10px;
     /*margin-right:auto;*/
 }
 
@@ -518,10 +527,12 @@ display:table-header-group;
 
 .tablehead{
     display:table-cell;
-    background-color:blue;
+    background-color:#eeeeee;
+    color:black;
+    font-weight:bold;
     text-align:center;
     min-width:90px;
-    color:white;
+    /*color:white;*/
     padding-left:10px;
     padding-right:10px;
     min-height:30px;
@@ -736,4 +747,267 @@ width:250px;
 
 .fiswidth{
     width:500px;
+}
+
+div.uploadandsubmitcontainer {
+    /*position: absolute;
+    float:left;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 1100px;
+    height: 640px;
+    margin: auto;
+    background-color: white;
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
+    /*box-shadow: 10px 10px 5px #3c3c3c;
+    border-radius: 3px;
+    border:solid 1px black;*/
+
+    position: absolute;
+    float:left;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height:0;
+    width:0;
+    /*margin: auto;*/
+    background-color: green;
+    box-shadow: 10px 10px 5px #3c3c3c;
+    /*border-radius: 3px;
+    border:solid 1px black;*/
+    margin-top:28px;
+}
+
+.maincontent {
+    height:auto;
+}
+
+div.dataentry2{
+    background-color: white;
+    box-shadow: 10px 10px 5px #3c3c3c;
+    /*border-radius: 3px;
+    border:solid 1px black;*/
+    margin-left:75px;
+    margin-right:100px;
+    height:0;
+    width:1291px;
+    justify-content: space-between;
+  flex-direction: column;
+  /*height: 100vh;*/
+  display: flex;
+}
+
+.supportingDocumentZone {
+    height:75px;
+    width:668px;
+}
+
+.supportingDocumentGrid {
+width:668px;
+height:235px;
+}
+
+.supportingDocumentSection{
+    margin-left:10px;
+    margin-top:20px;
+}
+
+.viewDocument {
+    margin-left:15px;
+    width:30px;
+    height:30px;
+}
+
+.actionImage {
+    margin-left:5px;
+    width:25px;
+    height:25px;
+    cursor:pointer;
+}
+
+.actionImage2 {
+    margin-left:5px;
+    width:30px;
+    height:30px;
+    cursor:pointer;
+}
+
+.badgeNumberForSubmit {
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    padding-left:5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width:115px;
+    height:30px;
+    font-size:15px;
+    color:black;
+}
+
+.approverNameForSubmit {
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    padding-left:5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width:310px;
+    height:30px;
+    font-size:15px;
+    color:black;
+}
+
+.otherBadgeNumberContainer{
+    margin-left:5px;
+}
+
+.required{
+    color:red;
+    font-weight:bold;
+}
+
+.requiredcontainer {
+    position:absolute;
+    display:block;
+    bottom:0;
+    left:0;
+    padding:5px;
+    font-size:15px;
+    background-color:yellow;
+}
+
+.successcontainer {
+    position:absolute;
+    display:block;
+    top:0;
+    right:0;
+}
+
+.approvaltitle
+{
+    padding-left:10px;
+    font-size:15px;
+    /*font-weight:bold;*/
+    margin-bottom:5px;
+    width:245px;
+    padding-top:5px;
+}
+
+.agreement{
+    padding:10px;
+    padding-top:10px;
+    font-size:15px;
+}
+
+.agreecheckbox{
+    width:20px;
+    height:20px;
+    margin-left:150px;
+    padding-right:10px;
+}
+
+.iagree{
+    width:70px;
+}
+
+.ui-grid-column-menu-button{
+  display: none;
+}
+
+.ui-grid{
+    font-size:14px;
+     -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px black;
+}
+.ui-grid-header-canvas{
+    font-size:14px; 
+    color:black;
+    /*background-color:#dcdada;*/
+    background-color:gray;
+}
+.ui-grid-top-panel{
+    color: black;
+}
+
+.ui-grid-pager-panel{
+    background-color:gray;
+    color:white;
+}
+
+.headerStyle{
+    text-align:center;
+}
+
+.submitsection{
+    margin-top:20px;
+    margin-left:10px;
+}
+
+.submitUser {
+    width:250px;
+    height:30px;
+    margin-left:2px;
+    font-size:14px; 
+}
+
+.employee{
+    margin-right:50px;
+}
+
+div.dataentry3{
+    background-color: white;
+    box-shadow: 10px 10px 5px #3c3c3c;
+    border-radius: 3px;
+    border:solid 1px black;
+    margin-left:75px;
+    margin-right:100px;
+    min-height:975px;
+
+    justify-content: space-between;
+  flex-direction: column;
+  /*height: 100vh;*/
+  display: flex;
+}
+
+.pagetitle2{
+    font-size:18px;
+    padding-bottom:2px;
+    background-color:#064468;
+    color:white;
+    width:1090px;
+    padding-left:5px;
+    margin-top:20px;
+}
+
+.pagetitle3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    background-color: #064468;
+    color: white;
+    width: 1100px;
+    padding-left: 5px;
+    margin-top:20px;
+}
+
+.pagetitle4 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    background-color: #064468;
+    color: white;
+    width: 990px;
+    padding-left: 5px;
+    margin-top:20px;
+}
+
+.pagetitle5 {
+    font-size: 18px;
+    margin-bottom: 0px;
+    background-color: #064468;
+    color: white;
+    width: 990px;
+    padding-left: 5px;
+    margin-top:20px;
 }

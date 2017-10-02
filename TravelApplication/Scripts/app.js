@@ -9,7 +9,24 @@ $(document).ready(function () {
 
     isInternetExplorer = (navigator.userAgent && navigator.userAgent.search("Trident") >= 0);
 
-    createnewrequest();
+    //$('#signin').hide();
+
+    scope = angular.element('#fileuploadtemplate').scope();
+    scope.loadFIS();
+    scope.loadCostCenters();
+
+    scope.loadFileUpload2();
+    //scope.loadCommonApprovers($('#badgeNumber').text());
+    //scope.loadTravelCoordinators();
+
+    //createnewrequest();
+
+    ////var scope = angular.element('#fileuploadtemplate').scope();
+    //$("#travelrequesttemplate").hide();
+    //$("#fileuploadtemplate").show();
+
+    //scope.loadSupportingDocuments(travelRequestId);
+
 });
 
 function closeinvaliduser() {
@@ -372,9 +389,26 @@ function savedataentry()
         success: function (data) {
             var result = JSON.parse(data);
             //$('#travelRequestId').text(result);
+            badgeNumber = 100;
             $('#badgeNumber').text(badgeNumber);
 
-            alert('success');
+            var scope = angular.element('#fileuploadtemplate').scope();
+            scope.loadCommonApprovers($('#badgeNumber').text());
+            scope.loadTravelCoordinators();
+            scope.loadSupportingDocuments(travelRequestId);
+
+            $("#travelrequesttemplate").hide();
+            $("#fileuploadtemplate").show();
+
+            // show file upload section
+            //$("#travelrequesttemplate").hide();
+            //$("#fileuploadtemplate").show();
+
+            //var travelRequestId = $('#travelRequestId').text();
+            //var scope = angular.element('#fileuploadtemplate').scope();
+            
+
+            //scope.loadSupportingDocuments(travelRequestId);
 
             //show estimated expense section
             //$('#travelrequesttemplate').hide();
@@ -419,4 +453,48 @@ function setUserName() {
             }
         });
     }
+}
+
+function setOtherUserName(source2, container) {
+
+    var badgeNumber = $('#' + source2).val();
+
+    if (badgeNumber) {
+        $.ajax({
+            type: "GET",
+            url: "/api/travelrequest/employee/" + badgeNumber,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                var result = JSON.parse(data);
+
+                $('#' + container).val(result.EmployeeFirstName + ' ' + result.EmployeeLastName);
+
+                // enable the submit button
+                $('#btnSubmit').prop("disabled", false);
+            },
+            error: function (xhr, options, error) {
+
+                if (xhr.status == 500) {
+                    var errorMessage = xhr.responseText;
+
+                    $("#submiterror").fadeIn("slow");
+                    $('#submiterrormessage').text(errorMessage);
+
+                    // fade out in 5 seconds
+                    $("#submiterror").fadeOut(fadeOutTimeInMilliseconds);
+
+                    // disable the submit button
+                    $('#btnSubmit').prop("disabled", true);
+                }
+            }
+        });
+    }
+}
+
+function backtotravelrequestsection()
+{
+    $("#fileuploadtemplate").hide();
+    $("#travelrequesttemplate").show();
+
 }
