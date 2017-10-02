@@ -55,11 +55,11 @@ namespace TravelApplication.Services
             
         }
 
-        public  bool SaveTravelRequestInput(TravelRequestInput travelRequest)
+        public TravelRequestInputResponse SaveTravelRequestInput(TravelRequestInput travelRequest)
         {
             try
             {
-                bool result =   travelRequestRepo.SaveTravelRequestInput(travelRequest);
+                var result =   travelRequestRepo.SaveTravelRequestInput(travelRequest);
                 return result;
             }
             catch (Exception ex)

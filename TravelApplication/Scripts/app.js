@@ -393,9 +393,9 @@ function savedataentry()
         success: function (data) {
             var result = JSON.parse(data);
             //$('#travelRequestId').text(result);
-            badgeNumber = 100;
-            $('#badgeNumber').text(badgeNumber);
-
+          //  badgeNumber = 100;
+            $('#badgeNumber').text(result.BadgeNumber);
+            $('#travelRequestId').text(result.TravelRequestId);
             var scope = angular.element('#fileuploadtemplate').scope();
             scope.loadCommonApprovers($('#badgeNumber').text());
             scope.loadTravelCoordinators();

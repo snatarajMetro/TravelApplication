@@ -644,10 +644,11 @@ namespace TravelApplication.Services
             
         }
 
-        public bool SaveTravelRequestInput(TravelRequestInput travelRequest)
+        public TravelRequestInputResponse SaveTravelRequestInput(TravelRequestInput travelRequest)
         {
             string travelRequestId = string.Empty;
             int estimatedExpenseId = 0;
+            TravelRequestInputResponse response = null;
             try
             {
                 //Validate basic information
@@ -669,7 +670,9 @@ namespace TravelApplication.Services
                     }
                     // Insert or update FIS expense
 
-                    return true;
+                    response = new TravelRequestInputResponse() { TravelRequestId = travelRequestId, BadgeNumber = travelRequest.TravelRequestData.BadgeNumber };
+
+                    return response;
 
                 }
                 dbConn.Close();

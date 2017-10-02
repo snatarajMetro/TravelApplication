@@ -186,6 +186,7 @@
     <Compile Include="Models\TravelRequest.cs" />
     <Compile Include="Models\TravelRequestDetails.cs" />
     <Compile Include="Models\TravelRequestInput.cs" />
+    <Compile Include="Models\TravelRequestInputResponse.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\UserResponse.cs" />
     <Compile Include="Models\UserRole.cs" />
