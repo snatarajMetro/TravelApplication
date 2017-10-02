@@ -662,7 +662,7 @@ namespace TravelApplication.Services
                     }
 
                     // Insert or update estimated expense
-                    estimatedExpenseId = SaveEstimatedExpenseRequestNew(dbConn, travelRequest.EstimatedExpenseData);
+                    estimatedExpenseId = SaveEstimatedExpenseRequestNew(dbConn, travelRequest.EstimatedExpenseData, travelRequestId);
                     if(estimatedExpenseId == 0)
                     {
                         throw new Exception("Couldn't save/update estimated expense information");
@@ -774,7 +774,7 @@ namespace TravelApplication.Services
             return travelRequestIdNew;
         }
 
-        public int SaveEstimatedExpenseRequestNew(DbConnection dbConn, EstimatedExpense request)
+        public int SaveEstimatedExpenseRequestNew(DbConnection dbConn, EstimatedExpense request, string travelRequestId)
         {
             int estimatedExpenseId = 0;
             try
@@ -810,7 +810,7 @@ namespace TravelApplication.Services
 						CASHADVANCE,
 						DATENEEDEDBY					 
 						 ) VALUES (:p1 ,:p2,:p3,:p4,:p5,:p6,:p7,:p8,:p9,:p10,:p11,:p12,:p13,:p14,:p15,:p16,:p17,:p18,:p19,:p20,:p21,:p22,:p23 ) returning ESTIMATEDEXPENSEID into : estimatedExpenseId ";
-                        cmd.Parameters.Add(new OracleParameter("p1", request.TravelRequestId));
+                        cmd.Parameters.Add(new OracleParameter("p1", travelRequestId));
                         cmd.Parameters.Add(new OracleParameter("p2", request.AdvanceLodging));
                         cmd.Parameters.Add(new OracleParameter("p3", request.AdvanceAirFare));
                         cmd.Parameters.Add(new OracleParameter("p4", request.AdvanceRegistration));
