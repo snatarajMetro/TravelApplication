@@ -59,9 +59,9 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
         $scope.totalFISAmount = (
             ($scope.totalFISAmount1 * 1)
             + ($scope.totalFISAmount2 * 1)
-            + ($scope.totalFISAmount3 * 1)
-            + ($scope.totalFISAmount4 * 1)
-            + ($scope.totalFISAmount5 * 1)
+            //+ ($scope.totalFISAmount3 * 1)
+            //+ ($scope.totalFISAmount4 * 1)
+            //+ ($scope.totalFISAmount5 * 1)
             );
     }
 

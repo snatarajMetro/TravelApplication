@@ -203,14 +203,14 @@
                                     </div>
                                 </div>
                                 <div class="tablerow">
-                                    <div class="tablecellheader expenserowtitle"><b>Totals</b></div>
+                                    <div class="tablecellheader expenserowtitle"><b>Total</b></div>
                                     <div class="spacer"></div>
                                     <div class="tablecell">
-                                        <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAdvanceTotal" readonly class="inputnumber" ng-model="totalAdvanceAmount" />
+                                        <input type="number" min="0.00" max="999999999.99" step="0.01" placeholder="0.00" id="txtAdvanceTotal" readonly disabled class="inputnumber totalbgcolor" ng-model="totalAdvanceAmount" />
                                     </div>
                                     <div class="spacer"></div>
                                     <div class="tablecell">
-                                        <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtEstimatedTotal" readonly class="inputnumber" ng-model="totalEstimatedAmount" />
+                                        <input type="number" min="0.00" max="999999999.99" step="0.01" placeholder="0.00" id="txtEstimatedTotal" readonly disabled class="inputnumber totalbgcolor" ng-model="totalEstimatedAmount" />
                                     </div>
                                     <div class="spacer"></div>
                                     <div class="tablecellheader expenserowtitle">Cash Advance Requested $</div>
@@ -311,6 +311,19 @@
                                                    class="inputnumberfis2"
                                                    ng-model="totalFISAmount2"
                                                    ng-change="updateTotalFISAmount()" />
+                                        </div>
+                                    </div>
+                                    <div class="tablerow">
+                                        <div class="tablecell"></div>
+                                        <div class="spacer"></div>
+                                        <div class="tablecell"></div>
+                                        <div class="spacer"></div>
+                                        <div class="tablecell"></div>
+                                        <div class="spacer"></div>
+                                        <div class="tablecellheader expenserowtitle"><b>Total</b></div>
+                                        <div class="spacer"></div>
+                                        <div class="tablecell" style="text-align:right;background-color:yellow;vertical-align:bottom;">
+                                            <input type="number" min="0.00" max="999999999.99" step="0.01" placeholder="0.00" id="txtFISTotal" readonly disabled class="inputnumberfis2 totalbgcolor" ng-model="totalFISAmount" />
                                         </div>
                                     </div>
                                 </div>
