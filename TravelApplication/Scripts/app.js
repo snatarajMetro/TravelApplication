@@ -15,6 +15,8 @@ $(document).ready(function () {
     scope.loadFIS();
     scope.loadCostCenters();
     scope.loadFileUpload2();
+    //scope.loadCommonApprovers();
+    //scope.loadTravelCoordinators();
 
     //viewexistingtravelrequests();
 
@@ -634,4 +636,34 @@ function showRejectSection(container) {
     scope.loadRejectAction(travelRequestId);
 
     $('#rejecttemplate').show();
+}
+function deletedocument(container) {
+
+    var documentId = $(container).prop('alt');
+    var travelRequestId = $('#travelRequestId').text();
+
+    // Call the delete document API
+    $.ajax({
+        type: "DELETE",
+        url: "/api/documents/deletedocument?travelRequestId=" + travelRequestId + "&documentId=" + documentId,
+        contentType: "application/json; charset=utf-8",
+        success: function () {
+
+            // reload supporting documents section
+            var scope = angular.element('#fileuploadtemplate').scope();
+            scope.loadSupportingDocuments(travelRequestId);
+        },
+        error: function (xhr, options, error) {
+
+            if (xhr.status == 500) {
+                var errorMessage = xhr.responseText;
+
+                $("#fileuploaderror").fadeIn("slow");
+                $('#fileuploaderrormessage').text(errorMessage);
+
+                // fade out in 5 seconds
+                $("#fileuploaderror").fadeOut(fadeOutTimeInMilliseconds);
+            }
+        }
+    });
 }
