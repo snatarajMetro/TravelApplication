@@ -260,7 +260,7 @@ div.signincontainer {
 }
 
 .roles {
-    padding-left:38px;
+    padding-left:28px;
     height:96px;
 }
 
@@ -338,13 +338,31 @@ div.actioncontainer {
     bottom: 0;
     left: 0;
     right: 0;
-    width: 550px;
-    height: 250px;
+    width: 370px;
+    height: 220px;
     margin: auto;
     background-color: white;
     box-shadow: 10px 10px 5px #3c3c3c;
     border-radius: 3px;
     border:solid 1px black;
+    
+}
+
+div.actioncontainer2 {
+    position: absolute;
+    float:left;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 550px;
+    height: 210px;
+    margin: auto;
+    background-color: white;
+    box-shadow: 10px 10px 5px #3c3c3c;
+    border-radius: 3px;
+    border:solid 1px black;
+    
 }
 
 .backsection2
@@ -354,7 +372,6 @@ div.actioncontainer {
 }
 
 .button2 {
-    padding-top:40px;
     float:left;
     height:100px;
     padding-left:28px;
@@ -471,7 +488,7 @@ div.dataentry{
   display: flex;
 }
 
-.actionbutton{
+.actionbuttonold{
     /*float:right;*/
     /*bottom:30px;
     left:70px;
@@ -1075,7 +1092,7 @@ div.dataentry3{
     position:absolute;
     /*display:block;*/
     top:0px;
-    left:965px;
+    left:890px;
 }
 
 .successcontainerok {
@@ -1083,8 +1100,8 @@ div.dataentry3{
     /*display:block;
     bottom:50%;
     left:35%;*/
-    top:0px;
-    left:965px;
+    top:0;
+    left:788px;
 }
 
 .dialogSuccessNew {
@@ -1134,12 +1151,12 @@ div.dataentry3{
     background-color:green;
     color:white;
     /*width:310px;*/
-    width:330px;
+    width:250px;
     height:auto;
     margin:2px; 
     padding:10px;
     padding-right:20px;
-    font-size:15px;
+    font-size:13px;
     
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -1191,4 +1208,56 @@ div.dataentryuploadandsubmitsection{
   flex-direction: column;
   /*height: 100vh;*/
   display: flex;
+}
+
+.actioncomments {
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width:340px;
+    height:90px;
+    font-size:14px;
+    color:black;
+    margin-top:2px;
+}
+
+.actionbutton{
+    position: absolute;
+    margin-left:70px;
+    margin-top:132px;
+}
+
+.cancelbutton{
+    position: absolute;
+    margin-left:205px;
+    margin-top:132px;
+}
+
+.commentsTitle{
+    font-size:12px;
+}
+
+.dialogerror {
+    background-color:#c44c4c;
+    color:white;
+    width:290px;
+    height:auto;
+    margin:2px; 
+    padding:10px;
+    padding-right:20px;
+    font-size:13px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    float:left;
+    position:relative;
+}
+
+.travelrequestidforaction{
+    font-weight:bold;
+    font-size:17px;
+}
+
+.travelrequestlabelforaction{
+    font-size:13px;
 }

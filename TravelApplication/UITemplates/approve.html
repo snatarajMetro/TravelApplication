@@ -2,13 +2,13 @@
     <div class="main actioncontainer">
         <div id="content" class="content estimatedexpense">
             <div class="approvaltitle">
-                <span>Travel Request Id :</span>
-                <span id="travelRequestIdForAction">0</span>
+                <span class="travelrequestlabelforaction">Travel Request # :</span>
+                <span id="travelRequestIdForAction" class="travelrequestidforaction">0</span>
             </div>
             <div id="approvesection">
                 <div style="float:left;" class="approvaltitle">
-                    <span>Comments</span>
-                    <textarea placeholder="comments" id="txtComments" width="100" class="actioncomments" />
+                    <span class="commentsTitle">Comments</span>
+                    <textarea id="txtComments" width="100" class="actioncomments" />
                 </div>
                 <div class="actionbutton">
                     <input class="btn btn-success signinbutton approve" type="button" id="btnApprove" name="btnApprove" value="Approve &#10004;" onclick="approve()" />
@@ -18,11 +18,11 @@
                 </div>
                 <span id="badgeNumberToAction" ></span>
                 <div id="approvesuccess" class="main successcontainerok" style="visibility:hidden;">
-                    <span class="dialogSuccess" id="approvesuccessmessage">success</span>
+                    <span class="dialogSuccess" id="approvesuccessmessage"></span>
                     <a href="#" class="close-thick" onclick="return closeapprovesuccess();"></a>
                 </div>
                 <div id="approveerror" class="main errorcontainer3" style="display:none">
-                    <span class="dialog" id="approveerrormessage"></span>
+                    <span class="dialogerror" id="approveerrormessage"></span>
                     <a href="#" class="close-thick" onclick="return closeapproveerror();"></a>
                 </div>
             </div>

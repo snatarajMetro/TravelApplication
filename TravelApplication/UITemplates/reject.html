@@ -2,13 +2,13 @@
     <div class="main actioncontainer">
         <div id="content" class="content estimatedexpense">
             <div class="approvaltitle">
-                <span>Travel Request Id :</span>
-                <span id="travelRequestIdForAction">0</span>
+                <span class="travelrequestlabelforaction">Travel Request # :</span>
+                <span id="travelRequestIdForAction" class="travelrequestidforaction">20</span>
             </div>
             <div id="rejectsection">
                 <div style="float:left;" class="approvaltitle">
-                    <span>Comments</span>
-                    <textarea placeholder="comments" id="txtComments" width="100" class="actioncomments" />
+                    <span class="commentsTitle">Comments</span>
+                    <textarea id="txtComments" width="100" class="actioncomments" />
                 </div>
                 <div class="actionbutton">
                     <input class="btn btn-success signinbutton approve" type="button" id="btnReject" name="btnReject" value="Reject &#x2718;" onclick="reject()" />
@@ -17,12 +17,12 @@
                     <input class="btn btn-success signinbutton" type="button" name="btnCancel" value="Cancel" onclick="cancelAction()" />
                 </div>
                 <span id="badgeNumberToAction" style="visibility:hidden"></span>
-                <div id="rejectsuccess" class="main successcontainer" style="display:none">
+                <div id="rejectsuccess" class="main successcontainerok" style="display:none">
                     <span class="dialogSuccess" id="rejectsuccessmessage"></span>
                     <a href="#" class="close-thick" onclick="return closerejectsuccess();"></a>
                 </div>
                 <div id="rejecterror" class="main errorcontainer" style="display:none">
-                    <span class="dialog" id="rejecterrormessage"></span>
+                    <span class="dialogerror" id="rejecterrormessage"></span>
                     <a href="#" class="close-thick" onclick="return closerejecterror();"></a>
                 </div>
             </div>

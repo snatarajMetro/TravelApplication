@@ -18,6 +18,7 @@ $(document).ready(function () {
     //scope.loadCommonApprovers();
     //scope.loadTravelCoordinators();
 
+    //$("#action").show();
     //viewexistingtravelrequests();
 
     //showApproveSection();
@@ -205,8 +206,11 @@ function viewexistingtravelrequests() {
     var scope = angular.element('#existingtravelrequeststemplate').scope();
     scope.loadExistingTravelRequests();
     scope.loadApproveAction();
+    scope.loadRejectAction();
 
     $('#existingtravelrequeststemplate').show();
+    //$('#approvetemplate').show();
+    //$('#rejecttemplate').show();
 }
 
 function backtoactionselection() {
@@ -631,7 +635,6 @@ function closerejectsuccess() {
 function showRejectSection(container) {
 
     var travelRequestId = $(container).prop('alt');
-
     var scope = angular.element('#rejecttemplate').scope();
     scope.loadRejectAction(travelRequestId);
 
