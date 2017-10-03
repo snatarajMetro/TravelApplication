@@ -15,18 +15,20 @@
         <div id="inputs" class="main">
             <span class="signin">Sign in</span>
         </div>
-        <div class="main label">
-            <input type="text" width="100" name="txtEmail" id="txtEmail" placeholder="Username" class="datainput" />
+        <div class="main label4">
+            <span class="signinlabel">Username</span><br />
+            <input type="text" width="100" name="txtEmail" id="txtEmail" class="datainputsignin" />
         </div>
-        <div class="main label">
-            <input type="password" width="100" id="txtPassword" name="txtPassword" placeholder="Password" class="datainput" />
+        <div class="main label4">
+            <span class="signinlabel">Password</span><br />
+            <input type="password" width="100" id="txtPassword" name="txtPassword" class="datainputsignin" />
         </div>
         <div id="invaliduser" class="main errorcontainer" style="display:none">
             <div class="dialog">Invalid username and/or password. Please try again.</div>
             <a href="#" class="close-thick" onclick="return closeinvaliduser();"></a>
         </div>
         <div>
-            <div class="signinbutton2">
+            <div class="signinbuttonlogin">
                 <input class="btn btn-success signinbutton" type="button" name="btnSignIn" value="Sign in" onclick="signIn()" /><br />
             </div>
         </div>

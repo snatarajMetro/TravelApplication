@@ -75,6 +75,37 @@ div.signincontainer {
     margin-bottom:10px;
 }
 
+.datainputsignin {
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    padding-left:5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width:375px;
+    height:35px;
+
+    font-size:15px;
+    color:black;
+    margin-top:5px;
+    margin-bottom:10px;
+    margin-left:60px;
+}
+
+.datainputsignin:focus {
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px dodgerblue;
+    padding-left:5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width:375px;
+    height:35px;
+    font-size:15px;
+    color:black;
+    margin-top:5px;
+    margin-bottom:10px;
+    margin-left:60px;
+}
+
 .datainputerror {
     -moz-border-radius: 3px;
     border-radius: 3px;
@@ -87,6 +118,22 @@ div.signincontainer {
     color:black;
     margin-top:5px;
     margin-bottom:10px;
+}
+
+.datainputsigninerror {
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px red;
+    padding-left:5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width:375px;
+    height:35px;
+
+    font-size:15px;
+    color:black;
+    margin-top:5px;
+    margin-bottom:10px;
+    margin-left:60px;
 }
 
 .datainputname {
@@ -119,6 +166,11 @@ div.signincontainer {
     padding-top:10px;
     float:left;
     margin-left:15px;
+}
+
+.label4 {
+    padding-top:10px;
+    /*padding-left:10px;*/
 }
 
 .errorcontainer {
@@ -188,6 +240,12 @@ div.signincontainer {
     position: absolute;
     margin-left:195px;
     margin-top:150px;
+}
+
+.signinbuttonlogin{
+    position: absolute;
+    margin-left:200px;
+    margin-top:10px;
 }
 
 .username {
@@ -1106,4 +1164,10 @@ div.dataentry3{
     border:solid 1px black;
     float:left;
     position:relative;
+}
+
+.signinlabel{
+    font-size:11px;
+    color:dodgerblue;
+    margin-left:60px;
 }

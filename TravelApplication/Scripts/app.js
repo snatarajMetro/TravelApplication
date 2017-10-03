@@ -5,16 +5,15 @@ var isInternetExplorer = false;
 
 $(document).ready(function () {
 
-    //$("#txtEmail").focus();
+    $("#txtEmail").focus();
 
     isInternetExplorer = (navigator.userAgent && navigator.userAgent.search("Trident") >= 0);
 
-    $('#signin').hide();
+    //$('#signin').hide();
 
     scope = angular.element('#fileuploadtemplate').scope();
     scope.loadFIS();
     scope.loadCostCenters();
-
     scope.loadFileUpload2();
 
     //viewexistingtravelrequests();
@@ -24,7 +23,7 @@ $(document).ready(function () {
     //scope.loadCommonApprovers($('#badgeNumber').text());
     //scope.loadTravelCoordinators();
 
-    createnewrequest();
+    //createnewrequest();
 
     //var scope = angular.element('#fileuploadtemplate').scope();
     //$("#travelrequesttemplate").hide();
@@ -67,8 +66,8 @@ function signIn() {
     var user = $("#txtEmail").val();
     var password = $("#txtPassword").val();
 
-    $("#txtEmail").attr("class", "datainput");
-    $("#txtPassword").attr("class", "datainput");
+    $("#txtEmail").attr("class", "datainputsignin");
+    $("#txtPassword").attr("class", "datainputsignin");
 
     $.ajax({
         type: "POST",
@@ -115,8 +114,8 @@ function signIn() {
                 // fade out in 5 seconds
                 $("#invaliduser").fadeOut(fadeOutTimeInMilliseconds);
 
-                $("#txtEmail").attr("class", "datainputerror");
-                $("#txtPassword").attr("class", "datainputerror");
+                $("#txtEmail").attr("class", "datainputsigninerror");
+                $("#txtPassword").attr("class", "datainputsigninerror");
                 $("#txtEmail").focus();
             }
         }
