@@ -59,6 +59,7 @@ function logout() {
     $("#signin").show();
     $("#existingtravelrequeststemplate").hide();
     $("#travelrequesttemplate").hide();
+    $("#fileuploadtemplate").hide();
 
     $("#txtEmail").focus();
 }
