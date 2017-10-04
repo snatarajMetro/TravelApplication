@@ -1323,3 +1323,25 @@ div.dataentryuploadandsubmitsection{
     top:450px;
     right:0;
 }
+
+.errorcontainernewrequest {
+    position:absolute;
+    /*display:block;*/
+    top:0px;
+    left:950px;
+}
+
+.dialognewrequest {
+    background-color:#c44c4c;
+    color:white;
+    width:300px;
+    height:auto;
+    margin:2px; 
+    padding:10px;
+    padding-right:20px;
+    font-size:15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    float:left;
+    position:relative;
+}

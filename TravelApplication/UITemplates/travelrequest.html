@@ -335,6 +335,18 @@
                         <input class="btn signinbutton" type="button" name="btnNext" value="Save and Continue" onclick="savedataentry()" />
                     </div>
                 </div>
+                <div class="row">
+                    <div id="submiterror" class="main errorcontainernewrequest" style="display:none;">
+                        <span class="dialognewrequest" id="submiterrormessage"></span>
+                        <a href="#" class="close-thick" onclick="return closetravelrequesterror();"></a>
+                    </div>
+                    <div id="submitsuccess" class="main successcontainerok" style="float:left;display:none;">
+                        <div class="dialogSuccessSubmit">
+                            <span id="submitsuccessmessage"></span>
+                            <input class="btn btn-success signinbutton ok" type="button" id="btnOk" name="btnOk" value="Ok" onclick="showaction()" />
+                        </div>
+                    </div>
+                </div>
              </div>
         </div>
     </div>
