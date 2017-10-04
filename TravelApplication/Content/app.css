@@ -393,7 +393,7 @@ div.existingtravelrequestcontainer {
     bottom: 0;
     left: 0;
     right: 0;
-    width: 1190px;
+    width: 1325px;
     height: 475px;
     margin: auto;
     background-color: white;
@@ -432,10 +432,10 @@ div.existingtravelrequestcontainer {
 }
 
 .existingTravelRequestsGrid{
-    width:1178px;
+    width:1310px;
     max-height:390px;
     margin-left:5px;
-    font-size:15px;
+    font-size:10px;
     word-wrap: break-word;
     overflow-y:scroll
 }
@@ -1023,8 +1023,16 @@ height:235px;
 }
 
 .ui-grid-pager-panel{
-    background-color:gray;
-    color:white;
+    background-color:#eeeeee;
+    color:black;
+}
+
+input.ui-grid-filter-input[type="text"] {
+    height: 25px;
+    font-size:11px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight:normal;
+    color:black;
 }
 
 .headerStyle{
@@ -1191,7 +1199,7 @@ div.dataentry3{
     padding:10px;
     padding-right:20px;
     font-size:15px;
-    font-family:'Open Sans Condensed', sans-serif;
+    /*font-family:'Open Sans Condensed', sans-serif;*/
     box-shadow: 10px 10px 5px #3c3c3c;
     border-radius: 3px;
     border:solid 1px black;
@@ -1279,4 +1287,22 @@ div.dataentryuploadandsubmitsection{
 
 .totalbgcolor{
     background-color:yellow;
+}
+
+.pagetitleexistingrequests{
+    font-size:18px;
+    padding-bottom:2px;
+    background-color:#064468;
+    color:white;
+    width:1312px;
+    padding-left:5px;
+    margin-top:5px;
+    margin-left:4px;
+}
+
+.existingrequestcolumnheader{
+    font-size:13px;
+    background-color:#eeeeee;
+    font-weight:500;
+
 }
