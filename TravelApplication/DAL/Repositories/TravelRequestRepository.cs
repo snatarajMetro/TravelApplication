@@ -329,7 +329,8 @@ namespace TravelApplication.Services
                                 EditActionVisible = EditActionEligible(dbConn,Convert.ToInt32(dataReader["TravelRequestId"])) ? true : false,
                                 ViewActionVisible = true,
                                 ApproveActionVisible = false,
-                                Status = dataReader["STATUS"].ToString()
+                                Status = dataReader["STATUS"].ToString(),
+                                Purpose = dataReader["Purpose"].ToString()
                             });
                         }
                     }
@@ -370,7 +371,8 @@ namespace TravelApplication.Services
                                 EditActionVisible = false,
                                 ViewActionVisible = true,
                                 ApproveActionVisible = getApprovalSatus(dbConn,Convert.ToInt32(dataReader["TravelRequestId"]), submittedBadgeNumber) ? true : false,
-                                Status = dataReader["STATUS"].ToString()
+                                Status = dataReader["STATUS"].ToString(),
+                                Purpose = dataReader["Purpose"].ToString()
                             });
                         }
                     }
