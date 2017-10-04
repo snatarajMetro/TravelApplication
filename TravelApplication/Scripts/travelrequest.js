@@ -342,6 +342,15 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                         }
             },
             {
+                field: 'Purpose',
+                name: 'Purpose',
+                width: 300,
+                headerCellClass: "existingrequestcolumnheader",
+                filter: {
+                    placeholder: '🔎 search'
+                }
+            },
+            {
                 field: 'SubmittedByUser',
                 name: 'Submitted By',
                 width: 160,
@@ -362,7 +371,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             {
                 field: "RequiredApprovers",
                 displayName: "Required Approvers",
-                width: 330,
+                width: 340,
                 headerCellClass: "existingrequestcolumnheader",
                 filter: {
                     placeholder: '🔎 search'
@@ -399,7 +408,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 name: 'Actions',
                 cellTemplate: actionTemplate,
                 enableFiltering: false,
-                width: 122,
+                width: 112,
                 headerCellClass: "existingrequestcolumnheader"
             }];
 

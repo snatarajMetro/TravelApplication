@@ -393,7 +393,7 @@ div.existingtravelrequestcontainer {
     bottom: 0;
     left: 0;
     right: 0;
-    width: 1325px;
+    width: 1645px;
     height: 475px;
     margin: auto;
     background-color: white;
@@ -432,7 +432,7 @@ div.existingtravelrequestcontainer {
 }
 
 .existingTravelRequestsGrid{
-    width:1310px;
+    width:1630px;
     max-height:390px;
     margin-left:5px;
     font-size:10px;
@@ -1013,10 +1013,9 @@ height:235px;
     border:solid 1px black;
 }
 .ui-grid-header-canvas{
-    font-size:14px; 
+    
     color:black;
-    /*background-color:#dcdada;*/
-    background-color:gray;
+    background-color:#eeeeee;
 }
 .ui-grid-top-panel{
     color: black;
@@ -1294,7 +1293,7 @@ div.dataentryuploadandsubmitsection{
     padding-bottom:2px;
     background-color:#064468;
     color:white;
-    width:1312px;
+    width:1633px;
     padding-left:5px;
     margin-top:5px;
     margin-left:4px;
