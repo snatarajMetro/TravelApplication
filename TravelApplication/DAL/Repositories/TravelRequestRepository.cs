@@ -309,7 +309,7 @@ namespace TravelApplication.Services
                 if (selectedRoleId == 1 || selectedRoleId == 2)
                 {
                
-                    string query = string.Format("Select * from TRAVELREQUEST where BADGENUMBER= {0} AND SELECTEDROLEID ={1} order by CREATIONDATETIME ", submittedBadgeNumber, selectedRoleId);
+                    string query = string.Format("Select * from TRAVELREQUEST where BADGENUMBER= {0} AND SELECTEDROLEID ={1} order by CREATIONDATETIME desc", submittedBadgeNumber, selectedRoleId);
                     OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
                     command.CommandText = query;
                     DbDataReader dataReader = command.ExecuteReader();
@@ -351,7 +351,7 @@ namespace TravelApplication.Services
 			                                                    TRAVELREQUEST_APPROVAL
 		                                                    WHERE
 			                                                    BADGENUMBER = {0}
-	                                                    )   order by CREATIONDATETIME", submittedBadgeNumber);
+	                                                    )   order by CREATIONDATETIME desc", submittedBadgeNumber);
                     OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
                     command.CommandText = query;
                     DbDataReader dataReader = command.ExecuteReader();
