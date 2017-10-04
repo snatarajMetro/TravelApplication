@@ -988,4 +988,54 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
            // $('').val();
         });
     }
+
+    // load travel request modal in edit mode
+    $scope.loadTravelRequestForEditNew = function (travelRequestId) {
+
+        $('#travelrequesttemplate').html('');
+
+        // get the data from api
+        $.get('api/travelrequestNew/' + travelRequestId)
+        .done(function (data) {
+
+            $scope.Data = data;
+
+            //reset travel request form section
+            $.get('/uitemplates/travelrequest.html')
+            .done(function (data) {
+                $('#travelrequesttemplate').html($compile($(data).html())($scope));
+                $scope.$apply();
+
+                $('#travelRequestIdForDisplay').html("Travel Request #<b>" + travelRequestId.toString() + "</b>");
+                $('#txtBadgeNumber').val($scope.Data.TravelRequestData.BadgeNumber);
+                $('#txtName').val($scope.Data.TravelRequestData.Name);
+                $('#txtDivision').val($scope.Data.TravelRequestData.Division);
+                $('#txtSection').val($scope.Data.TravelRequestData.Section);
+                $('#txtOrganization').val($scope.Data.TravelRequestData.Organization);
+                $('#txtMeetingLocation').val($scope.Data.TravelRequestData.MeetingLocation);
+
+                if ($scope.Data.TravelRequestData.MeetingBeginDateTime.substring(0, 10) != '0001-01-01') {
+                    $('#txtMeetingBeginDate').val($scope.Data.TravelRequestData.MeetingBeginDateTime.substring(0, 10));
+                }
+
+                if ($scope.Data.TravelRequestData.MeetingEndDateTime.substring(0, 10) != '0001-01-01') {
+
+                    $('#txtMeetingEndDate').val($scope.Data.TravelRequestData.MeetingEndDateTime.substring(0, 10));
+                }
+
+                if ($scope.Data.TravelRequestData.DepartureDateTime.substring(0, 10) != '0001-01-01') {
+
+                    $('#txtDepartureDate').val($scope.Data.TravelRequestData.DepartureDateTime.substring(0, 10));
+                }
+
+                if ($scope.Data.TravelRequestData.ReturnDateTime.substring(0, 10) != '0001-01-01') {
+
+                    $('#txtReturnDate').val($scope.Data.TravelRequestData.ReturnDateTime.substring(0, 10));
+                }
+
+                $("#txtBadgeNumber").prop("readonly", true);
+                $("#txtBadgeNumber").prop("style", "background-color:lightgray;");
+            });
+        });
+    }
 });

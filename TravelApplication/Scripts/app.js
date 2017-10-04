@@ -671,3 +671,16 @@ function deletedocument(container) {
         }
     });
 }
+
+function editTravelRequest(container) {
+
+    $('#existingtravelrequeststemplate').hide();
+
+    var travelRequestId = $(container).prop('alt');
+    var scope = angular.element('#travelrequesttemplate').scope();
+    scope.loadTravelRequestForEditNew(travelRequestId);
+
+    $('#travelRequestId').text(travelRequestId);
+
+    $('#travelrequesttemplate').show();
+}
