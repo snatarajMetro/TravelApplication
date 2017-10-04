@@ -309,7 +309,7 @@ namespace TravelApplication.Services
                 if (selectedRoleId == 1 || selectedRoleId == 2)
                 {
                
-                    string query = string.Format("Select * from TRAVELREQUEST where BADGENUMBER= {0} AND SELECTEDROLEID ={1}", submittedBadgeNumber, selectedRoleId);
+                    string query = string.Format("Select * from TRAVELREQUEST where BADGENUMBER= {0} AND SELECTEDROLEID ={1} order by CREATIONDATETIME ", submittedBadgeNumber, selectedRoleId);
                     OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
                     command.CommandText = query;
                     DbDataReader dataReader = command.ExecuteReader();
