@@ -1306,3 +1306,20 @@ div.dataentryuploadandsubmitsection{
     font-weight:500;
 
 }
+
+.dialogSuccessSubmit {
+    position:absolute;
+    background-color:#79fa97;
+    color:black;
+    width:410px;
+    height:120px;
+    margin:2px; 
+    padding:10px;
+    padding-right:20px;
+    font-size:15px;
+    box-shadow: 10px 10px 5px #3c3c3c;
+    border-radius: 3px;
+    border:solid 1px black;
+    top:450px;
+    right:0;
+}
