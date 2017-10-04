@@ -31,8 +31,8 @@ namespace TravelApplication.Models
         public DateTime SubmittedDateTime { get; set; }
         public string Agreed { get; set; }
         public string LoginId { get; set; }
-
         public int SelectedRoleId { get; set; }
         public int SubmittedByBadgeNumber { get; set; }
+        public string Purpose { get; set; }
     }
 }
