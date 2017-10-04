@@ -351,7 +351,7 @@ namespace TravelApplication.Services
 			                                                    TRAVELREQUEST_APPROVAL
 		                                                    WHERE
 			                                                    BADGENUMBER = {0}
-	                                                    )", submittedBadgeNumber);
+	                                                    )   order by CREATIONDATETIME", submittedBadgeNumber);
                     OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
                     command.CommandText = query;
                     DbDataReader dataReader = command.ExecuteReader();
