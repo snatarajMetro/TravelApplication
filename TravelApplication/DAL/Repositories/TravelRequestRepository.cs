@@ -380,16 +380,17 @@ namespace TravelApplication.Services
         private string getLastApproverDateTime(DbConnection dbConn,int travelRequestId)
         {
             string response = "";
-            string query = string.Format(@"SELECT
+            string query = string.Format(@"Select ApprovalDateTime from (
+                                            SELECT
 	                                        APPROVALDATETIME
                                         FROM
 	                                        TRAVELREQUEST_APPROVAL
                                         WHERE
 	                                        TRAVELREQUESTID = {0}
                                         AND APPROVALDATETIME IS NOT NULL
-                                        AND ROWNUM = 1
                                         ORDER BY
-	                                        APPROVALDATETIME DESC", travelRequestId);
+	                                        APPROVALDATETIME DESC)
+                                            where ROWNUM =1", travelRequestId);
 
             OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
             command.CommandText = query;
@@ -409,16 +410,17 @@ namespace TravelApplication.Services
         private string getLastApproverName(DbConnection dbConn,int travelRequestId)
         {
             string response = "";
-            string query = string.Format(@"SELECT
-	                                        APPROVERNAME
-                                        FROM
-	                                        TRAVELREQUEST_APPROVAL
-                                        WHERE
-	                                        TRAVELREQUESTID = {0}
-                                        AND APPROVALDATETIME IS NOT NULL
-                                        AND ROWNUM = 1
-                                        ORDER BY
-	                                        APPROVALDATETIME DESC", travelRequestId);
+            string query = string.Format(@"select APPROVERNAME from (
+                                                                    SELECT
+	                                                                    APPROVERNAME
+                                                                    FROM
+	                                                                    TRAVELREQUEST_APPROVAL
+                                                                    WHERE
+	                                                                    TRAVELREQUESTID = {0}
+                                                                    AND APPROVALDATETIME IS NOT NULL
+                                                                    ORDER BY
+	                                                                    APPROVALDATETIME desc )
+                                                                    where ROWNUM =1", travelRequestId);
 
             OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
             command.CommandText = query;
@@ -495,25 +497,29 @@ namespace TravelApplication.Services
                 OracleCommand cmd1 = new OracleCommand(query, (OracleConnection)dbConn);
                 cmd1.CommandText = query;
                 DbDataReader dataReader = cmd1.ExecuteReader();
+
+                // update travel request for the latest status 
+                cmd1.CommandText = string.Format(@"UPDATE  TRAVELREQUEST SET                                                  
+                                                     STATUS = :p1 
+                                                    WHERE TRAVELREQUESTID = {0}", travelRequestId);
                 if (dataReader.HasRows)
                 {
                     while (dataReader.Read())
                     {
                         result = Convert.ToInt32(dataReader["BADGENUMBER"].ToString());
                     }
-                    // update travel request for the latest status 
-                    cmd1.CommandText = string.Format(@"UPDATE  TRAVELREQUEST SET                                                  
-                                                     STATUS = :p1 
-                                                    WHERE TRAVELREQUESTID = {0}", travelRequestId);
-                    cmd1.Parameters.Add(new OracleParameter("p1", ApprovalStatus.Pending.ToString()));
-                    var rowsUpdated1 = cmd1.ExecuteNonQuery();
-    
-                    //Send Email for next approver
-                    string link = string.Format("<a href=\"http://localhost:2462/\">here</a>");
-                    string subject = string.Format(@"Travel Request Approval for Id - {0} ", travelRequestId);
-                    string body = string.Format(@"Please visit Travel application website " + link + " to Approve/Reject for travel request Id : {0}", travelRequestId);
-                    sendEmail(result.ToString(), body, subject);
+                    if (result != null || result != 0)
+                    {
 
+                        cmd1.Parameters.Add(new OracleParameter("p1", ApprovalStatus.Pending.ToString()));
+                        var rowsUpdated1 = cmd1.ExecuteNonQuery();
+
+                        //Send Email for next approver
+                        string link = string.Format("<a href=\"http://localhost:2462/\">here</a>");
+                        string subject = string.Format(@"Travel Request Approval for Id - {0} ", travelRequestId);
+                        string body = string.Format(@"Please visit Travel application website " + link + " to Approve/Reject for travel request Id : {0}", travelRequestId);
+                        sendEmail(result.ToString(), body, subject);
+                    }
                 }
                 else
                 {
