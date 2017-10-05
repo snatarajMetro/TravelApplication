@@ -1049,6 +1049,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 $('#txtSection').val($scope.Data.TravelRequestData.Section);
                 $('#txtOrganization').val($scope.Data.TravelRequestData.Organization);
                 $('#txtMeetingLocation').val($scope.Data.TravelRequestData.MeetingLocation);
+                $('#txtPurpose').val($scope.Data.TravelRequestData.Purpose);
 
                 if ($scope.Data.TravelRequestData.MeetingBeginDateTime.substring(0, 10) != '0001-01-01') {
                     $('#txtMeetingBeginDate').val($scope.Data.TravelRequestData.MeetingBeginDateTime.substring(0, 10));
