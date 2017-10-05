@@ -597,7 +597,7 @@ function setOtherUserName(source2, container) {
 }
 
 function closesubmiterror() {
-    $("#submiterror").hide();
+    $("#submiterror2").hide();
 }
 
 function cancelAction() {

@@ -1308,7 +1308,7 @@ div.dataentryuploadandsubmitsection{
 
 .dialogSuccessSubmit {
     position:absolute;
-    background-color:#79fa97;
+    background-color:lightgray;
     color:black;
     width:410px;
     height:120px;

@@ -680,8 +680,8 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 dataType: "json",
                 success: function (data) {
 
-                    $("#submitsuccess").fadeIn("slow");
-                    $('#submitsuccessmessage').html("Travel request has been successfully submitted. Travel request# is <b>" + travelRequestId + "</b>.");
+                    $("#submitsuccess2").fadeIn("slow");
+                    $('#submitsuccessmessage2').html("Travel request has been successfully submitted. Travel request# is <b>" + travelRequestId + "</b>.");
 
                     $('#btnSubmit').prop("disabled", true);
                     $('#btnBack').prop("disabled", true);
@@ -869,8 +869,8 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 dataType: "json",
                 success: function (data) {
 
-                    $("#submitsuccess").fadeIn("slow");
-                    $('#submitsuccessmessage').html("Travel request has been successfully submitted. Travel request# is <b>" + travelRequestId + "</b>.");
+                    $("#submitsuccess2").fadeIn("slow");
+                    $('#submitsuccessmessage2').html("Travel request has been successfully submitted. Travel request# is <b>" + travelRequestId + "</b>.");
 
                     $('#btnSubmit').prop("disabled", true);
                     $('#btnBack').prop("disabled", true);
@@ -880,21 +880,21 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
 
                         var errorMessage = xhr.responseText;
 
-                        $("#submiterror").fadeIn("slow");
-                        $('#submiterrormessage').text(errorMessage);
+                        $("#submiterror2").fadeIn("slow");
+                        $('#submiterrormessage2').text(errorMessage);
 
                         // fade out in 5 seconds
-                        $("#submiterror").fadeOut(fadeOutTimeInMilliseconds);
+                        $("#submiterror2").fadeOut(fadeOutTimeInMilliseconds);
                     }
                 }
             });
         }
         else {
-            $("#submiterror").fadeIn("slow");
-            $('#submiterrormessage').text("Some of the required fields are missing. Please try again.");
+            $("#submiterror2").fadeIn("slow");
+            $('#submiterrormessage2').text("Some of the required fields are missing. Please try again.");
 
             // fade out in 5 seconds
-            $("#submiterror").fadeOut(fadeOutTimeInMilliseconds);
+            $("#submiterror2").fadeOut(fadeOutTimeInMilliseconds);
         }
 
     }

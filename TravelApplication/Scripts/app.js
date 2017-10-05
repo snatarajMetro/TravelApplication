@@ -203,7 +203,13 @@ function createnewrequest() {
     //load travel request section
     var scope = angular.element('#travelrequesttemplate').scope();
     scope.loadTravelRequest();
+    scope.loadFileUpload2();
     $('#travelrequesttemplate').show();
+    $("#txtBadgeNumber").focus();
+
+    // reset travelRequestId
+    $('#travelRequestId').text('0');
+    $('#badgeNumber').text('0');
 
     //scope.loadFIS();
     scope.loadCostCenters();
