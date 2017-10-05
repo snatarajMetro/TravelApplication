@@ -386,7 +386,7 @@ namespace TravelApplication.Services
         }
 
 
-        public bool Approve(int badgeNumber, int travelRequestId, string comments)
+        public bool Approve(int approverBadgeNumber, int travelRequestId, string comments)
         {
             string approvalOrderResult = string.Empty;
             using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
@@ -398,7 +398,7 @@ namespace TravelApplication.Services
                                                     APPROVERCOMMENTS = :p1,
                                                     APPROVALSTATUS = :p2 ,
                                                     APPROVALDATETIME = :p3
-                                                    WHERE TRAVELREQUESTID = {0} AND BADGENUMBER = {1} ", travelRequestId, badgeNumber);
+                                                    WHERE TRAVELREQUESTID = {0} AND BADGENUMBER = {1} ", travelRequestId, approverBadgeNumber);
                 cmd.Parameters.Add(new OracleParameter("p1", comments));
                 cmd.Parameters.Add(new OracleParameter("p2", ApprovalStatus.Approved.ToString()));
                 cmd.Parameters.Add(new OracleParameter("p3", DateTime.Now));             
@@ -465,7 +465,7 @@ namespace TravelApplication.Services
             return true;
         }
 
-        public bool Reject(int badgeNumber, int travelRequestId, string comments)
+        public bool Reject(int ApproverBadgeNumber, int travelRequestId, string comments)
         {
             int approvalOrder = 0;
             using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
@@ -477,7 +477,7 @@ namespace TravelApplication.Services
                                                     APPROVERCOMMENTS = :p1,
                                                     APPROVALSTATUS = :p2 ,
                                                     APPROVALDATETIME = :p3
-                                                    WHERE TRAVELREQUESTID = {0} AND BADGENUMBER = {1} ", travelRequestId, badgeNumber);
+                                                    WHERE TRAVELREQUESTID = {0} AND BADGENUMBER = {1} ", travelRequestId, ApproverBadgeNumber);
                 cmd.Parameters.Add(new OracleParameter("p1", comments));
                 cmd.Parameters.Add(new OracleParameter("p2", ApprovalStatus.Rejected.ToString()));
                 cmd.Parameters.Add(new OracleParameter("p3", DateTime.Now));
@@ -499,6 +499,12 @@ namespace TravelApplication.Services
                 cmd1.Dispose();
                 dbConn.Close();
                 dbConn.Dispose();
+ 
+                //Send Email submitter and traveller 
+                //string link = string.Format("<a href=\"http://localhost:2462/\">here</a>");
+                //string subject = string.Format(@"Travel Request Approval for Id - {0} ", travelRequestId);
+                //string body = string.Format(@"Please visit Travel application website " + link + " to Approve/Reject for travel request Id : {0}", travelRequestId);
+                //sendEmail(result.ToString(), body, subject);
             }
 
 
