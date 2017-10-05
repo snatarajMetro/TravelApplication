@@ -30,5 +30,7 @@ namespace TravelApplication.Models
         public  string Status { get; set; }
 
         public int BadgeNumber { get; set; }
+
+        public string Purpose { get; set; }
     }
 }

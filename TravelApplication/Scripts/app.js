@@ -36,6 +36,15 @@ $(document).ready(function () {
 
 });
 
+function handleEnterOnSigIn(e)
+{
+    // Enter Key
+    if (e.keyCode === 13) {
+        e.preventDefault();
+        signIn();
+    }
+}
+
 function closeinvaliduser() {
     $("#invaliduser").hide();
     $("#txtEmail").focus();

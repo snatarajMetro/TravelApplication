@@ -17,11 +17,11 @@
         </div>
         <div class="main label4">
             <span class="signinlabel">Username</span><br />
-            <input type="text" width="100" name="txtEmail" id="txtEmail" class="datainputsignin" />
+            <input type="text" width="100" name="txtEmail" id="txtEmail" onkeypress="handleEnterOnSigIn(event)" class="datainputsignin" />
         </div>
         <div class="main label4">
             <span class="signinlabel">Password</span><br />
-            <input type="password" width="100" id="txtPassword" name="txtPassword" class="datainputsignin" />
+            <input type="password" width="100" id="txtPassword" name="txtPassword" onkeypress="handleEnterOnSigIn(event)" class="datainputsignin" />
         </div>
         <div id="invaliduser" class="main errorcontainer" style="display:none">
             <div class="dialog">Invalid username and/or password. Please try again.</div>
@@ -29,7 +29,7 @@
         </div>
         <div>
             <div class="signinbuttonlogin">
-                <input class="btn btn-success signinbutton" type="button" name="btnSignIn" value="Sign in" onclick="signIn()" /><br />
+                <input class="btn btn-success signinbutton" type="button" id="btnSignIn" name="btnSignIn" value="Sign in" onclick="signIn()" /><br />
             </div>
         </div>
     </div>

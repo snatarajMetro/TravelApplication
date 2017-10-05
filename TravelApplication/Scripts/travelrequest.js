@@ -334,65 +334,82 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
 
         $scope.columns = [{
                 field: 'TravelRequestId',
-                displayName: 'Travel Request Id',
-                width: 117,
+                displayName: 'Travel Request #',
+                width: 140,
+                headerCellClass:"existingrequestcolumnheader",
                 filter: {
-                    placeholder: '🔎 search here'
+                    placeholder: '🔎 search'
                         }
+            },
+            {
+                field: 'Purpose',
+                name: 'Purpose',
+                width: 300,
+                headerCellClass: "existingrequestcolumnheader",
+                filter: {
+                    placeholder: '🔎 search'
+                }
             },
             {
                 field: 'SubmittedByUser',
                 name: 'Submitted By',
                 width: 160,
+                headerCellClass: "existingrequestcolumnheader",
                 filter: {
-                    placeholder: '🔎 search here'
+                    placeholder: '🔎 search'
                 }
             },
             {
                 field: 'SubmittedDateTime',
                 displayName: 'Submitted On',
-                width: 110,
+                width: 130,
+                headerCellClass: "existingrequestcolumnheader",
                 filter: {
-                    placeholder: '🔎 search here'
+                    placeholder: '🔎 search'
                 }
             },
             {
                 field: "RequiredApprovers",
                 displayName: "Required Approvers",
-                width: 330,
+                width: 340,
+                headerCellClass: "existingrequestcolumnheader",
                 filter: {
-                    placeholder: '🔎 search here'
+                    placeholder: '🔎 search'
                 }
             },
             {
                 field: 'LastApproveredByUser',
                 displayName: 'Last Approvered By',
-                width: 140,
+                width: 150,
+                headerCellClass: "existingrequestcolumnheader",
                 filter: {
-                    placeholder: '🔎 search here'
+                    placeholder: '🔎 search'
                 }
             },
             {
                 field: 'LastApprovedDateTime',
                 displayName: 'Last Approved On',
-                width: 110,
+                width: 140,
+                headerCellClass: "existingrequestcolumnheader",
                 filter: {
-                    placeholder: '🔍 search here'
+                    placeholder: '🔎 search'
                 }
             },
             {
                 field: 'Status',
                 displayName: 'Status',
-                width: 90,
+                width: 120,
+                headerCellClass: "existingrequestcolumnheader",
                 filter: {
-                    placeholder: '🔍 search here'
+                    placeholder: '🔎 search'
                 }
             },
             {
                 name: 'Actions',
                 cellTemplate: actionTemplate,
                 enableFiltering: false,
-                width: 100
+                width: 112,
+                headerCellClass: "existingrequestcolumnheader"
             }];
 
         $scope.existingRequestsGridOptions = {
