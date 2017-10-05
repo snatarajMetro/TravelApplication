@@ -288,7 +288,7 @@ namespace TravelApplication.Services
                             MeetingEndDateTime = Convert.ToDateTime(dataReader["MEETINGENDDATETIME"]),
                             DepartureDateTime = Convert.ToDateTime(dataReader["DEPARTUREDATETIME"]),
                             ReturnDateTime = Convert.ToDateTime(dataReader["RETURNDATETIME"]),
-                            Purpose = dataReader["Purpose"].ToString()
+                            Purpose = dataReader["PURPOSE"].ToString()
                         };
                     }
                 }
@@ -320,7 +320,7 @@ namespace TravelApplication.Services
                             response.Add(new TravelRequestDetails()
                             {
                                 TravelRequestId = Convert.ToInt32(dataReader["TravelRequestId"]),
-                                Description = dataReader["PurPose"].ToString(),
+                                //Description = dataReader["PURPOSE"].ToString(),
                                 SubmittedByUser = dataReader["SUBMITTEDBYUSERNAME"].ToString(),
                                 SubmittedDateTime = dataReader["SUBMITTEDDATETIME"].ToString(),
                                 RequiredApprovers = GetApproversListByTravelRequestId(dbConn,Convert.ToInt32(dataReader["TravelRequestId"])),
@@ -330,7 +330,7 @@ namespace TravelApplication.Services
                                 ViewActionVisible = true,
                                 ApproveActionVisible = false,
                                 Status = dataReader["STATUS"].ToString(),
-                                Purpose = dataReader["Purpose"].ToString()
+                                Purpose = dataReader["PURPOSE"].ToString()
                             });
                         }
                     }
@@ -513,6 +513,7 @@ namespace TravelApplication.Services
 
         public TravelRequestInputResponse SaveTravelRequestInput(TravelRequestInput travelRequest)
         {
+           
             string travelRequestId = string.Empty;
             int estimatedExpenseId = 0;
             TravelRequestInputResponse response = null;
@@ -520,10 +521,11 @@ namespace TravelApplication.Services
             {
                 //Validate basic information
                 ValidateTravelRequestInfo(travelRequest.TravelRequestData);
+
                 using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
                 {
                     // Insert or update travel request
-                    travelRequestId = SaveTravelRequestNew(dbConn, travelRequest.TravelRequestData);
+                    travelRequestId = SaveTravelRequestNew(dbConn, travelRequest.TravelRequestData);                  
                     if (string.IsNullOrEmpty(travelRequestId))
                     {
                         throw new Exception("Couldn't save/update travel request information");
@@ -560,6 +562,10 @@ namespace TravelApplication.Services
             {
                 var loginId = getUserName(dbConn, travelRequest.UserId);
                 travelRequest.LoginId = loginId;
+                if (travelRequest.TravelRequestId != 0)
+                {
+                    travelRequest.TravelRequestIdNew = travelRequest.TravelRequestId.ToString();
+                }
                     if (string.IsNullOrEmpty(travelRequest.TravelRequestIdNew))
                     {
                         OracleCommand cmd = new OracleCommand();
