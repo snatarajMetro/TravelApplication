@@ -163,7 +163,8 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                     // on file added
                     self.on("addedfile", function (progress) {
                         var travelRequestId = $('#travelRequestId').text();
-                        var badgeNumber = $('#badgeNumber').text();
+                        var badgeNumber = $('#travelRequestBadgeNumber').text();
+
                         var uploadUrl = "/api/documents/upload?travelRequestId=" + travelRequestId + "&badgeNumber=" + badgeNumber;
                         self.options.url = uploadUrl;
                     });
@@ -295,10 +296,10 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 $scope.grid1Api = gridApi;
             }
         };
-
+        
         $.ajax({
             type: "GET",
-            url: "/api/documents/supportingdocuments?travelRequestId=" + travelRequestNumber + "&badgeNumber=" + $('#badgeNumber').text(),
+            url: "/api/documents/supportingdocuments?travelRequestId=" + travelRequestNumber + "&badgeNumber=" + $('#travelRequestBadgeNumber').text(),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
@@ -320,7 +321,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             $('#submittemplate').html($compile($(data).html())($scope));
             $scope.$apply();
 
-            $scope.loadCommonApprovers($('#badgeNumber').text());
+            $scope.loadCommonApprovers($('#travelRequestBadgeNumber').text());
            
             $scope.loadTravelCoordinators();
         });
@@ -442,7 +443,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             }
         };
 
-        var badgeNumber = $("#badgeNumber").text();
+        var badgeNumber = $("#signedInUserBadgeNumber").text();
         var selectedRoleId = $("#selectedRoleId").text();
         var url = "api/travelrequests?badgeNumber=" + badgeNumber + "&roleId=" + selectedRoleId;
 
@@ -470,7 +471,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
     // Refresh the existing request grid
     $scope.refreshExistingRequest = function () {
 
-        var badgeNumber     = $("#badgeNumber").text();
+        var badgeNumber     = $("#signedInUserBadgeNumber").text();
         var selectedRoleId  = $("#selectedRoleId").text();
         var url = "api/travelrequests?badgeNumber=" + badgeNumber + "&roleId=" + selectedRoleId;
 
@@ -734,7 +735,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
 
         var canSubmit = false;
         var travelRequestId = $('#travelRequestId').text();
-        var badgeNumber = $('#badgeNumber').text();
+        var badgeNumber = $('#signedInUserBadgeNumber').text();
 
         // Department Head
         var departmentHeadBadgeNumber = $("#ddlDepartmentHead option:selected").val();
