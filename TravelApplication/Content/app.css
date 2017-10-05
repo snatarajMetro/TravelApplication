@@ -1013,7 +1013,6 @@ height:235px;
     border:solid 1px black;
 }
 .ui-grid-header-canvas{
-    
     color:black;
     background-color:#eeeeee;
 }
@@ -1303,7 +1302,6 @@ div.dataentryuploadandsubmitsection{
     font-size:13px;
     background-color:#eeeeee;
     font-weight:500;
-
 }
 
 .dialogSuccessSubmit {
@@ -1343,4 +1341,8 @@ div.dataentryuploadandsubmitsection{
     border-radius: 5px;
     float:left;
     position:relative;
+}
+
+.existingrequestcolumnvalue{
+    /*font-size:12px;*/
 }

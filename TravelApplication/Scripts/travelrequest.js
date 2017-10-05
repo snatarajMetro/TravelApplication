@@ -1,4 +1,4 @@
-﻿var app = angular.module('travelApp', ['ui.grid', 'ui.grid.pagination']);
+﻿var app = angular.module('travelApp', ['ui.grid', 'ui.grid.pagination','ui.grid.resizeColumns']);
 //var app = angular.module('travelApp', ['ui.grid']);
 
 app.controller('travelAppCtrl', function ($scope, $compile) {
@@ -334,18 +334,25 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
 
         $scope.columns = [{
                 field: 'TravelRequestId',
-                displayName: 'Travel Request #',
-                width: 140,
-                headerCellClass:"existingrequestcolumnheader",
+                displayName: 'Travel Request#',
+                //width: 130,
+                headerCellClass: "existingrequestcolumnheader",
+                cellClass: "existingrequestcolumnvalue",
                 filter: {
-                    placeholder: '🔎 search'
+                    placeholder: '🔎 search',
+                    cellClass: 'travelrequestidcolumn'
                         }
             },
             {
                 field: 'Purpose',
                 name: 'Purpose',
-                width: 300,
+                //width: 300,
                 headerCellClass: "existingrequestcolumnheader",
+                cellClass: "existingrequestcolumnvalue",
+                cellTooltip:
+                        function (row, col) {
+                            return row.entity.Purpose;
+                        },
                 filter: {
                     placeholder: '🔎 search'
                 }
@@ -353,8 +360,9 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             {
                 field: 'SubmittedByUser',
                 name: 'Submitted By',
-                width: 160,
+                //width: 160,
                 headerCellClass: "existingrequestcolumnheader",
+                cellClass: "existingrequestcolumnvalue",
                 filter: {
                     placeholder: '🔎 search'
                 }
@@ -362,8 +370,9 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             {
                 field: 'SubmittedDateTime',
                 displayName: 'Submitted On',
-                width: 130,
+                //width: 115,
                 headerCellClass: "existingrequestcolumnheader",
+                cellClass: "existingrequestcolumnvalue",
                 filter: {
                     placeholder: '🔎 search'
                 }
@@ -371,8 +380,13 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             {
                 field: "RequiredApprovers",
                 displayName: "Required Approvers",
-                width: 340,
+                //width: 340,
                 headerCellClass: "existingrequestcolumnheader",
+                cellClass: "existingrequestcolumnvalue",
+                cellTooltip: 
+                        function( row, col ) {
+                            return row.entity.RequiredApprovers;
+                    },
                 filter: {
                     placeholder: '🔎 search'
                 }
@@ -382,6 +396,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 displayName: 'Last Approvered By',
                 width: 150,
                 headerCellClass: "existingrequestcolumnheader",
+                cellClass: "existingrequestcolumnvalue",
                 filter: {
                     placeholder: '🔎 search'
                 }
@@ -389,8 +404,9 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             {
                 field: 'LastApprovedDateTime',
                 displayName: 'Last Approved On',
-                width: 140,
+                //width: 150,
                 headerCellClass: "existingrequestcolumnheader",
+                cellClass: "existingrequestcolumnvalue",
                 filter: {
                     placeholder: '🔎 search'
                 }
@@ -398,8 +414,9 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             {
                 field: 'Status',
                 displayName: 'Status',
-                width: 120,
+                //width: 120,
                 headerCellClass: "existingrequestcolumnheader",
+                cellClass: "existingrequestcolumnvalue",
                 filter: {
                     placeholder: '🔎 search'
                 }
@@ -409,11 +426,13 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 cellTemplate: actionTemplate,
                 enableFiltering: false,
                 width: 112,
-                headerCellClass: "existingrequestcolumnheader"
+                headerCellClass: "existingrequestcolumnheader",
+                enableColumnResizing: false,
             }];
 
         $scope.existingRequestsGridOptions = {
             enableSorting: false,
+            enableColumnResizing: true,
             columnDefs: $scope.columns,
             enableFiltering: true,
             paginationPageSizes: [10, 15, 20],
