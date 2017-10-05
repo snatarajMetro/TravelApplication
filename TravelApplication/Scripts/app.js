@@ -22,6 +22,7 @@ $(document).ready(function () {
     //viewexistingtravelrequests();
 
     //showApproveSection();
+    //showRejectSection();
 
     //scope.loadCommonApprovers($('#badgeNumber').text());
     //scope.loadTravelCoordinators();
@@ -592,9 +593,9 @@ function approve() {
 
 function reject() {
 
-    var travelRequestId = $('#travelRequestIdForAction').text();
+    var travelRequestId = $('#travelRequestIdForRejectAction').text();
     var badgeNumber = $('#badgeNumber').text();
-    var comments = $('#txtComments').val();
+    var comments = $('#txtCommentsForReject').val();
 
     $.ajax({
         type: "POST",

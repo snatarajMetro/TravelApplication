@@ -889,7 +889,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 success: function (data) {
 
                     $("#submitsuccess2").fadeIn("slow");
-                    $('#submitsuccessmessage2').html("Travel request has been successfully submitted. Travel request# is <b>" + travelRequestId + "</b>.");
+                    $('#submitsuccessmessage2').html("Travel request has been successfully submitted. Travel Request# is <b>" + travelRequestId + "</b>.");
 
                     $('#btnSubmit').prop("disabled", true);
                     $('#btnBack').prop("disabled", true);
@@ -963,10 +963,10 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
         .done(function (data) {
             $('#rejecttemplate').html($compile($(data).html())($scope));
 
-            $('#travelRequestIdForAction').text(travelRequestId);
+            $('#travelRequestIdForRejectAction').text(travelRequestId);
             $scope.$apply();
 
-            $('#txtComments').focus();
+            $('#txtCommentsForReject').focus();
         });
     }
 

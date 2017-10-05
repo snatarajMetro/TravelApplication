@@ -212,23 +212,34 @@ div.signincontainer {
 }
 
 .signinbutton,
-.signinbutton:hover,
 .signinbutton:focus,
 .signinbutton:active
 {
-    color:white;
+    /*color:white;*/
     width:auto;
     min-width:100px;
     cursor:pointer;
-    background-color:dodgerblue;
-    border-color: #53A3CD;
+    /*background-color:dodgerblue;
+    border-color: #53A3CD;*/
     margin-right:20px;
 }
 
-.btn-success
+.approvebutton
 {
-    background-color:dodgerblue !important;
+    width:auto;
+    min-width:100px;
+    cursor:pointer;
+    margin-right:20px;
 }
+
+.rejectbutton
+{
+    width:auto;
+    min-width:100px;
+    cursor:pointer;
+    margin-right:20px;
+}
+
 .register
 {
     font-size:10px;
@@ -255,7 +266,7 @@ div.signincontainer {
 }
 
 .selectrole {
-    padding-left:38px;
+    padding-left:27px;
     padding-top:10px;
 }
 
@@ -504,12 +515,12 @@ div.dataentry{
 .backbutton:focus,
 .backbutton:active
 {
-    color:white;
+    /*color:white;*/
     width:auto;
     min-width:100px;
     cursor:pointer;
-    background-color:dodgerblue;
-    border-color: #53A3CD;
+    /*background-color:dodgerblue;
+    border-color: #53A3CD;*/
     margin-right:10px;
 }
 
@@ -1149,7 +1160,7 @@ div.dataentry3{
 .ok:hover{
     margin-left:146px;
     margin-top:22px;
-    background-color:green
+    /*background-color:green*/
 }
 
 .successcontainerok {

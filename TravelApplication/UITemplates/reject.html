@@ -3,18 +3,18 @@
         <div id="content" class="content estimatedexpense">
             <div class="approvaltitle">
                 <span class="travelrequestlabelforaction">Travel Request # :</span>
-                <span id="travelRequestIdForAction" class="travelrequestidforaction">20</span>
+                <span id="travelRequestIdForRejectAction" class="travelrequestidforaction">0</span>
             </div>
             <div id="rejectsection">
                 <div style="float:left;" class="approvaltitle">
                     <span class="commentsTitle">Comments</span>
-                    <textarea id="txtComments" width="100" class="actioncomments" />
+                    <textarea id="txtCommentsForReject" width="100" class="actioncomments" />
                 </div>
                 <div class="actionbutton">
-                    <input class="btn btn-success signinbutton approve" type="button" id="btnReject" name="btnReject" value="Reject &#x2718;" onclick="reject()" />
+                    <input class="btn btn-danger rejectbutton" type="button" id="btnReject" name="btnReject" value="Reject" onclick="reject()" />
                 </div>
                 <div class="cancelbutton">
-                    <input class="btn btn-success signinbutton" type="button" name="btnCancel" value="Cancel" onclick="cancelAction()" />
+                    <input class="btn btn-primary signinbutton" type="button" name="btnCancel" value="Cancel" onclick="cancelAction()" />
                 </div>
                 <span id="badgeNumberToAction" style="visibility:hidden"></span>
                 <div id="rejectsuccess" class="main successcontainerok" style="display:none">
