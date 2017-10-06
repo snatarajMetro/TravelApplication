@@ -1082,28 +1082,15 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 $('#txtOrganization').val($scope.Data.TravelRequestData.Organization);
                 $('#txtMeetingLocation').val($scope.Data.TravelRequestData.MeetingLocation);
                 $('#txtPurpose').val($scope.Data.TravelRequestData.Purpose);
-
-                if ($scope.Data.TravelRequestData.MeetingBeginDateTime.substring(0, 10) != '0001-01-01') {
-                    $('#txtMeetingBeginDate').val($scope.Data.TravelRequestData.MeetingBeginDateTime.substring(0, 10));
-                }
-
-                if ($scope.Data.TravelRequestData.MeetingEndDateTime.substring(0, 10) != '0001-01-01') {
-
-                    $('#txtMeetingEndDate').val($scope.Data.TravelRequestData.MeetingEndDateTime.substring(0, 10));
-                }
-
-                if ($scope.Data.TravelRequestData.DepartureDateTime.substring(0, 10) != '0001-01-01') {
-
-                    $('#txtDepartureDate').val($scope.Data.TravelRequestData.DepartureDateTime.substring(0, 10));
-                }
-
-                if ($scope.Data.TravelRequestData.ReturnDateTime.substring(0, 10) != '0001-01-01') {
-
-                    $('#txtReturnDate').val($scope.Data.TravelRequestData.ReturnDateTime.substring(0, 10));
-                }
+                $('#txtMeetingBeginDate').val($scope.Data.TravelRequestData.StrMeetingBeginDateTime);
+                $('#txtMeetingEndDate').val($scope.Data.TravelRequestData.StrMeetingEndDateTime);
+                $('#txtDepartureDate').val($scope.Data.TravelRequestData.StrDepartureDateTime);
+                $('#txtReturnDate').val($scope.Data.TravelRequestData.StrReturnDateTime);
 
                 $("#txtBadgeNumber").prop("readonly", true);
                 $("#txtBadgeNumber").prop("style", "background-color:lightgray;");
+
+                $('#travelrequesttemplate').show();
             });
         });
     }
