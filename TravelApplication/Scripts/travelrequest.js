@@ -133,9 +133,9 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
 
     
     //set fileupload section
-    $scope.loadFileUpload2 = function () {
+    $scope.loadFileUpload2 = function (travelRequestId) {
 
-        var travelRequestId = $('#travelRequestId').text();
+        //var travelRequestId = $('#travelRequestId').text();
 
         // load supporting document grid
         $scope.loadSupportingDocuments(travelRequestId);
@@ -218,25 +218,26 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
 
     // load cost centers and projects
     $scope.loadCostCenters = function () {
-        $scope.Projects = {};
+        //$scope.Projects = {};
 
         $.get('/api/fis/costcenters')
         .done(function (data) {
             $scope.CostCenters = JSON.parse(data);
 
-            angular.forEach($scope.CostCenters, function (value, index) {
+            //angular.forEach($scope.CostCenters, function (value, index) {
 
-                // get projects based on cost center name
-                $.get('/api/fis/projects/' + value.Name)
-                .done(function (data) {
+            //    // get projects based on cost center name
+            //    $.get('/api/fis/projects/' + value.Name)
+            //    .done(function (data) {
 
-                    $scope.Projects[value.Name] = JSON.parse(data);
-                    $scope.$apply();
-                });
-            })
+            //        $scope.Projects[value.Name] = JSON.parse(data);
+            //        $scope.$apply();
+            //    });
+            //})
         });
     };
 
+    $scope.Projects = {};
     $scope.projects1 = [];
     $scope.projects2 = [];
     $scope.projects3 = [];
@@ -245,20 +246,50 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
 
     $scope.getProjects = function (source, costCenter) {
 
-        if (source == 'ddlCostCenter1') {
-            $scope.projects1 = $scope.Projects[costCenter.Name];
+        var result = null;
+        // get projects based on cost center name
+        // get the list only if it doesn't exists
+        if (!$scope.Projects[costCenter.Name]) {
+            $.get('/api/fis/projects/' + costCenter.Name)
+            .done(function (data) {
+                result = JSON.parse(data);
+
+                if (source == 'ddlCostCenter1') {
+                    $scope.projects1 = result;
+                }
+                else if (source == 'ddlCostCenter2') {
+                    $scope.projects2 = result;
+                }
+                else if (source == 'ddlCostCenter3') {
+                    $scope.projects3 = result;
+                }
+                else if (source == 'ddlCostCenter4') {
+                    $scope.projects4 = result;
+                }
+                else if (source == 'ddlCostCenter5') {
+                    $scope.projects5 = result;
+                }
+
+                $scope.Projects[costCenter.Name] = result;
+                $scope.$apply();
+            });
         }
-        else if (source == 'ddlCostCenter2') {
-            $scope.projects2 = $scope.Projects[costCenter.Name];;
-        }
-        else if (source == 'ddlCostCenter3') {
-            $scope.projects3 = $scope.Projects[costCenter.Name];;
-        }
-        else if (source == 'ddlCostCenter4') {
-            $scope.projects4 = $scope.Projects[costCenter.Name];;
-        }
-        else if (source == 'ddlCostCenter5') {
-            $scope.projects5 = $scope.Projects[costCenter.Name];;
+        else {
+            if (source == 'ddlCostCenter1') {
+                $scope.projects1 = $scope.Projects[costCenter.Name];
+            }
+            else if (source == 'ddlCostCenter2') {
+                $scope.projects2 = $scope.Projects[costCenter.Name];
+            }
+            else if (source == 'ddlCostCenter3') {
+                $scope.projects3 = $scope.Projects[costCenter.Name];
+            }
+            else if (source == 'ddlCostCenter4') {
+                $scope.projects4 = $scope.Projects[costCenter.Name];
+            }
+            else if (source == 'ddlCostCenter5') {
+                $scope.projects5 = $scope.Projects[costCenter.Name];
+            }
         }
     };
 

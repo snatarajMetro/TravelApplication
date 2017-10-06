@@ -6,10 +6,10 @@ $(document).ready(function () {
 
     $("#txtEmail").focus();
 
-    scope = angular.element('#fileuploadtemplate').scope();
-    scope.loadFIS();
-    scope.loadCostCenters();
-    scope.loadFileUpload2();
+    //scope = angular.element('#fileuploadtemplate').scope();
+    //scope.loadFIS();
+    //scope.loadCostCenters();
+    //scope.loadFileUpload2();
 });
 
 function handleEnterOnSigIn(e)
@@ -172,8 +172,11 @@ function createnewrequest() {
 
     //load travel request section
     var scope = angular.element('#travelrequesttemplate').scope();
+    //scope.loadFIS();
+    //scope.loadCostCenters();
+
     scope.loadTravelRequest();
-    scope.loadFileUpload2();
+    //scope.loadFileUpload2();
     $('#travelrequesttemplate').show();
     $("#txtBadgeNumber").focus();
 
@@ -355,13 +358,14 @@ function savedataentry()
         success: function (data) {
             var result = JSON.parse(data);
             
-            $('#travelRequestBadgeNumber').text(badgeNumber);
+            $('#travelRequestBadgeNumber').text(result.BadgeNumber);
             $('#travelRequestId').text(result.TravelRequestId);
 
             var scope = angular.element('#fileuploadtemplate').scope();
+            scope.loadFileUpload2(result.TravelRequestId);
             scope.loadCommonApprovers($('#travelRequestBadgeNumber').text());
             scope.loadTravelCoordinators();
-            scope.loadSupportingDocuments(travelRequestId);
+            //scope.loadSupportingDocuments(travelRequestId);
 
             $("#travelrequesttemplate").hide();
             $("#fileuploadtemplate").show();
