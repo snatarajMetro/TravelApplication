@@ -288,7 +288,11 @@ namespace TravelApplication.Services
                             MeetingEndDateTime = Convert.ToDateTime(dataReader["MEETINGENDDATETIME"]),
                             DepartureDateTime = Convert.ToDateTime(dataReader["DEPARTUREDATETIME"]),
                             ReturnDateTime = Convert.ToDateTime(dataReader["RETURNDATETIME"]),
-                            Purpose = dataReader["PURPOSE"].ToString()
+                            Purpose = dataReader["PURPOSE"].ToString(),
+                            StrMeetingBeginDateTime = Convert.ToDateTime(dataReader["MEETINGBEGINDATETIME"]).ToShortDateString(),
+                            StrMeetingEndDateTime = Convert.ToDateTime(dataReader["MEETINGENDDATETIME"]).ToShortDateString(),
+                            StrDepartureDateTime = Convert.ToDateTime(dataReader["DEPARTUREDATETIME"]).ToShortDateString(),
+                            StrReturnDateTime = Convert.ToDateTime(dataReader["RETURNDATETIME"]).ToShortDateString(),
                         };
                     }
                 }

@@ -34,5 +34,9 @@ namespace TravelApplication.Models
         public int SelectedRoleId { get; set; }
         public int SubmittedByBadgeNumber { get; set; }
         public string Purpose { get; set; }
+        public string StrMeetingBeginDateTime { get; set; }
+        public string StrMeetingEndDateTime { get; set; }
+        public string StrDepartureDateTime { get; set; }
+        public string StrReturnDateTime { get; set; }
     }
 }
