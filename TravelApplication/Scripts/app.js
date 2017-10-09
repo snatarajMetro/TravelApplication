@@ -625,6 +625,4 @@ function editTravelRequest(container) {
     scope.loadTravelRequestForEditNew(travelRequestId);
 
     $('#travelRequestId').text(travelRequestId);
-
-    $('#travelrequesttemplate').show();
 }
