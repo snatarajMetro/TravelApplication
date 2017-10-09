@@ -8,12 +8,13 @@ namespace TravelApplication.Models
     public class FIS
     {
         public List<FISDetails> FISDetails { get; set; }
-        decimal TotalAmount { get; set; }
+        public decimal TotalAmount { get; set; }
     }
 
     public class FISDetails
     {
         public string TravelRequestId { get; set; }
+
         public string CostCenterId { get; set; }
 
         public string LineItem { get; set; }

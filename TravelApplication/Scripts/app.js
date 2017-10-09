@@ -5,11 +5,6 @@ var selectedRoleId = 0;
 $(document).ready(function () {
 
     $("#txtEmail").focus();
-
-    //scope = angular.element('#fileuploadtemplate').scope();
-    //scope.loadFIS();
-    //scope.loadCostCenters();
-    //scope.loadFileUpload2();
 });
 
 function handleEnterOnSigIn(e)
@@ -338,22 +333,28 @@ function savedataentry()
                 'CashAdvance': cashAdvanceRequested,
                 'DateNeededBy': dateNeededBy
             },
-            "FISData": [
-                {
-                    "CostCenterId": $("#ddlCostCenter1 option:selected").val(),
-                    "LineItem":$('#txtLineItem1').val(),
-                    "ProjectId": $("#project1 option:selected").val(),
-                    "Task": $('#txtTask1').val(),
-                    "Amount": $('#txtAmount1').val(),
-                },
-                {
-                    "CostCenterId": $("#ddlCostCenter2 option:selected").val(),
-                    "LineItem": $('#txtLineItem2').val(),
-                    "ProjectId": $("#project2 option:selected").val(),
-                    "Task": $('#txtTask2').val(),
-                    "Amount": $('#txtAmount2').val(),
-                }
-            ]
+            "FISData": 
+            {
+                "FISDetails":[
+                    {
+                        "CostCenterId": $("#ddlCostCenter1 option:selected").val(),
+                        "LineItem":$('#txtLineItem1').val(),
+                        "ProjectId": $("#project1 option:selected").val(),
+                        "Task": $('#txtTask1').val(),
+                        "Amount": $('#txtAmount1').val(),
+                        "TravelRequestId": travelRequestId
+                    },
+                    {
+                        "CostCenterId": $("#ddlCostCenter2 option:selected").val(),
+                        "LineItem": $('#txtLineItem2').val(),
+                        "ProjectId": $("#project2 option:selected").val(),
+                        "Task": $('#txtTask2').val(),
+                        "Amount": $('#txtAmount2').val(),
+                        "TravelRequestId": travelRequestId
+                    }
+                ],
+                "TotalAmount":$('#txtFISTotal').val()
+            }
         }),
         success: function (data) {
             var result = JSON.parse(data);
