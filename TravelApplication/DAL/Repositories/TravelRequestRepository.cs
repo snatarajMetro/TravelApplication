@@ -542,6 +542,7 @@ namespace TravelApplication.Services
                         throw new Exception("Couldn't save/update estimated expense information");
                     }
                     // Insert or update FIS expense
+                    SaveFISData(dbConn, travelRequest.FISData, travelRequestId);
 
                     response = new TravelRequestInputResponse() { TravelRequestId = travelRequestId, BadgeNumber = travelRequest.TravelRequestData.BadgeNumber };
 
@@ -825,7 +826,75 @@ namespace TravelApplication.Services
             return travelRequestInput;
         }
 
+        public void SaveFISData(DbConnection dbConn, FIS request, string travelRequestId)
+        {
+            try
+            {                
+                if (!CheckFISDataExists(dbConn, travelRequestId))
+                {
+                    foreach (var fis in request.FISDetails)
+                    {
+                        OracleCommand cmd = new OracleCommand();
+                        cmd.Connection = (OracleConnection)dbConn;
+                        cmd.CommandText = string.Format(@"INSERT INTO TRAVELREQUEST_FIS (                                                  
+                                                        TRAVELREQUESTID,
+                                                        COSTCENTERID ,
+                                                        LINEITEM ,
+                                                        PROJECTID ,
+                                                        TASK ,
+                                                        AMOUNT ,
+                                                        TOTALAMOUNT 
+                                                    )
+                                                    VALUES
+                                                        (:p1,:p2,:p3,:p4,:p5,:p6,:p7)");
+                        cmd.Parameters.Add(new OracleParameter("p1", travelRequestId));
+                        cmd.Parameters.Add(new OracleParameter("p2", fis.CostCenterId));
+                        cmd.Parameters.Add(new OracleParameter("p3", fis.LineItem));
+                        cmd.Parameters.Add(new OracleParameter("p4", fis.ProjectId));
+                        cmd.Parameters.Add(new OracleParameter("p5", fis.Task));
+                        cmd.Parameters.Add(new OracleParameter("p6", fis.Amount));
+                        cmd.Parameters.Add(new OracleParameter("p7", request.TotalAmount));
+                        var rowsUpdated = cmd.ExecuteNonQuery();
+                        cmd.Dispose();
+                    }
+                }
+                else
+                {
 
+                    foreach (var fis in request.FISDetails)
+                    {
+                        OracleCommand cmd = new OracleCommand();
+                        cmd.Connection = (OracleConnection)dbConn;
+                        cmd.CommandText = string.Format(@"UPDATE  TRAVELREQUEST_FIS SET                                                  
+                                                TRAVELREQUESTID = :p1,
+                                                        COSTCENTERID =:p2,
+                                                        LINEITEM =:p3,
+                                                        PROJECTID =:p4,
+                                                        TASK =:p5,
+                                                        AMOUNT =:p6,
+                                                        TOTALAMOUNT =:p7
+                                                WHERE TRAVELREQUESTID = {0}", travelRequestId);
+                        cmd.Parameters.Add(new OracleParameter("p1", travelRequestId));
+                        cmd.Parameters.Add(new OracleParameter("p2", fis.CostCenterId));
+                        cmd.Parameters.Add(new OracleParameter("p3", fis.LineItem));
+                        cmd.Parameters.Add(new OracleParameter("p4", fis.ProjectId));
+                        cmd.Parameters.Add(new OracleParameter("p5", fis.Task));
+                        cmd.Parameters.Add(new OracleParameter("p6", fis.Amount));
+                        cmd.Parameters.Add(new OracleParameter("p7", request.TotalAmount));
+                        var rowsUpdated = cmd.ExecuteNonQuery();
+                        cmd.Dispose();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                //TODO : log the exception 
+                throw new Exception("Couldn't insert/update record into Travel Request - " + ex.Message);
+            }
+
+            
+        }
 
         #region  Helper Methods
 
@@ -982,6 +1051,27 @@ namespace TravelApplication.Services
             }
             return false;
 
+        }
+
+        public bool CheckFISDataExists(DbConnection dbConn, string travelRequestId)
+        {
+            bool result = false;
+            string query = string.Format(@"Select * from TravelRequest_fis where travelRequestId = {0}", travelRequestId);
+            OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+            command.CommandText = query;
+            DbDataReader dataReader = command.ExecuteReader();
+            string userName = string.Empty;
+            if (dataReader != null && dataReader.HasRows == true)
+            {
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
+            command.Dispose();
+            dataReader.Close();
+            return result;
         }
 
         #endregion
