@@ -5,6 +5,8 @@ var selectedRoleId = 0;
 $(document).ready(function () {
 
     $("#txtEmail").focus();
+
+    //viewexistingtravelrequests();
 });
 
 function handleEnterOnSigIn(e)
@@ -186,6 +188,7 @@ function viewexistingtravelrequests() {
     scope.loadExistingTravelRequests();
     scope.loadApproveAction();
     scope.loadRejectAction();
+    scope.loadCostCenters();
 
     $('#existingtravelrequeststemplate').show();
 }

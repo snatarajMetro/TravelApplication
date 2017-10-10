@@ -741,6 +741,7 @@ display:table-header-group;
     color:black;
     margin-top:2px;
     margin-left:2px;
+    vertical-align:middle;
 }
 
 input.datainput:-ms-input-placeholder,
@@ -1356,4 +1357,18 @@ div.dataentryuploadandsubmitsection{
 
 .existingrequestcolumnvalue{
     /*font-size:12px;*/
+}
+
+
+.inputnumberadvance{
+    min-width:250px;
+    height:30px;
+    float:left;
+    margin-top:3px;
+    margin-bottom:3px;
+    text-align:right;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
