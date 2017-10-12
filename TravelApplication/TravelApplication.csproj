@@ -136,6 +136,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Class\Common\Email.cs" />
     <Compile Include="Class\Common\GoogleReCAPTCHA.cs" />
+    <Compile Include="Class\Common\LogMessage.cs" />
     <Compile Include="Class\Common\StandardModule.cs" />
     <Compile Include="Class\Common\StringEscape.cs" />
     <Compile Include="Class\SQLBuilder\InsertQueryBuilder.cs" />
