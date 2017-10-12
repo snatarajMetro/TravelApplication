@@ -16,7 +16,8 @@ namespace TravelApplication.Services
     public class TravelRequestRepository :  ApprovalRepository, ITravelRequestRepository
     {
         private DbConnection dbConn;
-        EstimatedExpenseRepository estimatedExpenseRepository = new EstimatedExpenseRepository();
+        IEstimatedExpenseRepository estimatedExpenseRepository = new EstimatedExpenseRepository();
+        IFISRepository fisRepository = new FISRepository();
 
 
         public async Task<EmployeeDetails> GetEmployeeDetails(int badgeNumber)
@@ -802,6 +803,7 @@ namespace TravelApplication.Services
         {
             TravelRequest travelRequest = null;
             EstimatedExpense estimatedExpense = null;
+            FIS fisDetails = null;
             TravelRequestInput travelRequestInput = null;
             try
             {
@@ -809,13 +811,15 @@ namespace TravelApplication.Services
                 {
                     travelRequest = GetTravelRequestDetail(dbConn, travelRequestId);
                     estimatedExpense = estimatedExpenseRepository.GetTravelRequestDetailNew(dbConn, travelRequestId);
+                    fisDetails = fisRepository.GetFISdetails(dbConn, travelRequestId);
                     dbConn.Close();
                     dbConn.Dispose();
                 }
                 travelRequestInput = new TravelRequestInput()
                 {
                     TravelRequestData = travelRequest,
-                    EstimatedExpenseData = estimatedExpense
+                    EstimatedExpenseData = estimatedExpense,
+                    FISData = fisDetails
                 };
             }
             catch (Exception)

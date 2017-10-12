@@ -1109,7 +1109,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 // set fis section
                 $('#txtFISTotal').val($scope.Data.FISData.TotalAmount);
 
-                // set 1st row of FIS data
+                 //set 1st row of FIS data
                 if ($scope.Data.FISData.FISDetails[0]) {
 
                     var costCenterName = $scope.Data.FISData.FISDetails[0].CostCenterId;
