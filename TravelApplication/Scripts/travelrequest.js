@@ -54,6 +54,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
     $scope.totalFISAmount3 = "0.00";
     $scope.totalFISAmount4 = "0.00";
     $scope.totalFISAmount5 = "0.00";
+    
 
     $scope.updateTotalFISAmount = function () {
         $scope.totalFISAmount = (
@@ -223,18 +224,9 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
         $.get('/api/fis/costcenters')
         .done(function (data) {
             $scope.CostCenters = JSON.parse(data);
-
-            //angular.forEach($scope.CostCenters, function (value, index) {
-
-            //    // get projects based on cost center name
-            //    $.get('/api/fis/projects/' + value.Name)
-            //    .done(function (data) {
-
-            //        $scope.Projects[value.Name] = JSON.parse(data);
-            //        $scope.$apply();
-            //    });
-            //})
         });
+
+
     };
 
     $scope.Projects = {};
@@ -1050,10 +1042,6 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 $("#txtBadgeNumber").prop("readonly", true);
                 $("#txtBadgeNumber").prop("style", "background-color:lightgray;");
             });
-
-            
-            
-           // $('').val();
         });
     }
 
@@ -1074,6 +1062,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 $('#travelrequesttemplate').html($compile($(data).html())($scope));
                 $scope.$apply();
 
+                // set user data section
                 $('#travelRequestIdForDisplay').html("Travel Request #<b>" + travelRequestId.toString() + "</b>");
                 $('#txtBadgeNumber').val($scope.Data.TravelRequestData.BadgeNumber);
                 $('#txtName').val($scope.Data.TravelRequestData.Name);
@@ -1086,11 +1075,80 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 $('#txtMeetingEndDate').val($scope.Data.TravelRequestData.StrMeetingEndDateTime);
                 $('#txtDepartureDate').val($scope.Data.TravelRequestData.StrDepartureDateTime);
                 $('#txtReturnDate').val($scope.Data.TravelRequestData.StrReturnDateTime);
-
                 $("#txtBadgeNumber").prop("readonly", true);
                 $("#txtBadgeNumber").prop("style", "background-color:lightgray;");
 
+                // set estimated expense section
+                $('#txtAdvLodge').val($scope.Data.EstimatedExpenseData.AdvanceLodging);
+                $('#txtTotalEstimatedLodge').val($scope.Data.EstimatedExpenseData.TotalEstimatedLodge);
+                $('#txtAdvAirfare').val($scope.Data.EstimatedExpenseData.AdvanceAirFare);
+                $('#txtTotalEstimatedAirfare').val($scope.Data.EstimatedExpenseData.TotalEstimatedAirFare);
+                $('#txtAdvRegistration').val($scope.Data.EstimatedExpenseData.AdvanceRegistration);
+                $('#txtTotalEstimatedRegistration').val($scope.Data.EstimatedExpenseData.TotalEstimatedRegistration);
+                $('#txtAdvMeals').val($scope.Data.EstimatedExpenseData.AdvanceMeals);
+                $('#txtTotalEstimatedMeals').val($scope.Data.EstimatedExpenseData.TotalEstimatedMeals);
+                $('#txtAdvCarRental').val($scope.Data.EstimatedExpenseData.AdvanceCarRental);
+                $('#txtTotalEstimatedCarRental').val($scope.Data.EstimatedExpenseData.TotalEstimatedCarRental);
+                $('#txtAdvMiscellaneous').val($scope.Data.EstimatedExpenseData.AdvanceMiscellaneous);
+                $('#txtTotalEstimatedMiscellaneous').val($scope.Data.EstimatedExpenseData.TotalEstimatedMiscellaneous);
+                $('#txtAdvanceTotal').val($scope.Data.EstimatedExpenseData.AdvanceTotal);
+                $('#txtEstimatedTotal').val($scope.Data.EstimatedExpenseData.TotalEstimatedTotal);
+                $('#txtHotelNameAndAddress').val($scope.Data.EstimatedExpenseData.HotelNameAndAddress);
+                $('#txtSchedule').val($scope.Data.EstimatedExpenseData.Schedule);
+                $('#txtPayableTo').val($scope.Data.EstimatedExpenseData.PayableToAndAddress);
+                $('#txtNotes').val($scope.Data.EstimatedExpenseData.Note);
+                $('#txtAgencyName').val($scope.Data.EstimatedExpenseData.AgencyNameAndReservation);
+                $('#txtShuttle').val($scope.Data.EstimatedExpenseData.Shuttle);
+                $('#txtCashAdvanceRequested').val($scope.Data.EstimatedExpenseData.CashAdvance);
+                
+                if ($scope.Data.EstimatedExpenseData.DateNeededBy.substring(0, 10) != '0001-01-01') {
+
+                    $('#txtDateNeededBy').val($scope.Data.EstimatedExpenseData.DateNeededBy.substring(0, 10));
+                }
+
+                // set fis section
+                $('#txtFISTotal').val($scope.Data.FISData.TotalAmount);
+
+                // set 1st row of FIS data
+                if ($scope.Data.FISData.FISDetails[0]) {
+
+                    var costCenterName = $scope.Data.FISData.FISDetails[0].CostCenterId;
+
+                    $("#ddlCostCenter1").val(costCenterName);
+                    angular.element("#ddlCostCenter1").triggerHandler('change');
+                    $("#txtLineItem1").val($scope.Data.FISData.FISDetails[0].LineItem);
+                    $("#txtTask1").val($scope.Data.FISData.FISDetails[0].Task);
+                    $("#txtAmount1").val($scope.Data.FISData.FISDetails[0].Amount);
+
+                    $.get('/api/fis/delay')
+                    .done(function () {
+                       
+                        var projectName = $scope.Data.FISData.FISDetails[0].ProjectId;
+                        $('#project1').val(projectName);
+                    });
+                }
+
+                // set 2nd row of FIS data
+                if ($scope.Data.FISData.FISDetails[1]) {
+
+                    var costCenterName = $scope.Data.FISData.FISDetails[1].CostCenterId;
+
+                    $("#ddlCostCenter2").val(costCenterName);
+                    angular.element("#ddlCostCenter2").triggerHandler('change');
+                    $("#txtLineItem2").val($scope.Data.FISData.FISDetails[1].LineItem);
+                    $("#txtTask2").val($scope.Data.FISData.FISDetails[1].Task);
+                    $("#txtAmount2").val($scope.Data.FISData.FISDetails[1].Amount);
+
+                    $.get('/api/fis/delay')
+                    .done(function () {
+
+                        var projectName = $scope.Data.FISData.FISDetails[1].ProjectId;
+                        $('#project2').val(projectName);
+                    });
+                }
+
                 $('#travelrequesttemplate').show();
+
             });
         });
     }
