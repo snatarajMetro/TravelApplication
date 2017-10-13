@@ -5,9 +5,7 @@ var selectedRoleId = 0;
 $(document).ready(function () {
 
     $("#txtEmail").focus();
-
-    //viewexistingtravelrequests();
-});
+  });
 
 function handleEnterOnSigIn(e)
 {
@@ -169,12 +167,8 @@ function createnewrequest() {
 
     //load travel request section
     var scope = angular.element('#travelrequesttemplate').scope();
-    //scope.loadFIS();
-    //scope.loadCostCenters();
-
+    
     scope.loadTravelRequest();
-    //scope.loadFileUpload2();
-    $('#travelrequesttemplate').show();
     $("#txtBadgeNumber").focus();
 
     scope.loadCostCenters();

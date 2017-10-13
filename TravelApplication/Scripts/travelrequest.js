@@ -4,18 +4,18 @@
 app.controller('travelAppCtrl', function ($scope, $compile) {
 
     // Estimated Expense section
-    $scope.advanceLodgingAmount = "0.00";
-    $scope.advanceAirfareAmount = "0.00";
-    $scope.advanceRegistrationAmount = "0.00";
-    $scope.advanceMealsAmount = "0.00";
-    $scope.advanceCarRentalAmount = "0.00";
-    $scope.advanceMiscellaneousAmount = "0.00";
-    $scope.estimatedLodgingAmount = "0.00";
-    $scope.estimatedAirfareAmount = "0.00";
-    $scope.estimatedRegistrationAmount = "0.00";
-    $scope.estimatedMealsAmount = "0.00";
-    $scope.estimatedCarRentalAmount = "0.00";
-    $scope.estimatedMiscellaneousAmount = "0.00";
+    $scope.advanceLodgingAmount = 0.00;
+    $scope.advanceAirfareAmount = 0.00;
+    $scope.advanceRegistrationAmount = 0.00;
+    $scope.advanceMealsAmount = 0.00;
+    $scope.advanceCarRentalAmount = 0.00;
+    $scope.advanceMiscellaneousAmount = 0.00;
+    $scope.estimatedLodgingAmount = 0.00;
+    $scope.estimatedAirfareAmount = 0.00;
+    $scope.estimatedRegistrationAmount = 0.00;
+    $scope.estimatedMealsAmount = 0.00;
+    $scope.estimatedCarRentalAmount = 0.00;
+    $scope.estimatedMiscellaneousAmount = 0.00;
 
     $scope.updateTotalAdvanceAmount = function () {
         $scope.totalAdvanceAmount = (
@@ -49,11 +49,11 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
     }
 
     // FIS section
-    $scope.totalFISAmount1 = "0.00";
-    $scope.totalFISAmount2 = "0.00";
-    $scope.totalFISAmount3 = "0.00";
-    $scope.totalFISAmount4 = "0.00";
-    $scope.totalFISAmount5 = "0.00";
+    $scope.totalFISAmount1 = 0.00;
+    $scope.totalFISAmount2 = 0.00;
+    $scope.totalFISAmount3 = 0.00;
+    $scope.totalFISAmount4 = 0.00;
+    $scope.totalFISAmount5 = 0.00;
     
 
     $scope.updateTotalFISAmount = function () {
@@ -214,6 +214,23 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
         .done(function (data) {
             $('#travelrequesttemplate').html($compile($(data).html())($scope));
             $scope.$apply();
+
+            $('#travelrequesttemplate').show();
+
+            // Date picker options
+            var options = {
+                format: 'mm/dd/yyyy',
+                orientation: "top right",
+                todayHighlight: true,
+                autoclose: true,
+            };
+
+            $('input[name="txtToday"]').datepicker(options);
+            $('input[name="txtMeetingBeginDate"]').datepicker(options);
+            $('input[name="txtMeetingEndDate"]').datepicker(options);
+            $('input[name="txtDepartureDate"]').datepicker(options);
+            $('input[name="txtReturnDate"]').datepicker(options);
+            $('input[name="txtDateNeededBy"]').datepicker(options);
         });
     }
 
