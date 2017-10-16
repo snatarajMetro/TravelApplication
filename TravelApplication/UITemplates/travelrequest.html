@@ -37,9 +37,9 @@
                             </div>
                             <div class="column">
                                 <div class="label2">
-                                    <span>Date</span><sup class="required">*</sup>
+                                    <span>Date</span>
                                 </div>
-                                <input type="text" id="txtToday" name="txtToday" width="100" class="datainputdate" placeholder="MM/DD/YYY" />
+                                <input type="text" id="txtToday" name="txtToday" width="100" class="datainputdate" placeholder="MM/DD/YYY" readonly disabled />
                             </div>
                         </div>
                         <div class="row" style="display:flex;flex-direction:row">
@@ -330,9 +330,13 @@
                              </div>
                           </div>
                     </div>
-                    <div class="actionbuttonold">
-                        <input class="btn btn-primary backbutton" type="button" name="btnBack" value="Back" onclick="backtoactionselection()" />
-                        <input class="btn btn-primary signinbutton" type="button" name="btnNext" value="Save and Continue" onclick="savedataentry()" />
+                    <div>
+                    <div style="display:flex;">
+                        <div class="newrequestrequiredcontainer"><br /><sub class="required">* required fields.</sub></div>
+                        <div class="actionbuttonold" style="flex-grow:1;">
+                            <input class="btn btn-primary backbutton" type="button" name="btnBack" value="Back" onclick="backtoactionselection()" />
+                            <input class="btn btn-primary signinbutton" type="button" name="btnNext" value="Save and Continue" onclick="savedataentry()" />
+                        </div>
                     </div>
                 </div>
                 <div class="row">

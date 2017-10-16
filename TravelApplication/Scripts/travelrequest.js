@@ -216,6 +216,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             $scope.$apply();
 
             $('#travelrequesttemplate').show();
+            $("#txtBadgeNumber").focus();
 
             // Date picker options
             var options = {
@@ -225,12 +226,16 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 autoclose: true,
             };
 
-            $('input[name="txtToday"]').datepicker(options);
+            //$('input[name="txtToday"]').datepicker(options);
             $('input[name="txtMeetingBeginDate"]').datepicker(options);
             $('input[name="txtMeetingEndDate"]').datepicker(options);
             $('input[name="txtDepartureDate"]').datepicker(options);
             $('input[name="txtReturnDate"]').datepicker(options);
             $('input[name="txtDateNeededBy"]').datepicker(options);
+
+            $("#txtToday")
+                .datepicker({ dateFormat: "mm/dd/yyyy" })
+                .datepicker("setDate", new Date());
         });
     }
 
