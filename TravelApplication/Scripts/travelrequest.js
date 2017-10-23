@@ -1174,4 +1174,14 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             });
         });
     }
+
+    $scope.loadTravelReimbursementRequest = function () {
+        $.get('/uitemplates/travelreimbursement.html')
+        .done(function (data) {
+            $('#travelreimbursementtemplate').html($compile($(data).html())($scope));
+            $scope.$apply();
+
+            $('#travelreimbursementtemplate').show();
+        });
+    }
 });

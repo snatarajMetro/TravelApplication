@@ -38,6 +38,7 @@ function logout() {
     $("#existingtravelrequeststemplate").hide();
     $("#travelrequesttemplate").hide();
     $("#fileuploadtemplate").hide();
+    $("#travelreimbursementtemplate").hide();
 
     $("#txtEmail").focus();
 }
@@ -679,4 +680,12 @@ function editTravelRequest(container) {
 
 function createnewreimbursementrequest() {
 
+    $("#action").hide();
+    $("#signin").hide();
+    $("#signintemplate").hide();
+
+    //load travel request section
+    var scope = angular.element('#travelreimbursementtemplate').scope();
+
+    scope.loadTravelReimbursementRequest();
 }

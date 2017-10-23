@@ -253,6 +253,7 @@
     <Content Include="Images\logo.png" />
     <Content Include="Images\New.png" />
     <Content Include="Images\newbg.png" />
+    <Content Include="Images\reimbursement.png" />
     <Content Include="Images\reject.jpg" />
     <Content Include="Images\reject1.png" />
     <Content Include="Images\reject2.jpg" />
@@ -539,6 +540,7 @@
     <Content Include="UITemplates\reject.html" />
     <Content Include="UITemplates\roleselection.html" />
     <Content Include="UITemplates\submit.html" />
+    <Content Include="UITemplates\travelreimbursement.html" />
     <Content Include="UITemplates\travelrequest.html" />
     <Content Include="UITemplates\travelrequestform.html" />
     <Content Include="UITemplates\uploadandsubmit.html" />
