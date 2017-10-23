@@ -676,3 +676,7 @@ function editTravelRequest(container) {
 
     $('#travelRequestId').text(travelRequestId);
 }
+
+function createnewreimbursementrequest() {
+
+}
