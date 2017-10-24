@@ -5,9 +5,7 @@ var selectedRoleId = 0;
 $(document).ready(function () {
 
     $("#txtEmail").focus();
-
-    //viewexistingtravelrequests();
-});
+  });
 
 function handleEnterOnSigIn(e)
 {
@@ -40,6 +38,7 @@ function logout() {
     $("#existingtravelrequeststemplate").hide();
     $("#travelrequesttemplate").hide();
     $("#fileuploadtemplate").hide();
+    $("#travelreimbursementtemplate").hide();
 
     $("#txtEmail").focus();
 }
@@ -169,14 +168,8 @@ function createnewrequest() {
 
     //load travel request section
     var scope = angular.element('#travelrequesttemplate').scope();
-    //scope.loadFIS();
-    //scope.loadCostCenters();
-
+    
     scope.loadTravelRequest();
-    //scope.loadFileUpload2();
-    $('#travelrequesttemplate').show();
-    $("#txtBadgeNumber").focus();
-
     scope.loadCostCenters();
 }
 
@@ -240,17 +233,19 @@ function addPlaceHolder(input) {
 
 function savedataentry()
 {
+    var canSubmit = true;
+
     // Get user inputs
-    var badgeNumber = $('#txtBadgeNumber').val();
-    var name = $('#txtName').val();
-    var division = $('#txtDivision').val();
-    var section = $('#txtSection').val();
-    var organization = $('#txtOrganization').val();
-    var meetingLocation = $('#txtMeetingLocation').val();
-    var meetingBeginDate = $('#txtMeetingBeginDate').val();
-    var meetingEndDate = $('#txtMeetingEndDate').val();
-    var departureDate = $('#txtDepartureDate').val();
-    var returnDate = $('#txtReturnDate').val();
+    var badgeNumber = jQuery.trim($('#txtBadgeNumber').val());
+    var name = jQuery.trim($('#txtName').val());
+    var division = jQuery.trim($('#txtDivision').val());
+    var section = jQuery.trim($('#txtSection').val());
+    var organization = jQuery.trim($('#txtOrganization').val());
+    var meetingLocation = jQuery.trim($('#txtMeetingLocation').val());
+    var meetingBeginDate = jQuery.trim($('#txtMeetingBeginDate').val());
+    var meetingEndDate = jQuery.trim($('#txtMeetingEndDate').val());
+    var departureDate = jQuery.trim($('#txtDepartureDate').val());
+    var returnDate = jQuery.trim($('#txtReturnDate').val());
     var userId = "";
     var travelRequestId = $('#travelRequestId').text();
     var selectedRoleId = $("#selectedRoleId").text();
@@ -274,7 +269,6 @@ function savedataentry()
     var totalEstimatedMeals = $('#txtTotalEstimatedMeals').val();
     var notes = $('#txtNotes').val();
 
-
     var advCarRental = $('#txtAdvCarRental').val();
     var totalEstimatedCarRental = $('#txtTotalEstimatedCarRental').val();
     var agencyName = $('#txtAgencyName').val();
@@ -288,108 +282,161 @@ function savedataentry()
     var cashAdvanceRequested = $('#txtCashAdvanceRequested').val();
     var dateNeededBy = $('#txtDateNeededBy').val();
 
-    $.ajax({
-        type: "POST",
-        url: "/api/travelrequest/savenew",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({
-            "TravelRequestData": {
-                'TravelRequestId': travelRequestId,
-                'BadgeNumber': badgeNumber,
-                'Name': name,
-                'Division': division,
-                'Section': section,
-                'Organization': organization,
-                'MeetingLocation': meetingLocation,
-                'MeetingBeginDateTime': meetingBeginDate,
-                'DepartureDateTime': departureDate,
-                'MeetingEndDateTime': meetingEndDate,
-                'ReturnDateTime': returnDate,
-                'UserId': userId,
-                'SelectedRoleId': selectedRoleId,
-                'Purpose': purpose,
-                'Today': today
+
+    if (!badgeNumber || badgeNumber.length <= 0)
+    {
+        canSubmit = false;
+    }
+
+    if (!name || name.length <= 0)
+    {
+        canSubmit = false;
+    }
+
+    if (!division || division.length <= 0) {
+        canSubmit = false;
+    }
+    
+    if (!section || section.length <= 0) {
+        canSubmit = false;
+    }
+
+    if (!organization || organization.length <= 0) {
+        canSubmit = false;
+    }
+
+    if (!meetingLocation || meetingLocation.length <= 0) {
+        canSubmit = false;
+    }
+
+    if (!meetingBeginDate || meetingBeginDate.length <= 0) {
+        canSubmit = false;
+    }
+
+    if (!meetingEndDate || meetingEndDate.length <= 0) {
+        canSubmit = false;
+    }
+
+    if (!departureDate || departureDate.length <= 0) {
+        canSubmit = false;
+    }
+
+    if (!returnDate || returnDate.length <= 0) {
+        canSubmit = false;
+    }
+
+    if (canSubmit) {
+        $.ajax({
+            type: "POST",
+            url: "/api/travelrequest/savenew",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                "TravelRequestData": {
+                    'TravelRequestId': travelRequestId,
+                    'BadgeNumber': badgeNumber,
+                    'Name': name,
+                    'Division': division,
+                    'Section': section,
+                    'Organization': organization,
+                    'MeetingLocation': meetingLocation,
+                    'MeetingBeginDateTime': meetingBeginDate,
+                    'DepartureDateTime': departureDate,
+                    'MeetingEndDateTime': meetingEndDate,
+                    'ReturnDateTime': returnDate,
+                    'UserId': userId,
+                    'SelectedRoleId': selectedRoleId,
+                    'Purpose': purpose,
+                    'Today': today
+                },
+                "EstimatedExpenseData": {
+                    'EstimatedExpenseId': 0,
+                    'TravelRequestId': travelRequestId,
+                    'AdvanceLodging': advLodge,
+                    'TotalEstimatedLodge': totalEstimatedLodge,
+                    'HotelNameAndAddress': hotelNameAndAddress,
+                    'AdvanceAirFare': advAirfare,
+                    'TotalEstimatedAirfare': totalEstimatedAirfare,
+                    'Schedule': schedule,
+                    'AdvanceRegistration': advRegistration,
+                    'TotalEstimatedRegistration': totalEstimatedRegistration,
+                    'PayableToAndAddress': payableTo,
+                    'AdvanceMeals': advMeals,
+                    'TotalEstimatedMeals': totalEstimatedMeals,
+                    'Note': notes,
+                    'AdvanceCarRental': advCarRental,
+                    'TotalEstimatedCarRental': totalEstimatedCarRental,
+                    'AgencyNameAndReservation': agencyName,
+                    'AdvanceMiscellaneous': advMiscellaneous,
+                    'TotalEstimatedMiscellaneous': totalEstimatedMiscellaneous,
+                    'Shuttle': shuttle,
+                    'AdvanceTotal': advanceTotal,
+                    'TotalEstimatedTotal': estimatedTotal,
+                    'CashAdvance': cashAdvanceRequested,
+                    'DateNeededBy': dateNeededBy
+                },
+                "FISData":
+                {
+                    "FISDetails": [
+                        {
+                            "CostCenterId": $("#ddlCostCenter1 option:selected").val(),
+                            "LineItem": $('#txtLineItem1').val(),
+                            "ProjectId": $("#project1 option:selected").val(),
+                            "Task": $('#txtTask1').val(),
+                            "Amount": $('#txtAmount1').val(),
+                            "TravelRequestId": travelRequestId
+                        },
+                        {
+                            "CostCenterId": $("#ddlCostCenter2 option:selected").val(),
+                            "LineItem": $('#txtLineItem2').val(),
+                            "ProjectId": $("#project2 option:selected").val(),
+                            "Task": $('#txtTask2').val(),
+                            "Amount": $('#txtAmount2').val(),
+                            "TravelRequestId": travelRequestId
+                        }
+                    ],
+                    "TotalAmount": $('#txtFISTotal').val()
+                }
+            }),
+            success: function (data) {
+                var result = JSON.parse(data);
+
+                $('#travelRequestBadgeNumber').text(result.BadgeNumber);
+                $('#travelRequestId').text(result.TravelRequestId);
+
+                var scope = angular.element('#fileuploadtemplate').scope();
+                scope.loadFileUpload2(result.TravelRequestId);
+                scope.loadCommonApprovers($('#travelRequestBadgeNumber').text());
+                scope.loadTravelCoordinators();
+                //scope.loadSupportingDocuments(travelRequestId);
+
+                $("#travelrequesttemplate").hide();
+                $("#fileuploadtemplate").show();
             },
-            "EstimatedExpenseData": {
-                'EstimatedExpenseId': 0,
-                'TravelRequestId': travelRequestId,
-                'AdvanceLodging': advLodge,
-                'TotalEstimatedLodge': totalEstimatedLodge,
-                'HotelNameAndAddress': hotelNameAndAddress,
-                'AdvanceAirFare': advAirfare,
-                'TotalEstimatedAirfare': totalEstimatedAirfare,
-                'Schedule': schedule,
-                'AdvanceRegistration': advRegistration,
-                'TotalEstimatedRegistration': totalEstimatedRegistration,
-                'PayableToAndAddress': payableTo,
-                'AdvanceMeals': advMeals,
-                'TotalEstimatedMeals': totalEstimatedMeals,
-                'Note':notes,
-                'AdvanceCarRental': advCarRental,
-                'TotalEstimatedCarRental': totalEstimatedCarRental,
-                'AgencyNameAndReservation': agencyName,
-                'AdvanceMiscellaneous': advMiscellaneous,
-                'TotalEstimatedMiscellaneous': totalEstimatedMiscellaneous,
-                'Shuttle': shuttle,
-                'AdvanceTotal': advanceTotal,
-                'TotalEstimatedTotal': estimatedTotal,
-                'CashAdvance': cashAdvanceRequested,
-                'DateNeededBy': dateNeededBy
-            },
-            "FISData": 
-            {
-                "FISDetails":[
-                    {
-                        "CostCenterId": $("#ddlCostCenter1 option:selected").val(),
-                        "LineItem":$('#txtLineItem1').val(),
-                        "ProjectId": $("#project1 option:selected").val(),
-                        "Task": $('#txtTask1').val(),
-                        "Amount": $('#txtAmount1').val(),
-                        "TravelRequestId": travelRequestId
-                    },
-                    {
-                        "CostCenterId": $("#ddlCostCenter2 option:selected").val(),
-                        "LineItem": $('#txtLineItem2').val(),
-                        "ProjectId": $("#project2 option:selected").val(),
-                        "Task": $('#txtTask2').val(),
-                        "Amount": $('#txtAmount2').val(),
-                        "TravelRequestId": travelRequestId
-                    }
-                ],
-                "TotalAmount":$('#txtFISTotal').val()
+            error: function (xhr, options, error) {
+
+                if (xhr.status == 500) {
+                    var errorMessage = xhr.responseText;
+
+                    $("#travelrequesterror").fadeIn("slow");
+                    $('#travelrequesterrormessage').text(errorMessage);
+
+                    // fade out in 5 seconds
+                    $("#travelrequesterror").fadeOut(fadeOutTimeInMilliseconds);
+                }
+
+                $('#travelRequestId').text(0);
+                $('#travelRequestBadgeNumber').text(0);
             }
-        }),
-        success: function (data) {
-            var result = JSON.parse(data);
-            
-            $('#travelRequestBadgeNumber').text(result.BadgeNumber);
-            $('#travelRequestId').text(result.TravelRequestId);
+        });
+    }
+    else {
 
-            var scope = angular.element('#fileuploadtemplate').scope();
-            scope.loadFileUpload2(result.TravelRequestId);
-            scope.loadCommonApprovers($('#travelRequestBadgeNumber').text());
-            scope.loadTravelCoordinators();
-            //scope.loadSupportingDocuments(travelRequestId);
+        $("#submiterror").fadeIn("slow");
+        $('#submiterrormessage').text("Some of the required fields are missing. Please try again.");
 
-            $("#travelrequesttemplate").hide();
-            $("#fileuploadtemplate").show();
-        },
-        error: function (xhr, options, error) {
-
-            if (xhr.status == 500) {
-                var errorMessage = xhr.responseText;
-
-                $("#travelrequesterror").fadeIn("slow");
-                $('#travelrequesterrormessage').text(errorMessage);
-
-                // fade out in 5 seconds
-                $("#travelrequesterror").fadeOut(fadeOutTimeInMilliseconds);
-            }
-
-            $('#travelRequestId').text(0);
-            $('#travelRequestBadgeNumber').text(0);
-        }
-    });
+        // fade out in 5 seconds
+        $("#submiterror").fadeOut(fadeOutTimeInMilliseconds);
+    }
 }
 
 function setUserName() {
@@ -629,4 +676,16 @@ function editTravelRequest(container) {
     scope.loadTravelRequestForEditNew(travelRequestId);
 
     $('#travelRequestId').text(travelRequestId);
+}
+
+function createnewreimbursementrequest() {
+
+    $("#action").hide();
+    $("#signin").hide();
+    $("#signintemplate").hide();
+
+    //load travel request section
+    var scope = angular.element('#travelreimbursementtemplate').scope();
+
+    scope.loadTravelReimbursementRequest();
 }
