@@ -22,7 +22,7 @@ namespace TravelApplication.Controllers.WebAPI
             {
                 Hashtable myparms = new Hashtable();
                 myparms.Add("p_travelrequestID", travelRequestId);
-                travelRequestReportService.RunReport("Travel_Request_newish.rpt","test",myparms);
+                travelRequestReportService.RunReport("Travel_Request.rpt","test",myparms);
                // response = Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)
