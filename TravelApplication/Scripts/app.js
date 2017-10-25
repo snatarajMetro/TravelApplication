@@ -39,6 +39,7 @@ function logout() {
     $("#travelrequesttemplate").hide();
     $("#fileuploadtemplate").hide();
     $("#travelreimbursementtemplate").hide();
+    $("#existingtravelreimbursementtemplate").hide();
 
     $("#txtEmail").focus();
 }
@@ -191,6 +192,7 @@ function backtoactionselection() {
     $("#travelrequesttemplate").hide();
     $("#estimatedexpensetemplate").hide();
     $("#existingtravelrequeststemplate").hide();
+    $("#existingtravelreimbursementtemplate").hide();
 
     // if selected role is approver, take them back to role selection modal
     if (selectedRoleId == 3) {
@@ -696,4 +698,6 @@ function viewreimbursementrequest() {
     var scope = angular.element('#existingtravelreimbursementtemplate').scope();
 
     scope.loadExistingTravelReimbursementRequests();
+
+    $('#existingtravelreimbursementtemplate').show();
 }

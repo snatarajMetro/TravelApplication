@@ -1185,7 +1185,8 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
         });
     }
 
-    $scope.loadExistingTravelReimbursementRequests = function () {
+    $scope.loadExistingTravelReimbursementRequestsOld = function () {
+
         $.get('/uitemplates/existingtravelreimbursements.html')
         .done(function (data) {
             $('#existingtravelreimbursementtemplate').html($compile($(data).html())($scope));
@@ -1193,5 +1194,144 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
 
             $('#existingtravelreimbursementtemplate').show();
         });
+    }
+
+    $scope.loadExistingTravelReimbursementRequests = function () {
+
+        var actionTemplate = '<div style="float:left;" ng-if="row.entity.ViewActionVisible == true"><img title="View" class="actionImage" src="/Images/view.png" /></div><div ng-if="row.entity.EditActionVisible == true"><img title="Edit" class="actionImage" src="/Images/edit.png" alt="{{row.entity.TravelRequestId}}" onclick="editTravelRequest(this);" /></div> <div ng-if="row.entity.ApproveActionVisible == true"><img title="Approve" class="actionImage" src="/Images/approve1.png" alt="{{row.entity.TravelRequestId}}" onclick="showApproveSection(this);" /><img title="Reject" class="actionImage2" src="/Images/reject1.png" alt="{{row.entity.TravelRequestId}}" onclick="showRejectSection(this);" /></div>';
+
+        $scope.columns = [{
+            field: 'TravelRequestId',
+            displayName: 'Travel Request#',
+            //width: 130,
+            headerCellClass: "existingrequestcolumnheader",
+            cellClass: "existingrequestcolumnvalue",
+            filter: {
+                placeholder: '🔎 search',
+                cellClass: 'travelrequestidcolumn'
+            }
+        },
+            {
+                field: 'Purpose',
+                name: 'Purpose',
+                //width: 300,
+                headerCellClass: "existingrequestcolumnheader",
+                cellClass: "existingrequestcolumnvalue",
+                cellTooltip:
+                        function (row, col) {
+                            return row.entity.Purpose;
+                        },
+                filter: {
+                    placeholder: '🔎 search'
+                }
+            },
+            {
+                field: 'SubmittedByUser',
+                name: 'Submitted By',
+                //width: 160,
+                headerCellClass: "existingrequestcolumnheader",
+                cellClass: "existingrequestcolumnvalue",
+                filter: {
+                    placeholder: '🔎 search'
+                }
+            },
+            {
+                field: 'SubmittedDateTime',
+                displayName: 'Submitted On',
+                //width: 115,
+                headerCellClass: "existingrequestcolumnheader",
+                cellClass: "existingrequestcolumnvalue",
+                filter: {
+                    placeholder: '🔎 search'
+                }
+            },
+            {
+                field: "RequiredApprovers",
+                displayName: "Required Approvers",
+                //width: 340,
+                headerCellClass: "existingrequestcolumnheader",
+                cellClass: "existingrequestcolumnvalue",
+                cellTooltip:
+                        function (row, col) {
+                            return row.entity.RequiredApprovers;
+                        },
+                filter: {
+                    placeholder: '🔎 search'
+                }
+            },
+            {
+                field: 'LastApproveredByUser',
+                displayName: 'Last Approvered By',
+                width: 150,
+                headerCellClass: "existingrequestcolumnheader",
+                cellClass: "existingrequestcolumnvalue",
+                filter: {
+                    placeholder: '🔎 search'
+                }
+            },
+            {
+                field: 'LastApprovedDateTime',
+                displayName: 'Last Approved On',
+                //width: 150,
+                headerCellClass: "existingrequestcolumnheader",
+                cellClass: "existingrequestcolumnvalue",
+                filter: {
+                    placeholder: '🔎 search'
+                }
+            },
+            {
+                field: 'Status',
+                displayName: 'Status',
+                //width: 120,
+                headerCellClass: "existingrequestcolumnheader",
+                cellClass: "existingrequestcolumnvalue",
+                filter: {
+                    placeholder: '🔎 search'
+                }
+            },
+            {
+                name: 'Actions',
+                cellTemplate: actionTemplate,
+                enableFiltering: false,
+                width: 112,
+                headerCellClass: "existingrequestcolumnheader",
+                enableColumnResizing: false,
+            }];
+
+        $scope.existingRequestsGridOptions = {
+            enableSorting: false,
+            enableColumnResizing: true,
+            columnDefs: $scope.columns,
+            enableFiltering: true,
+            paginationPageSizes: [10, 15, 20],
+            paginationPageSize: 10,
+            onRegisterApi: function (gridApi) {
+                $scope.grid1Api = gridApi;
+            }
+        };
+
+        var badgeNumber = $("#signedInUserBadgeNumber").text();
+        var selectedRoleId = $("#selectedRoleId").text();
+        var url = "api/travelrequests?badgeNumber=" + badgeNumber + "&roleId=" + selectedRoleId;
+
+        $.get(url)
+       .done(function (data) {
+
+           $scope.existingRequestsGridOptions.data = data;
+
+           angular.forEach($scope.existingRequestsGridOptions.data, function (value, index) {
+
+               if (value.SubmittedByUser == null || value.SubmittedByUser == '') {
+                   $scope.columns[2].visible = false;
+               }
+           })
+
+           $.get('/uitemplates/existingtravelreimbursements.html')
+           .done(function (data) {
+            $('#existingtravelreimbursementtemplate').html($compile($(data).html())($scope));
+            $scope.$apply();
+           });
+
+       });
     }
 });

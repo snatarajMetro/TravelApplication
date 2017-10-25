@@ -1441,9 +1441,11 @@ div.existingtravelreimbursementcontainer {
     bottom: 0;
     left: 0;
     right: 0;
-    height:0;
-    width:0;
-    background-color: green;
+    width: 1645px;
+    height: 475px;
+    margin: auto;
+    background-color: white;
     box-shadow: 10px 10px 5px #3c3c3c;
-    margin-top:28px;
+    border-radius: 3px;
+    border:solid 1px black;
 }
