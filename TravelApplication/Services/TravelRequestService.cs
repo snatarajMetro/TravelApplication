@@ -41,6 +41,12 @@ namespace TravelApplication.Services
             return result;
         }
 
+        public List<TravelRequestDetails> GetApprovedTravelrequestList(int badgeNumber, int selectedRoleId)
+        {
+            var result = travelRequestRepo.GetApprovedTravelRequestList(badgeNumber, selectedRoleId);
+            return result;
+        }
+
         public async Task<int> SaveTravelRequest(TravelRequest travelRequest)
         {
             try

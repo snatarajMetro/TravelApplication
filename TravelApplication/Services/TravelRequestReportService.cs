@@ -27,9 +27,9 @@ namespace TravelApplication.Services
                 String parm_name = System.Convert.ToString(de.Key);  
                 String[] parm_values_array = (System.Convert.ToString(de.Value)).Split(',');
 
-                dReport.SetParameterValue(parm_name, parm_values_array);
+             //   dReport.SetParameterValue("p_travelrequestID", "406");
             }
-
+            dReport.SetParameterValue("p_travelrequestID", "406");
             String mOleString = System.Configuration.ConfigurationManager.AppSettings["rptConnectionString"];
             String[] aTags = mOleString.Split(';');
 
@@ -47,8 +47,8 @@ namespace TravelApplication.Services
 
             crConnectionInFo.DatabaseName = "";
             crConnectionInFo.Password = "taer_dev";
-            crConnectionInFo.UserID = "taer";
-            crConnectionInFo.ServerName = "MTAORA50DEV";    
+            crConnectionInFo.UserID = "TAER";
+            crConnectionInFo.ServerName = "mtaora50dev";    
 
             crTables = dReport.Database.Tables;
             crTableLogonInfo.ConnectionInfo = crConnectionInFo;
