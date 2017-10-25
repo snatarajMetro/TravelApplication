@@ -1,0 +1,19 @@
+﻿<div id="existingtravelreimbursements">
+    <div class="main existingtravelreimbursementcontainer">
+        <div id="content" class="content">
+            <div class="pagetitleexistingrequests">
+                <span>Travel Reimbursements</span>
+            </div>
+        </div>
+        <div>
+            <div id="table" ng-app="travelApp" ng-controller="travelAppCtrl">
+                <div ui-grid="existingRequestsGridOptions" ui-grid-pagination ui-grid-cell-contents class="existingTravelRequestsGrid"></div>
+            </div>
+        </div>
+        <div id="footer" class="footer">
+            <div class="footerback">
+                <input class="btn btn-primary signinbutton" type="button" name="btnBack" value="Back" onclick="backtoactionselection()" />
+            </div>
+        </div>
+    </div>
+</div>

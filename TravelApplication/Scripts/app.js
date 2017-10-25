@@ -39,6 +39,7 @@ function logout() {
     $("#travelrequesttemplate").hide();
     $("#fileuploadtemplate").hide();
     $("#travelreimbursementtemplate").hide();
+    $("#existingtravelreimbursementtemplate").hide();
 
     $("#txtEmail").focus();
 }
@@ -191,6 +192,7 @@ function backtoactionselection() {
     $("#travelrequesttemplate").hide();
     $("#estimatedexpensetemplate").hide();
     $("#existingtravelrequeststemplate").hide();
+    $("#existingtravelreimbursementtemplate").hide();
 
     // if selected role is approver, take them back to role selection modal
     if (selectedRoleId == 3) {
@@ -680,12 +682,33 @@ function editTravelRequest(container) {
 
 function createnewreimbursementrequest() {
 
+    //load travel request section
+    var scope = angular.element('#travelreimbursementtemplate').scope();
+
+    scope.loadTravelReimbursementRequest();
+}
+
+function viewreimbursementrequest() {
+
     $("#action").hide();
     $("#signin").hide();
     $("#signintemplate").hide();
 
     //load travel request section
-    var scope = angular.element('#travelreimbursementtemplate').scope();
+    var scope = angular.element('#existingtravelreimbursementtemplate').scope();
 
-    scope.loadTravelReimbursementRequest();
+    scope.loadExistingTravelReimbursementRequests();
+
+    $('#existingtravelreimbursementtemplate').show();
+}
+
+function createTravelRequestReimbursement(container) {
+
+    $('#existingtravelreimbursementtemplate').hide();
+
+    var travelRequestId = $(container).prop('alt');
+    var scope = angular.element('#travelreimbursementtemplate').scope();
+    scope.loadTravelReimbursementRequest(travelRequestId);
+
+    $('#travelRequestId').text(travelRequestId);
 }
