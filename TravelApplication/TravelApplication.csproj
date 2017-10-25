@@ -553,6 +553,7 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="UITemplates\approve.html" />
     <Content Include="UITemplates\estimatedexpense.html" />
+    <Content Include="UITemplates\existingtravelreimbursements.html" />
     <Content Include="UITemplates\existingtravelrequests.html" />
     <Content Include="UITemplates\fileupload.html" />
     <Content Include="UITemplates\fis.html" />

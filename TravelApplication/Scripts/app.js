@@ -680,12 +680,20 @@ function editTravelRequest(container) {
 
 function createnewreimbursementrequest() {
 
+    //load travel request section
+    var scope = angular.element('#travelreimbursementtemplate').scope();
+
+    scope.loadTravelReimbursementRequest();
+}
+
+function viewreimbursementrequest() {
+
     $("#action").hide();
     $("#signin").hide();
     $("#signintemplate").hide();
 
     //load travel request section
-    var scope = angular.element('#travelreimbursementtemplate').scope();
+    var scope = angular.element('#existingtravelreimbursementtemplate').scope();
 
-    scope.loadTravelReimbursementRequest();
+    scope.loadExistingTravelReimbursementRequests();
 }
