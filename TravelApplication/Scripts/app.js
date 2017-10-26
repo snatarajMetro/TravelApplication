@@ -40,6 +40,7 @@ function logout() {
     $("#fileuploadtemplate").hide();
     $("#travelreimbursementtemplate").hide();
     $("#existingtravelreimbursementtemplate").hide();
+    $("#approvedtravelrequesttemplate").hide();
 
     $("#txtEmail").focus();
 }
@@ -193,6 +194,7 @@ function backtoactionselection() {
     $("#estimatedexpensetemplate").hide();
     $("#existingtravelrequeststemplate").hide();
     $("#existingtravelreimbursementtemplate").hide();
+    $("#approvedtravelrequesttemplate").hide();
 
     // if selected role is approver, take them back to role selection modal
     if (selectedRoleId == 3) {
@@ -688,20 +690,6 @@ function createnewreimbursementrequest() {
     scope.loadTravelReimbursementRequest();
 }
 
-function viewreimbursementrequest() {
-
-    $("#action").hide();
-    $("#signin").hide();
-    $("#signintemplate").hide();
-
-    //load travel request section
-    var scope = angular.element('#existingtravelreimbursementtemplate').scope();
-
-    scope.loadExistingTravelReimbursementRequests();
-
-    $('#existingtravelreimbursementtemplate').show();
-}
-
 function createTravelRequestReimbursement(container) {
 
     $('#existingtravelreimbursementtemplate').hide();
@@ -711,4 +699,43 @@ function createTravelRequestReimbursement(container) {
     scope.loadTravelReimbursementRequest(travelRequestId);
 
     $('#travelRequestId').text(travelRequestId);
+}
+
+function setreimbursement() {
+    $('#tab1content').hide();
+    $('#tab2content').show();
+
+    $('#link1').prop("class", "");
+    $('#link2').prop("class", "active");
+}
+
+function settravelrequest() {
+    $('#tab2content').hide();
+    $('#tab1content').show();
+
+    $('#link2').prop("class", "");
+    $('#link1').prop("class", "active");
+}
+
+function viewapprovedtravelrequests() {
+    $("#action").hide();
+
+    //reset estimated expense section
+    var scope = angular.element('#approvedtravelrequesttemplate').scope();
+    scope.loadApprovedTravelRequests();
+
+    $('#approvedtravelrequesttemplate').show();
+}
+
+function viewexistingreimbursements() {
+    //$("#action").hide();
+    //$("#signin").hide();
+    //$("#signintemplate").hide();
+
+    ////load travel request section
+    //var scope = angular.element('#existingtravelreimbursementtemplate').scope();
+
+    //scope.loadExistingTravelReimbursementRequests();
+
+    //$('#existingtravelreimbursementtemplate').show();
 }
