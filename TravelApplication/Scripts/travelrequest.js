@@ -1336,8 +1336,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
     }
 
     $scope.loadApprovedTravelRequests = function () {
-
-        var actionTemplate = '<div style="float:left;" ng-if="row.entity.ViewActionVisible == true"><img title="View" class="actionImage" src="/Images/view.png" /></div><div ng-if="row.entity.EditActionVisible == true"><img title="Create Travel Reimbursement" class="actionImage" src="/Images/reimbursement.png" alt="{{row.entity.TravelRequestId}}" onclick="createTravelRequestReimbursement(this);" /></div>';
+        var actionTemplate = '<div style="display:flex;"><div syle="float:left;" ng-if="row.entity.ViewActionVisible == true"><input  type="button" id="btnView" name="btnView" value="View" alt="{{row.entity.TravelRequestId}}" onclick="" /></div><div ng-if="row.entity.EditActionVisible == true"><input  type="button" id="btnOk" name="btnOk" value="Create Reimbursement" alt="{{row.entity.TravelRequestId}}" onclick="createTravelRequestReimbursement(this);" /></div></div>';
 
         $scope.columns = [{
             field: 'TravelRequestId',
@@ -1432,7 +1431,6 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 name: 'Actions',
                 cellTemplate: actionTemplate,
                 enableFiltering: false,
-                width: 112,
                 headerCellClass: "existingrequestcolumnheader",
                 enableColumnResizing: false,
             }];

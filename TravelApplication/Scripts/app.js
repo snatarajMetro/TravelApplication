@@ -692,7 +692,7 @@ function createnewreimbursementrequest() {
 
 function createTravelRequestReimbursement(container) {
 
-    $('#existingtravelreimbursementtemplate').hide();
+    $('#approvedtravelrequesttemplate').hide();
 
     var travelRequestId = $(container).prop('alt');
     var scope = angular.element('#travelreimbursementtemplate').scope();
