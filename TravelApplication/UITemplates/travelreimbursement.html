@@ -1,5 +1,313 @@
 ﻿<div id="travelreimbursementform">
     <div id="dataentry" class="main travelreimbursementcontainer">
-        Travel Reimbursement Form
+        <div class="reimbursementdataentry">
+            <div class="usersection">
+                <div class="row">
+                    <div class="column">
+                        <div class="reimbursementpagetitle">
+                            <span id="travelRequestIdForDisplay">Travel Reimbursement Form</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column">
+                        <div class="">
+                            <span>Travel Request #</span>
+                        </div>
+                        <input type="text" placeholder="" id="txtTravelRequestNumber1" class="datainput" value="1234567" readonly disabled />
+                    </div>
+                    <div class="column">
+                        <div class="label2">
+                            <span>Badge #</span><sup class="required">*</sup>
+                        </div>
+                        <input type="text" placeholder="" id="txtBadgeNumber" width="100" class="datainput" onblur="setUserName()" />
+                    </div>
+                    <div class="column">
+                        <div class="label3">
+                            <span>Travel Period From</span><sup class="required">*</sup>
+                        </div>
+                        <input type="text" placeholder="MM/DD/YYYY" id="txtTravelPeriodFrom" name="txtTravelPeriodFrom" width="100" class="datainputdate" />
+                    </div>
+                    <div class="column">
+                        <div class="label3">
+                            <span>Travel Period To</span><sup class="required">*</sup>
+                        </div>
+                        <input type="text" placeholder="MM/DD/YYYY" id="txtTravelPeriodTo" name="txtTravelPeriodTo" width="100" class="datainputdate" />
+                    </div>
+                    <div class="column">
+                        <div class="label3">
+                            <span>Travel Authorization #</span><sup class="required">*</sup>
+                        </div>
+                        <input type="text" placeholder="" id="txtTravelAuthorizationNumber" width="100" class="datainput" onblur="setUserName()" />
+                    </div>
+                    <div class="column">
+                        <div class="label3">
+                            <span>Vendor #</span><sup class="required">*</sup>
+                        </div>
+                        <input type="text" placeholder="" id="txtVendorNumber" width="100" class="datainput" onblur="setUserName()" />
+                    </div>
+                    <div class="column">
+                        <div class="label3">
+                            <span>Cost Center #</span><sup class="required">*</sup>
+                        </div>
+                        <input type="text" placeholder="" id="txtCostCenterNumber" width="100" class="datainput" onblur="setUserName()" />
+                    </div>
+                    <div class="column">
+                        <div class="label3">
+                            <span>Date</span>
+                        </div>
+                        <input type="text" id="txtToday" name="txtToday" width="100" class="datainputdate" placeholder="MM/DD/YYY" readonly disabled />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column">
+                        <div class="label2">
+                            <span>Name</span><sup class="required">*</sup>
+                        </div>
+                        <input type="text" placeholder="" id="txtName" class="datainputname" />
+                    </div>
+                    <div class="column">
+                        <div class="label2">
+                            <span>Ext.</span><sup class="required">*</sup>
+                        </div>
+                        <input type="text" placeholder="" id="txtExtension" class="datainput" />
+                    </div>
+                    <div class="column">
+                        <div class="label3">
+                            <span>Division</span><sup class="required">*</sup>
+                        </div>
+                        <input type="text" placeholder="" id="txtDivision" width="100" class="datainputname" onblur="setUserName()" />
+                    </div>
+                    <div class="column">
+                        <div class="label3">
+                            <span>Department</span><sup class="required">*</sup>
+                        </div>
+                        <input type="text" placeholder="" id="txtDepartment" width="100" class="datainput" onblur="setUserName()" />
+                    </div>
+                </div>
+            </div>
+            <div id="part1travel">
+                <div class="row">
+                    <div class="column">
+                        <div class="reimbursementpagetitle">
+                            <span>Travel</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered tablepart1">
+                        <thead>
+                            <tr>
+                                <th colspan="2" class="headercolumn1">Part 1 - TRAVEL ( Approved TA )</th>
+                                <th colspan="7" class="headerceteralign">Transportation</th>
+                                <th colspan="4" class="headerceteralign">Subsistence</th>
+                                <th colspan="2" class="headerceteralign">Telephone</th>
+                                <th class="headerceteralign">$</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="tablerowlabel">
+                                <td class="headerceteralign">Date</td>
+                                <td class="headerceteralign">City, State & Business Purposes</td>
+                                <td class="headerceteralign headercolumn"><b>(A)</b><br/> # of Total Miles</td>
+                                <td class="headerceteralign headercolumn"><b>(B)</b><br /> # of Normal Workday Mileage to Work</td>
+                                <td class="headerceteralign headercolumn"><b>(A) - (B)</b><br /> Business Miles</td>
+                                <td class="headerceteralign headercolumn">
+                                    <b>(A) - (B)</b><br />
+                                    Business Miles<br />
+                                    <b>x</b> Rate<br /><br />
+                                    &nbsp;$0.555
+                                </td>
+                                <td class="headerceteralign">Parking, Gas,<br />Tolls</td>
+                                <td class="headerceteralign">Airfare</td>
+                                <td class="headerceteralign">Taxi, Rail,<br />Vehicle Rental</td>
+                                <td class="headerceteralign">Lodging</td>
+                                <td class="headerceteralign">Meals</td>
+                                <td class="headerceteralign">Registration</td>
+                                <td class="headerceteralign">Other</td>
+                                <td class="headerceteralign">Local</td>
+                                <td class="headerceteralign">Long Distance,<br />Fax</td>
+                                <td class="headerceteralign">Daily Total</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="MM/DD/YYYY" id="txtTravelDate1" name="txtTravelDate1" class="datainputdate2" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtCityState1" name="txtCityState1" class="datainputname2" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtTotalMiles1" name="txtTotalMiles1" class="datatransportationcolumn" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtNormalMiles1" name="txtNormalMiles1" class="datatransportationcolumn" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtBusinessMiles1" name="txtBusinessMiles1" class="datatransportationcolumn" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtBusinessMilesTotal1" name="txtBusinessMilesTotal1" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtParking1" name="txtParking1" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAirfare1" name="txtAirfare1" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTaxi1" name="txtTaxi1" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtLodging1" name="txtLodging1" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtMeals1" name="txtMeals1" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtRegistration1" name="txtRegistration1" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtOther1" name="txtOther1" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtLocal1" name="txtLocal1" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtLongDistance1" name="txtLongDistance1" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal1" name="txtDailyTotal1" class="inputtransportationnumber" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="MM/DD/YYYY" id="txtTravelDate2" name="txtTravelDate2" class="datainputdate2" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtCityState2" name="txtCityState2" class="datainputname2" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtTotalMiles2" name="txtTotalMiles2" class="datatransportationcolumn" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtNormalMiles2" name="txtNormalMiles2" class="datatransportationcolumn" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtBusinessMiles2" name="txtBusinessMiles2" class="datatransportationcolumn" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtBusinessMilesTotal2" name="txtBusinessMilesTotal2" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtParking2" name="txtParking2" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAirfare2" name="txtAirfare2" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTaxi2" name="txtTaxi2" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtLodging2" name="txtLodging2" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtMeals2" name="txtMeals2" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtRegistration2" name="txtRegistration2" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtOther2" name="txtOther2" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtLocal2" name="txtLocal2" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtLongDistance2" name="txtLongDistance2" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal2" name="txtDailyTotal2" class="inputtransportationnumber" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="MM/DD/YYYY" id="txtTravelDate3" name="txtTravelDate3" class="datainputdate2" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtCityState3" name="txtCityState3" class="datainputname2" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtTotalMiles3" name="txtTotalMiles3" class="datatransportationcolumn" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtNormalMiles3" name="txtNormalMiles3" class="datatransportationcolumn" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtBusinessMiles3" name="txtBusinessMiles3" class="datatransportationcolumn" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtBusinessMilesTotal3" name="txtBusinessMilesTotal3" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtParking3" name="txtParking3" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAirfare3" name="txtAirfare3" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTaxi3" name="txtTaxi3" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtLodging3" name="txtLodging3" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtMeals3" name="txtMeals3" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtRegistration3" name="txtRegistration3" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtOther3" name="txtOther3" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtLocal3" name="txtLocal3" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtLongDistance3" name="txtLongDistance3" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal3" name="txtDailyTotal3" class="inputtransportationnumber" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input class="btn btn-danger deleterowbutton" type="button" id="btnDeleteRow" name="btnDeleteRow" value="Delete" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="addrowrow">
+                    <input class="btn btn-primary addrowbutton" type="button" id="btnAddRow" name="btnAddRow" value="Add Row" />
+                </div>
+            </div>
+            <div style="display:flex;">
+                <div class="newrequestrequiredcontainer"><br /><sub class="required">* required fields.</sub></div>
+                <div class="actionbuttonold" style="flex-grow:1;">
+                    <input class="btn btn-primary backbutton" type="button" name="btnBack" value="Back" onclick="showapprovedtravelrequests()" />
+                    <input class="btn btn-primary signinbutton" type="button" name="btnNext" value="Save and Continue" onclick="savedataentry()" />
+                </div>
+            </div>
+            <div class="row">
+                <div id="submiterror" class="main errorcontainernewrequest" style="display:none;">
+                    <span class="dialognewrequest" id="submiterrormessage"></span>
+                    <a href="#" class="close-thick" onclick="return closetravelrequesterror();"></a>
+                </div>
+                <div id="submitsuccess" class="main successcontainerok" style="float:left;display:none;">
+                    <div class="dialogSuccessSubmit">
+                        <span id="submitsuccessmessage"></span>
+                        <input class="btn btn-primary signinbutton ok" type="button" id="btnOk" name="btnOk" value="Ok" onclick="showaction()" />
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

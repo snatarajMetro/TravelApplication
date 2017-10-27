@@ -5,6 +5,9 @@ var selectedRoleId = 0;
 $(document).ready(function () {
 
     $("#txtEmail").focus();
+
+    //$("#signin").hide();
+    //createnewreimbursementrequest();
   });
 
 function handleEnterOnSigIn(e)
@@ -738,4 +741,11 @@ function viewexistingreimbursements() {
     //scope.loadExistingTravelReimbursementRequests();
 
     //$('#existingtravelreimbursementtemplate').show();
+}
+
+function showapprovedtravelrequests() {
+    
+    $('#approvedtravelrequesttemplate').hide();
+
+    //viewapprovedtravelrequests();
 }
