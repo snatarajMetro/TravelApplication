@@ -575,6 +575,7 @@
     <Content Include="UITemplates\travelrequest.html" />
     <Content Include="UITemplates\travelrequestform.html" />
     <Content Include="UITemplates\uploadandsubmit.html" />
+    <Content Include="UITemplates\uploadandsubmitreimbursement.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

@@ -1715,6 +1715,21 @@ div.ui-grid-cell input.focus {
     background-color:lightgray;
 }
 
+.tablepart2{
+    margin-top:5px;
+    margin-left:20px;
+    width:1110px;
+}
+
+th.headercolumncostcenter{
+    background-color:lightgray;
+    width:10px;
+}
+
+th.headercolumntotal{
+    width:10px;
+}
+
 .headerceteralign{
     text-align:center;
 }
@@ -1836,6 +1851,7 @@ div.reimbursementdataentry{
     background-color:lightgray;
     text-align:right;
     padding:0px;
+    font-weight:bold;
 }
 
 .datainputdatereimbursement {
@@ -1862,4 +1878,30 @@ div.reimbursementdataentry{
     font-size:15px;
     color:black;
     margin-bottom:10px;
+}
+
+.datainputcostcenter {
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    padding-left:5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width:150px;
+    height:30px;
+    font-size:15px;
+    color:black;
+}
+
+.calculationtext{
+    font-size:12px;
+    font-weight:bold;
+}
+
+.table > thead > tr > th {
+    padding:2px;
+}
+
+.table > tbody > tr > td {
+
+    padding-bottom:0px;
 }

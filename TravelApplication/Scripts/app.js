@@ -744,8 +744,27 @@ function viewexistingreimbursements() {
 }
 
 function showapprovedtravelrequests() {
-    
-    $('#approvedtravelrequesttemplate').hide();
 
-    //viewapprovedtravelrequests();
+    $('#travelreimbursementtemplate').hide();
+    viewapprovedtravelrequests();
+}
+
+function savereimbursementdataentry() {
+
+    var travelRequestId = $('#txtTravelRequestNumber1').val();
+
+    var scope = angular.element('#fileuploadtemplate').scope();
+    scope.loadFileUploadForReimbursement(travelRequestId);
+    scope.loadCommonApprovers($('#travelRequestBadgeNumber').text());
+    scope.loadTravelCoordinators();
+    //scope.loadSupportingDocuments(travelRequestId);
+
+    $("#travelreimbursementtemplate").hide();
+    $("#fileuploadtemplate").show();
+}
+
+function backtotravelreimbursementsection() {
+
+    $("#fileuploadtemplate").hide();
+    $("#travelreimbursementtemplate").show();
 }

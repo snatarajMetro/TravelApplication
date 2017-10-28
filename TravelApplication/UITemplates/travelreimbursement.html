@@ -103,7 +103,7 @@
                             <tr class="tablerowlabel">
                                 <td class="headerceteralign">Date</td>
                                 <td class="headerceteralign">City, State & Business Purposes</td>
-                                <td class="headerceteralign headercolumn"><b>(A)</b><br/> # of Total Miles</td>
+                                <td class="headerceteralign headercolumn"><b>(A)</b><br /> # of Total Miles</td>
                                 <td class="headerceteralign headercolumn"><b>(B)</b><br /> # of Normal Workday Mileage to Work</td>
                                 <td class="headerceteralign headercolumn"><b>(A) - (B)</b><br /> Business Miles</td>
                                 <td class="headerceteralign headercolumn">
@@ -262,8 +262,9 @@
                                 <td style="padding:0px;">
                                     <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtLongDistance3" name="txtLongDistance3" class="inputtransportationnumber" />
                                 </td>
-                                <td style="padding:0px;">
-                                    <input class="btn btn-danger deleterowbutton" type="button" id="btnDeleteRow" name="btnDeleteRow" value="Delete" />
+                                <td style="padding:0px;vertical-align:middle;border-color:white;">
+                                    <!--<input class="btn btn-danger deleterowbutton" type="button" id="btnDeleteRow" name="btnDeleteRow" value="Delete" />-->
+                                    <span style="color:red;font-weight:bold;cursor:pointer;" title="Delete row">&nbsp;❌</span>
                                 </td>
                             </tr>
                             <tr>
@@ -314,12 +315,126 @@
                 <div class="addrowrow">
                     <input class="btn btn-primary addrowbutton" type="button" id="btnAddRow" name="btnAddRow" value="Add Row" />
                 </div>
+                <div>
+                    <table class="table table-bordered tablepart2">
+                        <thead>
+                            <tr>
+                                <th class="headercolumncostcenter headerceteralign">Cost Center</th>
+                                <th class="headercolumncostcenter headerceteralign">Account</th>
+                                <th class="headercolumncostcenter headerceteralign">Project</th>
+                                <th class="headercolumncostcenter headerceteralign">Task #</th>
+                                <th class="headercolumncostcenter headerceteralign">Amount in $</th>
+                                <th class="headerceteralign">Calculation</th>
+                                <th class="headercolumntotal headerceteralign">$</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtCityState1" name="txtCityState1" class="datainputcostcenter" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtCityState1" name="txtCityState1" class="datainputcostcenter" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtCityState1" name="txtCityState1" class="datainputcostcenter" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtCityState1" name="txtCityState1" class="datainputcostcenter" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtCityState1" name="txtCityState1" class="datainputcostcenter" />
+                                </td>
+                                <td style="padding-top:5px;" class="calculationtext">Total Part I: Travel Expenses</td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal1" name="txtDailyTotal1" class="inputtransportationnumber" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtCityState1" name="txtCityState1" class="datainputcostcenter" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtCityState1" name="txtCityState1" class="datainputcostcenter" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtCityState1" name="txtCityState1" class="datainputcostcenter" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtCityState1" name="txtCityState1" class="datainputcostcenter" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtCityState1" name="txtCityState1" class="datainputcostcenter" />
+                                </td>
+                                <td style="padding-top:5px;" class="calculationtext">ADD: Total Part II: Non-Travel Expenses</td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal1" name="txtDailyTotal1" class="inputtransportationnumber" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td style="padding-top:5px;" class="calculationtext">TOTAL Exp Submitted for Approval</td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal1" name="txtDailyTotal1" class="inputtransportationnumber" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td style="padding-top:5px;" class="calculationtext">SUBSTRACT: Prepaid Exp Paid by MTA</td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal1" name="txtDailyTotal1" class="inputtransportationnumber" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td style="padding-top:5px;" class="calculationtext">TOTAL EXPENSES</td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal1" name="txtDailyTotal1" class="inputtransportationnumber" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td style="padding-top:5px;" class="calculationtext">SUBSTRACT:  Cash Advance</td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal1" name="txtDailyTotal1" class="inputtransportationnumber" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td style="padding-top:5px;" class="calculationtext">TOTAL</td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal1" name="txtDailyTotal1" class="inputtransportationnumber" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>    
+                </div>
             </div>
             <div style="display:flex;">
                 <div class="newrequestrequiredcontainer"><br /><sub class="required">* required fields.</sub></div>
                 <div class="actionbuttonold" style="flex-grow:1;">
                     <input class="btn btn-primary signinbutton3" type="button" name="btnBack" value="Back" onclick="showapprovedtravelrequests()" />
-                    <input class="btn btn-primary signinbutton3" type="button" name="btnNext" value="Save and Continue" onclick="savedataentry()" />
+                    <input class="btn btn-primary signinbutton3" type="button" name="btnNext" value="Save and Continue" onclick="savereimbursementdataentry()" />
                 </div>
             </div>
             <div class="row">
