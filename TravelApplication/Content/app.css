@@ -1740,6 +1740,7 @@ th.headercolumntotal{
 
 .tablerowlabel{
     font-size:11px;
+    font-weight:bold;
 }
 
 .tablecolumn1{
@@ -1751,7 +1752,7 @@ th.headercolumntotal{
     border-radius: 3px;
     border:solid 1px gray;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    width:60px;
+    width:65px;
     height:30px;
     font-size:15px;
     color:black;
@@ -1763,7 +1764,7 @@ th.headercolumntotal{
     float:left;
     /*margin-top:3px;
     margin-bottom:3px;*/
-    width:73px;
+    width:79px;
     text-align:right;
     -moz-border-radius: 3px;
     border-radius: 3px;
@@ -1904,4 +1905,17 @@ div.reimbursementdataentry{
 .table > tbody > tr > td {
 
     padding-bottom:0px;
+}
+
+.inputdropdownreibursement {
+    width:150px;
+    float:left;
+    /*margin-top:3px;
+    margin-bottom:3px;*/
+    height:30px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    
 }

@@ -691,6 +691,7 @@ function createnewreimbursementrequest() {
     var scope = angular.element('#travelreimbursementtemplate').scope();
 
     scope.loadTravelReimbursementRequest();
+    scope.loadCostCenters();
 }
 
 function createTravelRequestReimbursement(container) {

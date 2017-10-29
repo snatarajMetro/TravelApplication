@@ -246,6 +246,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
         $.get('/api/fis/costcenters')
         .done(function (data) {
             $scope.CostCenters = JSON.parse(data);
+            $scope.$apply();
         });
 
 
@@ -270,18 +271,25 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
 
                 if (source == 'ddlCostCenter1') {
                     $scope.projects1 = result;
+                    $scope.$apply();
+                    $('#project1').val("?");
                 }
                 else if (source == 'ddlCostCenter2') {
                     $scope.projects2 = result;
+                    $scope.$apply();
+                    $('#project2').val("?");
                 }
                 else if (source == 'ddlCostCenter3') {
                     $scope.projects3 = result;
+                    $scope.$apply();
                 }
                 else if (source == 'ddlCostCenter4') {
                     $scope.projects4 = result;
+                    $scope.$apply();
                 }
                 else if (source == 'ddlCostCenter5') {
                     $scope.projects5 = result;
+                    $scope.$apply();
                 }
 
                 $scope.Projects[costCenter.Name] = result;
@@ -291,18 +299,23 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
         else {
             if (source == 'ddlCostCenter1') {
                 $scope.projects1 = $scope.Projects[costCenter.Name];
+                $scope.$apply();
             }
             else if (source == 'ddlCostCenter2') {
                 $scope.projects2 = $scope.Projects[costCenter.Name];
+                $scope.$apply();
             }
             else if (source == 'ddlCostCenter3') {
                 $scope.projects3 = $scope.Projects[costCenter.Name];
+                $scope.$apply();
             }
             else if (source == 'ddlCostCenter4') {
                 $scope.projects4 = $scope.Projects[costCenter.Name];
+                $scope.$apply();
             }
             else if (source == 'ddlCostCenter5') {
                 $scope.projects5 = $scope.Projects[costCenter.Name];
+                $scope.$apply();
             }
         }
     };
@@ -1336,7 +1349,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
     }
 
     $scope.loadApprovedTravelRequests = function () {
-        var actionTemplate = '<div style="display:flex;"><div syle="float:left;" ng-if="row.entity.ViewActionVisible == true"><input  type="button" id="btnView" name="btnView" value="View" alt="{{row.entity.TravelRequestId}}" onclick="" /></div><div ng-if="row.entity.EditActionVisible == true"><input  type="button" id="btnOk" name="btnOk" value="Create Reimbursement" alt="{{row.entity.TravelRequestId}}" onclick="createTravelRequestReimbursement(this);" /></div></div>';
+        var actionTemplate = '<div style="display:flex;"><div syle="float:left;" ng-if="row.entity.ViewActionVisible == true"><input  type="button" id="btnView" name="btnView" value="View" alt="{{row.entity.TravelRequestId}}" onclick="" /></div><div ng-if="row.entity.EditActionVisible == true"><input  type="button" id="btnOk" name="btnOk" value="Create" alt="{{row.entity.TravelRequestId}}" onclick="createTravelRequestReimbursement(this);" /></div></div>';
 
         $scope.columns = [{
             field: 'TravelRequestId',
@@ -1428,7 +1441,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 }
             },
             {
-                name: 'Actions',
+                name: 'Reimbursement',
                 cellTemplate: actionTemplate,
                 enableFiltering: false,
                 headerCellClass: "existingrequestcolumnheader",

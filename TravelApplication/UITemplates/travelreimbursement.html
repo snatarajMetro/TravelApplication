@@ -216,7 +216,7 @@
                                     <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal2" name="txtDailyTotal2" class="inputtransportationnumber" />
                                 </td>
                             </tr>
-                            <tr>
+                            <!--<tr>
                                 <td style="padding:0px;">
                                     <input type="text" placeholder="MM/DD/YYYY" id="txtTravelDate3" name="txtTravelDate3" class="datainputdate2" />
                                 </td>
@@ -262,11 +262,11 @@
                                 <td style="padding:0px;">
                                     <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtLongDistance3" name="txtLongDistance3" class="inputtransportationnumber" />
                                 </td>
-                                <td style="padding:0px;vertical-align:middle;border-color:white;">
+                                <td style="padding:0px;vertical-align:middle;border-color:white;">-->
                                     <!--<input class="btn btn-danger deleterowbutton" type="button" id="btnDeleteRow" name="btnDeleteRow" value="Delete" />-->
-                                    <span style="color:red;font-weight:bold;cursor:pointer;" title="Delete row">&nbsp;❌</span>
+                                    <!--<span style="color:red;font-weight:bold;cursor:pointer;" title="Delete row">&nbsp;❌</span>
                                 </td>
-                            </tr>
+                            </tr>-->
                             <tr>
                                 <td colspan="2" class="headercolumn2">Part 1 Column Totals</td>
                                 <td style="padding:0px;">
@@ -315,7 +315,7 @@
                 <div class="addrowrow">
                     <input class="btn btn-primary addrowbutton" type="button" id="btnAddRow" name="btnAddRow" value="Add Row" />
                 </div>
-                <div>
+                <div  ng-app="travelApp" ng-controller="travelAppCtrl">
                     <table class="table table-bordered tablepart2">
                         <thead>
                             <tr>
@@ -331,13 +331,18 @@
                         <tbody>
                             <tr>
                                 <td style="padding:0px;">
-                                    <input type="text" placeholder="" id="txtCityState1" name="txtCityState1" class="datainputcostcenter" />
+                                    <select class="inputdropdownreibursement" id="ddlCostCenter1"
+                                            ng-model="ddlCostCenter1"
+                                            ng-options="costcenter.CostCenterValue for costcenter in CostCenters track by costcenter.Name"
+                                            ng-change="getProjects('ddlCostCenter1', ddlCostCenter1)"></select>
                                 </td>
                                 <td style="padding:0px;">
                                     <input type="text" placeholder="" id="txtCityState1" name="txtCityState1" class="datainputcostcenter" />
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="text" placeholder="" id="txtCityState1" name="txtCityState1" class="datainputcostcenter" />
+                                    <select class="inputdropdownreibursement" id="project1"
+                                            ng-model="ddlProjects1"
+                                            ng-options="project.Name for project in projects1 track by project.Id"></select>
                                 </td>
                                 <td style="padding:0px;">
                                     <input type="text" placeholder="" id="txtCityState1" name="txtCityState1" class="datainputcostcenter" />
@@ -352,13 +357,18 @@
                             </tr>
                             <tr>
                                 <td style="padding:0px;">
-                                    <input type="text" placeholder="" id="txtCityState1" name="txtCityState1" class="datainputcostcenter" />
+                                    <select class="inputdropdownreibursement" id="ddlCostCenter1"
+                                            ng-model="ddlCostCenter2"
+                                            ng-options="costcenter.CostCenterValue for costcenter in CostCenters track by costcenter.Name"
+                                            ng-change="getProjects('ddlCostCenter2', ddlCostCenter2)"></select>
                                 </td>
                                 <td style="padding:0px;">
                                     <input type="text" placeholder="" id="txtCityState1" name="txtCityState1" class="datainputcostcenter" />
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="text" placeholder="" id="txtCityState1" name="txtCityState1" class="datainputcostcenter" />
+                                    <select class="inputdropdownreibursement" id="project2"
+                                            ng-model="ddlProjects2"
+                                            ng-options="project.Name for project in projects2 track by project.Id"></select>
                                 </td>
                                 <td style="padding:0px;">
                                     <input type="text" placeholder="" id="txtCityState1" name="txtCityState1" class="datainputcostcenter" />
