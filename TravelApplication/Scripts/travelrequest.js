@@ -39,6 +39,17 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             );
     }
 
+    // Daily Total section
+    $scope.dailyTotalAmount1 = 0.00;
+    $scope.dailyTotalAmount2 = 0.00;
+
+    $scope.updateTotalDailyAmount = function () {
+        $scope.totalDailyAmount = (
+            ($scope.dailyTotalAmount1 * 1)
+            + ($scope.dailyTotalAmount2 * 1)
+            );
+    }
+
     //set estimated expense section
     $scope.loadEstimatedExpense = function () {
         $.get('/uitemplates/estimatedexpense.html')
@@ -1550,4 +1561,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             });
         });
     }
+
+    
+
 });

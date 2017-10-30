@@ -80,7 +80,7 @@
                     </div>
                 </div>
             </div>
-            <div id="part1travel">
+            <div id="part1travel" ng-app="travelApp" ng-controller="travelAppCtrl">
                 <div class="row">
                     <div class="column">
                         <div class="reimbursementpagetitle">
@@ -166,7 +166,10 @@
                                     <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtLocal1" name="txtLocal1" class="inputtransportationnumber" />
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal1" name="txtDailyTotal1" class="inputtransportationnumber" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal1" 
+                                           class="inputtransportationnumber"
+                                           ng-model="dailyTotalAmount1"
+                                           ng-change="updateTotalDailyAmount()" />
                                 </td>
                             </tr>
                             <tr>
@@ -315,7 +318,7 @@
                 <div class="addrowrow">
                     <input class="btn btn-primary addrowbutton" type="button" id="btnAddRow" name="btnAddRow" value="Add Row" />
                 </div>
-                <div  ng-app="travelApp" ng-controller="travelAppCtrl">
+                <div>
                     <table class="table table-bordered tablepart2">
                         <thead>
                             <tr>
