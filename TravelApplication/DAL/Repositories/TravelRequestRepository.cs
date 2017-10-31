@@ -30,13 +30,14 @@ namespace TravelApplication.Services
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
                 var endpointUrl = string.Format("http://apitest.metro.net/fis/EmployeeInfo/{0}", badgeNumber);
+
                 HttpResponseMessage response = await client.GetAsync(endpointUrl).ConfigureAwait(false);
 
                 if (response.IsSuccessStatusCode)
                 {
 
                     employeeDetails = await response.Content.ReadAsAsync<EmployeeDetails>();
-                }   
+                }
             }
             catch (Exception ex)
             {
@@ -50,6 +51,38 @@ namespace TravelApplication.Services
             return employeeDetails;
 
         }
+        public async Task<string> GetVendorNumber(int badgeNumber)
+        {
+             
+            var client = new HttpClient();
+            var result = string.Empty;
+            try
+            {
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                var endpointUrl = string.Format("http://apitest.metro.net/fis/VendorId/{0}", badgeNumber);
+
+                HttpResponseMessage response = await client.GetAsync(endpointUrl).ConfigureAwait(false);
+
+                if (response.IsSuccessStatusCode)
+                {
+
+                    result = await response.Content.ReadAsAsync<string>();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogMessage.Log("Could not get Vendor  information from FIS : " + ex.Message);
+                throw new Exception("Unable to get the Vendor information from FIS service");
+            }
+            finally
+            {
+                client.Dispose();
+            }
+            return result;
+
+        }
+
         public async Task<int> SaveTravelRequest(TravelRequest request)
         {
             int travelRequestId = 0;
@@ -1039,6 +1072,93 @@ namespace TravelApplication.Services
                 throw;
             }
         }
+
+        public TravelRequestReimbursementDetails GetTravelRequestInfoForReimbursement(string travelRequestId)
+        {
+            TravelReimbursementDetails travelReimbursementDetails = null;
+            EstimatedExpense estimatedExpense = null;
+            FIS fisDetails = null;
+            TravelRequestReimbursementDetails travelRequestReimbursementDetails = null ;
+
+            try
+            {
+                using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+                {
+                    travelReimbursementDetails = GetTravelReimbursementDetails(dbConn, travelRequestId);
+                    estimatedExpense = estimatedExpenseRepository.GetTravelRequestDetailNew(dbConn, travelRequestId);
+                    fisDetails = fisRepository.GetFISdetails(dbConn, travelRequestId);
+                    dbConn.Close();
+                    dbConn.Dispose();
+                }
+                travelRequestReimbursementDetails = new TravelRequestReimbursementDetails()
+                {
+                     TravelReimbursementDetails = travelReimbursementDetails,
+                      Fis = fisDetails,
+                      CashAdvance = estimatedExpense.CashAdvance
+                };
+            }
+            catch (Exception ex)
+            {
+                LogMessage.Log("Error while getting travel request details - " + ex.Message);
+                throw;
+            }
+
+            return travelRequestReimbursementDetails;
+        }
+
+        private TravelReimbursementDetails GetTravelReimbursementDetails(DbConnection dbConn, string travelRequestId)
+        {
+            try
+            {
+
+                TravelReimbursementDetails response = null;
+                string query = string.Format("Select * from TRAVELREQUEST where TRAVELREQUESTID= {0}", travelRequestId);
+                OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+                command.CommandText = query;
+                DbDataReader dataReader = command.ExecuteReader();
+                
+                if (dataReader.HasRows)
+                {
+                    while (dataReader.Read())
+                    {
+                       
+                        response = new TravelReimbursementDetails()
+                        {
+                            BadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]),
+                            Name = dataReader["NAME"].ToString(),
+                            Division = dataReader["DIVISION"].ToString(),                             
+                            DepartureDateTime = Convert.ToDateTime(dataReader["DEPARTUREDATETIME"]),
+                            ReturnDateTime = Convert.ToDateTime(dataReader["RETURNDATETIME"])                             
+                        };
+                    }
+
+                    var employeeDetails =  GetEmployeeDetails(response.BadgeNumber);
+                    response.CostCenterId = employeeDetails.Result.CostCenter;
+                    response.Department = employeeDetails.Result.Department;
+                    response.Extension = employeeDetails.Result.EmployeeWorkPhone;
+                    response.VendorNumber = GetVendorNumber(response.BadgeNumber).Result;
+                }
+                else
+                {
+                    throw new Exception("Couldn't retrieve travel request");
+                }
+                command.Dispose();
+                dataReader.Close();
+                return response;
+
+            }
+            catch (Exception ex)
+            {
+                LogMessage.Log("GetTravelRequestDetail : " + ex.Message);
+                throw;
+            }
+        }
+
+        private string GetVendorId(DbConnection dbConn, int badgeNumber)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region  Helper Methods
@@ -1296,6 +1416,8 @@ namespace TravelApplication.Services
             dataReader.Close();
             return result;
         }
+
+       
 
         #endregion
     }
