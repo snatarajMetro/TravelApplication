@@ -5,7 +5,7 @@ using System.Web;
 
 namespace TravelApplication.Models
 {
-    public class TravelReimbursementDetails
+    public class ReimbursementTravelRequestDetails
     {
         public string TravelRequestId { get; set; }
         public int BadgeNumber { get; set; }

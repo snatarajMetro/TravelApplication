@@ -18,6 +18,6 @@ namespace TravelApplication.Services
         TravelRequestInputResponse  SaveTravelRequestInput(TravelRequestInput travelRequest);
         TravelRequestInput GetTravelRequestDetailNew(string travelRequestId);
         List<TravelRequestDetails> GetApprovedTravelrequestList(int badgeNumber, int selectedRoleId);
-        TravelRequestReimbursementDetails GetTravelRequestInfoForReimbursement(string travelRequestId);
+        ReimbursementAllTravelInformation GetTravelRequestInfoForReimbursement(string travelRequestId);
     }
 }

@@ -81,9 +81,9 @@ namespace TravelApplication.Services
             return result;
         }
 
-        public TravelRequestReimbursementDetails GetTravelRequestInfoForReimbursement(string travelRequestId)
+        public ReimbursementAllTravelInformation GetTravelRequestInfoForReimbursement(string travelRequestId)
         {
-            TravelRequestReimbursementDetails result = travelRequestRepo.GetTravelRequestInfoForReimbursement(travelRequestId);
+            ReimbursementAllTravelInformation result = travelRequestRepo.GetTravelRequestInfoForReimbursement(travelRequestId);
             return result;
         }
     }
