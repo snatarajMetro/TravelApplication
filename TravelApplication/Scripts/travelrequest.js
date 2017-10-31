@@ -1453,6 +1453,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             },
             {
                 name: 'Reimbursement',
+                width: 100,
                 cellTemplate: actionTemplate,
                 enableFiltering: false,
                 headerCellClass: "existingrequestcolumnheader",

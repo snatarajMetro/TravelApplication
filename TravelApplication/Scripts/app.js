@@ -214,6 +214,17 @@ function backtoactionselection() {
     }
 }
 
+function backtoactionselection2() {
+
+    $("#travelrequesttemplate").hide();
+    $("#estimatedexpensetemplate").hide();
+    $("#existingtravelrequeststemplate").hide();
+    $("#existingtravelreimbursementtemplate").hide();
+    $("#approvedtravelrequesttemplate").hide();
+
+    $("#action").show();
+}
+
 function addPlaceHolder(input) {
 
     if (!Modernizr.input.placeholder) {
@@ -747,7 +758,9 @@ function viewexistingreimbursements() {
 function showapprovedtravelrequests() {
 
     $('#travelreimbursementtemplate').hide();
-    viewapprovedtravelrequests();
+    $("#action").hide();
+
+    $('#approvedtravelrequesttemplate').show();
 }
 
 function savereimbursementdataentry() {

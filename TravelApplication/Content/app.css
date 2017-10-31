@@ -1711,6 +1711,10 @@ div.ui-grid-cell input.focus {
     margin-bottom:2px;
 }
 
+.divpart1{
+    min-height:250px;
+}
+
 .headercolumn1{
     background-color:lightgray;
 }
@@ -1780,7 +1784,7 @@ div.reimbursementdataentry{
     margin-left:75px;
     margin-right:100px;
     /*height:200px;*/
-    width:1380px;
+    width:1390px;
     justify-content: space-between;
   flex-direction: column;
   /*height: 100vh;*/
