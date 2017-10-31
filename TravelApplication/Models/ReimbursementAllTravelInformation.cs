@@ -5,9 +5,9 @@ using System.Web;
 
 namespace TravelApplication.Models
 {
-    public class TravelRequestReimbursementDetails
+    public class ReimbursementAllTravelInformation
     {
-        public TravelReimbursementDetails TravelReimbursementDetails { get; set; }
+        public ReimbursementTravelRequestDetails TravelReimbursementDetails { get; set; }
         public FIS Fis { get; set; }
         public decimal CashAdvance { get; set; }
 

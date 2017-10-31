@@ -1073,12 +1073,12 @@ namespace TravelApplication.Services
             }
         }
 
-        public TravelRequestReimbursementDetails GetTravelRequestInfoForReimbursement(string travelRequestId)
+        public ReimbursementAllTravelInformation GetTravelRequestInfoForReimbursement(string travelRequestId)
         {
-            TravelReimbursementDetails travelReimbursementDetails = null;
+            ReimbursementTravelRequestDetails travelReimbursementDetails = null;
             EstimatedExpense estimatedExpense = null;
             FIS fisDetails = null;
-            TravelRequestReimbursementDetails travelRequestReimbursementDetails = null ;
+            ReimbursementAllTravelInformation travelRequestReimbursementDetails = null ;
 
             try
             {
@@ -1090,7 +1090,7 @@ namespace TravelApplication.Services
                     dbConn.Close();
                     dbConn.Dispose();
                 }
-                travelRequestReimbursementDetails = new TravelRequestReimbursementDetails()
+                travelRequestReimbursementDetails = new ReimbursementAllTravelInformation()
                 {
                      TravelReimbursementDetails = travelReimbursementDetails,
                       Fis = fisDetails,
@@ -1106,12 +1106,12 @@ namespace TravelApplication.Services
             return travelRequestReimbursementDetails;
         }
 
-        private TravelReimbursementDetails GetTravelReimbursementDetails(DbConnection dbConn, string travelRequestId)
+        private ReimbursementTravelRequestDetails GetTravelReimbursementDetails(DbConnection dbConn, string travelRequestId)
         {
             try
             {
 
-                TravelReimbursementDetails response = null;
+                ReimbursementTravelRequestDetails response = null;
                 string query = string.Format("Select * from TRAVELREQUEST where TRAVELREQUESTID= {0}", travelRequestId);
                 OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
                 command.CommandText = query;
@@ -1122,7 +1122,7 @@ namespace TravelApplication.Services
                     while (dataReader.Read())
                     {
                        
-                        response = new TravelReimbursementDetails()
+                        response = new ReimbursementTravelRequestDetails()
                         {
                             BadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]),
                             Name = dataReader["NAME"].ToString(),

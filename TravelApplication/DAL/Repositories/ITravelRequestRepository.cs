@@ -15,6 +15,6 @@ namespace TravelApplication.Services
         TravelRequestInputResponse SaveTravelRequestInput(TravelRequestInput travelRequest);
         TravelRequestInput GetTravelRequestDetailNew(string travelRequestId);
         List<TravelRequestDetails> GetApprovedTravelRequestList(int submittedBadgeNumber, int selectedRoleId);
-        TravelRequestReimbursementDetails GetTravelRequestInfoForReimbursement(string travelRequestId);
+        ReimbursementAllTravelInformation GetTravelRequestInfoForReimbursement(string travelRequestId);
     }
 }

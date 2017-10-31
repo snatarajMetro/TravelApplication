@@ -213,12 +213,12 @@
     <Compile Include="Models\SubmitTravelRequest.cs" />
     <Compile Include="Models\SubmitTravelRequestData.cs" />
     <Compile Include="Models\SupportingDocument.cs" />
-    <Compile Include="Models\TravelReimbursementDetails.cs" />
+    <Compile Include="Models\ReimbursementTravelRequestDetails.cs" />
     <Compile Include="Models\TravelRequest.cs" />
     <Compile Include="Models\TravelRequestDetails.cs" />
     <Compile Include="Models\TravelRequestInput.cs" />
     <Compile Include="Models\TravelRequestInputResponse.cs" />
-    <Compile Include="Models\TravelRequestReimbursementDetails.cs" />
+    <Compile Include="Models\ReimbursementAllTravelInformation.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\UserResponse.cs" />
     <Compile Include="Models\UserRole.cs" />
