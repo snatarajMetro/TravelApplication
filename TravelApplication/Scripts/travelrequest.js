@@ -40,13 +40,70 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
     }
 
     // Daily Total section
-    $scope.dailyTotalAmount1 = 0.00;
-    $scope.dailyTotalAmount2 = 0.00;
+    $scope.dailyTotalAmount1 = "";
+    $scope.dailyTotalAmount2 = "";
+    $scope.totalDailyAmount = "";
+
+    $scope.BusinessMileRate = 0.555;
+    $scope.TotalMileA1 = "";
+    $scope.TotalMileA2 = "";
+    $scope.TotalMileB1 = "";
+    $scope.TotalMileB2 = "";
+    $scope.BusinessMile1 = "";
+    $scope.BusinessMile2 = "";
+    $scope.BusinessMileAmount1 = "";
+    $scope.BusinessMileAmount2 = "";
+
+    $scope.totalMileA = "";
+    $scope.totalMileB = "";
+    $scope.totalBusinessMile = "";
+    $scope.totalBusinessMileAmount = "";
 
     $scope.updateTotalDailyAmount = function () {
         $scope.totalDailyAmount = (
             ($scope.dailyTotalAmount1 * 1)
             + ($scope.dailyTotalAmount2 * 1)
+            );
+    }
+
+    $scope.updateMileATotal = function () {
+        $scope.totalMileA = (
+            ($scope.TotalMileA1 * 1)
+            + ($scope.TotalMileA2 * 1)
+            );
+
+        //$scope.BusinessMile1 = (($scope.TotalMileA1 * 1) - ($scope.TotalMileB1 * 1));
+        //$scope.BusinessMile2 = (($scope.TotalMileA2 * 1) - ($scope.TotalMileB2 * 1));
+        updateBusinessMile();
+    }
+
+    $scope.updateMileBTotal = function () {
+        $scope.totalMileB = (
+            ($scope.TotalMileB1 * 1)
+            + ($scope.TotalMileB2 * 1)
+            );
+
+        //$scope.BusinessMile1 = (($scope.TotalMileA1 * 1) - ($scope.TotalMileB1 * 1));
+        //$scope.BusinessMile2 = (($scope.TotalMileA2 * 1) - ($scope.TotalMileB2 * 1));
+        updateBusinessMile();
+    }
+
+    function updateBusinessMile () {
+
+        $scope.BusinessMile1 = (($scope.TotalMileA1 * 1) - ($scope.TotalMileB1 * 1));
+        $scope.BusinessMile2 = (($scope.TotalMileA2 * 1) - ($scope.TotalMileB2 * 1));
+
+        $scope.BusinessMileAmount1 = ($scope.BusinessMile1 * $scope.BusinessMileRate);
+        $scope.BusinessMileAmount2 = ($scope.BusinessMile2 * $scope.BusinessMileRate);
+
+        $scope.totalBusinessMile = (
+            ($scope.BusinessMile1 * 1)
+            + ($scope.BusinessMile2 * 1)
+            );
+
+        $scope.totalBusinessMileAmount = (
+            ($scope.BusinessMileAmount1 * 1)
+            + ($scope.BusinessMileAmount2 * 1)
             );
     }
 
@@ -1453,6 +1510,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             },
             {
                 name: 'Reimbursement',
+                width: 100,
                 cellTemplate: actionTemplate,
                 enableFiltering: false,
                 headerCellClass: "existingrequestcolumnheader",

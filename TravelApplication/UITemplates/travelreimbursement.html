@@ -88,7 +88,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="table-responsive">
+                <div class="table-responsive divpart1">
                     <table class="table table-bordered tablepart1">
                         <thead>
                             <tr>
@@ -130,16 +130,16 @@
                                     <input type="text" placeholder="" id="txtCityState1" name="txtCityState1" class="datainputname2" />
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="text" placeholder="" id="txtTotalMiles1" name="txtTotalMiles1" class="datatransportationcolumn" maxlength="4" />
+                                    <input type="text" placeholder="" id="txtTotalMiles1" name="txtTotalMiles1" class="datatransportationcolumn" maxlength="4" onkeypress="return isNumberKey(event)" ng-model="TotalMileA1" ng-change="updateMileATotal()" />
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="text" placeholder="" id="txtNormalMiles1" name="txtNormalMiles1" class="datatransportationcolumn" />
+                                    <input type="text" placeholder="" id="txtNormalMiles1" name="txtNormalMiles1" class="datatransportationcolumn" maxlength="4" onkeypress="return isNumberKey(event)" ng-model="TotalMileB1" ng-change="updateMileBTotal()" />
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="text" placeholder="" id="txtBusinessMiles1" name="txtBusinessMiles1" class="datatransportationcolumn" />
+                                    <input type="text" placeholder="" id="txtBusinessMiles1" name="txtBusinessMiles1" class="datatransportationcolumn" ng-model="BusinessMile1" disabled readonly />
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtBusinessMilesTotal1" name="txtBusinessMilesTotal1" class="inputtransportationnumber" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtBusinessMilesTotal1" name="txtBusinessMilesTotal1" class="inputtransportationnumber" ng-model="BusinessMileAmount1" />
                                 </td>
                                 <td style="padding:0px;">
                                     <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtParking1" name="txtParking1" class="inputtransportationnumber" />
@@ -180,16 +180,16 @@
                                     <input type="text" placeholder="" id="txtCityState2" name="txtCityState2" class="datainputname2" />
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="text" placeholder="" id="txtTotalMiles2" name="txtTotalMiles2" class="datatransportationcolumn" />
+                                    <input type="text" placeholder="" id="txtTotalMiles2" name="txtTotalMiles2" class="datatransportationcolumn" maxlength="4" onkeypress="return isNumberKey(event)" ng-model="TotalMileA2" ng-change="updateMileATotal()" />
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="text" placeholder="" id="txtNormalMiles2" name="txtNormalMiles2" class="datatransportationcolumn" />
+                                    <input type="text" placeholder="" id="txtNormalMiles2" name="txtNormalMiles2" class="datatransportationcolumn" maxlength="4" onkeypress="return isNumberKey(event)" ng-model="TotalMileB2" ng-change="updateMileBTotal()" />
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="text" placeholder="" id="txtBusinessMiles2" name="txtBusinessMiles2" class="datatransportationcolumn" />
+                                    <input type="text" placeholder="" id="txtBusinessMiles2" name="txtBusinessMiles2" class="datatransportationcolumn" ng-model="BusinessMile2" disabled readonly />
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtBusinessMilesTotal2" name="txtBusinessMilesTotal2" class="inputtransportationnumber" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtBusinessMilesTotal2" name="txtBusinessMilesTotal2" class="inputtransportationnumber" ng-model="BusinessMileAmount2" />
                                 </td>
                                 <td style="padding:0px;">
                                     <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtParking2" name="txtParking2" class="inputtransportationnumber" />
@@ -216,7 +216,10 @@
                                     <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtLocal2" name="txtLocal2" class="inputtransportationnumber" />
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal2" name="txtDailyTotal2" class="inputtransportationnumber" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal2" name="txtDailyTotal2" 
+                                           class="inputtransportationnumber"
+                                           ng-model="dailyTotalAmount2"
+                                           ng-change="updateTotalDailyAmount()" />
                                 </td>
                             </tr>
                             <!--<tr>
@@ -273,43 +276,43 @@
                             <tr>
                                 <td colspan="2" class="headercolumn2">Part 1 Column Totals</td>
                                 <td style="padding:0px;">
-                                    <input type="text" placeholder="" id="txtTotalMiles3" name="txtTotalMiles3" class="datatransportationcolumn" readonly />
+                                    <input type="text" placeholder="" id="txtTotalMiles3" name="txtTotalMiles3" class="datatransportationcolumn totalbgcolor" ng-model="totalMileA" readonly />
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="text" placeholder="" id="txtNormalMiles3" name="txtNormalMiles3" class="datatransportationcolumn" readonly />
+                                    <input type="text" placeholder="" id="txtNormalMiles3" name="txtNormalMiles3" class="datatransportationcolumn totalbgcolor" ng-model="totalMileB" readonly />
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="text" placeholder="" id="txtBusinessMiles3" name="txtBusinessMiles3" class="datatransportationcolumn" readonly />
+                                    <input type="text" placeholder="" id="txtBusinessMiles3" name="txtBusinessMiles3" class="datatransportationcolumn totalbgcolor" ng-model="totalBusinessMile" readonly />
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtBusinessMilesTotal3" name="txtBusinessMilesTotal3" class="inputtransportationnumber" readonly />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtBusinessMilesTotal3" name="txtBusinessMilesTotal3" class="inputtransportationnumber totalbgcolor" ng-model="totalBusinessMileAmount" readonly />
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtParking3" name="txtParking3" class="inputtransportationnumber" readonly />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtParking3" name="txtParking3" class="inputtransportationnumber totalbgcolor" readonly />
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAirfare3" name="txtAirfare3" class="inputtransportationnumber" readonly />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAirfare3" name="txtAirfare3" class="inputtransportationnumber totalbgcolor" readonly />
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTaxi3" name="txtTaxi3" class="inputtransportationnumber" readonly />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTaxi3" name="txtTaxi3" class="inputtransportationnumber totalbgcolor" readonly />
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtParking3" name="txtParking3" class="inputtransportationnumber" readonly />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtParking3" name="txtParking3" class="inputtransportationnumber totalbgcolor" readonly />
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAirfare3" name="txtAirfare3" class="inputtransportationnumber" readonly />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAirfare3" name="txtAirfare3" class="inputtransportationnumber totalbgcolor" readonly />
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTaxi3" name="txtTaxi3" class="inputtransportationnumber" readonly />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTaxi3" name="txtTaxi3" class="inputtransportationnumber totalbgcolor" readonly />
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAirfare3" name="txtAirfare3" class="inputtransportationnumber" readonly />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAirfare3" name="txtAirfare3" class="inputtransportationnumber totalbgcolor" readonly />
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTaxi3" name="txtTaxi3" class="inputtransportationnumber" readonly />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTaxi3" name="txtTaxi3" class="inputtransportationnumber totalbgcolor" readonly />
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAirfare3" name="txtAirfare3" class="inputtransportationnumber" readonly disabled />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAirfare3" name="txtAirfare3" class="inputtransportationnumber totalbgcolor" ng-model="totalDailyAmount" readonly disabled />
                                 </td>
                             </tr>
                         </tbody>
@@ -355,7 +358,7 @@
                                 </td>
                                 <td style="padding-top:5px;" class="calculationtext">Total Part I: Travel Expenses</td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal1" name="txtDailyTotal1" class="inputtransportationnumber" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal1" name="txtDailyTotal1" ng-model="totalDailyAmount" class="inputtransportationnumber totalbgcolor" />
                                 </td>
                             </tr>
                             <tr>
@@ -381,7 +384,7 @@
                                 </td>
                                 <td style="padding-top:5px;" class="calculationtext">ADD: Total Part II: Non-Travel Expenses</td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal1" name="txtDailyTotal1" class="inputtransportationnumber" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal1" name="txtDailyTotal1" class="inputtransportationnumber totalbgcolor" />
                                 </td>
                             </tr>
                             <tr>
@@ -392,7 +395,7 @@
                                 <td></td>
                                 <td style="padding-top:5px;" class="calculationtext">TOTAL Exp Submitted for Approval</td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal1" name="txtDailyTotal1" class="inputtransportationnumber" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal1" name="txtDailyTotal1" class="inputtransportationnumber totalbgcolor" />
                                 </td>
                             </tr>
                             <tr>
@@ -403,7 +406,7 @@
                                 <td></td>
                                 <td style="padding-top:5px;" class="calculationtext">SUBSTRACT: Prepaid Exp Paid by MTA</td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal1" name="txtDailyTotal1" class="inputtransportationnumber" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal1" name="txtDailyTotal1" class="inputtransportationnumber totalbgcolor" />
                                 </td>
                             </tr>
                             <tr>
@@ -414,7 +417,7 @@
                                 <td></td>
                                 <td style="padding-top:5px;" class="calculationtext">TOTAL EXPENSES</td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal1" name="txtDailyTotal1" class="inputtransportationnumber" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal1" name="txtDailyTotal1" class="inputtransportationnumber totalbgcolor" />
                                 </td>
                             </tr>
                             <tr>
@@ -425,7 +428,7 @@
                                 <td></td>
                                 <td style="padding-top:5px;" class="calculationtext">SUBSTRACT:  Cash Advance</td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal1" name="txtDailyTotal1" class="inputtransportationnumber" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal1" name="txtDailyTotal1" class="inputtransportationnumber totalbgcolor" />
                                 </td>
                             </tr>
                             <tr>
@@ -436,7 +439,7 @@
                                 <td></td>
                                 <td style="padding-top:5px;" class="calculationtext">TOTAL</td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal1" name="txtDailyTotal1" class="inputtransportationnumber" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal1" name="txtDailyTotal1" class="inputtransportationnumber totalbgcolor" />
                                 </td>
                             </tr>
                         </tbody>
@@ -451,16 +454,16 @@
                 </div>
             </div>
             <div class="row">
-                <div id="submiterror" class="main errorcontainernewrequest" style="display:none;">
+                <div id="submiterror" class="main errorcontainernewrequest2" style="display:none;">
                     <span class="dialognewrequest" id="submiterrormessage"></span>
                     <a href="#" class="close-thick" onclick="return closetravelrequesterror();"></a>
                 </div>
-                <div id="submitsuccess" class="main successcontainerok" style="float:left;display:none;">
+                <!--<div id="submitsuccess" class="main successcontainerok" style="float:left;display:none;">
                     <div class="dialogSuccessSubmit">
                         <span id="submitsuccessmessage"></span>
                         <input class="btn btn-primary signinbutton ok" type="button" id="btnOk" name="btnOk" value="Ok" onclick="showaction()" />
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>
