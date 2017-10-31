@@ -46,9 +46,11 @@ namespace TravelApplication.Services
             String sDataSource = Convert.ToString(hTags["Data Source"]);
 
             crConnectionInFo.DatabaseName = "";
+            crConnectionInFo.ServerName = "mtaora50dev";
+            crConnectionInFo.UserID = "taer";
             crConnectionInFo.Password = "taer_dev";
-            crConnectionInFo.UserID = "TAER";
-            crConnectionInFo.ServerName = "mtaora50dev";    
+           
+               
 
             crTables = dReport.Database.Tables;
             crTableLogonInfo.ConnectionInfo = crConnectionInFo;

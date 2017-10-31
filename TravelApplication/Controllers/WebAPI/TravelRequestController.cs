@@ -196,7 +196,7 @@ namespace TravelApplication.Controllers.WebAPI
             return response;
         }
 
-
+        // Reimbursement section 
         [HttpGet]
         [Route("api/approvedTravelrequests")]
         public HttpResponseMessage GetapprovedTravelrequestList(int badgeNumber, int roleId)
@@ -206,6 +206,27 @@ namespace TravelApplication.Controllers.WebAPI
             try
             {
                 var result = travelRequestService.GetApprovedTravelrequestList(badgeNumber, roleId);
+
+                response = Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Log the exception message
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrieve EmployeeInfo for Badge # : " + ex.Message);
+
+            }
+            return response;
+        }
+
+        [HttpGet]
+        [Route("api/TravelrequestDetailForReimbursement")]
+        public HttpResponseMessage GetapprovedTravelrequestList(string travelRequestId)
+        {
+
+            HttpResponseMessage response = null;
+            try
+            {
+                var result = travelRequestService.GetTravelRequestInfoForReimbursement(travelRequestId);
 
                 response = Request.CreateResponse(HttpStatusCode.OK, result);
             }

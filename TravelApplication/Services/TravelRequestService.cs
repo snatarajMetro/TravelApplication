@@ -80,5 +80,11 @@ namespace TravelApplication.Services
             TravelRequestInput result = travelRequestRepo.GetTravelRequestDetailNew(travelRequestId);
             return result;
         }
+
+        public TravelRequestReimbursementDetails GetTravelRequestInfoForReimbursement(string travelRequestId)
+        {
+            TravelRequestReimbursementDetails result = travelRequestRepo.GetTravelRequestInfoForReimbursement(travelRequestId);
+            return result;
+        }
     }
 }
