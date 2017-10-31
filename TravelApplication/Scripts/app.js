@@ -765,20 +765,103 @@ function showapprovedtravelrequests() {
 
 function savereimbursementdataentry() {
 
-    var travelRequestId = $('#txtTravelRequestNumber1').val();
+    var canSubmit = true;
 
-    var scope = angular.element('#fileuploadtemplate').scope();
-    scope.loadFileUploadForReimbursement(travelRequestId);
-    scope.loadCommonApprovers($('#travelRequestBadgeNumber').text());
-    scope.loadTravelCoordinators();
-    //scope.loadSupportingDocuments(travelRequestId);
+    // Get user inputs
+    var travelRequestId = $('#txtTravelRequestNumber1').text();
+    var badgeNumber = jQuery.trim($('#txtBadgeNumber').val());
+    var travelPeriodFrom = $('#txtTravelPeriodFrom').text(); 
+    var travelPeriodTo = $('#txtTravelPeriodTo').text();
+    var vendorNumber = $('#txtVendorNumber').text();
+    var costCenterNumber = $('#txtCostCenterNumber').text();
+    var today = $('#txtToday').val();
+    var name = jQuery.trim($('#txtName').val());
+    var extension = $('#txtExtension').text();
+    var division = jQuery.trim($('#txtDivision').val());
+    var department = jQuery.trim($('#txtDepartment').val());
 
-    $("#travelreimbursementtemplate").hide();
-    $("#fileuploadtemplate").show();
+    // Get travel inputs
+
+    if (canSubmit) {
+        $.ajax({
+            type: "POST",
+            url: "/api/travelreimbursement/save",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                "TravelReimbursementDetails": {
+                    'TravelRequestId': travelRequestId,
+                    'BadgeNumber': badgeNumber,
+                    'DepartureDateTime': travelPeriodFrom,
+                    'ReturnDateTime': travelPeriodTo,
+                    'VendorNumber': vendorNumber,
+                    'CostCenterId': costCenterNumber,
+                    'Name': name,
+                    'Extension': extension,
+                    'Division': division,
+                    'Department': department
+                }
+            }),
+            success: function (data) {
+                var result = JSON.parse(data);
+
+                //$('#travelRequestBadgeNumber').text(result.BadgeNumber);
+                //$('#travelRequestId').text(result.TravelRequestId);
+
+                var scope = angular.element('#fileuploadtemplate').scope();
+                scope.loadFileUpload2(result.TravelRequestId);
+                scope.loadCommonApprovers($('#travelRequestBadgeNumber').text());
+                scope.loadTravelCoordinators();
+
+                $("#travelreimbursementtemplate").hide();
+                $("#fileuploadtemplate").show();
+            },
+            error: function (xhr, options, error) {
+
+                if (xhr.status == 500) {
+                    var errorMessage = xhr.responseText;
+
+                    $("#submiterror").fadeIn("slow");
+                    $('#submiterrormessage').text(errorMessage);
+
+                    // fade out in 5 seconds
+                    $("#submiterror").fadeOut(fadeOutTimeInMilliseconds);
+                }
+
+                $('#travelRequestId').text(0);
+                $('#travelRequestBadgeNumber').text(0);
+            }
+        });
+    }
+    else {
+
+        $("#submiterror").fadeIn("slow");
+        $('#submiterrormessage').text("Some of the required fields are missing. Please try again.");
+
+        // fade out in 5 seconds
+        $("#submiterror").fadeOut(fadeOutTimeInMilliseconds);
+    }
+
+    //var travelRequestId = $('#txtTravelRequestNumber1').val();
+
+    //var scope = angular.element('#fileuploadtemplate').scope();
+    //scope.loadFileUploadForReimbursement(travelRequestId);
+    //scope.loadCommonApprovers($('#travelRequestBadgeNumber').text());
+    //scope.loadTravelCoordinators();
+    ////scope.loadSupportingDocuments(travelRequestId);
+
+    //$("#travelreimbursementtemplate").hide();
+    //$("#fileuploadtemplate").show();
 }
 
 function backtotravelreimbursementsection() {
 
     $("#fileuploadtemplate").hide();
     $("#travelreimbursementtemplate").show();
+}
+
+function isNumberKey(evt) {
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+    return true;
 }
