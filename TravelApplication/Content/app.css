@@ -1931,3 +1931,17 @@ div.reimbursementdataentry{
     top:0px;
     left:1160px;
 }
+
+.inputamountnumber{
+    /*width:120px;*/
+    height:30px;
+    float:left;
+    /*margin-top:3px;
+    margin-bottom:3px;*/
+    width:150px;
+    text-align:right;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}

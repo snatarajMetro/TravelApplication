@@ -711,6 +711,8 @@ function createTravelRequestReimbursement(container) {
     $('#approvedtravelrequesttemplate').hide();
 
     var travelRequestId = $(container).prop('alt');
+    //travelRequestId = 1234567;
+
     var scope = angular.element('#travelreimbursementtemplate').scope();
     scope.loadTravelReimbursementRequest(travelRequestId);
     scope.loadCostCenters();
@@ -770,15 +772,15 @@ function savereimbursementdataentry() {
     var canSubmit = true;
 
     // Get user inputs
-    var travelRequestId = $('#txtTravelRequestNumber1').text();
+    var travelRequestId = $('#txtTravelRequestNumber1').val();
     var badgeNumber = jQuery.trim($('#txtBadgeNumber').val());
-    var travelPeriodFrom = $('#txtTravelPeriodFrom').text(); 
-    var travelPeriodTo = $('#txtTravelPeriodTo').text();
-    var vendorNumber = $('#txtVendorNumber').text();
-    var costCenterNumber = $('#txtCostCenterNumber').text();
+    var travelPeriodFrom = $('#txtTravelPeriodFrom').val();
+    var travelPeriodTo = $('#txtTravelPeriodTo').val();
+    var vendorNumber = $('#txtVendorNumber').val();
+    var costCenterNumber = $('#txtCostCenterNumber').val();
     var today = $('#txtToday').val();
     var name = jQuery.trim($('#txtName').val());
-    var extension = $('#txtExtension').text();
+    var extension = $('#txtExtension').val();
     var division = jQuery.trim($('#txtDivision').val());
     var department = jQuery.trim($('#txtDepartment').val());
 

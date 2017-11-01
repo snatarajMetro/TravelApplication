@@ -447,21 +447,20 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
     };
 
     $scope.Projects = {};
-    $scope.projects1 = [];
-    $scope.projects2 = [];
+    $scope.projects1 = {};
+    $scope.projects2 = {};
     $scope.projects3 = [];
     $scope.projects4 = [];
     $scope.projects5 = [];
 
-    $scope.getProjects = function (source, costCenter) {
+    $scope.getProjectsByCostCenterName = function (source, costCenterName) {
 
-        var result = null;
         // get projects based on cost center name
         // get the list only if it doesn't exists
-        if (!$scope.Projects[costCenter.Name]) {
-            $.get('/api/fis/projects/' + costCenter.Name)
+        if (!$scope.Projects[costCenterName]) {
+            $.get('/api/fis/projects/' + costCenterName)
             .done(function (data) {
-                result = JSON.parse(data);
+                var result = JSON.parse(data);
 
                 if (source == 'ddlCostCenter1') {
                     $scope.projects1 = result;
@@ -475,43 +474,41 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 }
                 else if (source == 'ddlCostCenter3') {
                     $scope.projects3 = result;
-                    $scope.$apply();
                 }
                 else if (source == 'ddlCostCenter4') {
                     $scope.projects4 = result;
-                    $scope.$apply();
                 }
                 else if (source == 'ddlCostCenter5') {
                     $scope.projects5 = result;
-                    $scope.$apply();
                 }
 
-                $scope.Projects[costCenter.Name] = result;
-                $scope.$apply();
+                $scope.Projects[costCenterName] = result;
             });
         }
         else {
             if (source == 'ddlCostCenter1') {
-                $scope.projects1 = $scope.Projects[costCenter.Name];
-                $scope.$apply();
+                $scope.projects1 = $scope.Projects[costCenterName];
             }
             else if (source == 'ddlCostCenter2') {
-                $scope.projects2 = $scope.Projects[costCenter.Name];
-                $scope.$apply();
+                $scope.projects2 = $scope.Projects[costCenterName];
             }
             else if (source == 'ddlCostCenter3') {
-                $scope.projects3 = $scope.Projects[costCenter.Name];
+                $scope.projects3 = $scope.Projects[costCenterName];
                 $scope.$apply();
             }
             else if (source == 'ddlCostCenter4') {
-                $scope.projects4 = $scope.Projects[costCenter.Name];
+                $scope.projects4 = $scope.Projects[costCenterName];
                 $scope.$apply();
             }
             else if (source == 'ddlCostCenter5') {
-                $scope.projects5 = $scope.Projects[costCenter.Name];
+                $scope.projects5 = $scope.Projects[costCenterName];
                 $scope.$apply();
             }
         }
+    };
+
+    $scope.getProjects = function (source, costCenter) {
+        $scope.getProjectsByCostCenterName(source, costCenter.Name);
     };
 
     $scope.loadSupportingDocuments = function (travelRequestNumber) {
@@ -1391,7 +1388,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             $.get('api/reimburse/TravelrequestDetails/' + travelRequestId)
             .done(function (data) {
 
-                // set user detail section
+                // Set user detail section
                 $("#txtTravelRequestNumber1").val(data.TravelReimbursementDetails.TravelRequestId);
                 $("#txtBadgeNumber").val(data.TravelReimbursementDetails.BadgeNumber);
                 $("#txtTravelPeriodFrom").val(data.TravelReimbursementDetails.DepartureDateTime);
@@ -1403,6 +1400,25 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 $("#txtDivision").val(data.TravelReimbursementDetails.Division);
                 $("#txtDepartment").val(data.TravelReimbursementDetails.Department);
                 $("#txtCashAdvance").val(data.CashAdvance);
+
+                // Set FIS section
+                angular.forEach(data.Fis.FISDetails, function (value, index) {
+
+                    var counter = index + 1;
+
+                    $("#ddlCostCenter" + counter).val(value.CostCenterId);
+                    $("#txtAccount" + counter).val(value.LineItem);
+                    $("#txtTask" + counter).val(value.Task);
+                    $("#txtAmount" + counter).val(value.Amount);
+
+                    angular.element("#ddlCostCenter" + counter).triggerHandler('change');
+
+                    $.get('/api/fis/delay')
+                    .done(function () {
+                        $("#ddlProjects" + counter).val(value.ProjectId);
+                        $scope.$apply();
+                    });
+                })
             });
 
             $scope.$apply();
