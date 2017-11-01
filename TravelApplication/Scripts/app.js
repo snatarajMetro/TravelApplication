@@ -8,6 +8,7 @@ $(document).ready(function () {
 
     //$("#signin").hide();
     //createnewreimbursementrequest();
+    //createTravelRequestReimbursement();
   });
 
 function handleEnterOnSigIn(e)
@@ -712,6 +713,7 @@ function createTravelRequestReimbursement(container) {
     var travelRequestId = $(container).prop('alt');
     var scope = angular.element('#travelreimbursementtemplate').scope();
     scope.loadTravelReimbursementRequest(travelRequestId);
+    scope.loadCostCenters();
 
     $('#travelRequestId').text(travelRequestId);
 }

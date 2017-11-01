@@ -36,7 +36,7 @@ namespace TravelApplication.Controllers.WebAPI
         }
 
         [HttpGet]
-        [Route("api/reimburse/TravelrequestDetails")]
+        [Route("api/reimburse/TravelrequestDetails/{travelRequestId}")]
         public HttpResponseMessage GetapprovedTravelrequestList(string travelRequestId)
         {
 

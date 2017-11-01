@@ -1386,9 +1386,26 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
         $.get('/uitemplates/travelreimbursement.html')
         .done(function (data) {
             $('#travelreimbursementtemplate').html($compile($(data).html())($scope));
-            $scope.$apply();
-
             $('#travelreimbursementtemplate').show();
+
+            $.get('api/reimburse/TravelrequestDetails/' + travelRequestId)
+            .done(function (data) {
+
+                // set user detail section
+                $("#txtTravelRequestNumber1").val(data.TravelReimbursementDetails.TravelRequestId);
+                $("#txtBadgeNumber").val(data.TravelReimbursementDetails.BadgeNumber);
+                $("#txtTravelPeriodFrom").val(data.TravelReimbursementDetails.DepartureDateTime);
+                $("#txtTravelPeriodTo").val(data.TravelReimbursementDetails.ReturnDateTime);
+                $("#txtVendorNumber").val(data.TravelReimbursementDetails.VendorNumber);
+                $("#txtCostCenterNumber").val(data.TravelReimbursementDetails.CostCenterId);
+                $("#txtName").val(data.TravelReimbursementDetails.Name);
+                $("#txtExtension").val(data.TravelReimbursementDetails.Extension);
+                $("#txtDivision").val(data.TravelReimbursementDetails.Division);
+                $("#txtDepartment").val(data.TravelReimbursementDetails.Department);
+                $("#txtCashAdvance").val(data.CashAdvance);
+            });
+
+            $scope.$apply();
         });
     }
 
@@ -1657,7 +1674,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
 
         var badgeNumber = $("#signedInUserBadgeNumber").text();
         var selectedRoleId = $("#selectedRoleId").text();
-        var url = "api/travelrequests?badgeNumber=" + badgeNumber + "&roleId=" + selectedRoleId;
+        var url = "api/reimburse/approvedTravelrequests?badgeNumber=" + badgeNumber + "&roleId=" + selectedRoleId;
 
         $.get(url)
        .done(function (data) {
