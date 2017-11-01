@@ -979,185 +979,235 @@ namespace TravelApplication.Services
 
         #region   REIMBURSE Section
 
-        public List<TravelRequestDetails> GetApprovedTravelRequestList(int submittedBadgeNumber, int selectedRoleId)
-        {
-            try
-            {
-                List<TravelRequestDetails> response = new List<TravelRequestDetails>();
+        //public List<TravelRequestDetails> GetApprovedTravelRequestList(int submittedBadgeNumber, int selectedRoleId)
+        //{
+        //    try
+        //    {
+        //        List<TravelRequestDetails> response = new List<TravelRequestDetails>();
 
-                using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
-                {
-                    if (selectedRoleId == 1 || selectedRoleId == 2)
-                    {
+        //        using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+        //        {
+        //            if (selectedRoleId == 1 || selectedRoleId == 2)
+        //            {
 
-                        string query = string.Format("Select * from TRAVELREQUEST where BADGENUMBER= {0} AND SELECTEDROLEID ={1} AND STATUS = '{2}' order by CREATIONDATETIME desc", submittedBadgeNumber, selectedRoleId, ApprovalStatus.Complete);
-                        OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
-                        command.CommandText = query;
-                        DbDataReader dataReader = command.ExecuteReader();
-                        if (dataReader.HasRows)
-                        {
-                            while (dataReader.Read())
-                            {
-                                response.Add(new TravelRequestDetails()
-                                {
-                                    TravelRequestId = Convert.ToInt32(dataReader["TravelRequestId"]),
-                                    //Description = dataReader["PURPOSE"].ToString(),
-                                    SubmittedByUser = dataReader["SUBMITTEDBYUSERNAME"].ToString(),
-                                    SubmittedDateTime = dataReader["SUBMITTEDDATETIME"].ToString(),
-                                    RequiredApprovers = GetApproversListByTravelRequestId(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])),
-                                    LastApproveredByUser = getLastApproverName(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])),
-                                    LastApprovedDateTime = getLastApproverDateTime(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])),
-                                    EditActionVisible = EditActionEligible(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])) ? true : false,
-                                    ViewActionVisible = true,
-                                    ApproveActionVisible = false,
-                                    Status = dataReader["STATUS"].ToString(),
-                                    Purpose = dataReader["PURPOSE"].ToString()
-                                });
-                            }
-                        }
-                        command.Dispose();
-                        dataReader.Close();
-                    }
-                    else
-                    {
-                        string query = string.Format(@"SELECT
-	                                                        *
-                                                        FROM
-	                                                        TRAVELREQUEST
-                                                        WHERE
-	                                                        TRAVELREQUESTID IN (
-		                                                        SELECT
-			                                                        TRAVELREQUESTId
-		                                                        FROM
-			                                                        TRAVELREQUEST_APPROVAL
-		                                                        WHERE
-			                                                        BADGENUMBER = {0}
-	                                                        )   order by CREATIONDATETIME desc", submittedBadgeNumber);
-                        OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
-                        command.CommandText = query;
-                        DbDataReader dataReader = command.ExecuteReader();
-                        if (dataReader.HasRows)
-                        {
-                            while (dataReader.Read())
-                            {
-                                response.Add(new TravelRequestDetails()
-                                {
-                                    TravelRequestId = Convert.ToInt32(dataReader["TravelRequestId"]),
-                                    Description = dataReader["Purpose"].ToString(),
-                                    SubmittedByUser = dataReader["SUBMITTEDBYUSERNAME"].ToString(),
-                                    SubmittedDateTime = dataReader["SUBMITTEDDATETIME"].ToString(),
-                                    RequiredApprovers = GetApproversListByTravelRequestId(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])),
-                                    LastApproveredByUser = getLastApproverName(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])),
-                                    LastApprovedDateTime = getLastApproverDateTime(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])),
-                                    EditActionVisible = false,
-                                    ViewActionVisible = true,
-                                    ApproveActionVisible = getApprovalSatus(dbConn, Convert.ToInt32(dataReader["TravelRequestId"]), submittedBadgeNumber) ? true : false,
-                                    Status = dataReader["STATUS"].ToString(),
-                                    Purpose = dataReader["Purpose"].ToString()
-                                });
-                            }
-                        }
-                        command.Dispose();
-                        dataReader.Close();
-                    }
-                    dbConn.Close();
-                    dbConn.Dispose();
-                    return response;
-                }
+        //                string query = string.Format("Select * from TRAVELREQUEST where BADGENUMBER= {0} AND SELECTEDROLEID ={1} AND STATUS = '{2}' order by CREATIONDATETIME desc", submittedBadgeNumber, selectedRoleId, ApprovalStatus.Complete);
+        //                OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+        //                command.CommandText = query;
+        //                DbDataReader dataReader = command.ExecuteReader();
+        //                if (dataReader.HasRows)
+        //                {
+        //                    while (dataReader.Read())
+        //                    {
+        //                        response.Add(new TravelRequestDetails()
+        //                        {
+        //                            TravelRequestId = Convert.ToInt32(dataReader["TravelRequestId"]),
+        //                            //Description = dataReader["PURPOSE"].ToString(),
+        //                            SubmittedByUser = dataReader["SUBMITTEDBYUSERNAME"].ToString(),
+        //                            SubmittedDateTime = dataReader["SUBMITTEDDATETIME"].ToString(),
+        //                            RequiredApprovers = GetApproversListByTravelRequestId(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])),
+        //                            LastApproveredByUser = getLastApproverName(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])),
+        //                            LastApprovedDateTime = getLastApproverDateTime(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])),
+        //                            EditActionVisible = EditActionEligible(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])) ? true : false,
+        //                            ViewActionVisible = true,
+        //                            ApproveActionVisible = false,
+        //                            Status = dataReader["STATUS"].ToString(),
+        //                            Purpose = dataReader["PURPOSE"].ToString()
+        //                        });
+        //                    }
+        //                }
+        //                command.Dispose();
+        //                dataReader.Close();
+        //            }
+        //            else
+        //            {
+        //                string query = string.Format(@"SELECT
+        //                                                 *
+        //                                                FROM
+        //                                                 TRAVELREQUEST
+        //                                                WHERE
+        //                                                 TRAVELREQUESTID IN (
+        //                                                  SELECT
+        //                                                   TRAVELREQUESTId
+        //                                                  FROM
+        //                                                   TRAVELREQUEST_APPROVAL
+        //                                                  WHERE
+        //                                                   BADGENUMBER = {0}
+        //                                                 )   order by CREATIONDATETIME desc", submittedBadgeNumber);
+        //                OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+        //                command.CommandText = query;
+        //                DbDataReader dataReader = command.ExecuteReader();
+        //                if (dataReader.HasRows)
+        //                {
+        //                    while (dataReader.Read())
+        //                    {
+        //                        response.Add(new TravelRequestDetails()
+        //                        {
+        //                            TravelRequestId = Convert.ToInt32(dataReader["TravelRequestId"]),
+        //                            Description = dataReader["Purpose"].ToString(),
+        //                            SubmittedByUser = dataReader["SUBMITTEDBYUSERNAME"].ToString(),
+        //                            SubmittedDateTime = dataReader["SUBMITTEDDATETIME"].ToString(),
+        //                            RequiredApprovers = GetApproversListByTravelRequestId(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])),
+        //                            LastApproveredByUser = getLastApproverName(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])),
+        //                            LastApprovedDateTime = getLastApproverDateTime(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])),
+        //                            EditActionVisible = false,
+        //                            ViewActionVisible = true,
+        //                            ApproveActionVisible = getApprovalSatus(dbConn, Convert.ToInt32(dataReader["TravelRequestId"]), submittedBadgeNumber) ? true : false,
+        //                            Status = dataReader["STATUS"].ToString(),
+        //                            Purpose = dataReader["Purpose"].ToString()
+        //                        });
+        //                    }
+        //                }
+        //                command.Dispose();
+        //                dataReader.Close();
+        //            }
+        //            dbConn.Close();
+        //            dbConn.Dispose();
+        //            return response;
+        //        }
 
-            }
-            catch (Exception ex)
-            {
-                LogMessage.Log("GetTravelRequestList : " + ex.Message);
-                throw;
-            }
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        LogMessage.Log("GetTravelRequestList : " + ex.Message);
+        //        throw;
+        //    }
+        //}
 
-        public ReimbursementAllTravelInformation GetTravelRequestInfoForReimbursement(string travelRequestId)
-        {
-            ReimbursementTravelRequestDetails travelReimbursementDetails = null;
-            EstimatedExpense estimatedExpense = null;
-            FIS fisDetails = null;
-            ReimbursementAllTravelInformation travelRequestReimbursementDetails = null ;
+        //public ReimbursementAllTravelInformation GetTravelRequestInfoForReimbursement(string travelRequestId)
+        //{
+        //    ReimbursementTravelRequestDetails travelReimbursementDetails = null;
+        //    EstimatedExpense estimatedExpense = null;
+        //    FIS fisDetails = null;
+        //    ReimbursementAllTravelInformation travelRequestReimbursementDetails = null ;
 
-            try
-            {
-                using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
-                {
-                    travelReimbursementDetails = GetTravelReimbursementDetails(dbConn, travelRequestId);
-                    estimatedExpense = estimatedExpenseRepository.GetTravelRequestDetailNew(dbConn, travelRequestId);
-                    fisDetails = fisRepository.GetFISdetails(dbConn, travelRequestId);
-                    dbConn.Close();
-                    dbConn.Dispose();
-                }
-                travelRequestReimbursementDetails = new ReimbursementAllTravelInformation()
-                {
-                     TravelReimbursementDetails = travelReimbursementDetails,
-                      Fis = fisDetails,
-                      CashAdvance = estimatedExpense.CashAdvance
-                };
-            }
-            catch (Exception ex)
-            {
-                LogMessage.Log("Error while getting travel request details - " + ex.Message);
-                throw;
-            }
+        //    try
+        //    {
+        //        using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+        //        {
+        //            travelReimbursementDetails = GetTravelReimbursementDetails(dbConn, travelRequestId);
+        //            estimatedExpense = estimatedExpenseRepository.GetTravelRequestDetailNew(dbConn, travelRequestId);
+        //            fisDetails = fisRepository.GetFISdetails(dbConn, travelRequestId);
+        //            dbConn.Close();
+        //            dbConn.Dispose();
+        //        }
+        //        travelRequestReimbursementDetails = new ReimbursementAllTravelInformation()
+        //        {
+        //             TravelReimbursementDetails = travelReimbursementDetails,
+        //              Fis = fisDetails,
+        //              CashAdvance = estimatedExpense.CashAdvance
+        //        };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        LogMessage.Log("Error while getting travel request details - " + ex.Message);
+        //        throw;
+        //    }
 
-            return travelRequestReimbursementDetails;
-        }
+        //    return travelRequestReimbursementDetails;
+        //}
 
-        private ReimbursementTravelRequestDetails GetTravelReimbursementDetails(DbConnection dbConn, string travelRequestId)
-        {
-            try
-            {
+        //private ReimbursementTravelRequestDetails GetTravelReimbursementDetails(DbConnection dbConn, string travelRequestId)
+        //{
+        //    try
+        //    {
 
-                ReimbursementTravelRequestDetails response = null;
-                string query = string.Format("Select * from TRAVELREQUEST where TRAVELREQUESTID= {0}", travelRequestId);
-                OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
-                command.CommandText = query;
-                DbDataReader dataReader = command.ExecuteReader();
-                
-                if (dataReader.HasRows)
-                {
-                    while (dataReader.Read())
-                    {
-                       
-                        response = new ReimbursementTravelRequestDetails()
-                        {
-                            BadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]),
-                            Name = dataReader["NAME"].ToString(),
-                            Division = dataReader["DIVISION"].ToString(),                             
-                            DepartureDateTime = Convert.ToDateTime(dataReader["DEPARTUREDATETIME"]),
-                            ReturnDateTime = Convert.ToDateTime(dataReader["RETURNDATETIME"])                             
-                        };
-                    }
+        //        ReimbursementTravelRequestDetails response = null;
+        //        string query = string.Format("Select * from TRAVELREQUEST where TRAVELREQUESTID= {0}", travelRequestId);
+        //        OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+        //        command.CommandText = query;
+        //        DbDataReader dataReader = command.ExecuteReader();
 
-                    var employeeDetails =  GetEmployeeDetails(response.BadgeNumber);
-                    response.CostCenterId = employeeDetails.Result.CostCenter;
-                    response.Department = employeeDetails.Result.Department;
-                    response.Extension = employeeDetails.Result.EmployeeWorkPhone;
-                    response.VendorNumber = GetVendorNumber(response.BadgeNumber).Result;
-                }
-                else
-                {
-                    throw new Exception("Couldn't retrieve travel request");
-                }
-                command.Dispose();
-                dataReader.Close();
-                return response;
+        //        if (dataReader.HasRows)
+        //        {
+        //            while (dataReader.Read())
+        //            {
 
-            }
-            catch (Exception ex)
-            {
-                LogMessage.Log("GetTravelRequestDetail : " + ex.Message);
-                throw;
-            }
-        }
+        //                response = new ReimbursementTravelRequestDetails()
+        //                {
+        //                    BadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]),
+        //                    Name = dataReader["NAME"].ToString(),
+        //                    Division = dataReader["DIVISION"].ToString(),                             
+        //                    DepartureDateTime = Convert.ToDateTime(dataReader["DEPARTUREDATETIME"]),
+        //                    ReturnDateTime = Convert.ToDateTime(dataReader["RETURNDATETIME"])                             
+        //                };
+        //            }
 
-        private string GetVendorId(DbConnection dbConn, int badgeNumber)
-        {
-            throw new NotImplementedException();
-        }
+        //            var employeeDetails =  GetEmployeeDetails(response.BadgeNumber);
+        //            response.CostCenterId = employeeDetails.Result.CostCenter;
+        //            response.Department = employeeDetails.Result.Department;
+        //            response.Extension = employeeDetails.Result.EmployeeWorkPhone;
+        //            response.VendorNumber = GetVendorNumber(response.BadgeNumber).Result;
+        //        }
+        //        else
+        //        {
+        //            throw new Exception("Couldn't retrieve travel request");
+        //        }
+        //        command.Dispose();
+        //        dataReader.Close();
+        //        return response;
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        LogMessage.Log("GetTravelRequestDetail : " + ex.Message);
+        //        throw;
+        //    }
+        //}
+
+        //private string GetVendorId(DbConnection dbConn, int badgeNumber)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+
+        //public Task<int> SaveTravelRequestReimbursement(ReimbursementInput reimbursementRequest)
+        //{
+        //    string travelRequestId = string.Empty;
+        //    int estimatedExpenseId = 0;
+        //    TravelRequestInputResponse response = null;
+        //    try
+        //    {
+        //        //Validate basic information
+
+
+        //        using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+        //        {
+        //            // Insert or update travel request
+        //            travelRequestId = SaveReimbursementTravelRequestDetails(dbConn, reimbursementRequest.reimbursementDetails);
+        //            if (string.IsNullOrEmpty(travelRequestId))
+        //            {
+        //                throw new Exception("Couldn't save/update travel request information");
+        //            }
+
+        //            // Insert or update estimated expense
+        //            estimatedExpenseId = SaveEstimatedExpenseRequestNew(dbConn, reimbursementRequest.EstimatedExpenseData, travelRequestId);
+        //            if (estimatedExpenseId == 0)
+        //            {
+        //                throw new Exception("Couldn't save/update estimated expense information");
+        //            }
+        //            // Insert or update FIS expense
+        //            SaveFISData(dbConn, reimbursementRequest.fis, travelRequestId);
+
+        //            response = new TravelRequestInputResponse() { TravelRequestId = travelRequestId, BadgeNumber = travelRequest.TravelRequestData.BadgeNumber };
+
+        //            return response;
+
+        //        }
+        //        dbConn.Close();
+        //        dbConn.Dispose();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        LogMessage.Log("SaveTravelRequestInput : " + ex.Message);
+        //        throw new Exception("Couldn't save record into Travel Request - ");
+        //    }
+        //}
+
+        //private string SaveReimbursementTravelRequestDetails(DbConnection dbConn, ReimbursementDetails reimbursementDetails)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
 
         #endregion
 
@@ -1417,7 +1467,7 @@ namespace TravelApplication.Services
             return result;
         }
 
-       
+
 
         #endregion
     }

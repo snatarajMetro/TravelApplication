@@ -41,12 +41,6 @@ namespace TravelApplication.Services
             return result;
         }
 
-        public List<TravelRequestDetails> GetApprovedTravelrequestList(int badgeNumber, int selectedRoleId)
-        {
-            var result = travelRequestRepo.GetApprovedTravelRequestList(badgeNumber, selectedRoleId);
-            return result;
-        }
-
         public async Task<int> SaveTravelRequest(TravelRequest travelRequest)
         {
             try
@@ -80,11 +74,6 @@ namespace TravelApplication.Services
             TravelRequestInput result = travelRequestRepo.GetTravelRequestDetailNew(travelRequestId);
             return result;
         }
-
-        public ReimbursementAllTravelInformation GetTravelRequestInfoForReimbursement(string travelRequestId)
-        {
-            ReimbursementAllTravelInformation result = travelRequestRepo.GetTravelRequestInfoForReimbursement(travelRequestId);
-            return result;
-        }
+       
     }
 }

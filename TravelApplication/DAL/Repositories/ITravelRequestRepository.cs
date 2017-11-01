@@ -14,7 +14,6 @@ namespace TravelApplication.Services
         bool Reject(int badgeNumber, int travelRequestId, string comments);
         TravelRequestInputResponse SaveTravelRequestInput(TravelRequestInput travelRequest);
         TravelRequestInput GetTravelRequestDetailNew(string travelRequestId);
-        List<TravelRequestDetails> GetApprovedTravelRequestList(int submittedBadgeNumber, int selectedRoleId);
-        ReimbursementAllTravelInformation GetTravelRequestInfoForReimbursement(string travelRequestId);
+        Task<string> GetVendorNumber(int badgeNumber);
     }
 }

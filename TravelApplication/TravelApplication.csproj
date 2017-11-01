@@ -178,6 +178,7 @@
     <Compile Include="Controllers\WebAPI\EstimatedExpenseController.cs" />
     <Compile Include="Controllers\WebAPI\FISController.cs" />
     <Compile Include="Controllers\WebAPI\LoginController.cs" />
+    <Compile Include="Controllers\WebAPI\ReimbursementController.cs" />
     <Compile Include="Controllers\WebAPI\TravelRequestController.cs" />
     <Compile Include="Controllers\WebAPI\TravelRequestReportController.cs" />
     <Compile Include="DAL\DBProvider\ConnectionFactory.cs" />
@@ -190,7 +191,9 @@
     <Compile Include="DAL\Repositories\IDocumentsRepository.cs" />
     <Compile Include="DAL\Repositories\IEstimatedExpenseRepository.cs" />
     <Compile Include="DAL\Repositories\IFISRepository.cs" />
+    <Compile Include="DAL\Repositories\IReimbursementRepository.cs" />
     <Compile Include="DAL\Repositories\IUserRepository.cs" />
+    <Compile Include="DAL\Repositories\ReimbursementRepository.cs" />
     <Compile Include="DAL\Repositories\UserRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -208,6 +211,7 @@
     <Compile Include="Models\PageConfigModel.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ReimbursementDetails.cs" />
+    <Compile Include="Models\ReimbursementInput.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\SharePointUpload.cs" />
     <Compile Include="Models\SubmitTravelRequest.cs" />
@@ -240,9 +244,11 @@
     <Compile Include="Services\IEmailService.cs" />
     <Compile Include="Services\IEstimatedExpenseService.cs" />
     <Compile Include="Services\IFISService.cs" />
+    <Compile Include="Services\IReimbursementService.cs" />
     <Compile Include="Services\ITravelRequestService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="DAL\Repositories\TravelRequestRepository.cs" />
+    <Compile Include="Services\ReimbursementService.cs" />
     <Compile Include="Services\TravelRequestReportService.cs" />
     <Compile Include="Services\TravelRequestService.cs" />
     <Compile Include="Services\UserService.cs" />

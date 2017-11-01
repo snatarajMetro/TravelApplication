@@ -196,48 +196,69 @@ namespace TravelApplication.Controllers.WebAPI
             return response;
         }
 
-        // Reimbursement section 
-        [HttpGet]
-        [Route("api/approvedTravelrequests")]
-        public HttpResponseMessage GetapprovedTravelrequestList(int badgeNumber, int roleId)
-        {
+        //// Reimbursement section 
+        //[HttpGet]
+        //[Route("api/approvedTravelrequests")]
+        //public HttpResponseMessage GetapprovedTravelrequestList(int badgeNumber, int roleId)
+        //{
 
-            HttpResponseMessage response = null;
-            try
-            {
-                var result = travelRequestService.GetApprovedTravelrequestList(badgeNumber, roleId);
+        //    HttpResponseMessage response = null;
+        //    try
+        //    {
+        //        var result = travelRequestService.GetApprovedTravelrequestList(badgeNumber, roleId);
 
-                response = Request.CreateResponse(HttpStatusCode.OK, result);
-            }
-            catch (Exception ex)
-            {
-                // TODO: Log the exception message
-                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrieve EmployeeInfo for Badge # : " + ex.Message);
+        //        response = Request.CreateResponse(HttpStatusCode.OK, result);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // TODO: Log the exception message
+        //        response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrieve EmployeeInfo for Badge # : " + ex.Message);
 
-            }
-            return response;
-        }
+        //    }
+        //    return response;
+        //}
 
-        [HttpGet]
-        [Route("api/TravelrequestDetailForReimbursement")]
-        public HttpResponseMessage GetapprovedTravelrequestList(string travelRequestId)
-        {
+        //[HttpGet]
+        //[Route("api/TravelrequestDetailForReimbursement")]
+        //public HttpResponseMessage GetapprovedTravelrequestList(string travelRequestId)
+        //{
 
-            HttpResponseMessage response = null;
-            try
-            {
-                var result = travelRequestService.GetTravelRequestInfoForReimbursement(travelRequestId);
+        //    HttpResponseMessage response = null;
+        //    try
+        //    {
+        //        var result = travelRequestService.GetTravelRequestInfoForReimbursement(travelRequestId);
 
-                response = Request.CreateResponse(HttpStatusCode.OK, result);
-            }
-            catch (Exception ex)
-            {
-                // TODO: Log the exception message
-                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrieve EmployeeInfo for Badge # : " + ex.Message);
+        //        response = Request.CreateResponse(HttpStatusCode.OK, result);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // TODO: Log the exception message
+        //        response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrieve EmployeeInfo for Badge # : " + ex.Message);
 
-            }
-            return response;
-        }
+        //    }
+        //    return response;
+        //}
+
+        //[HttpPost]
+        //[Route("api/travelrequestReimbursement/save")]
+        //public HttpResponseMessage SaveTravelRequestReimbursement(ReimbursementInput reimbursementRequest)
+        //{
+        //    HttpResponseMessage response = null;
+        //    try
+        //    {
+        //        var result = travelRequestService.SaveTravelRequestReimbursement(reimbursementRequest);
+        //        var data = new JavaScriptSerializer().Serialize(result);
+
+        //        response = Request.CreateResponse(HttpStatusCode.OK, data);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // TODO: Log the exception message
+        //        response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't save travel request : " + ex.Message);
+
+        //    }
+        //    return response;
+        //}
     }
 
 }

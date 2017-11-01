@@ -25,7 +25,7 @@ namespace TravelApplication.Models
         public decimal TotalPart1TravelExpenses { get; set; }
         public decimal TotalPart2TravelExpenses { get; set; }
         public decimal TotalExpSubmittedForApproval { get; set; }
-        public decimal SubstractPaidByMTA { get; set; }
+        public decimal SubtractPaidByMTA { get; set; }
         public decimal TotalExpenses { get; set; }
         public decimal SubtractCashAdvance { get; set; }
         public decimal Total { get; set; }
@@ -39,14 +39,14 @@ namespace TravelApplication.Models
         public int MileageToWork { get; set; }
         public int BusinessMiles { get; set; }
         public decimal BusinessMilesXRate { get; set; }
-        public decimal ParkingGas { get; set; }
+        public decimal ParkingAndGas { get; set; }
         public decimal AirFare { get; set; }
         public decimal TaxiRail { get; set; }
         public decimal Lodge { get; set; }
         public decimal Meals { get; set; }
         public decimal Registration { get; set; }
         public decimal Internet { get; set; }
-        public decimal Other { get; set; }
+        public decimal Others { get; set; }
         public decimal DailyTotal { get; set; }
     }
 }
