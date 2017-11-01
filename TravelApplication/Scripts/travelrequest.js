@@ -53,11 +53,35 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
     $scope.BusinessMile2 = "";
     $scope.BusinessMileAmount1 = "";
     $scope.BusinessMileAmount2 = "";
+    $scope.Parking1 = "";
+    $scope.Parking2 = "";
+    $scope.Airfare1 = "";
+    $scope.Airfare2 = "";
+    $scope.Taxi1 = "";
+    $scope.Taxi2 = "";
+    $scope.Lodging1 = "";
+    $scope.Lodging2 = "";
+    $scope.Meals1 = "";
+    $scope.Meals2 = "";
+    $scope.Registration1 = "";
+    $scope.Registration2 = "";
+    $scope.Internet1 = "";
+    $scope.Internet2 = "";
+    $scope.Other1 = "";
+    $scope.Other2 = "";
 
     $scope.totalMileA = "";
     $scope.totalMileB = "";
     $scope.totalBusinessMile = "";
     $scope.totalBusinessMileAmount = "";
+    $scope.totalParking = "";
+    $scope.totalAirfare = "";
+    $scope.totalTaxi = "";
+    $scope.totalLodging = "";
+    $scope.totalMeals = "";
+    $scope.totalRegistration = "";
+    $scope.totalInternet = "";
+    $scope.totalOther = "";
 
     $scope.updateTotalDailyAmount = function () {
         $scope.totalDailyAmount = (
@@ -72,9 +96,8 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             + ($scope.TotalMileA2 * 1)
             );
 
-        //$scope.BusinessMile1 = (($scope.TotalMileA1 * 1) - ($scope.TotalMileB1 * 1));
-        //$scope.BusinessMile2 = (($scope.TotalMileA2 * 1) - ($scope.TotalMileB2 * 1));
         updateBusinessMile();
+        updateDailyTotal();
     }
 
     $scope.updateMileBTotal = function () {
@@ -83,9 +106,8 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             + ($scope.TotalMileB2 * 1)
             );
 
-        //$scope.BusinessMile1 = (($scope.TotalMileA1 * 1) - ($scope.TotalMileB1 * 1));
-        //$scope.BusinessMile2 = (($scope.TotalMileA2 * 1) - ($scope.TotalMileB2 * 1));
         updateBusinessMile();
+        updateDailyTotal();
     }
 
     function updateBusinessMile () {
@@ -105,6 +127,110 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             ($scope.BusinessMileAmount1 * 1)
             + ($scope.BusinessMileAmount2 * 1)
             );
+    }
+
+    function updateDailyTotal() {
+
+        $scope.dailyTotalAmount1 = (
+                ($scope.BusinessMileAmount1 * 1)
+                + ($scope.Parking1 * 1)
+                + ($scope.Airfare1 * 1)
+                + ($scope.Taxi1 * 1)
+                + ($scope.Lodging1 * 1)
+                + ($scope.Meals1 * 1)
+                + ($scope.Registration1 * 1)
+                + ($scope.Internet1 * 1)
+                + ($scope.Other1 * 1)
+            );
+
+        $scope.dailyTotalAmount2 = (
+                ($scope.BusinessMileAmount2 * 1)
+                + ($scope.Parking2 * 1)
+                + ($scope.Airfare2 * 1)
+                + ($scope.Taxi2 * 1)
+                + ($scope.Lodging2 * 1)
+                + ($scope.Meals2 * 1)
+                + ($scope.Registration2 * 1)
+                + ($scope.Internet2 * 1)
+                + ($scope.Other2 * 1)
+            );
+
+        $scope.totalDailyAmount = (
+            ($scope.dailyTotalAmount1 * 1)
+            + ($scope.dailyTotalAmount2 * 1)
+            );
+    }
+
+    $scope.updateParkingTotal = function () {
+        $scope.totalParking = (
+            ($scope.Parking1 * 1)
+            + ($scope.Parking2 * 1)
+            );
+
+        updateDailyTotal();
+    }
+
+    $scope.updateAirfareTotal = function () {
+        $scope.totalAirfare = (
+            ($scope.Airfare1 * 1)
+            + ($scope.Airfare2 * 1)
+            );
+
+        updateDailyTotal();
+    }
+
+    $scope.updateTaxiTotal = function () {
+        $scope.totalTaxi = (
+            ($scope.Taxi1 * 1)
+            + ($scope.Taxi2 * 1)
+            );
+
+        updateDailyTotal();
+    }
+
+    $scope.updateLodgingTotal = function () {
+        $scope.totalLodging = (
+            ($scope.Lodging1 * 1)
+            + ($scope.Lodging2 * 1)
+            );
+
+        updateDailyTotal();
+    }
+
+    $scope.updateMealTotal = function () {
+        $scope.totalMeals = (
+            ($scope.Meals1 * 1)
+            + ($scope.Meals2 * 1)
+            );
+
+        updateDailyTotal();
+    }
+
+    $scope.updateRegistrationTotal = function () {
+        $scope.totalRegistration = (
+            ($scope.Registration1 * 1)
+            + ($scope.Registration2 * 1)
+            );
+
+        updateDailyTotal();
+    }
+
+    $scope.updateInternetTotal = function () {
+        $scope.totalInternet = (
+            ($scope.Internet1 * 1)
+            + ($scope.Internet2 * 1)
+            );
+
+        updateDailyTotal();
+    }
+
+    $scope.updateOtherTotal = function () {
+        $scope.totalOther = (
+            ($scope.Other1 * 1)
+            + ($scope.Other2 * 1)
+            );
+
+        updateDailyTotal();
     }
 
     //set estimated expense section
