@@ -14,8 +14,8 @@ namespace TravelApplication.DAL.Repositories
         ReimbursementAllTravelInformation GetTravelRequestInfoForReimbursement(string travelRequestId);
         ReimbursementTravelRequestDetails GetTravelReimbursementDetails(DbConnection dbConn, string travelRequestId);
         string GetVendorId(DbConnection dbConn, int badgeNumber);
-        Task<int> SaveTravelRequestReimbursement(ReimbursementInput reimbursementRequest);
-        string SaveReimbursementTravelRequestDetails(DbConnection dbConn, ReimbursementDetails reimbursementDetails);
+        string SaveTravelRequestReimbursement(ReimbursementInput reimbursementRequest);
+     
 
     }
 }
