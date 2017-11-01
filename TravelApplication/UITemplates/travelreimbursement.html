@@ -14,7 +14,7 @@
                         <div class="">
                             <span>Travel Authorization #</span>
                         </div>
-                        <input type="text" placeholder="" id="txtTravelRequestNumber1" class="datainput" value="1234567" readonly disabled />
+                        <input type="text" placeholder="" id="txtTravelRequestNumber1" class="datainput" readonly disabled />
                     </div>
                     <div class="column">
                         <div class="label2">
@@ -62,7 +62,7 @@
                     </div>
                     <div class="column">
                         <div class="label2">
-                            <span>Ext.</span><sup class="required">*</sup>
+                            <span>Ext.</span>
                         </div>
                         <input type="text" placeholder="" id="txtExtension" class="datainput" />
                     </div>
@@ -341,18 +341,18 @@
                                             ng-change="getProjects('ddlCostCenter1', ddlCostCenter1)"></select>
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="text" placeholder="" id="txtCityState1" name="txtCityState1" class="datainputcostcenter" />
+                                    <input type="text" placeholder="" id="txtAccount1" name="txtAccount1" class="datainputcostcenter" />
                                 </td>
                                 <td style="padding:0px;">
-                                    <select class="inputdropdownreibursement" id="project1"
+                                    <select class="inputdropdownreibursement" id="ddlProjects1"
                                             ng-model="ddlProjects1"
                                             ng-options="project.Name for project in projects1 track by project.Id"></select>
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="text" placeholder="" id="txtCityState1" name="txtCityState1" class="datainputcostcenter" />
+                                    <input type="text" placeholder="" id="txtTask1" name="txtTask1" class="datainputcostcenter" />
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="text" placeholder="" id="txtCityState1" name="txtCityState1" class="datainputcostcenter" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAmount1" name="txtAmount1" class="inputamountnumber" />
                                 </td>
                                 <td style="padding-top:5px;" class="calculationtext">Total Part I: Travel Expenses</td>
                                 <td style="padding:0px;">
@@ -361,24 +361,24 @@
                             </tr>
                             <tr>
                                 <td style="padding:0px;">
-                                    <select class="inputdropdownreibursement" id="ddlCostCenter1"
+                                    <select class="inputdropdownreibursement" id="ddlCostCenter2"
                                             ng-model="ddlCostCenter2"
                                             ng-options="costcenter.CostCenterValue for costcenter in CostCenters track by costcenter.Name"
                                             ng-change="getProjects('ddlCostCenter2', ddlCostCenter2)"></select>
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="text" placeholder="" id="txtCityState1" name="txtCityState1" class="datainputcostcenter" />
+                                    <input type="text" placeholder="" id="txtAccount2" name="txtAccount2" class="datainputcostcenter" />
                                 </td>
                                 <td style="padding:0px;">
-                                    <select class="inputdropdownreibursement" id="project2"
+                                    <select class="inputdropdownreibursement" id="ddlProjects2"
                                             ng-model="ddlProjects2"
                                             ng-options="project.Name for project in projects2 track by project.Id"></select>
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="text" placeholder="" id="txtCityState1" name="txtCityState1" class="datainputcostcenter" />
+                                    <input type="text" placeholder="" id="txtTask2" name="txtTask2" class="datainputcostcenter" />
                                 </td>
                                 <td style="padding:0px;">
-                                    <input type="text" placeholder="" id="txtCityState1" name="txtCityState1" class="datainputcostcenter" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAmount2" name="txtAmount2" class="inputamountnumber" />
                                 </td>
                                 <td style="padding-top:5px;" class="calculationtext">ADD: Total Part II: Non-Travel Expenses</td>
                                 <td style="padding:0px;">
@@ -426,7 +426,7 @@
                                 <td></td>
                                 <td style="padding-top:5px;" class="calculationtext">SUBSTRACT:  Cash Advance</td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal1" name="txtDailyTotal1" class="inputtransportationnumber totalbgcolor" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtCashAdvance" name="txtCashAdvance" class="inputtransportationnumber totalbgcolor" />
                                 </td>
                             </tr>
                             <tr>
