@@ -21,12 +21,12 @@ namespace TravelApplication.Services
             return result;
         }
 
-        public async System.Threading.Tasks.Task<int> SaveTravelRequestReimbursement(ReimbursementInput reimbursementRequest)
+        public string SaveTravelRequestReimbursement(ReimbursementInput reimbursementRequest)
         {
             try
             {
-                int travelRequestId = await reimbursementRepository.SaveTravelRequestReimbursement(reimbursementRequest);
-                return travelRequestId;
+                string reimbursementId = reimbursementRepository.SaveTravelRequestReimbursement(reimbursementRequest);
+                return reimbursementId;
             }
             catch (Exception ex)
             {

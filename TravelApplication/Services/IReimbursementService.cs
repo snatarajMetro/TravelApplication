@@ -10,7 +10,7 @@ namespace TravelApplication.Services
     {
         List<TravelRequestDetails> GetApprovedTravelrequestList(int badgeNumber, int selectedRoleId);
         ReimbursementAllTravelInformation GetTravelRequestInfoForReimbursement(string travelRequestId);
-        System.Threading.Tasks.Task<int> SaveTravelRequestReimbursement(ReimbursementInput reimbursementRequest);
+        string SaveTravelRequestReimbursement(ReimbursementInput reimbursementRequest);
 
     }
 }

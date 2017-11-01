@@ -6,8 +6,7 @@ using System.Web;
 namespace TravelApplication.Models
 {
     public class ReimbursementDetails
-    {
-        public int ReimbursementId { get; set; }
+    {       
         public List<Reimbursement> Reimbursement { get; set; }
         public int TotalMiles { get; set; }
         public int TotalMileageToWork { get; set; }
@@ -33,6 +32,8 @@ namespace TravelApplication.Models
 
     public class Reimbursement
     {
+        public int Id { get; set; }
+        public string TravelRequestId { get; set; }
         public DateTime Date { get; set; }
         public string CityStateAndBusinessPurpose { get; set; }
         public int Miles { get; set; }

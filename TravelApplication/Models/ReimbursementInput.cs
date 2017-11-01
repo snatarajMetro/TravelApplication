@@ -7,8 +7,8 @@ namespace TravelApplication.Models
 {
     public class ReimbursementInput
     {
-        public ReimbursementTravelRequestDetails TravelRequest { get; set; }
-        public ReimbursementDetails reimbursementDetails { get; set; }
-        public FIS fis { get; set; }
+        public ReimbursementTravelRequestDetails ReimbursementTravelRequestDetails { get; set; }
+        public ReimbursementDetails ReimbursementDetails { get; set; }
+        public FIS FIS { get; set; }
     }
 }
