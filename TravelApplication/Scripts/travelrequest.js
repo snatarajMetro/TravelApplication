@@ -1576,7 +1576,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
     }
 
     $scope.loadApprovedTravelRequests = function () {
-        var actionTemplate = '<div style="display:flex;"><div syle="float:left;" ng-if="row.entity.ViewActionVisible == true"><input  type="button" id="btnView" name="btnView" value="View" alt="{{row.entity.TravelRequestId}}" onclick="" /></div><div ng-if="row.entity.EditActionVisible == true"><input  type="button" id="btnOk" name="btnOk" value="Create" alt="{{row.entity.TravelRequestId}}" onclick="createTravelRequestReimbursement(this);" /></div></div>';
+        var actionTemplate = '<div style="display:flex;"><div syle="float:left;" ng-if="row.entity.ViewActionVisible == true"><input  type="button" id="btnView" name="btnView" value="View" alt="{{row.entity.TravelRequestId}}" onclick="" /></div><div><input  type="button" id="btnOk" name="btnOk" value="Create" alt="{{row.entity.TravelRequestId}}" onclick="createTravelRequestReimbursement(this);" /></div></div>';
 
         $scope.columns = [{
             field: 'TravelRequestId',
