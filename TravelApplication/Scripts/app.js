@@ -770,6 +770,8 @@ function showapprovedtravelrequests() {
 function savereimbursementdataentry() {
 
     var canSubmit = true;
+    var selectedRoleId = $("#selectedRoleId").text();
+    var signedInUserBadgeNumber = $('#signedInUserBadgeNumber').text();
 
     // Get user inputs
     var travelRequestId = $('#txtTravelRequestNumber1').val();
@@ -789,10 +791,10 @@ function savereimbursementdataentry() {
     if (canSubmit) {
         $.ajax({
             type: "POST",
-            url: "/api/travelreimbursement/save",
+            url: "api/reimburse/save",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({
-                "TravelReimbursementDetails": {
+                "ReimbursementTravelRequestDetails": {
                     'TravelRequestId': travelRequestId,
                     'BadgeNumber': badgeNumber,
                     'DepartureDateTime': travelPeriodFrom,
@@ -802,7 +804,93 @@ function savereimbursementdataentry() {
                     'Name': name,
                     'Extension': extension,
                     'Division': division,
-                    'Department': department
+                    'Department': department,
+                    'SelectedRoleId': selectedRoleId,
+                    'SubmittedByBadgeNumber': signedInUserBadgeNumber
+                },
+                "FIS":
+                {
+                    "FISDetails": [
+                        {
+                            "CostCenterId": $("#ddlCostCenter1 option:selected").val(),
+                            "LineItem": $('#txtAccount1').val(),
+                            "ProjectId": $("#ddlProjects1 option:selected").val(),
+                            "Task": $('#txtTask1').val(),
+                            "Amount": $('#txtAmount1').val(),
+                            "TravelRequestId": travelRequestId
+                        },
+                        {
+                            "CostCenterId": $("#ddlCostCenter2 option:selected").val(),
+                            "LineItem": $('#txtAccount2').val(),
+                            "ProjectId": $("#ddlProjects2 option:selected").val(),
+                            "Task": $('#txtTask2').val(),
+                            "Amount": $('#txtAmount2').val(),
+                            "TravelRequestId": travelRequestId
+                        }
+                    ],
+                    "TotalAmount": 0
+                },
+                "ReimbursementDetails": {
+                    "Reimbursement":[
+                        {
+                            "Id":0,
+                            "TravelRequestId": travelRequestId,
+                            "Date": $('#txtTravelDate1').val(),
+                            "CityStateAndBusinessPurpose": $('#txtCityState1').val(),
+                            "Miles": $('#txtTotalMiles1').val(),
+                            "MileageToWork": $('#txtNormalMiles1').val(),
+                            "BusinessMiles": $('#txtBusinessMiles1').val(),
+                            "BusinessMilesXRate": $('#txtBusinessMilesTotal1').val(),
+                            "ParkingAndGas": $('#txtParking1').val(),
+                            "AirFare": $('#txtAirfare1').val(),
+                            "TaxiRail": $('#txtTaxi1').val(),
+                            "Lodge": $('#txtLodging1').val(),
+                            "Meals": $('#txtMeals1').val(),
+                            "Registration": $('#txtRegistration1').val(),
+                            "Internet": $('#txtInternet1').val(),
+                            "Others": $('#txtOther1').val(),
+                            "DailyTotal": $('#txtDailyTotal1').val()
+                        },
+                        {
+                            "Id": 0,
+                            "TravelRequestId": travelRequestId,
+                            "Date": $('#txtTravelDate2').val(),
+                            "CityStateAndBusinessPurpose": $('#txtCityState2').val(),
+                            "Miles": $('#txtTotalMiles2').val(),
+                            "MileageToWork": $('#txtNormalMiles2').val(),
+                            "BusinessMiles": $('#txtBusinessMiles2').val(),
+                            "BusinessMilesXRate": $('#txtBusinessMilesTotal2').val(),
+                            "ParkingAndGas": $('#txtParking2').val(),
+                            "AirFare": $('#txtAirfare2').val(),
+                            "TaxiRail": $('#txtTaxi2').val(),
+                            "Lodge": $('#txtLodging2').val(),
+                            "Meals": $('#txtMeals2').val(),
+                            "Registration": $('#txtRegistration2').val(),
+                            "Internet": $('#txtInternet2').val(),
+                            "Others": $('#txtOther2').val(),
+                            "DailyTotal": $('#txtDailyTotal2').val()
+                        }
+                    ],
+                    "TotalMiles":$('#txtTotalMiles').val(),
+                    "TotalMileageToWork": $('#txtTotalNormalMiles').val(),
+                    "TotalBusinessMiles": $('#txtTotalBusinessMiles').val(),
+                    "TotalBusinessMilesXRate": $('#txtBusinessMilesAmountTotal').val(),
+                    "TotalParkingGas": $('#txtParkingTotal').val(),
+                    "TotalAirFare": $('#txtAirfareTotal').val(),
+                    "TotalTaxiRail": $('#txtTaxiTotal').val(),
+                    "TotalLodge": $('#txtLodgingTotal').val(),
+                    "TotalMeals": $('#txtMealsTotal').val(),
+                    "TotalRegistration": $('#txtRegistrationTotal').val(),
+                    "TotalInternet": $('#txtInternetTotal').val(),
+                    "TotalOther": $('#txtOtherTotal').val(),
+                    "TotalDailyTotal": $('#txtTotalDailyAmount').val(),
+                    "TotalPart1TravelExpenses": $('#txtTotalPart1TravelExpense').val(),
+                    "TotalPart2TravelExpenses": $('#txtTotalPart2NonTravelExpense').val(),
+                    "TotalExpSubmittedForApproval": $('#txtTotalSubmittedForApproval').val(),
+                    "SubtractPaidByMTA": $('#txtTotalPrePaidByMTA').val(),
+                    "TotalExpenses": $('#txtTotalExpenses').val(),
+                    "SubtractCashAdvance": $('#txtCashAdvance').val(),
+                    "Total": $('#txtTotal').val()
                 }
             }),
             success: function (data) {
