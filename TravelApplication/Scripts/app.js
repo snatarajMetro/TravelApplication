@@ -739,7 +739,6 @@ function settravelrequest() {
 function viewapprovedtravelrequests() {
     $("#action").hide();
 
-    //reset estimated expense section
     var scope = angular.element('#approvedtravelrequesttemplate').scope();
     scope.loadApprovedTravelRequests();
 
@@ -747,16 +746,13 @@ function viewapprovedtravelrequests() {
 }
 
 function viewexistingreimbursements() {
-    //$("#action").hide();
-    //$("#signin").hide();
-    //$("#signintemplate").hide();
 
-    ////load travel request section
-    //var scope = angular.element('#existingtravelreimbursementtemplate').scope();
+    $("#action").hide();
 
-    //scope.loadExistingTravelReimbursementRequests();
+    var scope = angular.element('#approvedtravelrequesttemplate').scope();
+    scope.loadExistingTravelReimbursementRequests();
 
-    //$('#existingtravelreimbursementtemplate').show();
+    $('#existingtravelreimbursementtemplate').show();
 }
 
 function showapprovedtravelrequests() {

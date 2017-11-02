@@ -1476,6 +1476,7 @@ div.existingtravelreimbursementcontainer {
 .tabbable-line > .nav-tabs > li {
   margin-right: 2px;
   cursor:pointer;
+  margin-left:10px;
 }
 .tabbable-line > .nav-tabs > li > a {
   border: 0;
@@ -1554,8 +1555,8 @@ div.actioncontainer4 {
     bottom: 0;
     left: 0;
     right: 0;
-    width: 350px;
-    height: 300px;
+    width: 500px;
+    height: 250px;
     margin: auto;
     background-color:white;
     box-shadow: 10px 10px 5px #3c3c3c;
@@ -1944,4 +1945,11 @@ div.reimbursementdataentry{
     border-radius: 3px;
     border:solid 1px gray;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+.roles2 {
+    padding-left:28px;
+    margin-left:70px;
+    height:96px;
 }
