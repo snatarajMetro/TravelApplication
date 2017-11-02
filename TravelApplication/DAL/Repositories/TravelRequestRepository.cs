@@ -1244,35 +1244,35 @@ namespace TravelApplication.Services
             return response;
         }
 
-        private string getReimburseLastApproverDateTime(DbConnection dbConn, int travelRequestId)
-        {
-            string response = "";
-            string query = string.Format(@"Select ApprovalDateTime from (
-                                            SELECT
-	                                        APPROVALDATETIME
-                                        FROM
-	                                        TRAVEL_REIMBURSE_APPROVAL
-                                        WHERE
-	                                        TRAVELREQUESTID = {0}
-                                        AND APPROVALDATETIME IS NOT NULL
-                                        ORDER BY
-	                                        APPROVALDATETIME DESC)
-                                            where ROWNUM =1", travelRequestId);
+        //private string getReimburseLastApproverDateTime(DbConnection dbConn, int travelRequestId)
+        //{
+        //    string response = "";
+        //    string query = string.Format(@"Select ApprovalDateTime from (
+        //                                    SELECT
+	       //                                 APPROVALDATETIME
+        //                                FROM
+	       //                                 TRAVEL_REIMBURSE_APPROVAL
+        //                                WHERE
+	       //                                 TRAVELREQUESTID = {0}
+        //                                AND APPROVALDATETIME IS NOT NULL
+        //                                ORDER BY
+	       //                                 APPROVALDATETIME DESC)
+        //                                    where ROWNUM =1", travelRequestId);
 
-            OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
-            command.CommandText = query;
-            DbDataReader dataReader = command.ExecuteReader();
-            if (dataReader.HasRows)
-            {
-                while (dataReader.Read())
-                {
-                    response = dataReader["APPROVALDATETIME"].ToString();
-                }
-            }
-            command.Dispose();
-            dataReader.Close();
-            return response;
-        }
+        //    OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+        //    command.CommandText = query;
+        //    DbDataReader dataReader = command.ExecuteReader();
+        //    if (dataReader.HasRows)
+        //    {
+        //        while (dataReader.Read())
+        //        {
+        //            response = dataReader["APPROVALDATETIME"].ToString();
+        //        }
+        //    }
+        //    command.Dispose();
+        //    dataReader.Close();
+        //    return response;
+        //}
         private string getLastApproverName(DbConnection dbConn, int travelRequestId)
         {
             string response = "";
@@ -1303,35 +1303,35 @@ namespace TravelApplication.Services
             return response;
         }
 
-        private string getReimburseLastApproverName(DbConnection dbConn, int travelRequestId)
-        {
-            string response = "";
-            string query = string.Format(@"select APPROVERNAME from (
-                                                                    SELECT
-	                                                                    APPROVERNAME
-                                                                    FROM
-	                                                                    TRAVEL_REIMBURSE_APPROVAL
-                                                                    WHERE
-	                                                                    TRAVELREQUESTID = {0}
-                                                                    AND APPROVALDATETIME IS NOT NULL
-                                                                    ORDER BY
-	                                                                    APPROVALDATETIME desc )
-                                                                    where ROWNUM =1", travelRequestId);
+        //private string getReimburseLastApproverName(DbConnection dbConn, int travelRequestId)
+        //{
+        //    string response = "";
+        //    string query = string.Format(@"select APPROVERNAME from (
+        //                                                            SELECT
+	       //                                                             APPROVERNAME
+        //                                                            FROM
+	       //                                                             TRAVEL_REIMBURSE_APPROVAL
+        //                                                            WHERE
+	       //                                                             TRAVELREQUESTID = {0}
+        //                                                            AND APPROVALDATETIME IS NOT NULL
+        //                                                            ORDER BY
+	       //                                                             APPROVALDATETIME desc )
+        //                                                            where ROWNUM =1", travelRequestId);
 
-            OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
-            command.CommandText = query;
-            DbDataReader dataReader = command.ExecuteReader();
-            if (dataReader.HasRows)
-            {
-                while (dataReader.Read())
-                {
-                    response = dataReader["APPROVERNAME"].ToString();
-                }
-            }
-            command.Dispose();
-            dataReader.Close();
-            return response;
-        }
+        //    OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+        //    command.CommandText = query;
+        //    DbDataReader dataReader = command.ExecuteReader();
+        //    if (dataReader.HasRows)
+        //    {
+        //        while (dataReader.Read())
+        //        {
+        //            response = dataReader["APPROVERNAME"].ToString();
+        //        }
+        //    }
+        //    command.Dispose();
+        //    dataReader.Close();
+        //    return response;
+        //}
         private string GetApproversListByTravelRequestId(DbConnection dbConn, int travelRequestId)
         {
             string response = string.Empty;
@@ -1353,26 +1353,26 @@ namespace TravelApplication.Services
             return response;
         }
 
-        private string GetReimburseApproversListByTravelRequestId(DbConnection dbConn, int travelRequestId)
-        {
-            string response = string.Empty;
-            string query = string.Format("select APPROVERNAME from TRAVEL_REIMBURSE_APPROVAL where TRAVELREQUESTID = {0} order by ApprovalOrder", travelRequestId);
-            OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
-            command.CommandText = query;
-            DbDataReader dataReader = command.ExecuteReader();
-            List<string> result = new List<string>();
-            if (dataReader.HasRows)
-            {
-                while (dataReader.Read())
-                {
-                    result.Add(dataReader["APPROVERNAME"].ToString());
-                }
-            }
-            response = string.Join(", ", result);
-            command.Dispose();
-            dataReader.Close();
-            return response;
-        }
+        //private string GetReimburseApproversListByTravelRequestId(DbConnection dbConn, int travelRequestId)
+        //{
+        //    string response = string.Empty;
+        //    string query = string.Format("select APPROVERNAME from TRAVEL_REIMBURSE_APPROVAL where TRAVELREQUESTID = {0} order by ApprovalOrder", travelRequestId);
+        //    OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+        //    command.CommandText = query;
+        //    DbDataReader dataReader = command.ExecuteReader();
+        //    List<string> result = new List<string>();
+        //    if (dataReader.HasRows)
+        //    {
+        //        while (dataReader.Read())
+        //        {
+        //            result.Add(dataReader["APPROVERNAME"].ToString());
+        //        }
+        //    }
+        //    response = string.Join(", ", result);
+        //    command.Dispose();
+        //    dataReader.Close();
+        //    return response;
+        //}
 
         public bool getApprovalSatus(DbConnection dbConn, int travelRequestId, int approverBadgeNumber)
         {

@@ -76,5 +76,26 @@ namespace TravelApplication.Controllers.WebAPI
             }
             return response;
         }
+
+        [HttpGet]
+        [Route("api/reimburse/reimbursementRequests")]
+        public HttpResponseMessage GetReimbursementRequests(int badgeNumber, int roleId)
+        {
+
+            HttpResponseMessage response = null;
+            try
+            {
+                var result = reimbursementService.GetReimbursementRequests(badgeNumber, roleId);
+
+                response = Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Log the exception message
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrieve EmployeeInfo for Badge # : " + ex.Message);
+
+            }
+            return response;
+        }
     }
 }
