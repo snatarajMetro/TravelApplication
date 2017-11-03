@@ -35,6 +35,12 @@ namespace TravelApplication.Services
             return result;
         }
 
+        public bool SubmitReimburse(SubmitReimburseData submitReimburseData)
+        {
+            var result = approvalRepository.SubmitReimburse(submitReimburseData);
+            return result;
+        }
+
         public bool SubmitTravelRequest(SubmitTravelRequestData submitTravelRequestData)
         {
             var result = approvalRepository.SubmitTravelRequest(submitTravelRequestData);

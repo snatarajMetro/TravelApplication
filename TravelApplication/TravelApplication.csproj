@@ -215,6 +215,7 @@
     <Compile Include="Models\ReimbursementInput.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\SharePointUpload.cs" />
+    <Compile Include="Models\SubmitReimburseData.cs" />
     <Compile Include="Models\SubmitTravelRequest.cs" />
     <Compile Include="Models\SubmitTravelRequestData.cs" />
     <Compile Include="Models\SupportingDocument.cs" />

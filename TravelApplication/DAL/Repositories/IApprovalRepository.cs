@@ -14,5 +14,6 @@ namespace TravelApplication.DAL.Repositories
         void sendEmail(string departmentHeadBadgeNumber, string body, string subject);
         bool SubmitTravelRequestNew(SubmitTravelRequest submitTravelRequest);
         SubmitTravelRequest GetApproverDetails(string travelRequestId);
+        bool SubmitReimburse(SubmitReimburseData submitReimburseData);
     }
 }

@@ -14,5 +14,6 @@ namespace TravelApplication.Services
         bool SubmitTravelRequest(SubmitTravelRequestData submitTravelRequestData);
         bool SubmitTravelRequestNew(SubmitTravelRequest submitTravelRequest);
         SubmitTravelRequest GetapproverDetails(string travelRequestId);
+        bool SubmitReimburse(SubmitReimburseData submitReimburseData);
     }
 }
