@@ -1,6 +1,7 @@
 ﻿var userName = '';
 var fadeOutTimeInMilliseconds = 5000; // 5 seconds
 var selectedRoleId = 0;
+var rowCounter = 2;
 
 $(document).ready(function () {
 

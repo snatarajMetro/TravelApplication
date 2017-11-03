@@ -1953,3 +1953,10 @@ div.reimbursementdataentry{
     margin-left:70px;
     height:96px;
 }
+
+.deleterow{
+    margin-left:3px;
+    margin-top:7px;
+    padding:2px;
+    font-size:10px;
+}
