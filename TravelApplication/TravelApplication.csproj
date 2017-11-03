@@ -299,12 +299,15 @@
     <Content Include="Images\logo.png" />
     <Content Include="Images\New.png" />
     <Content Include="Images\newbg.png" />
+    <Content Include="Images\Reimburse.png" />
     <Content Include="Images\reimbursement.png" />
     <Content Include="Images\reject.jpg" />
     <Content Include="Images\reject1.png" />
     <Content Include="Images\reject2.jpg" />
     <Content Include="Images\sn.png" />
     <Content Include="Images\view.png" />
+    <Content Include="Images\viewOld.png" />
+    <Content Include="Images\createNew.png" />
     <Content Include="Images\wallpaper.png" />
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
