@@ -1387,6 +1387,23 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             $('#travelreimbursementtemplate').html($compile($(data).html())($scope));
             $('#travelreimbursementtemplate').show();
 
+            // Date picker options
+            var options = {
+                format: 'mm/dd/yyyy',
+                orientation: "top right",
+                todayHighlight: true,
+                autoclose: true,
+            };
+
+            $('input[name="txtTravelPeriodFrom"]').datepicker(options);
+            $('input[name="txtTravelPeriodTo"]').datepicker(options);
+            $('input[name="txtTravelDate1"]').datepicker(options);
+            $('input[name="txtTravelDate2"]').datepicker(options);
+
+            $("#txtToday")
+                .datepicker({ dateFormat: "mm/dd/yyyy" })
+                .datepicker("setDate", new Date());
+
             $.get('api/reimburse/TravelrequestDetails/' + travelRequestId)
             .done(function (data) {
 
@@ -1433,7 +1450,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 var cols = "";
 
                 cols += "<td style='padding:0px;'>";
-                cols += "   <input type='text' placeholder='MM/DD/YYYY' id='txtTravelDate" + rowCounter + "' class='datainputdate2' />";
+                cols += "   <input type='text' placeholder='MM/DD/YYYY' id='txtTravelDate" + rowCounter + "' name='txtTravelDate" + rowCounter + "' class='datainputdate2' />";
                 cols += "</td>";
                 cols += "<td style='padding:0px;'>";
                 cols += "   <input type='text' id='txtCityState" + rowCounter + "' name='txtCityState" + rowCounter + "' class='datainputname2' />";
@@ -1490,9 +1507,19 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 newRow.insertBefore($('#part1columntotal'));
                 angular.element("#row3").triggerHandler('change');
 
-                $scope.$apply();
+                // Date picker options
+                var options = {
+                    format: 'mm/dd/yyyy',
+                    orientation: "top right",
+                    todayHighlight: true,
+                    autoclose: true,
+                };
 
-                $("#txtTravelDate" + rowCounter).focus();
+                $("input[name=" + "'txtTravelDate" + rowCounter + "']").datepicker(options);
+
+                //$("#txtTravelDate" + rowCounter).focus();
+
+                $scope.$apply();
             });
 
             $("table.tablepart1").on("click", ".deleterow", function (event) {
