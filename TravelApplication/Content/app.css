@@ -1961,3 +1961,8 @@ div.reimbursementdataentry{
     padding:2px;
     font-size:10px;
 }
+
+div.ui-grid-cell input[class^="reimbursebutton"]
+{
+    background-color:green;
+}

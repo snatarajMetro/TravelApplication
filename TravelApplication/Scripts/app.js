@@ -12,6 +12,16 @@ $(document).ready(function () {
     //createTravelRequestReimbursement();
   });
 
+//$(".two-decimals").change(function () {
+//    alert('here');
+
+//    this.value = parseFloat(this.value).toFixed(2);
+//});
+
+function setTwoDecimal(el) {
+    el.value = parseFloat(el.value).toFixed(2);
+}
+
 function handleEnterOnSigIn(e)
 {
     // Enter Key
@@ -667,7 +677,7 @@ function deletedocument(container) {
         url: "/api/documents/deletedocument?travelRequestId=" + travelRequestId + "&documentId=" + documentId,
         contentType: "application/json; charset=utf-8",
         success: function () {
-
+           
             // reload supporting documents section
             var scope = angular.element('#fileuploadtemplate').scope();
             scope.loadSupportingDocuments(travelRequestId);
@@ -891,13 +901,13 @@ function savereimbursementdataentry() {
                 }
             }),
             success: function (data) {
-                var result = JSON.parse(data);
+                //var result = JSON.parse(data);
 
-                //$('#travelRequestBadgeNumber').text(result.BadgeNumber);
-                //$('#travelRequestId').text(result.TravelRequestId);
+                $('#travelRequestBadgeNumber').text(badgeNumber);
+                $('#travelRequestId').text(travelRequestId);
 
                 var scope = angular.element('#fileuploadtemplate').scope();
-                scope.loadFileUpload2(result.TravelRequestId);
+                scope.loadFileUploadForReimbursement(travelRequestId);
                 scope.loadCommonApprovers($('#travelRequestBadgeNumber').text());
                 scope.loadTravelCoordinators();
 
@@ -929,17 +939,6 @@ function savereimbursementdataentry() {
         // fade out in 5 seconds
         $("#submiterror").fadeOut(fadeOutTimeInMilliseconds);
     }
-
-    //var travelRequestId = $('#txtTravelRequestNumber1').val();
-
-    //var scope = angular.element('#fileuploadtemplate').scope();
-    //scope.loadFileUploadForReimbursement(travelRequestId);
-    //scope.loadCommonApprovers($('#travelRequestBadgeNumber').text());
-    //scope.loadTravelCoordinators();
-    ////scope.loadSupportingDocuments(travelRequestId);
-
-    //$("#travelreimbursementtemplate").hide();
-    //$("#fileuploadtemplate").show();
 }
 
 function backtotravelreimbursementsection() {
@@ -953,4 +952,25 @@ function isNumberKey(evt) {
     if (charCode > 31 && (charCode < 48 || charCode > 57))
         return false;
     return true;
+}
+
+function updateTotal(obj) {
+
+    var total = 0;
+    for(var i=1; i<= rowCounter; i++)
+    {
+        var value = $("#txtTotalMiles" + i).val();
+
+        if (value) {
+            total += parseInt(value);
+        }
+    }
+    $("#txtTotalMiles").val(total);
+}
+
+function checkDec(el) {
+    var ex = /^\d+(?:\.\d{1,2})?$/;
+    if (ex.test(el.value) == false) {
+        el.value = el.value.substring(0, el.value.length - 1);
+    }
 }

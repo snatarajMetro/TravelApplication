@@ -1170,6 +1170,194 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
 
     }
 
+    $scope.submitRequestReimbursement = function () {
+
+        var canSubmit = false;
+        var travelRequestId = $('#travelRequestId').text();
+        var badgeNumber = $('#signedInUserBadgeNumber').text();
+
+        // Department Head
+        var departmentHeadBadgeNumber = $("#ddlDepartmentHead option:selected").val();
+        var departmentHeadName = "";
+
+        if (departmentHeadBadgeNumber && departmentHeadBadgeNumber != '?') {
+
+            if (departmentHeadBadgeNumber == '-1') {
+                departmentHeadBadgeNumber = $('#txtDepartmentHeadBadgeNumber').val();
+                departmentHeadName = $('#txtDepartmentHeadName').val();
+            }
+            else {
+                departmentHeadName = $("#ddlDepartmentHead option:selected").text();
+            }
+
+            if (departmentHeadBadgeNumber) {
+
+                canSubmit = true;
+            }
+        }
+
+        // Executive Officer
+        var executiveOfficerBadgeNumber = $("#ddlExecutiveOfficer option:selected").val();
+        var executiveOfficerName = "";
+
+        if (executiveOfficerBadgeNumber && executiveOfficerBadgeNumber != '?') {
+
+            if (executiveOfficerBadgeNumber == '-1') {
+                executiveOfficerBadgeNumber = $('#txtExecutiveOfficerBadgeNumber').val();
+                executiveOfficerName = $('#txtExecutiveOfficerName').val();
+            }
+            else {
+                executiveOfficerName = $("#ddlExecutiveOfficer option:selected").text();
+            }
+        }
+        else {
+            executiveOfficerBadgeNumber = "";
+        }
+
+        // CEO (For International)
+        var ceoForInternationalBadgeNumber = $("#ddlCEOForInternational option:selected").val();
+        var ceoForInternationalName = "";
+
+        if (ceoForInternationalBadgeNumber && ceoForInternationalBadgeNumber != '?') {
+
+            if (ceoForInternationalBadgeNumber == '-1') {
+                ceoForInternationalBadgeNumber = $('#txtCEOForInternationalBadgeNumber').val();
+                ceoForInternationalName = $('#txtCEOForInternationalName').val();
+            }
+            else {
+                ceoForInternationalName = $("#ddlCEOForInternational option:selected").text();
+            }
+        }
+        else {
+            ceoForInternationalBadgeNumber = "";
+        }
+
+        // CEO (For APTA/CTA conference)
+        var ceoForAPTABadgeNumber = $("#ddlCEOForAPTA option:selected").val();
+        var ceoForAPTAName = "";
+
+        if (ceoForAPTABadgeNumber && ceoForAPTABadgeNumber != '?') {
+
+            if (ceoForAPTABadgeNumber == '-1') {
+                ceoForAPTABadgeNumber = $('#txtCEOForAPTABadgeNumber').val();
+                ceoForAPTAName = $('#txtCEOForAPTAName').val();
+            }
+            else {
+                ceoForAPTAName = $("#ddlCEOForAPTA option:selected").text();
+            }
+        }
+        else {
+            ceoForAPTABadgeNumber = "";
+        }
+
+        // Travel Co-ordinator
+        var travelCoordinatorBadgeNumber = $("#ddlTravelCoordinator option:selected").val();
+        var travelCoordinatorName = "";
+
+        if (travelCoordinatorBadgeNumber && travelCoordinatorBadgeNumber != '?') {
+
+            if (travelCoordinatorBadgeNumber == '-1') {
+                travelCoordinatorBadgeNumber = $('#txtTravelCoordinatorBadgeNumber').val();
+                travelCoordinatorName = $('#txtTravelCoordinatorName').val();
+            }
+            else {
+                travelCoordinatorName = $("#ddlTravelCoordinator option:selected").text();
+            }
+
+            if (travelCoordinatorBadgeNumber && canSubmit) {
+                canSubmit = true;
+            }
+        }
+        else {
+            canSubmit = false;
+        }
+
+        // Agree checkbox
+        var agreedToTermsAndConditions = $('#cbAgree').prop('checked');
+
+        if (!agreedToTermsAndConditions) {
+            canSubmit = false;
+        }
+
+        // Submitted by user name
+        var submittedByUserName = $('#txtSubmittedByUserName').val().trim();
+        if (!submittedByUserName) {
+            canSubmit = false;
+        }
+
+        if (canSubmit) {
+            $.ajax({
+                type: "POST",
+                url: "/api/approval/submitReimburse",
+                data: JSON.stringify({
+                    "HeirarchichalApprovalRequest": {
+                        "TravelRequestId": travelRequestId,
+                        "BadgeNumber": badgeNumber,
+                        "AgreedToTermsAndConditions": agreedToTermsAndConditions,
+                        "SubmittedByUserName": submittedByUserName,
+                        "ApproverList": [
+                            {
+                                "ApproverName": departmentHeadName,
+                                "ApproverBadgeNumber": departmentHeadBadgeNumber,
+                                "ApprovalOrder": 1
+                            },
+                            {
+                                "ApproverName": executiveOfficerName,
+                                "ApproverBadgeNumber": executiveOfficerBadgeNumber,
+                                "ApprovalOrder": 2
+                            },
+                            {
+                                "ApproverName": ceoForInternationalName,
+                                "ApproverBadgeNumber": ceoForInternationalBadgeNumber,
+                                "ApprovalOrder": 3
+                            },
+                            {
+                                "ApproverName": ceoForAPTAName,
+                                "ApproverBadgeNumber": ceoForAPTABadgeNumber,
+                                "ApprovalOrder": 4
+                            },
+                            {
+                                "ApproverName": travelCoordinatorName,
+                                "ApproverBadgeNumber": travelCoordinatorBadgeNumber,
+                                "ApprovalOrder": 5
+                            }
+                        ]
+                    }
+                }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+
+                    $("#submitsuccess2").fadeIn("slow");
+                    $('#submitsuccessmessage2').html("Reimbursement request has been successfully submitted. Reimbursement Request# is <b>" + travelRequestId + "</b>.");
+
+                    $('#btnSubmit').prop("disabled", true);
+                    $('#btnBack').prop("disabled", true);
+                },
+                error: function (xhr, options, error) {
+                    if (xhr.status == 500) {
+
+                        var errorMessage = xhr.responseText;
+
+                        $("#submiterror2").fadeIn("slow");
+                        $('#submiterrormessage2').text(errorMessage);
+
+                        // fade out in 5 seconds
+                        $("#submiterror2").fadeOut(fadeOutTimeInMilliseconds);
+                    }
+                }
+            });
+        }
+        else {
+            $("#submiterror2").fadeIn("slow");
+            $('#submiterrormessage2').text("Some of the required fields are missing. Please try again.");
+
+            // fade out in 5 seconds
+            $("#submiterror2").fadeOut(fadeOutTimeInMilliseconds);
+        }
+
+    }
+
     // travel request fields
     $scope.badgeNumber = 0;
     $scope.travelRequestUserName = "";
@@ -1682,7 +1870,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
     }
 
     $scope.loadApprovedTravelRequests = function () {
-        var actionTemplate = '<div style="display:flex;"><div syle="float:left;" ng-if="row.entity.ViewActionVisible == true"><input  type="button" id="btnView" name="btnView" value="View" alt="{{row.entity.TravelRequestId}}" onclick="" /></div><div><input  type="button" id="btnOk" name="btnOk" value="Create" alt="{{row.entity.TravelRequestId}}" onclick="createTravelRequestReimbursement(this);" /></div></div>';
+        var actionTemplate = '<div style="display:flex;"><div syle="float:left;" ng-if="row.entity.ViewActionVisible == true"><input  type="button" id="btnView" name="btnView" value="View" alt="{{row.entity.TravelRequestId}}" onclick="" /></div><div><input  type="button" id="btnOk" name="btnOk" value="Reimburse" alt="{{row.entity.TravelRequestId}}" class="reimbursebutton" onclick="createTravelRequestReimbursement(this);" /></div></div>';
 
         $scope.columns = [{
             field: 'TravelRequestId',
@@ -1775,7 +1963,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             },
             {
                 name: 'Reimbursement',
-                width: 100,
+                width: 150,
                 cellTemplate: actionTemplate,
                 enableFiltering: false,
                 headerCellClass: "existingrequestcolumnheader",
