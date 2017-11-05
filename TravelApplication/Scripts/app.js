@@ -974,3 +974,8 @@ function checkDec(el) {
         el.value = el.value.substring(0, el.value.length - 1);
     }
 }
+
+function backtorolesection() {
+    $("#action").hide();
+    $('#signintemplate').show();
+}
