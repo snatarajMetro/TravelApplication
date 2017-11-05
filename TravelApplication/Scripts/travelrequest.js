@@ -83,12 +83,23 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
     $scope.totalRegistration = "";
     $scope.totalInternet = "";
     $scope.totalOther = "";
+    $scope.totalPart2NonTravelExpenseAmount = "";
+    $scope.totalSubmittedForApprovalAmount = "";
+    $scope.totalPrePaidByMTAAmount = "";
+    $scope.totalExpenseAmount = "";
+    $scope.totalCashAdvanceAmount = "";
+    $scope.totalAmount = "";
 
     $scope.updateTotalDailyAmount = function () {
         $scope.totalDailyAmount = (
             ($scope.dailyTotalAmount1 * 1)
             + ($scope.dailyTotalAmount2 * 1)
             );
+    }
+
+    $scope.updateSubmittedForApprovalAmount = function () {
+        $scope.totalSubmittedForApprovalAmount = $scope.totalDailyAmount + $scope.totalPart2NonTravelExpenseAmount;
+        updatetotalExpenseAmount();
     }
 
     $scope.updateMileATotal = function () {
@@ -110,6 +121,14 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
 
         updateBusinessMile();
         updateDailyTotal();
+    }
+
+    function updatetotalExpenseAmount() {
+        $scope.totalExpenseAmount = ($scope.totalSubmittedForApprovalAmount * 1) - ($scope.totalPrePaidByMTAAmount * 1);
+
+        
+        $scope.totalAmount = $scope.totalExpenseAmount - ($scope.totalCashAdvanceAmount * 1)
+
     }
 
     function updateBusinessMile () {
@@ -161,6 +180,14 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             ($scope.dailyTotalAmount1 * 1)
             + ($scope.dailyTotalAmount2 * 1)
             );
+
+        $scope.totalSubmittedForApprovalAmount = $scope.totalDailyAmount + $scope.totalPart2NonTravelExpenseAmount * 1;
+
+        updatetotalExpenseAmount();
+    }
+
+    $scope.updatePrePaidByMTAAmount = function () {
+        updatetotalExpenseAmount();
     }
 
     $scope.updateParkingTotal = function () {
@@ -1607,6 +1634,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 $("#txtDivision").val(data.TravelReimbursementDetails.Division);
                 $("#txtDepartment").val(data.TravelReimbursementDetails.Department);
                 $("#txtCashAdvance").val(data.CashAdvance);
+                $scope.totalCashAdvanceAmount = data.CashAdvance;
 
                 // Set FIS section
                 angular.forEach(data.Fis.FISDetails, function (value, index) {

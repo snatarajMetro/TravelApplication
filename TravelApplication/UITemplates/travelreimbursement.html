@@ -220,57 +220,6 @@
                                            ng-model="dailyTotalAmount2" />
                                 </td>
                             </tr>
-                            <!--<tr>
-                                <td style="padding:0px;">
-                                    <input type="text" placeholder="MM/DD/YYYY" id="txtTravelDate3" name="txtTravelDate3" class="datainputdate2" />
-                                </td>
-                                <td style="padding:0px;">
-                                    <input type="text" placeholder="" id="txtCityState3" name="txtCityState3" class="datainputname2" />
-                                </td>
-                                <td style="padding:0px;">
-                                    <input type="text" placeholder="" id="txtTotalMiles3" name="txtTotalMiles3" class="datatransportationcolumn" />
-                                </td>
-                                <td style="padding:0px;">
-                                    <input type="text" placeholder="" id="txtNormalMiles3" name="txtNormalMiles3" class="datatransportationcolumn" />
-                                </td>
-                                <td style="padding:0px;">
-                                    <input type="text" placeholder="" id="txtBusinessMiles3" name="txtBusinessMiles3" class="datatransportationcolumn" />
-                                </td>
-                                <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtBusinessMilesTotal3" name="txtBusinessMilesTotal3" class="inputtransportationnumber" />
-                                </td>
-                                <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtParking3" name="txtParking3" class="inputtransportationnumber" />
-                                </td>
-                                <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAirfare3" name="txtAirfare3" class="inputtransportationnumber" />
-                                </td>
-                                <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTaxi3" name="txtTaxi3" class="inputtransportationnumber" />
-                                </td>
-                                <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtLodging3" name="txtLodging3" class="inputtransportationnumber" />
-                                </td>
-                                <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtMeals3" name="txtMeals3" class="inputtransportationnumber" />
-                                </td>
-                                <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtRegistration3" name="txtRegistration3" class="inputtransportationnumber" />
-                                </td>
-                                <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtOther3" name="txtOther3" class="inputtransportationnumber" />
-                                </td>
-                                <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtLocal3" name="txtLocal3" class="inputtransportationnumber" />
-                                </td>
-                                <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtLongDistance3" name="txtLongDistance3" class="inputtransportationnumber" />
-                                </td>
-                                <td style="padding:0px;vertical-align:middle;border-color:white;">-->
-                                    <!--<input class="btn btn-danger deleterowbutton" type="button" id="btnDeleteRow" name="btnDeleteRow" value="Delete" />-->
-                                    <!--<span style="color:red;font-weight:bold;cursor:pointer;" title="Delete row">&nbsp;❌</span>
-                                </td>
-                            </tr>-->
                             <tr id="part1columntotal">
                                 <td colspan="2" class="headercolumn2">Part 1 Column Totals</td>
                                 <td style="padding:0px;">
@@ -354,7 +303,7 @@
                                 </td>
                                 <td style="padding-top:5px;" class="calculationtext">Total Part I: Travel Expenses</td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTotalPart1TravelExpense" name="txtTotalPart1TravelExpense" ng-model="totalDailyAmount" class="inputtransportationnumber totalbgcolor" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTotalPart1TravelExpense" name="txtTotalPart1TravelExpense" ng-model="totalDailyAmount" class="inputtransportationnumber totalbgcolor" readonly />
                                 </td>
                             </tr>
                             <tr>
@@ -380,7 +329,7 @@
                                 </td>
                                 <td style="padding-top:5px;" class="calculationtext">ADD: Total Part II: Non-Travel Expenses</td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTotalPart2NonTravelExpense" name="txtTotalPart2NonTravelExpense" class="inputtransportationnumber totalbgcolor" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTotalPart2NonTravelExpense" name="txtTotalPart2NonTravelExpense" ng-model="totalPart2NonTravelExpenseAmount" class="inputtransportationnumber totalbgcolor" ng-change="updateSubmittedForApprovalAmount()" />
                                 </td>
                             </tr>
                             <tr>
@@ -391,7 +340,7 @@
                                 <td></td>
                                 <td style="padding-top:5px;" class="calculationtext">TOTAL Exp Submitted for Approval</td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTotalSubmittedForApproval" name="txtTotalSubmittedForApproval" class="inputtransportationnumber totalbgcolor" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTotalSubmittedForApproval" name="txtTotalSubmittedForApproval" ng-model="totalSubmittedForApprovalAmount" class="inputtransportationnumber totalbgcolor" />
                                 </td>
                             </tr>
                             <tr>
@@ -402,7 +351,7 @@
                                 <td></td>
                                 <td style="padding-top:5px;" class="calculationtext">SUBSTRACT: Prepaid Exp Paid by MTA</td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTotalPrePaidByMTA" name="txtTotalPrePaidByMTA" class="inputtransportationnumber totalbgcolor" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTotalPrePaidByMTA" name="txtTotalPrePaidByMTA" ng-model="totalPrePaidByMTAAmount" ng-change="updatePrePaidByMTAAmount()" class="inputtransportationnumber totalbgcolor" />
                                 </td>
                             </tr>
                             <tr>
@@ -413,7 +362,7 @@
                                 <td></td>
                                 <td style="padding-top:5px;" class="calculationtext">TOTAL EXPENSES</td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTotalExpenses" name="txtTotalExpenses" class="inputtransportationnumber totalbgcolor" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTotalExpenses" name="txtTotalExpenses" ng-model="totalExpenseAmount" class="inputtransportationnumber totalbgcolor" />
                                 </td>
                             </tr>
                             <tr>
@@ -424,7 +373,7 @@
                                 <td></td>
                                 <td style="padding-top:5px;" class="calculationtext">SUBSTRACT:  Cash Advance</td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtCashAdvance" name="txtCashAdvance" class="inputtransportationnumber totalbgcolor" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtCashAdvance" name="txtCashAdvance" ng-model="totalCashAdvanceAmount" class="inputtransportationnumber totalbgcolor" readonly />
                                 </td>
                             </tr>
                             <tr>
@@ -435,7 +384,7 @@
                                 <td></td>
                                 <td style="padding-top:5px;" class="calculationtext">TOTAL</td>
                                 <td style="padding:0px;">
-                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTotal" name="txtTotal" class="inputtransportationnumber totalbgcolor" />
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTotal" name="txtTotal" ng-model="totalAmount" class="inputtransportationnumber totalbgcolor" readonly disabled />
                                 </td>
                             </tr>
                         </tbody>
