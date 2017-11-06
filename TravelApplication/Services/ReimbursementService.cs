@@ -16,6 +16,12 @@ namespace TravelApplication.Services
             return result;
         }
 
+        public ReimbursementInput GetReimbursementDetails(string travelRequestId)
+        {
+            var result = reimbursementRepository.GetAllReimbursementDetails(travelRequestId);
+            return result;
+        }
+
         public List<ReimburseGridDetails> GetReimbursementRequests(int badgeNumber, int roleId)
         {
             var result = reimbursementRepository.GetReimbursementRequestsList(badgeNumber, roleId);

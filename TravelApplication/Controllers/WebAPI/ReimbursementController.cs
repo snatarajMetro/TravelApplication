@@ -97,5 +97,24 @@ namespace TravelApplication.Controllers.WebAPI
             }
             return response;
         }
+
+        [HttpGet]
+        [Route("api/reimburse/{travelRequestId}")]
+        public HttpResponseMessage GetReimbursementDetails(string travelRequestId)
+        {
+            HttpResponseMessage response = null;
+            try
+            {
+                ReimbursementInput result = reimbursementService.GetReimbursementDetails(travelRequestId);
+                response = Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Log the exception message
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrive reiumbursement details for the given  Id : " + ex.Message);
+
+            }
+            return response;
+        }
     }
 }

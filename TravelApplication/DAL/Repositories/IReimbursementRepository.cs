@@ -13,8 +13,8 @@ namespace TravelApplication.DAL.Repositories
         List<TravelRequestDetails> GetApprovedTravelRequestList(int submittedBadgeNumber, int selectedRoleId);
         ReimbursementAllTravelInformation GetTravelRequestInfoForReimbursement(string travelRequestId);
         ReimbursementTravelRequestDetails GetTravelReimbursementDetails(DbConnection dbConn, string travelRequestId);
-        string GetVendorId(DbConnection dbConn, int badgeNumber);
         string SaveTravelRequestReimbursement(ReimbursementInput reimbursementRequest);
+        ReimbursementInput GetAllReimbursementDetails(string travelRequestId);
         List<ReimburseGridDetails> GetReimbursementRequestsList(int badgeNumber, int selectedRoleId);
     }
 }

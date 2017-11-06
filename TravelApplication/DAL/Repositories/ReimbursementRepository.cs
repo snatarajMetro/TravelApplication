@@ -197,12 +197,6 @@ namespace TravelApplication.DAL.Repositories
             }
         }
 
-        public string GetVendorId(DbConnection dbConn, int badgeNumber)
-        {
-            throw new NotImplementedException();
-        }
-
-
         public string SaveTravelRequestReimbursement(ReimbursementInput reimbursementRequest)
         {
             string reimbursementId = string.Empty;
@@ -247,7 +241,7 @@ namespace TravelApplication.DAL.Repositories
         {
             try
             {
-                    foreach (var reimbursement in reimbursementDetails.Reimbursement)
+                        foreach (var reimbursement in reimbursementDetails.Reimbursement)
                     {
                         if (!CheckReimburseDataExists(dbConn, reimbursement.Id))
                         {
@@ -838,7 +832,8 @@ namespace TravelApplication.DAL.Repositories
                                 response.Add(new ReimburseGridDetails()
                                 {
                                     TravelRequestId = dataReader["TravelRequestId"].ToString(),
-                                    //Description = dataReader["PURPOSE"].ToString(),
+                                    BadgeNumber = Convert.ToInt16(dataReader["BadgeNumber"].ToString()),
+                                    Purpose = dataReader["PURPOSE"].ToString(),
                                     SubmittedByUser = dataReader["SUBMITTEDBYUSERNAME"].ToString(),
                                     SubmittedDateTime = Convert.ToDateTime(dataReader["SUBMITTEDDATETIME"]),
                                     RequiredApprovers = GetReimburseApproversListByTravelRequestId(dbConn, dataReader["TravelRequestId"].ToString()),
@@ -847,7 +842,8 @@ namespace TravelApplication.DAL.Repositories
                                     EditActionVisible = ReimburseEditActionEligible(dbConn, dataReader["TravelRequestId"].ToString()) ? true : false,
                                     ViewActionVisible = true,
                                     ApproveActionVisible = false,
-                                    Status = dataReader["STATUS"].ToString()                                    
+                                    Status = dataReader["STATUS"].ToString(),
+                                    StrSubmittedDateTime = dataReader["SUBMITTEDDATETIME"].ToString() ?? string.Empty
                                 });
                             }
                         }
@@ -1091,6 +1087,111 @@ namespace TravelApplication.DAL.Repositories
                 throw new Exception(ex.Message);
             }
 
+        }
+
+        public ReimbursementInput GetAllReimbursementDetails(string travelRequestId)
+        {
+            ReimbursementInput response = new ReimbursementInput();
+            try
+            {
+                using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+                {
+                    
+                    response.ReimbursementTravelRequestDetails = GetTravelReimbursementDetails(dbConn, travelRequestId);
+                    response.ReimbursementDetails =  GetReimbursementDetails(dbConn, travelRequestId);
+                    response.FIS = fisRepository.GetFISdetails(dbConn, travelRequestId);
+
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+           
+
+            return response;
+        }
+
+        private ReimbursementDetails GetReimbursementDetails(DbConnection dbconn, string travelRequestId)
+        {
+            try
+            {
+                ReimbursementDetails finalResponse = null;
+                List<Reimbursement> response =  new List<Reimbursement>();
+                string query = string.Format("Select * from Reimburse where TRAVELREQUESTID= {0}", travelRequestId);
+                OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+                command.CommandText = query;
+                DbDataReader dataReader = command.ExecuteReader();
+
+                if (dataReader.HasRows)
+                {
+                    while (dataReader.Read())
+                    {
+
+                        response.Add(new Reimbursement()
+                        {
+                            TravelRequestId = travelRequestId,
+                            Date = Convert.ToDateTime(dataReader["RDate"]),
+                            CityStateAndBusinessPurpose = dataReader["CITYSTATEANDBUSINESSPURPOSE"].ToString(),
+                            Miles = Convert.ToInt32(dataReader["MILES"]),
+                            MileageToWork = Convert.ToInt32(dataReader["MILEAGETOWORK"]),
+                            BusinessMiles = Convert.ToInt32(dataReader["BUSINESSMILES"]),
+                            BusinessMilesXRate = Convert.ToInt32(dataReader["BUSINESSMILESXRATE"]),
+                            ParkingAndGas = Convert.ToInt32(dataReader["PARKINGANDGAS"]),
+                            AirFare = Convert.ToInt32(dataReader["AIRFARE"]),
+                            TaxiRail = Convert.ToInt32(dataReader["TAXIRAIL"]),
+                            Lodge = Convert.ToInt32(dataReader["LODGE"]),
+                            Meals = Convert.ToInt32(dataReader["MEALS"]),
+                            Registration = Convert.ToInt32(dataReader["REGISTRATION"]),
+                            Internet  = Convert.ToInt32(dataReader["INTERNET"]),
+                            Others = Convert.ToInt32(dataReader["OTHERS"]),
+                            DailyTotal = Convert.ToInt32(dataReader["DAILYTOTAL"]),
+
+                        });
+                        finalResponse = new ReimbursementDetails()
+                        {
+                            Reimbursement = response,
+                            SubtractCashAdvance = Convert.ToInt32(dataReader["SUBTRACTCASHADVANCE"]),
+                            SubtractPaidByMTA = Convert.ToInt32(dataReader["SUBTRACTPAIDBYMTA"]),
+                            Total = Convert.ToInt32(dataReader["TOTAL"]),
+                            TotalAirFare = Convert.ToInt32(dataReader["TOTALAIRFARE"]),
+                            TotalBusinessMiles = Convert.ToInt32(dataReader["TOTALBUSINESSMILES"]),
+                            TotalBusinessMilesXRate = Convert.ToInt32(dataReader["TOTALBUSINESSMILESXRATE"]),
+                            TotalDailyTotal = Convert.ToInt32(dataReader["TOTALDAILYTOTAL"]),
+                            TotalExpenses = Convert.ToInt32(dataReader["TOTALEXPENSES"]),
+                            TotalExpSubmittedForApproval = Convert.ToInt32(dataReader["TOTALEXPSUBMITTEDFORAPPROVAL"]),
+                            TotalInternet = Convert.ToInt32(dataReader["TOTALINTERNET"]),
+                            TotalLodge = Convert.ToInt32(dataReader["TOTALLODGE"]),
+                            TotalMeals = Convert.ToInt32(dataReader["TOTALMEALS"]),
+                            TotalMileageToWork = Convert.ToInt32(dataReader["TOTALMILEAGETOWORK"]),
+                            TotalMiles = Convert.ToInt32(dataReader["TOTALMILES"]),
+                            TotalOther = Convert.ToInt32(dataReader["TOTALOTHER"]),
+                            TotalParkingGas = Convert.ToInt32(dataReader["TOTALPARKIMGGAS"]),
+                            TotalPart1TravelExpenses = Convert.ToInt32(dataReader["TOTALPART1TRAVELEXPENSES"]),
+                            TotalPart2TravelExpenses = Convert.ToInt32(dataReader["TOTALPART2TRAVELEXPENSES"]),
+                            TotalRegistration = Convert.ToInt32(dataReader["TOTALREGISTRATION"]),
+                            TotalTaxiRail = Convert.ToInt32(dataReader["TOTALTAXIRAIL"]),
+
+                        };
+                    }
+                     
+ 
+                }
+                else
+                {
+                    throw new Exception("Couldn't retrieve reimbursement details");
+                }
+                command.Dispose();
+                dataReader.Close();
+                return finalResponse;
+
+            }
+            catch (Exception ex)
+            {
+                LogMessage.Log("GetTravelRequestDetail : " + ex.Message);
+                throw;
+            }
         }
     }
 }

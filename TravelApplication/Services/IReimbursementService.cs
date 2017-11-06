@@ -12,5 +12,6 @@ namespace TravelApplication.Services
         ReimbursementAllTravelInformation GetTravelRequestInfoForReimbursement(string travelRequestId);
         string SaveTravelRequestReimbursement(ReimbursementInput reimbursementRequest);
         List<ReimburseGridDetails> GetReimbursementRequests(int badgeNumber, int roleId);
+        ReimbursementInput GetReimbursementDetails(string travelRequestId);
     }
 }

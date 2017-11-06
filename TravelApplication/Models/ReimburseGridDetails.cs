@@ -8,6 +8,8 @@ namespace TravelApplication.Models
     public class ReimburseGridDetails
     {
         public string TravelRequestId { get; set; }
+        public int BadgeNumber { get; set; }
+        public string Purpose { get; set; }
         public string SubmittedByUser {get;set;}
         public DateTime SubmittedDateTime { get; set; }
         public string RequiredApprovers { get; set; }
@@ -17,6 +19,7 @@ namespace TravelApplication.Models
         public bool ViewActionVisible { get; set; }
         public bool ApproveActionVisible { get; set; }
         public string Status { get; set; }
+        public string StrSubmittedDateTime { get; set; }
 
 
     }
