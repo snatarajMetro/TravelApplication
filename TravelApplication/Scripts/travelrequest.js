@@ -103,10 +103,17 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
     }
 
     $scope.updateMileATotal = function () {
+
+        var totalA = 0;
+
+        for (var index = 2; index < rowCounter; index++) {
+            totalA = (totalA * 1) + ($("#txtTotalMiles" + (index + 1)).val() * 1);
+        }
+
         $scope.totalMileA = (
             ($scope.TotalMileA1 * 1)
             + ($scope.TotalMileA2 * 1)
-            + ($scope.TotalMileA3 * 1)
+            + (totalA * 1)
             );
 
         updateBusinessMile();
@@ -1662,7 +1669,8 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
 
                 rowCounter++;
 
-                var newRow = $("<tr class='tablerow' id='row" + rowCounter + "' name='row" + rowCounter + "'>");
+                var newRow = $("<tr ng-app='travelApp' ng-controller='travelAppCtrl' class='tablerow' id='row" + rowCounter + "' name='row" + rowCounter + "'>");
+
                 var cols = "";
 
                 cols += "<td style='padding:0px;'>";
@@ -1713,15 +1721,17 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 cols += "<td style='padding:0px;'><input type='button' class='deleterow btn btn-md btn-danger'  value='Delete'></td>";
                 cols += "</tr>";
 
-                //$compile(cols)($scope);
-
                 newRow.append(cols);
-                //newRow.insertBefore($('#part1columntotal'));
-                //angular.element("#TotalMileA3").triggerHandler('change');
 
-                $compile(newRow)($scope);
                 newRow.insertBefore($('#part1columntotal'));
-                angular.element("#row3").triggerHandler('change');
+
+                //var s = $("#row" + rowCounter);
+
+                //var element = angular.element($("#divpart1"));
+
+                //$compile(element.contents())($scope);
+
+                //angular.element("#row3").triggerHandler('change');
 
                 // Date picker options
                 var options = {
