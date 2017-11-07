@@ -291,26 +291,19 @@ namespace TravelApplication.DAL.Repositories
 
         public bool SubmitReimburse(SubmitReimburseData submitReimburseData)
         {
-            List<BadgeInfo> approvalOrderList = new List<BadgeInfo>();
-            approvalOrderList.Add(new BadgeInfo() { BadgeId = submitReimburseData.DepartmentHeadBadgeNumber, Name = submitReimburseData.DepartmentHeadName });
-            approvalOrderList.Add(new BadgeInfo() { BadgeId = submitReimburseData.ExecutiveOfficerBadgeNumber, Name = submitReimburseData.ExecutiveOfficerName });
-            approvalOrderList.Add(new BadgeInfo() { BadgeId = submitReimburseData.CEOForAPTABadgeNumber, Name = submitReimburseData.CEOForAPTAName });
-            approvalOrderList.Add(new BadgeInfo() { BadgeId = submitReimburseData.CEOForInternationalBadgeNumber, Name = submitReimburseData.CEOForInternationalName });
-            approvalOrderList.Add(new BadgeInfo() { BadgeId = submitReimburseData.TravelCoordinatorBadgeNumber, Name = submitReimburseData.TravelCoordinatorName });
-
             try
             {
-
-                dbConn = ConnectionFactory.GetOpenDefaultConnection();
-                int count = 1;
-                foreach (var item in approvalOrderList)
+                using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
                 {
-                    if (!string.IsNullOrEmpty(item.BadgeId))
+                    foreach (var item in submitReimburseData.HeirarchichalApprovalRequest.ApproverList)
                     {
-                        // submit to approval 
-                        OracleCommand cmd = new OracleCommand();
-                        cmd.Connection = (OracleConnection)dbConn;
-                        cmd.CommandText = @"INSERT INTO REIMBURSE_APPROVAL (                                                  
+                        if (item.ApproverBadgeNumber != 0)
+                        {
+
+                            // submit to approval 
+                            OracleCommand cmd = new OracleCommand();
+                            cmd.Connection = (OracleConnection)dbConn;
+                            cmd.CommandText = @"INSERT INTO REIMBURSE_APPROVAL (                                                  
                                                             TRAVELREQUESTID,
                                                             BADGENUMBER,
                                                             APPROVERNAME,
@@ -319,40 +312,40 @@ namespace TravelApplication.DAL.Repositories
                                                         )
                                                         VALUES
                                                             (:p1,:p2,:p3,:p4,:p5)";
-                        cmd.Parameters.Add(new OracleParameter("p1", submitReimburseData.TravelRequestId));
-                        cmd.Parameters.Add(new OracleParameter("p2", item.BadgeId));
-                        cmd.Parameters.Add(new OracleParameter("p3", item.Name));
-                        cmd.Parameters.Add(new OracleParameter("p4", Common.ApprovalStatus.Pending.ToString()));
-                        cmd.Parameters.Add(new OracleParameter("p5", count));
-                        var rowsUpdated = cmd.ExecuteNonQuery();
-                        cmd.Dispose();
-                        count++;
+                            cmd.Parameters.Add(new OracleParameter("p1", submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId));
+                            cmd.Parameters.Add(new OracleParameter("p2", item.ApproverBadgeNumber));
+                            cmd.Parameters.Add(new OracleParameter("p3", item.ApproverName));
+                            cmd.Parameters.Add(new OracleParameter("p4", Common.ApprovalStatus.Pending.ToString()));
+                            cmd.Parameters.Add(new OracleParameter("p5", item.ApprovalOrder));
+                            var rowsUpdated = cmd.ExecuteNonQuery();
+                            cmd.Dispose();
+                        }
                     }
-                }
-                OracleCommand cmd1 = new OracleCommand();
-                cmd1.Connection = (OracleConnection)dbConn;
-                cmd1.CommandText = string.Format(@"UPDATE REIMBURSE_TRAVELREQUEST SET                                                 
+                    OracleCommand cmd1 = new OracleCommand();
+                    cmd1.Connection = (OracleConnection)dbConn;
+                    cmd1.CommandText = string.Format(@"UPDATE REIMBURSE_TRAVELREQUEST SET                                                 
                                                        SUBMITTEDBYUSERNAME = :p1 ,
                                                         SUBMITTEDDATETIME = :p2,
                                                         STATUS = :p3,
                                                         AGREE = :p4
-                                                   WHERE TRAVELREQUESTID = {0}", submitReimburseData.TravelRequestId);
+                                                   WHERE TRAVELREQUESTID = {0}", submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId);
 
-                cmd1.Parameters.Add(new OracleParameter("p1", submitReimburseData.SubmittedByUserName));
-                cmd1.Parameters.Add(new OracleParameter("p2", DateTime.Now));
-                cmd1.Parameters.Add(new OracleParameter("p3", Common.ApprovalStatus.Pending.ToString()));
-                cmd1.Parameters.Add(new OracleParameter("p4", (submitReimburseData.AgreedToTermsAndConditions) ? "Y" : "N"));
-                var rowsUpdated1 = cmd1.ExecuteNonQuery();
-                cmd1.Dispose();
-                dbConn.Close();
-                dbConn.Dispose();
+                    cmd1.Parameters.Add(new OracleParameter("p1", submitReimburseData.HeirarchichalApprovalRequest.SubmittedByUserName));
+                    cmd1.Parameters.Add(new OracleParameter("p2", DateTime.Now));
+                    cmd1.Parameters.Add(new OracleParameter("p3", Common.ApprovalStatus.Pending.ToString()));
+                    cmd1.Parameters.Add(new OracleParameter("p4", (submitReimburseData.HeirarchichalApprovalRequest.AgreedToTermsAndConditions) ? "Y" : "N"));
+                    var rowsUpdated1 = cmd1.ExecuteNonQuery();
+                    cmd1.Dispose();
+                    dbConn.Close();
+                    dbConn.Dispose();
 
 
-                string link = string.Format("<a href=\"http://localhost:2462/\">here</a>");
-                string subject = string.Format(@"Reimburse Request Approval for Id - {0} ", submitReimburseData.TravelRequestId);
-                string body = string.Format(@"Please visit Travel application website " + link + " to Approve/Reject for travel request Id : {0}", submitReimburseData.TravelRequestId);
-                sendEmail(submitReimburseData.DepartmentHeadBadgeNumber, body, subject);
-                return true;
+                    string link = string.Format("<a href=\"http://localhost:2462/\">here</a>");
+                    string subject = string.Format(@"Reimbursement Request Approval for Travel Request Id - {0} ", submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId);
+                    string body = string.Format(@"Please visit Travel application website " + link + " to Approve/Reject for travel request Id : {0}", submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId);
+                    sendEmail(submitReimburseData.HeirarchichalApprovalRequest.ApproverList[0].ApproverBadgeNumber.ToString(), body, subject);
+                    return true;
+                }
 
             }
             catch (Exception ex)
@@ -360,7 +353,6 @@ namespace TravelApplication.DAL.Repositories
 
                 throw new Exception(ex.Message);
             }
-
         }
     }
 

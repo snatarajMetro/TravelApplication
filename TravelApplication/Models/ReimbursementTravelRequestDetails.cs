@@ -10,6 +10,7 @@ namespace TravelApplication.Models
         public string ReimbursementId { get; set; }
         public string TravelRequestId { get; set; }
         public int BadgeNumber { get; set; }
+        public string Purpose { get; set; }
         public DateTime DepartureDateTime { get; set; }
         public DateTime ReturnDateTime { get; set; }
         public string VendorNumber { get; set; }
@@ -20,6 +21,8 @@ namespace TravelApplication.Models
         public string Department { get; set; }
         public int SelectedRoleId { get; set; }
         public int SubmittedByBadgeNumber { get; set; }
+        public string StrDepartureDateTime { get; set; }
+        public string StrReturnDateTime { get; set; }
 
     }
 }
