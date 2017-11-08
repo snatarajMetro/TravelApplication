@@ -716,7 +716,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 enableColumnResizing: false,
             }];
 
-        $scope.existingRequestsGridOptions = {
+        $scope.existingRequestsGridOptions3 = {
             enableSorting: false,
             enableColumnResizing: true,
             columnDefs: $scope.columns,
@@ -724,7 +724,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             paginationPageSizes: [10, 15, 20],
             paginationPageSize: 10,
             onRegisterApi: function (gridApi) {
-                $scope.grid1Api = gridApi;
+                $scope.gridApi = gridApi;
             }
         };
 
@@ -735,9 +735,9 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
         $.get(url)
        .done(function (data) {
 
-           $scope.existingRequestsGridOptions.data = data;
+           $scope.existingRequestsGridOptions3.data = data;
 
-           angular.forEach($scope.existingRequestsGridOptions.data, function (value, index) {
+           angular.forEach($scope.existingRequestsGridOptions3.data, function (value, index) {
 
                if (value.SubmittedByUser == null || value.SubmittedByUser == '') {
                    $scope.columns[2].visible = false;
@@ -763,9 +763,9 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
         $.get(url)
        .done(function (data) {
 
-           $scope.existingRequestsGridOptions.data = data;
+           $scope.existingRequestsGridOptions3.data = data;
 
-           angular.forEach($scope.existingRequestsGridOptions.data, function (value, index) {
+           angular.forEach($scope.existingRequestsGridOptions3.data, function (value, index) {
 
                if (value.SubmittedByUser == null || value.SubmittedByUser == '') {
                    $scope.columns[2].visible = false;
@@ -1772,7 +1772,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
     $scope.loadExistingTravelReimbursementRequests = function () {
 
         //var actionTemplate = '<div style="float:left;" ng-if="row.entity.ViewActionVisible == true"><img title="View" class="actionImage" src="/Images/view.png" /></div><div ng-if="row.entity.EditActionVisible == true"><img title="Create Travel Reimbursement" class="actionImage" src="/Images/reimbursement.png" alt="{{row.entity.TravelRequestId}}" onclick="createTravelRequestReimbursement(this);" /></div>';
-        var actionTemplate = '<div style="float:left;" ng-if="row.entity.ViewActionVisible == true"><img title="View" class="actionImage" src="/Images/view.png" /></div><div ng-if="row.entity.EditActionVisible == true"><img title="Edit" class="actionImage" src="/Images/edit.png" alt="{{row.entity.TravelRequestId}}" onclick="editTravelRequest(this);" /></div> <div ng-if="row.entity.ApproveActionVisible == true"><img title="Approve" class="actionImage" src="/Images/approve1.png" alt="{{row.entity.TravelRequestId}}" onclick="showApproveSection(this);" /><img title="Reject" class="actionImage2" src="/Images/reject1.png" alt="{{row.entity.TravelRequestId}}" onclick="showRejectSection(this);" /></div>';
+        var actionTemplate = '<div style="float:left;" ng-if="row.entity.ViewActionVisible == true"><img title="View" class="actionImage" src="/Images/view.png" /></div><div ng-if="row.entity.EditActionVisible == true"><img title="Edit" class="actionImage" src="/Images/edit.png" alt="{{row.entity.TravelRequestId}}" onclick="editTravelReimbursement(this);" /></div> <div ng-if="row.entity.ApproveActionVisible == true"><img title="Approve" class="actionImage" src="/Images/approve1.png" alt="{{row.entity.TravelRequestId}}" onclick="showApproveSection(this);" /><img title="Reject" class="actionImage2" src="/Images/reject1.png" alt="{{row.entity.TravelRequestId}}" onclick="showRejectSection(this);" /></div>';
 
         $scope.columns = [{
                 field: 'ReimbursementId',
@@ -1878,12 +1878,12 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 name: 'Actions',
                 cellTemplate: actionTemplate,
                 enableFiltering: false,
-                width: 112,
+                width: 182,
                 headerCellClass: "existingrequestcolumnheader",
                 enableColumnResizing: false,
             }];
 
-        $scope.existingRequestsGridOptions = {
+        $scope.existingRequestsGridOptions2 = {
             enableSorting: false,
             enableColumnResizing: true,
             columnDefs: $scope.columns,
@@ -1891,7 +1891,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             paginationPageSizes: [10, 15, 20],
             paginationPageSize: 10,
             onRegisterApi: function (gridApi) {
-                $scope.grid1Api = gridApi;
+                $scope.gridApi = gridApi;
             }
         };
 
@@ -1902,9 +1902,9 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
         $.get(url)
        .done(function (data) {
 
-           $scope.existingRequestsGridOptions.data = data;
+           $scope.existingRequestsGridOptions2.data = data;
 
-           angular.forEach($scope.existingRequestsGridOptions.data, function (value, index) {
+           angular.forEach($scope.existingRequestsGridOptions2.data, function (value, index) {
 
                if (value.SubmittedByUser == null || value.SubmittedByUser == '') {
                    $scope.columns[2].visible = false;
@@ -2021,7 +2021,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 enableColumnResizing: false,
             }];
 
-        $scope.existingRequestsGridOptions = {
+        $scope.existingRequestsGridOptions1 = {
             enableSorting: false,
             enableColumnResizing: true,
             columnDefs: $scope.columns,
@@ -2029,7 +2029,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             paginationPageSizes: [10, 15, 20],
             paginationPageSize: 10,
             onRegisterApi: function (gridApi) {
-                $scope.grid1Api = gridApi;
+                $scope.gridApi = gridApi;
             }
         };
 
@@ -2040,9 +2040,9 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
         $.get(url)
        .done(function (data) {
 
-           $scope.existingRequestsGridOptions.data = data;
+           $scope.existingRequestsGridOptions1.data = data;
 
-           angular.forEach($scope.existingRequestsGridOptions.data, function (value, index) {
+           angular.forEach($scope.existingRequestsGridOptions1.data, function (value, index) {
 
                if (value.SubmittedByUser == null || value.SubmittedByUser == '') {
                    $scope.columns[2].visible = false;
@@ -2124,6 +2124,114 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
         });
     }
 
-    
+    // load travel reimbursement modal in edit mode
+    $scope.loadTravelReimbursementForEdit = function (travelRequestId) {
+
+        $('#travelrequesttemplate').html('');
+
+        // get the data from api
+        $.get('api/reimburse/' + travelRequestId)
+        .done(function (data) {
+
+            $scope.Data = data;
+
+            //reset travel request form section
+            $.get('/uitemplates/travelreimbursement.html')
+            .done(function (data) {
+                $('#travelreimbursementtemplate').html($compile($(data).html())($scope));
+                $scope.$apply();
+
+                // set user data section
+                $('#travelRequestIdForDisplay').html("Travel Request #<b>" + travelRequestId.toString() + "</b>");
+                $('#txtBadgeNumber').val($scope.Data.ReimbursementTravelRequestDetails.BadgeNumber);
+                $('#txtName').val($scope.Data.ReimbursementTravelRequestDetails.Name);
+                $('#txtTravelRequestNumber1').val($scope.Data.ReimbursementTravelRequestDetails.TravelRequestId);
+                
+                //$('#txtDivision').val($scope.Data.TravelRequestData.Division);
+                //$('#txtSection').val($scope.Data.TravelRequestData.Section);
+                //$('#txtOrganization').val($scope.Data.TravelRequestData.Organization);
+                //$('#txtMeetingLocation').val($scope.Data.TravelRequestData.MeetingLocation);
+                //$('#txtPurpose').val($scope.Data.TravelRequestData.Purpose);
+                //$('#txtMeetingBeginDate').val($scope.Data.TravelRequestData.StrMeetingBeginDateTime);
+                //$('#txtMeetingEndDate').val($scope.Data.TravelRequestData.StrMeetingEndDateTime);
+                //$('#txtDepartureDate').val($scope.Data.TravelRequestData.StrDepartureDateTime);
+                //$('#txtReturnDate').val($scope.Data.TravelRequestData.StrReturnDateTime);
+                //$("#txtBadgeNumber").prop("readonly", true);
+                //$("#txtBadgeNumber").prop("style", "background-color:lightgray;");
+
+                // set estimated expense section
+                //$('#txtAdvLodge').val($scope.Data.EstimatedExpenseData.AdvanceLodging);
+                //$('#txtTotalEstimatedLodge').val($scope.Data.EstimatedExpenseData.TotalEstimatedLodge);
+                //$('#txtAdvAirfare').val($scope.Data.EstimatedExpenseData.AdvanceAirFare);
+                //$('#txtTotalEstimatedAirfare').val($scope.Data.EstimatedExpenseData.TotalEstimatedAirFare);
+                //$('#txtAdvRegistration').val($scope.Data.EstimatedExpenseData.AdvanceRegistration);
+                //$('#txtTotalEstimatedRegistration').val($scope.Data.EstimatedExpenseData.TotalEstimatedRegistration);
+                //$('#txtAdvMeals').val($scope.Data.EstimatedExpenseData.AdvanceMeals);
+                //$('#txtTotalEstimatedMeals').val($scope.Data.EstimatedExpenseData.TotalEstimatedMeals);
+                //$('#txtAdvCarRental').val($scope.Data.EstimatedExpenseData.AdvanceCarRental);
+                //$('#txtTotalEstimatedCarRental').val($scope.Data.EstimatedExpenseData.TotalEstimatedCarRental);
+                //$('#txtAdvMiscellaneous').val($scope.Data.EstimatedExpenseData.AdvanceMiscellaneous);
+                //$('#txtTotalEstimatedMiscellaneous').val($scope.Data.EstimatedExpenseData.TotalEstimatedMiscellaneous);
+                //$('#txtAdvanceTotal').val($scope.Data.EstimatedExpenseData.AdvanceTotal);
+                //$('#txtEstimatedTotal').val($scope.Data.EstimatedExpenseData.TotalEstimatedTotal);
+                //$('#txtHotelNameAndAddress').val($scope.Data.EstimatedExpenseData.HotelNameAndAddress);
+                //$('#txtSchedule').val($scope.Data.EstimatedExpenseData.Schedule);
+                //$('#txtPayableTo').val($scope.Data.EstimatedExpenseData.PayableToAndAddress);
+                //$('#txtNotes').val($scope.Data.EstimatedExpenseData.Note);
+                //$('#txtAgencyName').val($scope.Data.EstimatedExpenseData.AgencyNameAndReservation);
+                //$('#txtShuttle').val($scope.Data.EstimatedExpenseData.Shuttle);
+                //$('#txtCashAdvanceRequested').val($scope.Data.EstimatedExpenseData.CashAdvance);
+
+                //if ($scope.Data.EstimatedExpenseData.DateNeededBy.substring(0, 10) != '0001-01-01') {
+
+                //    $('#txtDateNeededBy').val($scope.Data.EstimatedExpenseData.DateNeededBy.substring(0, 10));
+                //}
+
+                //// set fis section
+                //$('#txtFISTotal').val($scope.Data.FISData.TotalAmount);
+
+                //set 1st row of FIS data
+                //if ($scope.Data.FISData.FISDetails[0]) {
+
+                //    var costCenterName = $scope.Data.FISData.FISDetails[0].CostCenterId;
+
+                //    $("#ddlCostCenter1").val(costCenterName);
+                //    angular.element("#ddlCostCenter1").triggerHandler('change');
+                //    $("#txtLineItem1").val($scope.Data.FISData.FISDetails[0].LineItem);
+                //    $("#txtTask1").val($scope.Data.FISData.FISDetails[0].Task);
+                //    $("#txtAmount1").val($scope.Data.FISData.FISDetails[0].Amount);
+
+                //    $.get('/api/fis/delay')
+                //    .done(function () {
+
+                //        var projectName = $scope.Data.FISData.FISDetails[0].ProjectId;
+                //        $('#project1').val(projectName);
+                //    });
+                //}
+
+                //// set 2nd row of FIS data
+                //if ($scope.Data.FISData.FISDetails[1]) {
+
+                //    var costCenterName = $scope.Data.FISData.FISDetails[1].CostCenterId;
+
+                //    $("#ddlCostCenter2").val(costCenterName);
+                //    angular.element("#ddlCostCenter2").triggerHandler('change');
+                //    $("#txtLineItem2").val($scope.Data.FISData.FISDetails[1].LineItem);
+                //    $("#txtTask2").val($scope.Data.FISData.FISDetails[1].Task);
+                //    $("#txtAmount2").val($scope.Data.FISData.FISDetails[1].Amount);
+
+                //    $.get('/api/fis/delay')
+                //    .done(function () {
+
+                //        var projectName = $scope.Data.FISData.FISDetails[1].ProjectId;
+                //        $('#project2').val(projectName);
+                //    });
+                //}
+
+                $('#travelreimbursementtemplate').show();
+
+            });
+        });
+    }
 
 });

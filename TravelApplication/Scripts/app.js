@@ -10,6 +10,7 @@ $(document).ready(function () {
     //$("#signin").hide();
     //createnewreimbursementrequest();
     //createTravelRequestReimbursement();
+    //editTravelReimbursement(null);
   });
 
 //$(".two-decimals").change(function () {
@@ -182,6 +183,7 @@ function createnewrequest() {
     // reset
     $('#travelRequestId').text(0);
     $('#travelRequestBadgeNumber').text(0);
+    $('#travalAction').text('travelrequest');
 
     //load travel request section
     var scope = angular.element('#travelrequesttemplate').scope();
@@ -192,6 +194,8 @@ function createnewrequest() {
 
 function viewexistingtravelrequests() {
     $("#action").hide();
+
+    $('#travalAction').text('travelrequest');
 
     //reset estimated expense section
     var scope = angular.element('#existingtravelrequeststemplate').scope();
@@ -708,6 +712,20 @@ function editTravelRequest(container) {
     $('#travelRequestId').text(travelRequestId);
 }
 
+function editTravelReimbursement(container) {
+
+    $('#existingtravelreimbursementtemplate').hide();
+
+    var travelRequestId = $(container).prop('alt');
+    //var travelRequestId = 123456;
+    var scope = angular.element('#travelreimbursementtemplate').scope();
+    scope.loadTravelReimbursementForEdit(travelRequestId);
+
+    $('#travelRequestId').text(travelRequestId);
+    $('#txtTravelRequestNumber1').text(travelRequestId);
+    
+}
+
 function createnewreimbursementrequest() {
 
     //load travel request section
@@ -720,6 +738,7 @@ function createnewreimbursementrequest() {
 function createTravelRequestReimbursement(container) {
 
     $('#approvedtravelrequesttemplate').hide();
+    $('#travelRequestId').text(0);
 
     var travelRequestId = $(container).prop('alt');
     //travelRequestId = 1234567;
@@ -749,6 +768,7 @@ function settravelrequest() {
 
 function viewapprovedtravelrequests() {
     $("#action").hide();
+    $('#travalAction').text('travelreimbursement');
 
     var scope = angular.element('#approvedtravelrequesttemplate').scope();
     scope.loadApprovedTravelRequests();
@@ -759,8 +779,9 @@ function viewapprovedtravelrequests() {
 function viewexistingreimbursements() {
 
     $("#action").hide();
+    $('#travalAction').text('travelreimbursement');
 
-    var scope = angular.element('#approvedtravelrequesttemplate').scope();
+    var scope = angular.element('#existingtravelreimbursementtemplate').scope();
     scope.loadExistingTravelReimbursementRequests();
 
     $('#existingtravelreimbursementtemplate').show();
@@ -768,10 +789,20 @@ function viewexistingreimbursements() {
 
 function showapprovedtravelrequests() {
 
-    $('#travelreimbursementtemplate').hide();
-    $("#action").hide();
+    var travelRequestId = $('#travelRequestId').text();
 
-    $('#approvedtravelrequesttemplate').show();
+    if (travelRequestId) {
+        $('#travelreimbursementtemplate').hide();
+        $('#existingtravelreimbursementtemplate').show();
+
+        $('#travelRequestId').text(0);
+    }
+    else {
+        $('#travelreimbursementtemplate').hide();
+        $("#action").hide();
+
+        $('#approvedtravelrequesttemplate').show();
+    }
 }
 
 function savereimbursementdataentry() {
