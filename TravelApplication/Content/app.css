@@ -1875,6 +1875,19 @@ div.reimbursementdataentry{
     margin-bottom:10px;
 }
 
+.datainputdatereimbursementtoday {
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:solid 1px gray;
+    padding-left:5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width:85px;
+    height:30px;
+    font-size:13px;
+    color:black;
+    margin-bottom:10px;
+}
+
 .datainputreimbursement {
     -moz-border-radius: 3px;
     border-radius: 3px;

@@ -792,6 +792,7 @@ function savereimbursementdataentry() {
     var extension = $('#txtExtension').val();
     var division = jQuery.trim($('#txtDivision').val());
     var department = jQuery.trim($('#txtDepartment').val());
+    var purpose = jQuery.trim($('#txtPurpose').val());
 
     // Get travel inputs
 
@@ -813,7 +814,8 @@ function savereimbursementdataentry() {
                     'Division': division,
                     'Department': department,
                     'SelectedRoleId': selectedRoleId,
-                    'SubmittedByBadgeNumber': signedInUserBadgeNumber
+                    'SubmittedByBadgeNumber': signedInUserBadgeNumber,
+                    'Purpose':purpose
                 },
                 "FIS":
                 {

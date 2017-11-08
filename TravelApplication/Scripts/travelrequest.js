@@ -1641,6 +1641,8 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 $("#txtDivision").val(data.TravelReimbursementDetails.Division);
                 $("#txtDepartment").val(data.TravelReimbursementDetails.Department);
                 $("#txtCashAdvance").val(data.CashAdvance);
+                $("#txtPurpose").val(data.Purpose);
+                
                 $scope.totalCashAdvanceAmount = data.CashAdvance;
 
                 // Set FIS section
