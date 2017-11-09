@@ -2146,21 +2146,19 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 $('#txtBadgeNumber').val($scope.Data.ReimbursementTravelRequestDetails.BadgeNumber);
                 $('#txtName').val($scope.Data.ReimbursementTravelRequestDetails.Name);
                 $('#txtTravelRequestNumber1').val($scope.Data.ReimbursementTravelRequestDetails.TravelRequestId);
-                
-                //$('#txtDivision').val($scope.Data.TravelRequestData.Division);
-                //$('#txtSection').val($scope.Data.TravelRequestData.Section);
-                //$('#txtOrganization').val($scope.Data.TravelRequestData.Organization);
-                //$('#txtMeetingLocation').val($scope.Data.TravelRequestData.MeetingLocation);
-                //$('#txtPurpose').val($scope.Data.TravelRequestData.Purpose);
-                //$('#txtMeetingBeginDate').val($scope.Data.TravelRequestData.StrMeetingBeginDateTime);
-                //$('#txtMeetingEndDate').val($scope.Data.TravelRequestData.StrMeetingEndDateTime);
-                //$('#txtDepartureDate').val($scope.Data.TravelRequestData.StrDepartureDateTime);
-                //$('#txtReturnDate').val($scope.Data.TravelRequestData.StrReturnDateTime);
-                //$("#txtBadgeNumber").prop("readonly", true);
-                //$("#txtBadgeNumber").prop("style", "background-color:lightgray;");
+                $('#txtDivision').val($scope.Data.ReimbursementTravelRequestDetails.Division);
+                $('#txtVendorNumber').val($scope.Data.ReimbursementTravelRequestDetails.VendorNumber);
+                $('#txtCostCenterNumber').val($scope.Data.ReimbursementTravelRequestDetails.CostCenterId);
+                $('#txtTravelPeriodFrom').val($scope.Data.ReimbursementTravelRequestDetails.DepartureDateTime);
+                $('#txtTravelPeriodTo').val($scope.Data.ReimbursementTravelRequestDetails.ReturnDateTime);
+                $('#txtPurpose').val($scope.Data.ReimbursementTravelRequestDetails.Purpose);
+                $('#txtDepartment').val($scope.Data.ReimbursementTravelRequestDetails.Department);
+                $('#txtExtension').val($scope.Data.ReimbursementTravelRequestDetails.Extension);
 
-                // set estimated expense section
-                //$('#txtAdvLodge').val($scope.Data.EstimatedExpenseData.AdvanceLodging);
+                // set travel expense section
+                // set first row data result.ReimbursementDetails.Reimbursement[0].Date
+                $('#txtTravelDate1').val($scope.Data.ReimbursementDetails.Reimbursement[0].Date);
+
                 //$('#txtTotalEstimatedLodge').val($scope.Data.EstimatedExpenseData.TotalEstimatedLodge);
                 //$('#txtAdvAirfare').val($scope.Data.EstimatedExpenseData.AdvanceAirFare);
                 //$('#txtTotalEstimatedAirfare').val($scope.Data.EstimatedExpenseData.TotalEstimatedAirFare);
