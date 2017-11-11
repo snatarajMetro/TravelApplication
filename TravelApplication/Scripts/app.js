@@ -721,6 +721,8 @@ function editTravelReimbursement(container) {
     var scope = angular.element('#travelreimbursementtemplate').scope();
     scope.loadTravelReimbursementForEdit(travelRequestId);
 
+    $('#travelreimbursementtemplate').show();
+
     $('#travelRequestId').text(travelRequestId);
     $('#txtTravelRequestNumber1').text(travelRequestId);
     

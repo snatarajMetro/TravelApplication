@@ -39,56 +39,57 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             );
     }
 
-    // Daily Total section
-    $scope.dailyTotalAmount1 = "";
-    $scope.dailyTotalAmount2 = "";
-    $scope.totalDailyAmount = "";
-
     $scope.BusinessMileRate = 0.555;
-    $scope.TotalMileA1 = "";
-    $scope.TotalMileA2 = "";
-    $scope.TotalMileA3 = "";
-    $scope.TotalMileB1 = "";
-    $scope.TotalMileB2 = "";
-    $scope.BusinessMile1 = "";
-    $scope.BusinessMile2 = "";
-    $scope.BusinessMileAmount1 = "";
-    $scope.BusinessMileAmount2 = "";
-    $scope.Parking1 = "";
-    $scope.Parking2 = "";
-    $scope.Airfare1 = "";
-    $scope.Airfare2 = "";
-    $scope.Taxi1 = "";
-    $scope.Taxi2 = "";
-    $scope.Lodging1 = "";
-    $scope.Lodging2 = "";
-    $scope.Meals1 = "";
-    $scope.Meals2 = "";
-    $scope.Registration1 = "";
-    $scope.Registration2 = "";
-    $scope.Internet1 = "";
-    $scope.Internet2 = "";
-    $scope.Other1 = "";
-    $scope.Other2 = "";
 
-    $scope.totalMileA = "";
-    $scope.totalMileB = "";
-    $scope.totalBusinessMile = "";
-    $scope.totalBusinessMileAmount = "";
-    $scope.totalParking = "";
-    $scope.totalAirfare = "";
-    $scope.totalTaxi = "";
-    $scope.totalLodging = "";
-    $scope.totalMeals = "";
-    $scope.totalRegistration = "";
-    $scope.totalInternet = "";
-    $scope.totalOther = "";
-    $scope.totalPart2NonTravelExpenseAmount = "";
-    $scope.totalSubmittedForApprovalAmount = "";
-    $scope.totalPrePaidByMTAAmount = "";
-    $scope.totalExpenseAmount = "";
-    $scope.totalCashAdvanceAmount = "";
-    $scope.totalAmount = "";
+    // Daily Total section
+    //$scope.dailyTotalAmount1 = "";
+    //$scope.dailyTotalAmount2 = "";
+    //$scope.totalDailyAmount = "";
+   
+    //$scope.TotalMileA1 = "";
+    //$scope.TotalMileA2 = "";
+    //$scope.TotalMileA3 = "";
+    //$scope.TotalMileB1 = "";
+    //$scope.TotalMileB2 = "";
+    //$scope.BusinessMile1 = "";
+    //$scope.BusinessMile2 = "";
+    //$scope.BusinessMileAmount1 = "";
+    //$scope.BusinessMileAmount2 = "";
+    //$scope.Parking1 = "";
+    //$scope.Parking2 = "";
+    //$scope.Airfare1 = "";
+    //$scope.Airfare2 = "";
+    //$scope.Taxi1 = "";
+    //$scope.Taxi2 = "";
+    //$scope.Lodging1 = "";
+    //$scope.Lodging2 = "";
+    //$scope.Meals1 = "";
+    //$scope.Meals2 = "";
+    //$scope.Registration1 = "";
+    //$scope.Registration2 = "";
+    //$scope.Internet1 = "";
+    //$scope.Internet2 = "";
+    //$scope.Other1 = "";
+    //$scope.Other2 = "";
+
+    //$scope.totalMileA = "";
+    //$scope.totalMileB = "";
+    //$scope.totalBusinessMile = "";
+    //$scope.totalBusinessMileAmount = "";
+    //$scope.totalParking = "";
+    //$scope.totalAirfare = "";
+    //$scope.totalTaxi = "";
+    //$scope.totalLodging = "";
+    //$scope.totalMeals = "";
+    //$scope.totalRegistration = "";
+    //$scope.totalInternet = "";
+    //$scope.totalOther = "";
+    //$scope.totalPart2NonTravelExpenseAmount = "";
+    //$scope.totalSubmittedForApprovalAmount = "";
+    //$scope.totalPrePaidByMTAAmount = "";
+    //$scope.totalExpenseAmount = "";
+    //$scope.totalCashAdvanceAmount = "";
+    //$scope.totalAmount = "";
 
     $scope.updateTotalDailyAmount = function () {
         $scope.totalDailyAmount = (
@@ -102,7 +103,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
         updatetotalExpenseAmount();
     }
 
-    $scope.updateMileATotal = function () {
+    $scope.updateMileATotal = function (model) {
 
         var totalA = 0;
 
@@ -110,24 +111,39 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             totalA = (totalA * 1) + ($("#txtTotalMiles" + (index + 1)).val() * 1);
         }
 
-        $scope.totalMileA = (
-            ($scope.TotalMileA1 * 1)
-            + ($scope.TotalMileA2 * 1)
-            + (totalA * 1)
-            );
+        if (model && model[0].TotalMiles) {
+            totalA = (totalA * 1) + (model[0].TotalMiles * 1);
 
-        updateBusinessMile();
-        updateDailyTotal();
+            $scope.totalMileA = (
+                ($scope.TotalMileA2 * 1)
+                + (totalA * 1)
+                );
+
+            updateBusinessMile();
+            updateDailyTotal();
+        }
+
+        //$scope.totalMileA = (
+        //    ($scope.TravelModel[0].TotalMiles * 1)
+        //    + ($scope.TotalMileA2 * 1)
+        //    + (totalA * 1)
+        //    );
+
+        //updateBusinessMile();
+        //updateDailyTotal();
     }
 
-    $scope.updateMileBTotal = function () {
-        $scope.totalMileB = (
-            ($scope.TotalMileB1 * 1)
-            + ($scope.TotalMileB2 * 1)
-            );
+    $scope.updateMileBTotal = function (model) {
 
-        updateBusinessMile();
-        updateDailyTotal();
+        if (model && model[0].MileageToWork) {
+            $scope.totalMileB = (
+                (model[0].MileageToWork * 1)
+                + ($scope.TotalMileB2 * 1)
+                );
+
+            updateBusinessMile();
+            updateDailyTotal();
+        }
     }
 
     function updatetotalExpenseAmount() {
@@ -140,14 +156,14 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
 
     function updateBusinessMile () {
 
-        $scope.BusinessMile1 = (($scope.TotalMileA1 * 1) - ($scope.TotalMileB1 * 1));
+        $scope.TravelModel[0].BusinessMiles = (($scope.TravelModel[0].TotalMiles * 1) - ($scope.TravelModel[0].MileageToWork * 1));
         $scope.BusinessMile2 = (($scope.TotalMileA2 * 1) - ($scope.TotalMileB2 * 1));
 
-        $scope.BusinessMileAmount1 = ($scope.BusinessMile1 * $scope.BusinessMileRate);
+        $scope.BusinessMileAmount1 = ($scope.TravelModel[0].BusinessMiles * $scope.BusinessMileRate);
         $scope.BusinessMileAmount2 = ($scope.BusinessMile2 * $scope.BusinessMileRate);
 
         $scope.totalBusinessMile = (
-            ($scope.BusinessMile1 * 1)
+            ($scope.TravelModel[0].BusinessMiles * 1)
             + ($scope.BusinessMile2 * 1)
             );
 
@@ -2124,8 +2140,62 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
         });
     }
 
+    for (var index = 0; index < rowCounter; index++) {
+
+        $scope.$watch('TravelModel[' + index + '].TotalMiles', function () {
+            updateTotal($scope.TravelModel);
+        });
+
+        $scope.$watch('TravelModel[' + index + '].MileageToWork', function () {
+            updateTotal($scope.TravelModel);
+        });
+    }
+
+    //$scope.$watch('TotalMileA2', function () {
+    //    //updateTotal();
+    //});
+
+    function updateTotal(model) {
+        $scope.updateMileATotal(model);
+        $scope.updateMileBTotal(model);
+        $scope.updateParkingTotal();
+        $scope.updateAirfareTotal();
+        $scope.updateTaxiTotal();
+        $scope.updateLodgingTotal();
+        $scope.updateMealTotal();
+        $scope.updateRegistrationTotal();
+        $scope.updateInternetTotal();
+        $scope.updateOtherTotal();
+    }
+
     // load travel reimbursement modal in edit mode
     $scope.loadTravelReimbursementForEdit = function (travelRequestId) {
+
+        //$scope.TotalMileA1 = 0.00;
+        $scope.TotalMileA2 = 0.00;
+        //$scope.TotalMileB1 = 0.00;
+        $scope.TotalMileB2 = 0.00;
+        //$scope.BusinessMile1 = 0.00;
+        $scope.BusinessMile2 = 0.00;
+        $scope.BusinessMileAmount1 = 0.00;
+        $scope.BusinessMileAmount2 = 0.00;
+        $scope.Parking1 = 0.00;
+        $scope.Parking2 = 0.00;
+        $scope.Airfare1 = 0.00;
+        $scope.Airfare2 = 0.00;
+        $scope.Taxi1 = 0.00;
+        $scope.Taxi2 = 0.00;
+        $scope.Lodging1 = 0.00;
+        $scope.Lodging2 = 0.00;
+        $scope.Meals1 = 0.00;
+        $scope.Meals2 = 0.00;
+        $scope.Registration1 = 0.00;
+        $scope.Registration2 = 0.00;
+        $scope.Internet1 = 0.00;
+        $scope.Internet2 = 0.00;
+        $scope.Other1 = 0.00;
+        $scope.Other2 = 0.00;
+        $scope.TravelModel = [{}];
 
         $('#travelrequesttemplate').html('');
 
@@ -2137,9 +2207,11 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
 
             //reset travel request form section
             $.get('/uitemplates/travelreimbursement.html')
-            .done(function (data) {
+            .always(function (data) {
                 $('#travelreimbursementtemplate').html($compile($(data).html())($scope));
                 $scope.$apply();
+
+                $scope.$apply(function () {
 
                 // set user data section
                 $('#travelRequestIdForDisplay').html("Travel Request #<b>" + travelRequestId.toString() + "</b>");
@@ -2149,85 +2221,37 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 $('#txtDivision').val($scope.Data.ReimbursementTravelRequestDetails.Division);
                 $('#txtVendorNumber').val($scope.Data.ReimbursementTravelRequestDetails.VendorNumber);
                 $('#txtCostCenterNumber').val($scope.Data.ReimbursementTravelRequestDetails.CostCenterId);
-                $('#txtTravelPeriodFrom').val($scope.Data.ReimbursementTravelRequestDetails.DepartureDateTime);
-                $('#txtTravelPeriodTo').val($scope.Data.ReimbursementTravelRequestDetails.ReturnDateTime);
+                $('#txtTravelPeriodFrom').val($scope.Data.ReimbursementTravelRequestDetails.StrDepartureDateTime);
+                $('#txtTravelPeriodTo').val($scope.Data.ReimbursementTravelRequestDetails.StrReturnDateTime);
                 $('#txtPurpose').val($scope.Data.ReimbursementTravelRequestDetails.Purpose);
                 $('#txtDepartment').val($scope.Data.ReimbursementTravelRequestDetails.Department);
                 $('#txtExtension').val($scope.Data.ReimbursementTravelRequestDetails.Extension);
 
+                // set travel data section
+                for (var index = 0; index < $scope.Data.ReimbursementDetails.Reimbursement.length; index++) {
+
+                    $('#txtTravelDate' + index).val($scope.Data.ReimbursementDetails.Reimbursement[index].Date);
+                    $('#txtCityState' + index).val($scope.Data.ReimbursementDetails.Reimbursement[index].CityStateAndBusinessPurpose);
+                    $scope.TravelModel[index].TotalMiles    = $scope.Data.ReimbursementDetails.Reimbursement[index].Miles;
+                    $scope.TravelModel[index].MileageToWork = $scope.Data.ReimbursementDetails.Reimbursement[index].MileageToWork;
+                    $scope.TravelModel[index].BusinessMiles = $scope.Data.ReimbursementDetails.Reimbursement[index].BusinessMiles;
+                }
+
                 // set travel expense section
                 // set first row data result.ReimbursementDetails.Reimbursement[0].Date
-                $('#txtTravelDate1').val($scope.Data.ReimbursementDetails.Reimbursement[0].Date);
-
-                //$('#txtTotalEstimatedLodge').val($scope.Data.EstimatedExpenseData.TotalEstimatedLodge);
-                //$('#txtAdvAirfare').val($scope.Data.EstimatedExpenseData.AdvanceAirFare);
-                //$('#txtTotalEstimatedAirfare').val($scope.Data.EstimatedExpenseData.TotalEstimatedAirFare);
-                //$('#txtAdvRegistration').val($scope.Data.EstimatedExpenseData.AdvanceRegistration);
-                //$('#txtTotalEstimatedRegistration').val($scope.Data.EstimatedExpenseData.TotalEstimatedRegistration);
-                //$('#txtAdvMeals').val($scope.Data.EstimatedExpenseData.AdvanceMeals);
-                //$('#txtTotalEstimatedMeals').val($scope.Data.EstimatedExpenseData.TotalEstimatedMeals);
-                //$('#txtAdvCarRental').val($scope.Data.EstimatedExpenseData.AdvanceCarRental);
-                //$('#txtTotalEstimatedCarRental').val($scope.Data.EstimatedExpenseData.TotalEstimatedCarRental);
-                //$('#txtAdvMiscellaneous').val($scope.Data.EstimatedExpenseData.AdvanceMiscellaneous);
-                //$('#txtTotalEstimatedMiscellaneous').val($scope.Data.EstimatedExpenseData.TotalEstimatedMiscellaneous);
-                //$('#txtAdvanceTotal').val($scope.Data.EstimatedExpenseData.AdvanceTotal);
-                //$('#txtEstimatedTotal').val($scope.Data.EstimatedExpenseData.TotalEstimatedTotal);
-                //$('#txtHotelNameAndAddress').val($scope.Data.EstimatedExpenseData.HotelNameAndAddress);
-                //$('#txtSchedule').val($scope.Data.EstimatedExpenseData.Schedule);
-                //$('#txtPayableTo').val($scope.Data.EstimatedExpenseData.PayableToAndAddress);
-                //$('#txtNotes').val($scope.Data.EstimatedExpenseData.Note);
-                //$('#txtAgencyName').val($scope.Data.EstimatedExpenseData.AgencyNameAndReservation);
-                //$('#txtShuttle').val($scope.Data.EstimatedExpenseData.Shuttle);
-                //$('#txtCashAdvanceRequested').val($scope.Data.EstimatedExpenseData.CashAdvance);
-
-                //if ($scope.Data.EstimatedExpenseData.DateNeededBy.substring(0, 10) != '0001-01-01') {
-
-                //    $('#txtDateNeededBy').val($scope.Data.EstimatedExpenseData.DateNeededBy.substring(0, 10));
-                //}
-
-                //// set fis section
-                //$('#txtFISTotal').val($scope.Data.FISData.TotalAmount);
-
-                //set 1st row of FIS data
-                //if ($scope.Data.FISData.FISDetails[0]) {
-
-                //    var costCenterName = $scope.Data.FISData.FISDetails[0].CostCenterId;
-
-                //    $("#ddlCostCenter1").val(costCenterName);
-                //    angular.element("#ddlCostCenter1").triggerHandler('change');
-                //    $("#txtLineItem1").val($scope.Data.FISData.FISDetails[0].LineItem);
-                //    $("#txtTask1").val($scope.Data.FISData.FISDetails[0].Task);
-                //    $("#txtAmount1").val($scope.Data.FISData.FISDetails[0].Amount);
-
-                //    $.get('/api/fis/delay')
-                //    .done(function () {
-
-                //        var projectName = $scope.Data.FISData.FISDetails[0].ProjectId;
-                //        $('#project1').val(projectName);
-                //    });
-                //}
-
-                //// set 2nd row of FIS data
-                //if ($scope.Data.FISData.FISDetails[1]) {
-
-                //    var costCenterName = $scope.Data.FISData.FISDetails[1].CostCenterId;
-
-                //    $("#ddlCostCenter2").val(costCenterName);
-                //    angular.element("#ddlCostCenter2").triggerHandler('change');
-                //    $("#txtLineItem2").val($scope.Data.FISData.FISDetails[1].LineItem);
-                //    $("#txtTask2").val($scope.Data.FISData.FISDetails[1].Task);
-                //    $("#txtAmount2").val($scope.Data.FISData.FISDetails[1].Amount);
-
-                //    $.get('/api/fis/delay')
-                //    .done(function () {
-
-                //        var projectName = $scope.Data.FISData.FISDetails[1].ProjectId;
-                //        $('#project2').val(projectName);
-                //    });
-                //}
-
-                $('#travelreimbursementtemplate').show();
-
+               
+                $scope.BusinessMileAmount1 = $scope.Data.ReimbursementDetails.Reimbursement[0].BusinessMilesXRate;
+                $scope.Parking1 = $scope.Data.ReimbursementDetails.Reimbursement[0].ParkingAndGas;
+                $scope.Airfare1 = $scope.Data.ReimbursementDetails.Reimbursement[0].AirFare;
+                $scope.Taxi1 = $scope.Data.ReimbursementDetails.Reimbursement[0].TaxiRail;
+                $scope.Lodging1 = $scope.Data.ReimbursementDetails.Reimbursement[0].Lodge;
+                $scope.Meals1 = $scope.Data.ReimbursementDetails.Reimbursement[0].Meals;
+                $scope.Registration1 = $scope.Data.ReimbursementDetails.Reimbursement[0].Registration;
+                $scope.Internet1 = $scope.Data.ReimbursementDetails.Reimbursement[0].Internet;
+                $scope.Other1 = $scope.Data.ReimbursementDetails.Reimbursement[0].Others;
+                $scope.dailyTotalAmount1 = $scope.Data.ReimbursementDetails.Reimbursement[0].DailyTotal;
+                   
+                });
             });
         });
     }
