@@ -2165,6 +2165,12 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
         $scope.TravelModel = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
         $scope.totalBusinessMile = 0;
         $scope.totalAirfare = 0;
+        $scope.totalPart2NonTravelExpenseAmount = 0;
+        $scope.totalSubmittedForApprovalAmount = 0;
+        $scope.totalPrePaidByMTAAmount = 0;
+        $scope.totalExpenseAmount = 0;
+        $scope.totalCashAdvanceAmount = 0;
+        $scope.totalAmount = 0;
 
         $('#travelrequesttemplate').html('');
 
