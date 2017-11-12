@@ -103,9 +103,6 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
             $scope.TravelModel[index].BusinessMileAmount = ($scope.TravelModel[index].BusinessMiles * $scope.BusinessMileRate);
         }
 
-        
-       // $scope.BusinessMileAmount2 = ($scope.TravelModel[1].BusinessMiles * $scope.BusinessMileRate);
-
         $scope.totalBusinessMile = (
             ($scope.TravelModel[0].BusinessMiles * 1)
             + ($scope.TravelModel[1].BusinessMiles * 1)
@@ -121,37 +118,37 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
 
         if (model) {
 
-            $scope.dailyTotalAmount1 = (
+            model[0].DailyTotal = (
                     (model[0].BusinessMileAmount * 1)
                     + (model[0].Parking * 1)
                     + (model[0].Airfare * 1)
                     + (model[0].Taxi * 1)
                     + (model[0].Lodging * 1)
-                    + ($scope.Meals1 * 1)
-                    + ($scope.Registration1 * 1)
-                    + ($scope.Internet1 * 1)
-                    + ($scope.Other1 * 1)
+                    + (model[0].Meals * 1)
+                    + (model[0].Registration * 1)
+                    + (model[0].Internet * 1)
+                    + (model[0].Other * 1)
                 );
 
-            $scope.dailyTotalAmount2 = (
+            model[1].DailyTotal = (
                     (model[1].BusinessMileAmount * 1)
                     + (model[1].Parking * 1)
                     + (model[1].Airfare * 1)
                     + (model[1].Taxi * 1)
                     + (model[1].Lodging * 1)
-                    + ($scope.Meals2 * 1)
-                    + ($scope.Registration2 * 1)
-                    + ($scope.Internet2 * 1)
-                    + ($scope.Other2 * 1)
+                    + (model[1].Meals * 1)
+                    + (model[1].Registration * 1)
+                    + (model[1].Internet * 1)
+                    + (model[1].Other * 1)
                 );
+
+            $scope.totalDailyAmount = (
+            (model[0].DailyTotal * 1)
+            + (model[1].DailyTotal * 1)
+            );
         }
 
-        $scope.totalDailyAmount = (
-            ($scope.dailyTotalAmount1 * 1)
-            + ($scope.dailyTotalAmount2 * 1)
-            );
-
-        $scope.totalSubmittedForApprovalAmount = $scope.totalDailyAmount + $scope.totalPart2NonTravelExpenseAmount * 1;
+        $scope.totalSubmittedForApprovalAmount = $scope.totalDailyAmount + ($scope.totalPart2NonTravelExpenseAmount * 1);
 
         updatetotalExpenseAmount();
     }
@@ -169,9 +166,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 );
 
             updateDailyTotal(model);
-        }
-
-        
+        }  
     }
 
     $scope.updateAirfareTotal = function (model) {
@@ -211,39 +206,51 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
     }
 
     $scope.updateMealTotal = function (model) {
-        $scope.totalMeals = (
-            ($scope.Meals1 * 1)
-            + ($scope.Meals2 * 1)
-            );
 
-        updateDailyTotal(model);
+        if (model) {
+            $scope.totalMeals = (
+                (model[0].Meals * 1)
+                + (model[1].Meals * 1)
+                );
+
+            updateDailyTotal(model);
+        }
     }
 
     $scope.updateRegistrationTotal = function (model) {
-        $scope.totalRegistration = (
-            ($scope.Registration1 * 1)
-            + ($scope.Registration2 * 1)
-            );
 
-        updateDailyTotal(model);
+        if (model) {
+            $scope.totalRegistration = (
+                (model[0].Registration * 1)
+                + (model[1].Registration * 1)
+                );
+
+            updateDailyTotal(model);
+        }
     }
 
     $scope.updateInternetTotal = function (model) {
-        $scope.totalInternet = (
-            ($scope.Internet1 * 1)
-            + ($scope.Internet2 * 1)
-            );
 
-        updateDailyTotal(model);
+        if (model) {
+            $scope.totalInternet = (
+                (model[0].Internet * 1)
+                + (model[1].Internet * 1)
+                );
+
+            updateDailyTotal(model);
+        }
     }
 
     $scope.updateOtherTotal = function (model) {
-        $scope.totalOther = (
-            ($scope.Other1 * 1)
-            + ($scope.Other2 * 1)
-            );
 
-        updateDailyTotal(model);
+        if (model) {
+            $scope.totalOther = (
+                (model[0].Other * 1)
+                + (model[1].Other * 1)
+                );
+
+            updateDailyTotal(model);
+        }
     }
 
     //set estimated expense section
@@ -2126,6 +2133,22 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
         $scope.$watch('TravelModel[' + index + '].Lodging', function () {
             updateTotal($scope.TravelModel);
         });
+
+        $scope.$watch('TravelModel[' + index + '].Meals', function () {
+            updateTotal($scope.TravelModel);
+        });
+
+        $scope.$watch('TravelModel[' + index + '].Registration', function () {
+            updateTotal($scope.TravelModel);
+        });
+
+        $scope.$watch('TravelModel[' + index + '].Internet', function () {
+            updateTotal($scope.TravelModel);
+        });
+
+        $scope.$watch('TravelModel[' + index + '].Other', function () {
+            updateTotal($scope.TravelModel);
+        });
     }
 
     function updateTotal(model) {
@@ -2135,33 +2158,15 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
         $scope.updateAirfareTotal(model);
         $scope.updateTaxiTotal(model);
         $scope.updateLodgingTotal(model);
-        //$scope.updateMealTotal(model);
-        //$scope.updateRegistrationTotal(model);
-        //$scope.updateInternetTotal(model);
-        //$scope.updateOtherTotal(model);
+        $scope.updateMealTotal(model);
+        $scope.updateRegistrationTotal(model);
+        $scope.updateInternetTotal(model);
+        $scope.updateOtherTotal(model);
     }
 
     // load travel reimbursement modal in edit mode
     $scope.loadTravelReimbursementForEdit = function (travelRequestId) {
 
-        //$scope.BusinessMileAmount1 = 0.00;
-        //$scope.BusinessMileAmount2 = 0.00;
-        //$scope.Parking1 = 0.00;
-        //$scope.Parking2 = 0.00;
-        //$scope.Airfare1 = 0.00;
-        //$scope.Airfare2 = 0.00;
-        //$scope.Taxi1 = 0.00;
-        //$scope.Taxi2 = 0.00;
-        ///$scope.Lodging1 = 0.00;
-        //$scope.Lodging2 = 0.00;
-        $scope.Meals1 = 0.00;
-        $scope.Meals2 = 0.00;
-        $scope.Registration1 = 0.00;
-        $scope.Registration2 = 0.00;
-        $scope.Internet1 = 0.00;
-        $scope.Internet2 = 0.00;
-        $scope.Other1 = 0.00;
-        $scope.Other2 = 0.00;
         $scope.TravelModel = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
         $scope.totalBusinessMile = 0;
         $scope.totalAirfare = 0;
@@ -2200,6 +2205,11 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                     $scope.TravelModel[index].Airfare = 0;
                     $scope.TravelModel[index].Taxi = 0;
                     $scope.TravelModel[index].Lodging = 0;
+                    $scope.TravelModel[index].Meals = 0
+                    $scope.TravelModel[index].Registration = 0;
+                    $scope.TravelModel[index].Internet = 0;
+                    $scope.TravelModel[index].Other = 0;
+                    $scope.TravelModel[index].DailyTotal = 0;
                 }
 
                 // set user data section
@@ -2229,21 +2239,14 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                     $scope.TravelModel[index].Airfare               = $scope.Data.ReimbursementDetails.Reimbursement[index].AirFare;
                     $scope.TravelModel[index].Taxi                  = $scope.Data.ReimbursementDetails.Reimbursement[index].TaxiRail;
                     $scope.TravelModel[index].Lodging               = $scope.Data.ReimbursementDetails.Reimbursement[index].Lodge;
+                    $scope.TravelModel[index].Meals                 = $scope.Data.ReimbursementDetails.Reimbursement[index].Meals;
+                    $scope.TravelModel[index].Registration          = $scope.Data.ReimbursementDetails.Reimbursement[index].Registration;
+                    $scope.TravelModel[index].Internet              = $scope.Data.ReimbursementDetails.Reimbursement[index].Internet;
+                    $scope.TravelModel[index].Other                 = $scope.Data.ReimbursementDetails.Reimbursement[index].Others;
+                    $scope.TravelModel[index].DailyTotal            = $scope.Data.ReimbursementDetails.Reimbursement[index].DailyTotal;
                 }
 
-                // set travel expense section
-                // set first row data result.ReimbursementDetails.Reimbursement[0].Date
-               
-                //$scope.BusinessMileAmount1 = $scope.Data.ReimbursementDetails.Reimbursement[0].BusinessMilesXRate;
-                //$scope.Parking1 = $scope.Data.ReimbursementDetails.Reimbursement[0].ParkingAndGas;
-                //$scope.Airfare1 = $scope.Data.ReimbursementDetails.Reimbursement[0].AirFare;
-                //$scope.Taxi1 = $scope.Data.ReimbursementDetails.Reimbursement[0].TaxiRail;
-                //$scope.Lodging1 = $scope.Data.ReimbursementDetails.Reimbursement[0].Lodge;
-                $scope.Meals1 = $scope.Data.ReimbursementDetails.Reimbursement[0].Meals;
-                $scope.Registration1 = $scope.Data.ReimbursementDetails.Reimbursement[0].Registration;
-                $scope.Internet1 = $scope.Data.ReimbursementDetails.Reimbursement[0].Internet;
-                $scope.Other1 = $scope.Data.ReimbursementDetails.Reimbursement[0].Others;
-                $scope.dailyTotalAmount1 = $scope.Data.ReimbursementDetails.Reimbursement[0].DailyTotal;
+                // set FIS expense section
                    
                 });
             });
