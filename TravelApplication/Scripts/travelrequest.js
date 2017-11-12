@@ -2247,7 +2247,8 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 }
 
                 // set FIS expense section
-                   
+                $scope.FISTotalAmount = $scope.Data.FIS.TotalAmount;
+
                 });
             });
         });
