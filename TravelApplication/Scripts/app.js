@@ -1,7 +1,8 @@
 ﻿var userName = '';
 var fadeOutTimeInMilliseconds = 5000; // 5 seconds
 var selectedRoleId = 0;
-var rowCounter = 2;
+var maxRowCount = 5;
+var currentRowNumber = 3;
 
 $(document).ready(function () {
 
@@ -911,6 +912,63 @@ function savereimbursementdataentry() {
                             "Internet": $('#txtInternet2').val(),
                             "Others": $('#txtOther2').val(),
                             "DailyTotal": $('#txtDailyTotal2').val()
+                        },
+                        {
+                            "Id": 0,
+                            "TravelRequestId": travelRequestId,
+                            "Date": $('#txtTravelDate3').val(),
+                            "CityStateAndBusinessPurpose": $('#txtCityState3').val(),
+                            "Miles": $('#txtTotalMiles3').val(),
+                            "MileageToWork": $('#txtNormalMiles3').val(),
+                            "BusinessMiles": $('#txtBusinessMiles3').val(),
+                            "BusinessMilesXRate": $('#txtBusinessMilesTotal3').val(),
+                            "ParkingAndGas": $('#txtParking3').val(),
+                            "AirFare": $('#txtAirfare3').val(),
+                            "TaxiRail": $('#txtTaxi3').val(),
+                            "Lodge": $('#txtLodging3').val(),
+                            "Meals": $('#txtMeals3').val(),
+                            "Registration": $('#txtRegistration3').val(),
+                            "Internet": $('#txtInternet3').val(),
+                            "Others": $('#txtOther3').val(),
+                            "DailyTotal": $('#txtDailyTotal3').val()
+                        },
+                        {
+                            "Id": 0,
+                            "TravelRequestId": travelRequestId,
+                            "Date": $('#txtTravelDate4').val(),
+                            "CityStateAndBusinessPurpose": $('#txtCityState4').val(),
+                            "Miles": $('#txtTotalMiles4').val(),
+                            "MileageToWork": $('#txtNormalMiles4').val(),
+                            "BusinessMiles": $('#txtBusinessMiles4').val(),
+                            "BusinessMilesXRate": $('#txtBusinessMilesTotal4').val(),
+                            "ParkingAndGas": $('#txtParking4').val(),
+                            "AirFare": $('#txtAirfare4').val(),
+                            "TaxiRail": $('#txtTaxi4').val(),
+                            "Lodge": $('#txtLodging4').val(),
+                            "Meals": $('#txtMeals4').val(),
+                            "Registration": $('#txtRegistration4').val(),
+                            "Internet": $('#txtInternet4').val(),
+                            "Others": $('#txtOther4').val(),
+                            "DailyTotal": $('#txtDailyTotal4').val()
+                        },
+                        {
+                            "Id": 0,
+                            "TravelRequestId": travelRequestId,
+                            "Date": $('#txtTravelDate5').val(),
+                            "CityStateAndBusinessPurpose": $('#txtCityState5').val(),
+                            "Miles": $('#txtTotalMiles5').val(),
+                            "MileageToWork": $('#txtNormalMiles5').val(),
+                            "BusinessMiles": $('#txtBusinessMiles5').val(),
+                            "BusinessMilesXRate": $('#txtBusinessMilesTotal5').val(),
+                            "ParkingAndGas": $('#txtParking5').val(),
+                            "AirFare": $('#txtAirfare5').val(),
+                            "TaxiRail": $('#txtTaxi5').val(),
+                            "Lodge": $('#txtLodging5').val(),
+                            "Meals": $('#txtMeals5').val(),
+                            "Registration": $('#txtRegistration5').val(),
+                            "Internet": $('#txtInternet5').val(),
+                            "Others": $('#txtOther5').val(),
+                            "DailyTotal": $('#txtDailyTotal5').val()
                         }
                     ],
                     "TotalMiles":$('#txtTotalMiles').val(),
@@ -992,7 +1050,7 @@ function isNumberKey(evt) {
 function updateTotal(obj) {
 
     var total = 0;
-    for(var i=1; i<= rowCounter; i++)
+    for (var i = 1; i <= maxRowCount; i++)
     {
         var value = $("#txtTotalMiles" + i).val();
 

@@ -128,7 +128,7 @@
                                 <td class="headerceteralign">Other</td>
                                 <td class="headerceteralign">Daily Total</td>
                             </tr>
-                            <tr>
+                            <tr id="row1">
                                 <td style="padding:0px;">
                                     <input type="text" placeholder="MM/DD/YYYY" id="txtTravelDate1" name="txtTravelDate1" class="datainputdate2" ng-model="TravelModel[0].TravelDate" />
                                 </td>
@@ -177,7 +177,7 @@
                                            ng-model="TravelModel[0].DailyTotal" />
                                 </td>
                             </tr>
-                            <tr>
+                            <tr id="row2">
                                 <td style="padding:0px;">
                                     <input type="text" placeholder="MM/DD/YYYY" id="txtTravelDate2" name="txtTravelDate2" class="datainputdate2" ng-model="TravelModel[1].TravelDate" />
                                 </td>
@@ -225,6 +225,156 @@
                                            class="inputtransportationnumber" readonly
                                            ng-model="TravelModel[1].DailyTotal" />
                                 </td>
+                            </tr>
+                            <tr id="row3" style="display:none;">
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="MM/DD/YYYY" id="txtTravelDate3" name="txtTravelDate3" class="datainputdate2" ng-model="TravelModel[2].TravelDate" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtCityState3" name="txtCityState3" class="datainputname2" ng-model="TravelModel[2].City" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtTotalMiles3" name="txtTotalMiles3" class="datatransportationcolumn" maxlength="4" onkeypress="return isNumberKey(event)" ng-model="TravelModel[2].TotalMiles" ng-change="updateMileATotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtNormalMiles3" name="txtNormalMiles3" class="datatransportationcolumn" maxlength="4" onkeypress="return isNumberKey(event)" ng-model="TravelModel[2].MileageToWork" ng-change="updateMileBTotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtBusinessMiles3" name="txtBusinessMiles3" class="datatransportationcolumn" ng-model="TravelModel[2].BusinessMiles" disabled readonly />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtBusinessMilesTotal3" name="txtBusinessMilesTotal3" class="inputtransportationnumber" ng-model="TravelModel[2].BusinessMileAmount" readonly />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtParking3" name="txtParking3" class="inputtransportationnumber" ng-model="TravelModel[2].Parking" ng-change="updateParkingTotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAirfare3" name="txtAirfare3" class="inputtransportationnumber" ng-model="TravelModel[2].Airfare" ng-change="updateAirfareTotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTaxi3" name="txtTaxi3" class="inputtransportationnumber" ng-model="TravelModel[2].Taxi" ng-change="updateTaxiTotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtLodging3" name="txtLodging3" class="inputtransportationnumber" ng-model="TravelModel[2].Lodging" ng-change="updateLodgingTotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtMeals3" name="txtMeals3" class="inputtransportationnumber" ng-model="TravelModel[2].Meals" ng-change="updateMealTotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtRegistration3" name="txtRegistration3" class="inputtransportationnumber" ng-model="TravelModel[2].Registration" ng-change="updateRegistrationTotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txInternet3" name="txtInternet3" class="inputtransportationnumber" ng-model="TravelModel[2].Internet" ng-change="updateInternetTotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtOther3" name="txtOther3" class="inputtransportationnumber" ng-model="TravelModel[2].Other" ng-change="updateOtherTotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal3" name="txtDailyTotal3"
+                                           class="inputtransportationnumber" readonly
+                                           ng-model="TravelModel[2].DailyTotal" />
+                                </td>
+                                <td style="padding:0px;"><input type="button" class="deleterow btn btn-md btn-danger" value="Delete"></td>
+                            </tr>
+                            <tr id="row4" style="display:none;">
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="MM/DD/YYYY" id="txtTravelDate4" name="txtTravelDate4" class="datainputdate2" ng-model="TravelModel[3].TravelDate" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtCityState4" name="txtCityState4" class="datainputname2" ng-model="TravelModel[3].City" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtTotalMiles4" name="txtTotalMiles4" class="datatransportationcolumn" maxlength="4" onkeypress="return isNumberKey(event)" ng-model="TravelModel[3].TotalMiles" ng-change="updateMileATotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtNormalMiles4" name="txtNormalMiles4" class="datatransportationcolumn" maxlength="4" onkeypress="return isNumberKey(event)" ng-model="TravelModel[3].MileageToWork" ng-change="updateMileBTotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtBusinessMiles4" name="txtBusinessMiles4" class="datatransportationcolumn" ng-model="TravelModel[3].BusinessMiles" disabled readonly />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtBusinessMilesTotal4" name="txtBusinessMilesTotal4" class="inputtransportationnumber" ng-model="TravelModel[3].BusinessMileAmount" readonly />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtParking4" name="txtParking4" class="inputtransportationnumber" ng-model="TravelModel[3].Parking" ng-change="updateParkingTotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAirfare4" name="txtAirfare4" class="inputtransportationnumber" ng-model="TravelModel[3].Airfare" ng-change="updateAirfareTotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTaxi4" name="txtTaxi4" class="inputtransportationnumber" ng-model="TravelModel[3].Taxi" ng-change="updateTaxiTotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtLodging4" name="txtLodging4" class="inputtransportationnumber" ng-model="TravelModel[3].Lodging" ng-change="updateLodgingTotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtMeals4" name="txtMeals4" class="inputtransportationnumber" ng-model="TravelModel[3].Meals" ng-change="updateMealTotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtRegistration4" name="txtRegistration4" class="inputtransportationnumber" ng-model="TravelModel[3].Registration" ng-change="updateRegistrationTotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txInternet4" name="txtInternet4" class="inputtransportationnumber" ng-model="TravelModel[3].Internet" ng-change="updateInternetTotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtOther4" name="txtOther4" class="inputtransportationnumber" ng-model="TravelModel[3].Other" ng-change="updateOtherTotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal4" name="txtDailyTotal3"
+                                           class="inputtransportationnumber" readonly
+                                           ng-model="TravelModel[3].DailyTotal" />
+                                </td>
+                                <td style="padding:0px;"><input type="button" class="deleterow btn btn-md btn-danger" value="Delete"></td>
+                            </tr>
+                            <tr id="row5" style="display:none;">
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="MM/DD/YYYY" id="txtTravelDate5" name="txtTravelDate5" class="datainputdate2" ng-model="TravelModel[4].TravelDate" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtCityState5" name="txtCityState5" class="datainputname2" ng-model="TravelModel[4].City" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtTotalMiles5" name="txtTotalMiles5" class="datatransportationcolumn" maxlength="4" onkeypress="return isNumberKey(event)" ng-model="TravelModel[4].TotalMiles" ng-change="updateMileATotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtNormalMiles5" name="txtNormalMiles5" class="datatransportationcolumn" maxlength="4" onkeypress="return isNumberKey(event)" ng-model="TravelModel[4].MileageToWork" ng-change="updateMileBTotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="text" placeholder="" id="txtBusinessMiles5" name="txtBusinessMiles5" class="datatransportationcolumn" ng-model="TravelModel[4].BusinessMiles" disabled readonly />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtBusinessMilesTotal5" name="txtBusinessMilesTotal5" class="inputtransportationnumber" ng-model="TravelModel[4].BusinessMileAmount" readonly />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtParking5" name="txtParking5" class="inputtransportationnumber" ng-model="TravelModel[4].Parking" ng-change="updateParkingTotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAirfare5" name="txtAirfare5" class="inputtransportationnumber" ng-model="TravelModel[4].Airfare" ng-change="updateAirfareTotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTaxi5" name="txtTaxi5" class="inputtransportationnumber" ng-model="TravelModel[4].Taxi" ng-change="updateTaxiTotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtLodging5" name="txtLodging5" class="inputtransportationnumber" ng-model="TravelModel[4].Lodging" ng-change="updateLodgingTotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtMeals5" name="txtMeals5" class="inputtransportationnumber" ng-model="TravelModel[4].Meals" ng-change="updateMealTotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtRegistration5" name="txtRegistration5" class="inputtransportationnumber" ng-model="TravelModel[4].Registration" ng-change="updateRegistrationTotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txInternet5" name="txtInternet5" class="inputtransportationnumber" ng-model="TravelModel[4].Internet" ng-change="updateInternetTotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtOther5" name="txtOther5" class="inputtransportationnumber" ng-model="TravelModel[4].Other" ng-change="updateOtherTotal()" />
+                                </td>
+                                <td style="padding:0px;">
+                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtDailyTotal4" name="txtDailyTotal3"
+                                           class="inputtransportationnumber" readonly
+                                           ng-model="TravelModel[4].DailyTotal" />
+                                </td>
+                                <td style="padding:0px;"><input type="button" class="deleterow btn btn-md btn-danger" value="Delete"></td>
                             </tr>
                             <tr id="part1columntotal">
                                 <td colspan="2" class="headercolumn2">Part 1 Column Totals</td>
