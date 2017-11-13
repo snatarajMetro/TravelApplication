@@ -56,12 +56,15 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
     $scope.updateMileATotal = function (model) {
 
         var totalA = 0;
+        //alert(rowCounter);
 
         for (var index = 0; index < rowCounter; index++) {
             if (model && model[index].TotalMiles) {
                 totalA = (totalA * 1) + (model[index].TotalMiles * 1);
             }
         }
+
+       // alert(totalA);
 
         if (totalA > 0)
         {
@@ -75,13 +78,14 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
     $scope.updateMileBTotal = function (model) {
 
         var totalB = 0;
-
+      
         for (var index = 0; index < rowCounter; index++) {
             if (model && model[index].MileageToWork) {
                 totalB = (totalB * 1) + (model[index].MileageToWork * 1);
             }
         }
 
+        
         if (totalB > 0) {
             $scope.totalMileB = (totalB * 1);
 
@@ -141,6 +145,8 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                     + (model[1].Internet * 1)
                     + (model[1].Other * 1)
                 );
+
+       
 
             $scope.totalDailyAmount = (
             (model[0].DailyTotal * 1)
@@ -1599,6 +1605,21 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
     }
 
     $scope.loadTravelReimbursementRequest = function (travelRequestId) {
+
+        $scope.TravelModel = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
+        $scope.totalBusinessMile = 0;
+        $scope.totalAirfare = 0;
+        $scope.totalPart2NonTravelExpenseAmount = 0;
+        $scope.totalSubmittedForApprovalAmount = 0;
+        $scope.totalPrePaidByMTAAmount = 0;
+        $scope.totalExpenseAmount = 0;
+        $scope.totalCashAdvanceAmount = 0;
+        $scope.totalAmount = 0;
+        $scope.totalFISAmount = 0;
+        $scope.SelectedProject = [{}, {}];
+
+        setWatch(); 
+
         $.get('/uitemplates/travelreimbursement.html')
         .done(function (data) {
             $('#travelreimbursementtemplate').html($compile($(data).html())($scope));
@@ -1660,96 +1681,106 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 })
             });
 
-            $scope.$apply();
+            $scope.$apply(function () {
 
-            $("#btnAddRow").on("click", function () {
+                // set default values
+                for (var index = 0; index < 10; index++) {
+                    $scope.TravelModel[index].TravelDate = "";
+                    $scope.TravelModel[index].City = "";
+                    $scope.TravelModel[index].TotalMiles = 0;
+                    $scope.TravelModel[index].MileageToWork = 0;
+                    $scope.TravelModel[index].BusinessMiles = 0;
+                    $scope.TravelModel[index].BusinessMileAmount = 0;
+                    $scope.TravelModel[index].Parking = 0;
+                    $scope.TravelModel[index].Airfare = 0;
+                    $scope.TravelModel[index].Taxi = 0;
+                    $scope.TravelModel[index].Lodging = 0;
+                    $scope.TravelModel[index].Meals = 0
+                    $scope.TravelModel[index].Registration = 0;
+                    $scope.TravelModel[index].Internet = 0;
+                    $scope.TravelModel[index].Other = 0;
+                    $scope.TravelModel[index].DailyTotal = 0;
+                }
 
-                rowCounter++;
+                $("#btnAddRow").on("click", function () {
 
-                var newRow = $("<tr ng-app='travelApp' ng-controller='travelAppCtrl' class='tablerow' id='row" + rowCounter + "' name='row" + rowCounter + "'>");
+                    rowCounter++;
 
-                var cols = "";
+                    var index = rowCounter - 1;
+                    var newRow = $("<tr ng-app='travelApp' ng-controller='travelAppCtrl' class='tablerow' id='row" + rowCounter + "' name='row" + rowCounter + "'>");
 
-                cols += "<td style='padding:0px;'>";
-                cols += "   <input type='text' placeholder='MM/DD/YYYY' id='txtTravelDate" + rowCounter + "' name='txtTravelDate" + rowCounter + "' class='datainputdate2' />";
-                cols += "</td>";
-                cols += "<td style='padding:0px;'>";
-                cols += "   <input type='text' id='txtCityState" + rowCounter + "' name='txtCityState" + rowCounter + "' class='datainputname2' />";
-                cols += "</td>";
-                cols += "<td style='padding:0px;'>";
-                cols += "   <input type='text' id='txtTotalMiles" + rowCounter + "' name='txtTotalMiles" + rowCounter + "' class='datatransportationcolumn' maxlength='4' onkeypress='return isNumberKey(event)' ng-model='TotalMileA" + rowCounter + "' ng-change='updateMileATotal()' />";
-                cols += "</td>";
-                cols += "<td style='padding:0px;'>";
-                cols += "   <input type='text' id='txtNormalMiles" + rowCounter + "' name='txtNormalMiles" + rowCounter + "' class='datatransportationcolumn' maxlength='4' onkeypress='return isNumberKey(event)' ng-model='TotalMileB" + rowCounter + "' ng-change='updateMileBTotal()' />";
-                cols += "</td>";
-                cols += "<td style='padding:0px;'>";
-                cols += "   <input type='text' id='txtBusinessMiles" + rowCounter + "' name='txtBusinessMiles" + rowCounter + "' class='datatransportationcolumn' maxlength='4' onkeypress='return isNumberKey(event)' ng-model='BusinessMile" + rowCounter + "' disabled readonly />";
-                cols += "</td>";
-                cols += "<td style='padding:0px;'>";
-                cols += "   <input type='number' min='0.00' max='999999.99' step='0.01' placeholder='0.00' id='txtBusinessMilesTotal" + rowCounter + "' name='txtBusinessMilesTotal" + rowCounter + "' class='inputtransportationnumber' maxlength='4' onkeypress='return isNumberKey(event)' ng-model='BusinessMileAmount" + rowCounter + "' />";
-                cols += "</td>";
-                cols += "<td style='padding:0px;'>";
-                cols += "   <input type='number' min='0.00' max='999999.99' step='0.01' placeholder='0.00' id='txtParking" + rowCounter + "' name='txtParking" + rowCounter + "' class='inputtransportationnumber' maxlength='4' onkeypress='return isNumberKey(event)' ng-model='Parking" + rowCounter + "' ng-change='updateParkingTotal()' />";
-                cols += "</td>";
-                cols += "<td style='padding:0px;'>";
-                cols += "   <input type='number' min='0.00' max='999999.99' step='0.01' placeholder='0.00' id='txtAirfare" + rowCounter + "' name='txtAirfare" + rowCounter + "' class='inputtransportationnumber' maxlength='4' onkeypress='return isNumberKey(event)' ng-model='Airfare" + rowCounter + "' ng-change='updateAirfareTotal()' />";
-                cols += "</td>";
-                cols += "<td style='padding:0px;'>";
-                cols += "   <input type='number' min='0.00' max='999999.99' step='0.01' placeholder='0.00' id='txtTaxi" + rowCounter + "' name='txtTaxi" + rowCounter + "' class='inputtransportationnumber' maxlength='4' onkeypress='return isNumberKey(event)' ng-model='Taxi" + rowCounter + "' ng-change='updateTaxiTotal()' />";
-                cols += "</td>";
-                cols += "<td style='padding:0px;'>";
-                cols += "   <input type='number' min='0.00' max='999999.99' step='0.01' placeholder='0.00' id='txtLodging" + rowCounter + "' name='txtLodging" + rowCounter + "' class='inputtransportationnumber' maxlength='4' onkeypress='return isNumberKey(event)' ng-model='Lodging" + rowCounter + "' ng-change='updateLodgingTotal()' />";
-                cols += "</td>";
-                cols += "<td style='padding:0px;'>";
-                cols += "   <input type='number' min='0.00' max='999999.99' step='0.01' placeholder='0.00' id='txtMeals" + rowCounter + "' name='txtMeals" + rowCounter + "' class='inputtransportationnumber' maxlength='4' onkeypress='return isNumberKey(event)' ng-model='Meals" + rowCounter + "' ng-change='updateMealTotal()' />";
-                cols += "</td>";
-                cols += "<td style='padding:0px;'>";
-                cols += "   <input type='number' min='0.00' max='999999.99' step='0.01' placeholder='0.00' id='txtRegistration" + rowCounter + "' name='txtRegistration" + rowCounter + "' class='inputtransportationnumber' maxlength='4' onkeypress='return isNumberKey(event)' ng-model='Registration" + rowCounter + "' ng-change='updateRegistrationTotal()' />";
-                cols += "</td>";
-                cols += "<td style='padding:0px;'>";
-                cols += "   <input type='number' min='0.00' max='999999.99' step='0.01' placeholder='0.00' id='txtInternet" + rowCounter + "' name='txtInternet" + rowCounter + "' class='inputtransportationnumber' maxlength='4' onkeypress='return isNumberKey(event)' ng-model='Internet" + rowCounter + "' ng-change='updateInternetTotal()' />";
-                cols += "</td>";
-                cols += "<td style='padding:0px;'>";
-                cols += "   <input type='number' min='0.00' max='999999.99' step='0.01' placeholder='0.00' id='txtOther" + rowCounter + "' name='txtOther" + rowCounter + "' class='inputtransportationnumber' maxlength='4' onkeypress='return isNumberKey(event)' ng-model='Other" + rowCounter + "' ng-change='updateOtherTotal()' />";
-                cols += "</td>";
-                cols += "<td style='padding:0px;'>";
-                cols += "   <input type='number' min='0.00' max='999999.99' step='0.01' placeholder='0.00' id='txtDailyTotal" + rowCounter + "' name='txtDailyTotal" + rowCounter + "' class='inputtransportationnumber' maxlength='4' onkeypress='return isNumberKey(event)' ng-model='dailyTotalAmount" + rowCounter + "' />";
-                cols += "</td>";
-                cols += "<td style='padding:0px;'><input type='button' class='deleterow btn btn-md btn-danger'  value='Delete'></td>";
-                cols += "</tr>";
+                    var cols = "";
 
-                newRow.append(cols);
+                    cols += "<td style='padding:0px;'>";
+                    cols += "   <input type='text' placeholder='MM/DD/YYYY' id='txtTravelDate" + rowCounter + "' name='txtTravelDate" + rowCounter + "' ng-model='TravelModel[" + index + "].TravelDate' class='datainputdate2' />";
+                    cols += "</td>";
+                    cols += "<td style='padding:0px;'>"
+                    cols += "   <input type='text' id='txtCityState" + rowCounter + "' name='txtCityState" + rowCounter + "' ng-model='TravelModel[" + index + "].City' class='datainputname2' />";
+                    cols += "</td>";
+                    cols += "<td style='padding:0px;'>";
+                    cols += "   <input type='text' id='txtTotalMiles" + rowCounter + "' name='txtTotalMiles" + rowCounter + "' class='datatransportationcolumn' maxlength='4' onkeypress='return isNumberKey(event)' ng-model='TravelModel[" + index + "].TotalMiles' ng-change='updateMileATotal()' />";
+                    cols += "</td>";
+                    cols += "<td style='padding:0px;'>";
+                    cols += "   <input type='text' id='txtNormalMiles" + rowCounter + "' name='txtNormalMiles" + rowCounter + "' class='datatransportationcolumn' maxlength='4' onkeypress='return isNumberKey(event)' ng-model='TravelModel[" + index + "].MileageToWork' ng-change='updateMileBTotal()' />";
+                    cols += "</td>";
+                    cols += "<td style='padding:0px;'>";
+                    cols += "   <input type='text' id='txtBusinessMiles" + rowCounter + "' name='txtBusinessMiles" + rowCounter + "' class='datatransportationcolumn' maxlength='4' onkeypress='return isNumberKey(event)' ng-model='TravelModel[" + index + "].BusinessMiles' disabled readonly />";
+                    cols += "</td>";
+                    cols += "<td style='padding:0px;'>";
+                    cols += "   <input type='number' min='0.00' max='999999.99' step='0.01' placeholder='0.00' id='txtBusinessMilesTotal" + rowCounter + "' name='txtBusinessMilesTotal" + rowCounter + "' class='inputtransportationnumber' maxlength='4' onkeypress='return isNumberKey(event)' ng-model='BusinessMileAmount" + rowCounter + "' readonly />";
+                    cols += "</td>";
+                    cols += "<td style='padding:0px;'>";
+                    cols += "   <input type='number' min='0.00' max='999999.99' step='0.01' placeholder='0.00' id='txtParking" + rowCounter + "' name='txtParking" + rowCounter + "' class='inputtransportationnumber' maxlength='4' onkeypress='return isNumberKey(event)' ng-model='Parking" + rowCounter + "' ng-change='updateParkingTotal()' />";
+                    cols += "</td>";
+                    cols += "<td style='padding:0px;'>";
+                    cols += "   <input type='number' min='0.00' max='999999.99' step='0.01' placeholder='0.00' id='txtAirfare" + rowCounter + "' name='txtAirfare" + rowCounter + "' class='inputtransportationnumber' maxlength='4' onkeypress='return isNumberKey(event)' ng-model='Airfare" + rowCounter + "' ng-change='updateAirfareTotal()' />";
+                    cols += "</td>";
+                    cols += "<td style='padding:0px;'>";
+                    cols += "   <input type='number' min='0.00' max='999999.99' step='0.01' placeholder='0.00' id='txtTaxi" + rowCounter + "' name='txtTaxi" + rowCounter + "' class='inputtransportationnumber' maxlength='4' onkeypress='return isNumberKey(event)' ng-model='Taxi" + rowCounter + "' ng-change='updateTaxiTotal()' />";
+                    cols += "</td>";
+                    cols += "<td style='padding:0px;'>";
+                    cols += "   <input type='number' min='0.00' max='999999.99' step='0.01' placeholder='0.00' id='txtLodging" + rowCounter + "' name='txtLodging" + rowCounter + "' class='inputtransportationnumber' maxlength='4' onkeypress='return isNumberKey(event)' ng-model='Lodging" + rowCounter + "' ng-change='updateLodgingTotal()' />";
+                    cols += "</td>";
+                    cols += "<td style='padding:0px;'>";
+                    cols += "   <input type='number' min='0.00' max='999999.99' step='0.01' placeholder='0.00' id='txtMeals" + rowCounter + "' name='txtMeals" + rowCounter + "' class='inputtransportationnumber' maxlength='4' onkeypress='return isNumberKey(event)' ng-model='Meals" + rowCounter + "' ng-change='updateMealTotal()' />";
+                    cols += "</td>";
+                    cols += "<td style='padding:0px;'>";
+                    cols += "   <input type='number' min='0.00' max='999999.99' step='0.01' placeholder='0.00' id='txtRegistration" + rowCounter + "' name='txtRegistration" + rowCounter + "' class='inputtransportationnumber' maxlength='4' onkeypress='return isNumberKey(event)' ng-model='Registration" + rowCounter + "' ng-change='updateRegistrationTotal()' />";
+                    cols += "</td>";
+                    cols += "<td style='padding:0px;'>";
+                    cols += "   <input type='number' min='0.00' max='999999.99' step='0.01' placeholder='0.00' id='txtInternet" + rowCounter + "' name='txtInternet" + rowCounter + "' class='inputtransportationnumber' maxlength='4' onkeypress='return isNumberKey(event)' ng-model='Internet" + rowCounter + "' ng-change='updateInternetTotal()' />";
+                    cols += "</td>";
+                    cols += "<td style='padding:0px;'>";
+                    cols += "   <input type='number' min='0.00' max='999999.99' step='0.01' placeholder='0.00' id='txtOther" + rowCounter + "' name='txtOther" + rowCounter + "' class='inputtransportationnumber' maxlength='4' onkeypress='return isNumberKey(event)' ng-model='Other" + rowCounter + "' ng-change='updateOtherTotal()' />";
+                    cols += "</td>";
+                    cols += "<td style='padding:0px;'>";
+                    cols += "   <input type='number' min='0.00' max='999999.99' step='0.01' placeholder='0.00' id='txtDailyTotal" + rowCounter + "' name='txtDailyTotal" + rowCounter + "' class='inputtransportationnumber' maxlength='4' onkeypress='return isNumberKey(event)' ng-model='dailyTotalAmount" + rowCounter + "' />";
+                    cols += "</td>";
+                    cols += "<td style='padding:0px;'><input type='button' class='deleterow btn btn-md btn-danger'  value='Delete'></td>";
+                    cols += "</tr>";
 
-                newRow.insertBefore($('#part1columntotal'));
+                    newRow.append(cols);
 
-                //var s = $("#row" + rowCounter);
+                    newRow.insertBefore($('#part1columntotal'));
 
-                //var element = angular.element($("#divpart1"));
+                    // Date picker options
+                    var options = {
+                        format: 'mm/dd/yyyy',
+                        orientation: "top right",
+                        todayHighlight: true,
+                        autoclose: true,
+                    };
 
-                //$compile(element.contents())($scope);
+                    $("input[name=" + "'txtTravelDate" + rowCounter + "']").datepicker(options);
 
-                //angular.element("#row3").triggerHandler('change');
+                    $scope.$apply();
+                });
 
-                // Date picker options
-                var options = {
-                    format: 'mm/dd/yyyy',
-                    orientation: "top right",
-                    todayHighlight: true,
-                    autoclose: true,
-                };
-
-                $("input[name=" + "'txtTravelDate" + rowCounter + "']").datepicker(options);
-
-                //$("#txtTravelDate" + rowCounter).focus();
-
-                $scope.$apply();
+                $("table.tablepart1").on("click", ".deleterow", function (event) {
+                    $(this).closest("tr").remove();
+                    rowCounter -= 1
+                });
             });
-
-            $("table.tablepart1").on("click", ".deleterow", function (event) {
-                $(this).closest("tr").remove();
-                rowCounter -= 1
-            });
-            
         });
     }
 
@@ -2121,7 +2152,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
     function setWatch() {
         var i = 0;
-        for (var index = 0; index < rowCounter; index++) {
+        for (var index = 0; index < 10; index++) {
 
             $scope.$watch('TravelModel[' + index + '].TotalMiles', function () {
                 updateTotal($scope.TravelModel);
@@ -2175,16 +2206,18 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
     }
 
     function updateTotal(model) {
+
+        //alert('here');
         $scope.updateMileATotal(model);
-        $scope.updateMileBTotal(model);
-        $scope.updateParkingTotal(model);
-        $scope.updateAirfareTotal(model);
-        $scope.updateTaxiTotal(model);
-        $scope.updateLodgingTotal(model);
-        $scope.updateMealTotal(model);
-        $scope.updateRegistrationTotal(model);
-        $scope.updateInternetTotal(model);
-        $scope.updateOtherTotal(model);
+        //$scope.updateMileBTotal(model);
+        //$scope.updateParkingTotal(model);
+        //$scope.updateAirfareTotal(model);
+        //$scope.updateTaxiTotal(model);
+        //$scope.updateLodgingTotal(model);
+        //$scope.updateMealTotal(model);
+        //$scope.updateRegistrationTotal(model);
+        //$scope.updateInternetTotal(model);
+        //$scope.updateOtherTotal(model);
     }
 
     // load travel reimbursement modal in edit mode
