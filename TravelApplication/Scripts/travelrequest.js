@@ -1,7 +1,7 @@
 ﻿var app = angular.module('travelApp', ['ui.grid', 'ui.grid.pagination','ui.grid.resizeColumns']);
 //var app = angular.module('travelApp', ['ui.grid']);
 
-app.controller('travelAppCtrl', function ($scope, $compile) {
+app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
     // Estimated Expense section
     $scope.advanceLodgingAmount = 0.00;
@@ -455,15 +455,13 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
 
     // load cost centers and projects
     $scope.loadCostCenters = function () {
-        //$scope.Projects = {};
 
         $.get('/api/fis/costcenters')
         .done(function (data) {
             $scope.CostCenters = JSON.parse(data);
             $scope.$apply();
+
         });
-
-
     };
 
     $scope.Projects = {};
@@ -486,11 +484,21 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                     $scope.projects1 = result;
                     $scope.$apply();
                     $('#project1').val("?");
+
+                    if ($scope.SelectedProject) {
+                        $("#ddlProjects1").val($scope.SelectedProject[0].Id);
+                        $scope.SelectedProject[0].Id = "";
+                    }
                 }
                 else if (source == 'ddlCostCenter2') {
                     $scope.projects2 = result;
                     $scope.$apply();
                     $('#project2').val("?");
+
+                    if ($scope.SelectedProject) {
+                        $("#ddlProjects2").val($scope.SelectedProject[1].Id);
+                        $scope.SelectedProject[1].Id = "";
+                    }
                 }
                 else if (source == 'ddlCostCenter3') {
                     $scope.projects3 = result;
@@ -503,11 +511,13 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 }
 
                 $scope.Projects[costCenterName] = result;
+                
             });
         }
         else {
             if (source == 'ddlCostCenter1') {
                 $scope.projects1 = $scope.Projects[costCenterName];
+                //alert('here');
             }
             else if (source == 'ddlCostCenter2') {
                 $scope.projects2 = $scope.Projects[costCenterName];
@@ -528,6 +538,7 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
     };
 
     $scope.getProjects = function (source, costCenter) {
+
         $scope.getProjectsByCostCenterName(source, costCenter.Name);
     };
 
@@ -2108,47 +2119,59 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
         });
     }
 
-    for (var index = 0; index < rowCounter; index++) {
+    function setWatch() {
+        var i = 0;
+        for (var index = 0; index < rowCounter; index++) {
 
-        $scope.$watch('TravelModel[' + index + '].TotalMiles', function () {
-            updateTotal($scope.TravelModel);
-        });
+            $scope.$watch('TravelModel[' + index + '].TotalMiles', function () {
+                updateTotal($scope.TravelModel);
+            });
 
-        $scope.$watch('TravelModel[' + index + '].MileageToWork', function () {
-            updateTotal($scope.TravelModel);
-        });
+            $scope.$watch('TravelModel[' + index + '].MileageToWork', function () {
+                updateTotal($scope.TravelModel);
+            });
 
-        $scope.$watch('TravelModel[' + index + '].Parking', function () {
-            updateTotal($scope.TravelModel);
-        });
+            $scope.$watch('TravelModel[' + index + '].Parking', function () {
+                updateTotal($scope.TravelModel);
+            });
 
-        $scope.$watch('TravelModel[' + index + '].Airfare', function () {
-            updateTotal($scope.TravelModel);
-        });
+            $scope.$watch('TravelModel[' + index + '].Airfare', function () {
+                updateTotal($scope.TravelModel);
+            });
 
-        $scope.$watch('TravelModel[' + index + '].Taxi', function () {
-            updateTotal($scope.TravelModel);
-        });
+            $scope.$watch('TravelModel[' + index + '].Taxi', function () {
+                updateTotal($scope.TravelModel);
+            });
 
-        $scope.$watch('TravelModel[' + index + '].Lodging', function () {
-            updateTotal($scope.TravelModel);
-        });
+            $scope.$watch('TravelModel[' + index + '].Lodging', function () {
+                updateTotal($scope.TravelModel);
+            });
 
-        $scope.$watch('TravelModel[' + index + '].Meals', function () {
-            updateTotal($scope.TravelModel);
-        });
+            $scope.$watch('TravelModel[' + index + '].Meals', function () {
+                updateTotal($scope.TravelModel);
+            });
 
-        $scope.$watch('TravelModel[' + index + '].Registration', function () {
-            updateTotal($scope.TravelModel);
-        });
+            $scope.$watch('TravelModel[' + index + '].Registration', function () {
+                updateTotal($scope.TravelModel);
+            });
 
-        $scope.$watch('TravelModel[' + index + '].Internet', function () {
-            updateTotal($scope.TravelModel);
-        });
+            $scope.$watch('TravelModel[' + index + '].Internet', function () {
+                updateTotal($scope.TravelModel);
+            });
 
-        $scope.$watch('TravelModel[' + index + '].Other', function () {
-            updateTotal($scope.TravelModel);
-        });
+            $scope.$watch('TravelModel[' + index + '].Other', function () {
+                updateTotal($scope.TravelModel);
+            });
+            
+            //$scope.$watch('ddlCostCenter' + (i + 1), function () {
+            //    if ($scope.CostCenters) {
+            //        //alert('2:' + 'ddlCostCenter' + (i + 1));
+            //        $scope.getProjects('ddlCostCenter' + (i + 1), $scope.CostCenters[i]);
+            //        i = i + 1;
+            //        $scope.$apply();
+            //    }
+            //});
+        }
     }
 
     function updateTotal(model) {
@@ -2176,6 +2199,10 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
         $scope.totalExpenseAmount = 0;
         $scope.totalCashAdvanceAmount = 0;
         $scope.totalAmount = 0;
+        $scope.totalFISAmount = 0;
+        $scope.SelectedProject = [{}, {}];
+
+        setWatch();
 
         $('#travelrequesttemplate').html('');
 
@@ -2247,9 +2274,27 @@ app.controller('travelAppCtrl', function ($scope, $compile) {
                 }
 
                 // set FIS expense section
-                $scope.FISTotalAmount = $scope.Data.FIS.TotalAmount;
+                $scope.totalFISAmount = $scope.Data.FIS.TotalAmount;
+
+                for (var index = 0; index < $scope.Data.FIS.FISDetails.length; index++) {
+
+                    var costCenterName = $scope.Data.FIS.FISDetails[index].CostCenterId;
+
+                    $("#ddlCostCenter" + (index + 1)).val(costCenterName);
+                    $("#txtAccount" + (index + 1)).val($scope.Data.FIS.FISDetails[index].LineItem);
+                    $("#txtTask" + (index + 1)).val($scope.Data.FIS.FISDetails[index].Task);
+                    $("#txtAmount" + (index + 1)).val($scope.Data.FIS.FISDetails[index].Amount);
+                }
 
                 });
+
+                for (var index2 = 0; index2 < $scope.Data.FIS.FISDetails.length; index2++) {
+
+                    var projectName = $scope.Data.FIS.FISDetails[index2].ProjectId;
+                    $scope.SelectedProject[index2].Id = projectName;
+                    $timeout(angular.element("#ddlCostCenter" + (index2 + 1)).triggerHandler('change'), 0, true);
+
+                }
             });
         });
     }
