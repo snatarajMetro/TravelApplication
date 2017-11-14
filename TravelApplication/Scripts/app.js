@@ -288,8 +288,7 @@ function savedataentry()
     var travelRequestId = $('#travelRequestId').text();
     var selectedRoleId = $("#selectedRoleId").text();
     var purpose = $('#txtPurpose').val();
-    var today = $('#txtToday').val();
-
+    
     // Get estimated expenses
     var advLodge = $('#txtAdvLodge').val();
     var totalEstimatedLodge = $('#txtTotalEstimatedLodge').val();
@@ -383,8 +382,7 @@ function savedataentry()
                     'ReturnDateTime': returnDate,
                     'UserId': userId,
                     'SelectedRoleId': selectedRoleId,
-                    'Purpose': purpose,
-                    'Today': today
+                    'Purpose': purpose
                 },
                 "EstimatedExpenseData": {
                     'EstimatedExpenseId': 0,
@@ -840,7 +838,6 @@ function savereimbursementdataentry() {
     var travelPeriodTo = $('#txtTravelPeriodTo').val();
     var vendorNumber = $('#txtVendorNumber').val();
     var costCenterNumber = $('#txtCostCenterNumber').val();
-    var today = $('#txtToday').val();
     var name = jQuery.trim($('#txtName').val());
     var extension = $('#txtExtension').val();
     var division = jQuery.trim($('#txtDivision').val());

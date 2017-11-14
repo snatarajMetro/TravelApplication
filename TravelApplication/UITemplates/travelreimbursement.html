@@ -78,12 +78,6 @@
                         </div>
                         <input type="text" placeholder="" id="txtDepartment" width="100" class="datainputname" />
                     </div>
-                    <div class="column">
-                        <div class="label3">
-                            <span>Date</span>
-                        </div>
-                        <input type="text" id="txtToday" name="txtToday" width="100" class="datainputdatereimbursementtoday" placeholder="MM/DD/YYY" readonly disabled />
-                    </div>
                 </div>
             </div>
             <div id="part1travel" ng-app="travelApp" ng-controller="travelAppCtrl">
@@ -274,7 +268,7 @@
                                            class="inputtransportationnumber" readonly
                                            ng-model="TravelModel[2].DailyTotal" />
                                 </td>
-                                <td style="padding:0px;"><input type="button" class="deleterow btn btn-md btn-danger" value="Delete"></td>
+                                <td id="deleterow3" style="padding:0px;"><input type="button" class="deleterow btn btn-md btn-danger" value="Delete"></td>
                             </tr>
                             <tr id="row4" style="display:none;">
                                 <td style="padding:0px;">
@@ -324,7 +318,7 @@
                                            class="inputtransportationnumber" readonly
                                            ng-model="TravelModel[3].DailyTotal" />
                                 </td>
-                                <td style="padding:0px;"><input type="button" class="deleterow btn btn-md btn-danger" value="Delete"></td>
+                                <td id="deleterow4" style="padding:0px;"><input type="button" class="deleterow btn btn-md btn-danger" value="Delete"></td>
                             </tr>
                             <tr id="row5" style="display:none;">
                                 <td style="padding:0px;">
@@ -374,7 +368,7 @@
                                            class="inputtransportationnumber" readonly
                                            ng-model="TravelModel[4].DailyTotal" />
                                 </td>
-                                <td style="padding:0px;"><input type="button" class="deleterow btn btn-md btn-danger" value="Delete"></td>
+                                <td id="deleterow5" style="padding:0px;"><input type="button" class="deleterow btn btn-md btn-danger" value="Delete"></td>
                             </tr>
                             <tr id="part1columntotal">
                                 <td colspan="2" class="headercolumn2">Part 1 Column Totals</td>
