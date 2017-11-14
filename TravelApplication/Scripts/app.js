@@ -9,6 +9,8 @@ $(document).ready(function () {
 
     $("#txtEmail").focus();
 
+    //createnewrequest();
+
     //$("#signin").hide();
     //createnewreimbursementrequest();
     //createTravelRequestReimbursement();
@@ -722,6 +724,7 @@ function editTravelReimbursement(container) {
     //var travelRequestId = 123456;
     var scope = angular.element('#travelreimbursementtemplate').scope();
     scope.loadTravelReimbursementForEdit(travelRequestId);
+    scope.loadCostCenters();
 
     $('#travelreimbursementtemplate').show();
 
@@ -885,9 +888,33 @@ function savereimbursementdataentry() {
                             "Task": $('#txtTask2').val(),
                             "Amount": $('#txtAmount2').val(),
                             "TravelRequestId": travelRequestId
+                        },
+                        {
+                            "CostCenterId": $("#ddlCostCenter3 option:selected").val(),
+                            "LineItem": $('#txtAccount3').val(),
+                            "ProjectId": $("#ddlProjects3 option:selected").val(),
+                            "Task": $('#txtTask3').val(),
+                            "Amount": $('#txtAmount3').val(),
+                            "TravelRequestId": travelRequestId
+                        },
+                        {
+                            "CostCenterId": $("#ddlCostCenter4 option:selected").val(),
+                            "LineItem": $('#txtAccount4').val(),
+                            "ProjectId": $("#ddlProjects4 option:selected").val(),
+                            "Task": $('#txtTask4').val(),
+                            "Amount": $('#txtAmount4').val(),
+                            "TravelRequestId": travelRequestId
+                        },
+                        {
+                            "CostCenterId": $("#ddlCostCenter5 option:selected").val(),
+                            "LineItem": $('#txtAccount5').val(),
+                            "ProjectId": $("#ddlProjects5 option:selected").val(),
+                            "Task": $('#txtTask5').val(),
+                            "Amount": $('#txtAmount5').val(),
+                            "TravelRequestId": travelRequestId
                         }
                     ],
-                    "TotalAmount": 0
+                    "TotalAmount": $('#txFISTotalAmount').val()
                 },
                 "ReimbursementDetails": {
                     "Reimbursement":[

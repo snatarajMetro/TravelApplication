@@ -451,7 +451,8 @@
                                                     <input type="text" placeholder="" id="txtTask1" name="txtTask1" class="datainputcostcenter" />
                                                 </td>
                                                 <td style="padding:0px;">
-                                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAmount1" name="txtAmount1" class="inputamountnumber" />
+                                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAmount1" 
+                                                           name="txtAmount1" class="inputamountnumber" ng-model="FISModel[0].Amount"  ng-change="updateFISTotal()" />
                                                 </td>
                                                 <td></td>
                                             </tr>
@@ -474,7 +475,8 @@
                                                     <input type="text" placeholder="" id="txtTask2" name="txtTask2" class="datainputcostcenter" />
                                                 </td>
                                                 <td style="padding:0px;">
-                                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAmount2" name="txtAmount2" class="inputamountnumber" />
+                                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAmount2" 
+                                                           name="txtAmount2" class="inputamountnumber" ng-model="FISModel[1].Amount" ng-change="updateFISTotal()" />
                                                 </td>
                                                 <td></td>
                                             </tr>
@@ -497,9 +499,10 @@
                                                     <input type="text" placeholder="" id="txtTask3" name="txtTask3" class="datainputcostcenter" />
                                                 </td>
                                                 <td style="padding:0px;">
-                                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAmount3" name="txtAmount3" class="inputamountnumber" />
+                                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAmount3" 
+                                                           name="txtAmount3" class="inputamountnumber" ng-model="FISModel[2].Amount" ng-change="updateFISTotal()" />
                                                 </td>
-                                                <td style="padding:0px;"><input type="button" class="deleterowfis btn btn-md btn-danger" value="Delete"></td>
+                                                <td id="deletefisrow3" style="padding:0px;"><input type="button" class="deleterowfis btn btn-md btn-danger" value="Delete"></td>
                                             </tr>
                                             <tr id="rowfis4" style="display:none;">
                                                 <td style="padding:0px;">
@@ -520,9 +523,10 @@
                                                     <input type="text" placeholder="" id="txtTask4" name="txtTask4" class="datainputcostcenter" />
                                                 </td>
                                                 <td style="padding:0px;">
-                                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAmount4" name="txtAmount4" class="inputamountnumber" />
+                                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAmount4" 
+                                                           name="txtAmount4" class="inputamountnumber" ng-model="FISModel[3].Amount" ng-change="updateFISTotal()" />
                                                 </td>
-                                                <td style="padding:0px;"><input type="button" class="deleterowfis btn btn-md btn-danger" value="Delete"></td>
+                                                <td id="deletefisrow4" style="padding:0px;"><input type="button" class="deleterowfis btn btn-md btn-danger" value="Delete"></td>
                                             </tr>
                                             <tr id="rowfis5" style="display:none;">
                                                 <td style="padding:0px;">
@@ -543,9 +547,10 @@
                                                     <input type="text" placeholder="" id="txtTask5" name="txtTask5" class="datainputcostcenter" />
                                                 </td>
                                                 <td style="padding:0px;">
-                                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAmount5" name="txtAmount5" class="inputamountnumber" />
+                                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAmount5" 
+                                                           name="txtAmount5" class="inputamountnumber" ng-model="FISModel[4].Amount" ng-change="updateFISTotal()" />
                                                 </td>
-                                                <td style="padding:0px;"><input type="button" class="deleterowfis btn btn-md btn-danger" value="Delete"></td>
+                                                <td id="deletefisrow5" style="padding:0px;"><input type="button" class="deleterowfis btn btn-md btn-danger" value="Delete"></td>
                                             </tr>
                                             <tr id="rowfistotal">
                                                 <td style="padding:0px;">

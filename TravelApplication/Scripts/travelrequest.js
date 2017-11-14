@@ -41,6 +41,21 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
     $scope.BusinessMileRate = 0.555;
 
+    $scope.updateFISTotal = function (model) {
+        var totalFISAmount = 0;
+
+        for (var index = 0; index < maxRowCount; index++) {
+            if (model && model[index].Amount) {
+                totalFISAmount = (totalFISAmount * 1) + (model[index].Amount * 1);
+            }
+        }
+
+        if (totalFISAmount > 0)
+        {
+            $scope.totalFISAmount = (totalFISAmount * 1);
+        }
+    }
+
     $scope.updateTotalDailyAmount = function () {
         $scope.totalDailyAmount = (
             ($scope.dailyTotalAmount1 * 1)
@@ -1625,6 +1640,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
     $scope.loadTravelReimbursementRequest = function (travelRequestId) {
 
         $scope.TravelModel = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
+        $scope.FISModel = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
         $scope.totalMileA = 0;
         $scope.totalMileB = 0;
         $scope.totalBusinessMile = 0;
@@ -1722,6 +1738,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                     $scope.TravelModel[index].Internet = 0;
                     $scope.TravelModel[index].Other = 0;
                     $scope.TravelModel[index].DailyTotal = 0;
+                    $scope.FISModel[index].Amount = 0;
                 }
 
                 // add travel section row
@@ -2218,6 +2235,10 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 updateTotal($scope.TravelModel);
             });
             
+            $scope.$watch('FISModel[' + index + '].Amount', function () {
+                updateTotal2($scope.FISModel);
+            });
+
             //$scope.$watch('ddlCostCenter' + (i + 1), function () {
             //    if ($scope.CostCenters) {
             //        //alert('2:' + 'ddlCostCenter' + (i + 1));
@@ -2244,10 +2265,15 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         $scope.updateOtherTotal(model);
     }
 
+    function updateTotal2(model) {
+        $scope.updateFISTotal(model);
+    }
+
     // load travel reimbursement modal in edit mode
     $scope.loadTravelReimbursementForEdit = function (travelRequestId) {
 
         $scope.TravelModel = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
+        $scope.FISModel = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
         $scope.totalBusinessMile = 0;
         $scope.totalAirfare = 0;
         $scope.totalPart2NonTravelExpenseAmount = 0;
@@ -2310,6 +2336,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                     $scope.TravelModel[index].Internet = 0;
                     $scope.TravelModel[index].Other = 0;
                     $scope.TravelModel[index].DailyTotal = 0;
+                    $scope.FISModel[index].Amount = "";
                 }
 
                 // set user data section
@@ -2353,19 +2380,25 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
                 // set FIS expense section
                 if ($scope.Data.FIS) {
-                    $scope.totalFISAmount = $scope.Data.FIS.TotalAmount;
+                    //$scope.totalFISAmount = $scope.Data.FIS.TotalAmount;
 
                     if ($scope.Data.FIS.FISDetails) {
 
-                        //for (var index = 0; index < $scope.Data.FIS.FISDetails.length; index++) {
+                        for (var index = 0; index < $scope.Data.FIS.FISDetails.length; index++) {
 
-                        //    var costCenterName = $scope.Data.FIS.FISDetails[index].CostCenterId;
+                            var costCenterName = $scope.Data.FIS.FISDetails[index].CostCenterId;
 
-                        //    $("#ddlCostCenter" + (index + 1)).val(costCenterName);
-                        //    $("#txtAccount" + (index + 1)).val($scope.Data.FIS.FISDetails[index].LineItem);
-                        //    $("#txtTask" + (index + 1)).val($scope.Data.FIS.FISDetails[index].Task);
-                        //    $("#txtAmount" + (index + 1)).val($scope.Data.FIS.FISDetails[index].Amount);
-                        //}
+                            $("#ddlCostCenter" + (index + 1)).val(costCenterName);
+                            $("#txtAccount" + (index + 1)).val($scope.Data.FIS.FISDetails[index].LineItem);
+                            $("#txtTask" + (index + 1)).val($scope.Data.FIS.FISDetails[index].Task);
+
+                            $scope.FISModel[index].Amount = $scope.Data.FIS.FISDetails[index].Amount;
+
+                            $("#rowfis" + (index + 1)).show();
+                            $("#deletefisrow" + (index + 1)).hide();
+
+                            currentRowNumberFIS = ((index + 1) + 1);
+                        }
                     }
                 }
                 
@@ -2412,7 +2445,10 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                         $scope.TravelModel[index].Internet = 0;
                         $scope.TravelModel[index].Other = 0;
 
+                        
+
                         updateTotal($scope.TravelModel);
+                        updateTotal2($scope.FISModel);
                     });
 
                     $("#row" + currentRowNumber).hide();
@@ -2423,7 +2459,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 $("#btnAddRowFIS").on("click", function () {
 
                     $("#rowfis" + currentRowNumberFIS).show();
-
+                    
                     // disable "add" button if max row count has been reached
                     if (currentRowNumberFIS == maxRowCount) {
                         $("#btnAddRowFIS").prop('disabled', 'disabled');
@@ -2438,12 +2474,16 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                     currentRowNumberFIS -= 1;
 
                     $scope.$apply(function () {
+
+                        var index = (currentRowNumberFIS - 1);
+
                         // reset
                         $("#ddlCostCenter" + currentRowNumberFIS).val("?");
                         $("#txtAccount" + currentRowNumberFIS).val("");
                         $("#ddlProjects" + currentRowNumberFIS).val("?");
                         $("#txtTask" + currentRowNumberFIS).val("");
-                        $("#txtAmount" + currentRowNumberFIS).val("");
+                        
+                        $scope.FISModel[index].Amount = "";
                     });
 
                     $("#rowfis" + currentRowNumberFIS).hide();
@@ -2454,6 +2494,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 });
 
                 if ($scope.Data.FIS) {
+
                     if ($scope.Data.FIS.FISDetails) {
                         for (var index2 = 0; index2 < $scope.Data.FIS.FISDetails.length; index2++) {
 
