@@ -49,6 +49,7 @@ function logout() {
     userName = "";
 
     $("#action").hide();
+    $("#action2").hide();
     $("#invaliduser").hide();
     $("#logout").hide();
     $('#signintemplate').hide();
@@ -161,7 +162,8 @@ function actionselection() {
 
         // if Approver, show the exsiting request grid
         if (selectedRoleId == 3) {
-            viewexistingtravelrequests();
+            //viewexistingtravelrequests();
+            $("#action2").show();
         }
         else {
             // otherwise, show the action selection modal
@@ -762,12 +764,28 @@ function setreimbursement() {
     $('#link2').prop("class", "active");
 }
 
+function setreimbursement2() {
+    $('#tab1content1').hide();
+    $('#tab2content1').show();
+
+    $('#link11').prop("class", "");
+    $('#link21').prop("class", "active");
+}
+
 function settravelrequest() {
     $('#tab2content').hide();
     $('#tab1content').show();
 
     $('#link2').prop("class", "");
     $('#link1').prop("class", "active");
+}
+
+function settravelrequest2() {
+    $('#tab2content1').hide();
+    $('#tab1content1').show();
+
+    $('#link21').prop("class", "");
+    $('#link11').prop("class", "active");
 }
 
 function viewapprovedtravelrequests() {
@@ -1071,5 +1089,6 @@ function checkDec(el) {
 
 function backtorolesection() {
     $("#action").hide();
+    $("#action2").hide();
     $('#signintemplate').show();
 }

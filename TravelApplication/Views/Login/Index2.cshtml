@@ -74,6 +74,35 @@
             </div>
         </div>
     </div>
+    <div id="action2" class="main actioncontainer5" style="display:none">
+        <div id="tabselection" class="main roles2">
+            <div class="tabbable-line">
+                <ul class="nav nav-tabs ">
+                    <li id="link11" class="active">
+                        <a onclick="settravelrequest2()">Travel Request</a>
+                    </li>
+                    <li id="link21">
+                        <a onclick="setreimbursement2()">Reimbursement</a>
+                    </li>
+                </ul>
+            </div>
+            <div id="tab1content1">
+                <div class="action" onclick="viewexistingtravelrequests();">
+                    <img style="padding:0px;" src="~/Images/View.png" width="30" height="30" />
+                    <span onclick="">View existing travel requests</span>
+                </div>
+            </div>
+            <div id="tab2content1" style="display:none;">
+                <div class="action" onclick="viewexistingreimbursements();">
+                    <img style="padding:0px;" src="~/Images/Reimburse.png" width="30" height="30" />
+                    <span onclick="">View existing reimbursement requests</span>
+                </div>
+            </div>
+            <div>
+                <input class="btn btn-primary backbutton actionbuttonback2" type="button" id="btnBack" value="Back" onclick="backtorolesection()" />
+            </div>
+        </div>
+    </div>
     <div id="signintemplate"
          class="main signincontainer"
          style="display:none">
