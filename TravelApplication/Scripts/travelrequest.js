@@ -511,12 +511,33 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 }
                 else if (source == 'ddlCostCenter3') {
                     $scope.projects3 = result;
+                    $scope.$apply();
+                    $('#project3').val("?");
+
+                    if ($scope.SelectedProject) {
+                        $("#ddlProjects3").val($scope.SelectedProject[2].Id);
+                        $scope.SelectedProject[2].Id = "";
+                    }
                 }
                 else if (source == 'ddlCostCenter4') {
                     $scope.projects4 = result;
+                    $scope.$apply();
+                    $('#project4').val("?");
+
+                    if ($scope.SelectedProject) {
+                        $("#ddlProjects4").val($scope.SelectedProject[3].Id);
+                        $scope.SelectedProject[3].Id = "";
+                    }
                 }
                 else if (source == 'ddlCostCenter5') {
                     $scope.projects5 = result;
+                    $scope.$apply();
+                    $('#project5').val("?");
+
+                    if ($scope.SelectedProject) {
+                        $("#ddlProjects5").val($scope.SelectedProject[4].Id);
+                        $scope.SelectedProject[4].Id = "";
+                    }
                 }
 
                 $scope.Projects[costCenterName] = result;
@@ -526,28 +547,23 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         else {
             if (source == 'ddlCostCenter1') {
                 $scope.projects1 = $scope.Projects[costCenterName];
-                //alert('here');
             }
             else if (source == 'ddlCostCenter2') {
                 $scope.projects2 = $scope.Projects[costCenterName];
             }
             else if (source == 'ddlCostCenter3') {
                 $scope.projects3 = $scope.Projects[costCenterName];
-                $scope.$apply();
             }
             else if (source == 'ddlCostCenter4') {
                 $scope.projects4 = $scope.Projects[costCenterName];
-                $scope.$apply();
             }
             else if (source == 'ddlCostCenter5') {
                 $scope.projects5 = $scope.Projects[costCenterName];
-                $scope.$apply();
             }
         }
     };
 
     $scope.getProjects = function (source, costCenter) {
-
         $scope.getProjectsByCostCenterName(source, costCenter.Name);
     };
 
@@ -1622,7 +1638,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         $scope.totalCashAdvanceAmount = 0;
         $scope.totalAmount = 0;
         $scope.totalFISAmount = 0;
-        $scope.SelectedProject = [{}, {}];
+        $scope.SelectedProject = [{}, {}, {}, {}, {}];
 
         setWatch(); 
 
@@ -1709,11 +1725,12 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                     $scope.TravelModel[index].DailyTotal = 0;
                 }
 
+                // add travel section row
                 $("#btnAddRow").on("click", function () {
 
                     $("#row" + currentRowNumber).show();
 
-                    // disable "add" button if max rouw count has been reached
+                    // disable "add" button if max row count has been reached
                     if (currentRowNumber == maxRowCount) {
                         $("#btnAddRow").prop('disabled', 'disabled');
                     }
@@ -1721,6 +1738,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                     currentRowNumber++;
                 });
 
+                // delete travel section row
                 $("table.tablepart1").on("click", ".deleterow", function (event) {
 
                     currentRowNumber -= 1;
@@ -1755,6 +1773,37 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
                     $("#row" + currentRowNumber).hide();
                     $("#btnAddRow").prop('disabled', '');
+                });
+
+                // add fis section row
+                $("#btnAddRowFIS").on("click", function () {
+
+                    $("#rowfis" + currentRowNumberFIS).show();
+
+                    // disable "add" button if max row count has been reached
+                    if (currentRowNumberFIS == maxRowCount) {
+                        $("#btnAddRowFIS").prop('disabled', 'disabled');
+                    }
+
+                    currentRowNumberFIS++;
+                });
+
+                // delete fis section row
+                $("table.tablepartfis").on("click", ".deleterowfis", function (event) {
+
+                    currentRowNumberFIS -= 1;
+
+                    $scope.$apply(function () {
+                        // reset
+                        $("#ddlCostCenter" + currentRowNumberFIS).val("?");
+                        $("#txtAccount" + currentRowNumberFIS).val("");
+                        $("#ddlProjects" + currentRowNumberFIS).val("?");
+                        $("#txtTask" + currentRowNumberFIS).val("");
+                        $("#txtAmount" + currentRowNumberFIS).val("");
+                    });
+
+                    $("#rowfis" + currentRowNumberFIS).hide();
+                    $("#btnAddRowFIS").prop('disabled', '');
                 });
             });
         });
@@ -2209,7 +2258,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         $scope.totalCashAdvanceAmount = 0;
         $scope.totalAmount = 0;
         $scope.totalFISAmount = 0;
-        $scope.SelectedProject = [{}, {}];
+        $scope.SelectedProject = [{}, {}, {}, {}, {}];
 
         setWatch();
 

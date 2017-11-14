@@ -1723,11 +1723,28 @@ div.ui-grid-cell input.focus {
 .tablepart2{
     margin-top:5px;
     margin-left:20px;
-    width:1110px;
+    width:1150px;
+}
+
+.tablepartfis{
+    margin-top:5px;
+    margin-left:20px;
+    width:400px;
+}
+
+.tablepartfistotal{
+    margin-top:5px;
+    margin-left:0px;
+    width:350px;
+}
+.tablepartfistotalcolumns {
+   background-color:#064468;
+   color:white;
 }
 
 th.headercolumncostcenter{
-    background-color:lightgray;
+    background-color:#064468;
+    color:white;
     width:10px;
 }
 
@@ -1817,6 +1834,17 @@ div.reimbursementdataentry{
     margin-top:2px;
     margin-left:20px;
     margin-bottom:10px;
+    height:25px;
+    width:60px;
+    padding-top:3px;
+    font-size:11px;
+    padding-left:5px;
+}
+
+.addrowbuttonfis {
+    margin-top:2px;
+    margin-left:0px;
+    margin-bottom:0px;
     height:25px;
     width:60px;
     padding-top:3px;
@@ -1969,6 +1997,13 @@ div.reimbursementdataentry{
 }
 
 .deleterow{
+    margin-left:3px;
+    margin-top:7px;
+    padding:2px;
+    font-size:10px;
+}
+
+.deleterowfis {
     margin-left:3px;
     margin-top:7px;
     padding:2px;

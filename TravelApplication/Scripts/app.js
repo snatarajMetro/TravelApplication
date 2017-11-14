@@ -3,6 +3,7 @@ var fadeOutTimeInMilliseconds = 5000; // 5 seconds
 var selectedRoleId = 0;
 var maxRowCount = 5;
 var currentRowNumber = 3;
+var currentRowNumberFIS = 3;
 
 $(document).ready(function () {
 
