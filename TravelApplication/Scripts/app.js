@@ -221,9 +221,11 @@ function backtoactionselection() {
     $("#existingtravelreimbursementtemplate").hide();
     $("#approvedtravelrequesttemplate").hide();
 
+    //alert(selectedRoleId);
+
     // if selected role is approver, take them back to role selection modal
     if (selectedRoleId == 3) {
-        $("#signintemplate").show();
+        $("#action2").show();
     }
     else if ($('#travelRequestId').text() != 0) {
         $('#travelRequestId').text(0);
@@ -791,6 +793,7 @@ function settravelrequest2() {
 
 function viewapprovedtravelrequests() {
     $("#action").hide();
+    $("#action2").hide();
     $('#travalAction').text('travelreimbursement');
 
     var scope = angular.element('#approvedtravelrequesttemplate').scope();
@@ -802,6 +805,7 @@ function viewapprovedtravelrequests() {
 function viewexistingreimbursements() {
 
     $("#action").hide();
+    $("#action2").hide();
     $('#travalAction').text('travelreimbursement');
 
     var scope = angular.element('#existingtravelreimbursementtemplate').scope();
@@ -816,7 +820,8 @@ function showapprovedtravelrequests() {
 
     if (travelRequestId) {
         $('#travelreimbursementtemplate').hide();
-        $('#existingtravelreimbursementtemplate').show();
+        $('#approvedtravelrequesttemplate').show();
+       // $('#existingtravelreimbursementtemplate').show();
 
         $('#travelRequestId').text(0);
     }
