@@ -551,6 +551,12 @@ div.dataentry{
     color:black;
 }
 
+.labelmeetinglocation {
+    font-size:15px;
+    width:120px;
+    color:black;
+}
+
 .label5 {
     font-size:15px;
     width:150px;

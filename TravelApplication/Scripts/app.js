@@ -10,6 +10,7 @@ $(document).ready(function () {
     $("#txtEmail").focus();
 
     //createnewrequest();
+    //editTravelRequest();
 
     //$("#signin").hide();
     //createnewreimbursementrequest();
@@ -455,13 +456,14 @@ function savedataentry()
             error: function (xhr, options, error) {
 
                 if (xhr.status == 500) {
+                    
                     var errorMessage = xhr.responseText;
 
-                    $("#travelrequesterror").fadeIn("slow");
-                    $('#travelrequesterrormessage').text(errorMessage);
+                    $("#submiterror").fadeIn("slow");
+                    $('#submiterrormessage').text(errorMessage);
 
                     // fade out in 5 seconds
-                    $("#travelrequesterror").fadeOut(fadeOutTimeInMilliseconds);
+                    $("#submiterror").fadeOut(fadeOutTimeInMilliseconds);
                 }
 
                 $('#travelRequestId').text(0);
@@ -712,8 +714,11 @@ function editTravelRequest(container) {
     $('#existingtravelrequeststemplate').hide();
 
     var travelRequestId = $(container).prop('alt');
+    //var travelRequestId = 123456;
+
     var scope = angular.element('#travelrequesttemplate').scope();
     scope.loadTravelRequestForEditNew(travelRequestId);
+    scope.loadCostCenters();
 
     $('#travelRequestId').text(travelRequestId);
 }

@@ -489,11 +489,11 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
     };
 
     $scope.Projects = {};
-    $scope.projects1 = {};
-    $scope.projects2 = {};
-    $scope.projects3 = [];
-    $scope.projects4 = [];
-    $scope.projects5 = [];
+    //$scope.projects1 = {};
+    //$scope.projects2 = {};
+    //$scope.projects3 = {};
+    //$scope.projects4 = {};
+    //$scope.projects5 = {};
 
     $scope.getProjectsByCostCenterName = function (source, costCenterName) {
 
@@ -511,6 +511,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
                     if ($scope.SelectedProject) {
                         $("#ddlProjects1").val($scope.SelectedProject[0].Id);
+                        $("#project1").val($scope.SelectedProject[0].Id);
                         $scope.SelectedProject[0].Id = "";
                     }
                 }
@@ -521,6 +522,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
                     if ($scope.SelectedProject) {
                         $("#ddlProjects2").val($scope.SelectedProject[1].Id);
+                        $("#project2").val($scope.SelectedProject[1].Id);
                         $scope.SelectedProject[1].Id = "";
                     }
                 }
@@ -531,6 +533,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
                     if ($scope.SelectedProject) {
                         $("#ddlProjects3").val($scope.SelectedProject[2].Id);
+                        $("#project3").val($scope.SelectedProject[2].Id);
                         $scope.SelectedProject[2].Id = "";
                     }
                 }
@@ -541,6 +544,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
                     if ($scope.SelectedProject) {
                         $("#ddlProjects4").val($scope.SelectedProject[3].Id);
+                        $("#project4").val($scope.SelectedProject[3].Id);
                         $scope.SelectedProject[3].Id = "";
                     }
                 }
@@ -551,6 +555,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
                     if ($scope.SelectedProject) {
                         $("#ddlProjects5").val($scope.SelectedProject[4].Id);
+                        $("#project5").val($scope.SelectedProject[4].Id);
                         $scope.SelectedProject[4].Id = "";
                     }
                 }
@@ -1534,6 +1539,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
     $scope.loadTravelRequestForEditNew = function (travelRequestId) {
 
         $('#travelrequesttemplate').html('');
+        $scope.SelectedProject = [{}, {}, {}, {}, {}];
 
         // get the data from api
         $.get('api/travelrequestNew/' + travelRequestId)
@@ -1600,17 +1606,20 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                     var costCenterName = $scope.Data.FISData.FISDetails[0].CostCenterId;
 
                     $("#ddlCostCenter1").val(costCenterName);
-                    angular.element("#ddlCostCenter1").triggerHandler('change');
+                    //angular.element("#ddlCostCenter1").triggerHandler('change');
                     $("#txtLineItem1").val($scope.Data.FISData.FISDetails[0].LineItem);
                     $("#txtTask1").val($scope.Data.FISData.FISDetails[0].Task);
                     $("#txtAmount1").val($scope.Data.FISData.FISDetails[0].Amount);
 
-                    $.get('/api/fis/delay')
-                    .done(function () {
+                    $scope.SelectedProject[0].Id = $scope.Data.FISData.FISDetails[0].ProjectId;
+                    $timeout(angular.element("#ddlCostCenter1").triggerHandler('change'), 0, true);
+
+                    //$.get('/api/fis/delay')
+                    //.done(function () {
                        
-                        var projectName = $scope.Data.FISData.FISDetails[0].ProjectId;
-                        $('#project1').val(projectName);
-                    });
+                    //    var projectName = $scope.Data.FISData.FISDetails[0].ProjectId;
+                    //    $('#project1').val(projectName);
+                    //});
                 }
 
                 // set 2nd row of FIS data
@@ -1619,17 +1628,20 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                     var costCenterName = $scope.Data.FISData.FISDetails[1].CostCenterId;
 
                     $("#ddlCostCenter2").val(costCenterName);
-                    angular.element("#ddlCostCenter2").triggerHandler('change');
+                    //angular.element("#ddlCostCenter2").triggerHandler('change');
                     $("#txtLineItem2").val($scope.Data.FISData.FISDetails[1].LineItem);
                     $("#txtTask2").val($scope.Data.FISData.FISDetails[1].Task);
                     $("#txtAmount2").val($scope.Data.FISData.FISDetails[1].Amount);
 
-                    $.get('/api/fis/delay')
-                    .done(function () {
+                    $scope.SelectedProject[1].Id = $scope.Data.FISData.FISDetails[1].ProjectId;
+                    $timeout(angular.element("#ddlCostCenter2").triggerHandler('change'), 0, true);
 
-                        var projectName = $scope.Data.FISData.FISDetails[1].ProjectId;
-                        $('#project2').val(projectName);
-                    });
+                    //$.get('/api/fis/delay')
+                    //.done(function () {
+
+                    //    var projectName = $scope.Data.FISData.FISDetails[1].ProjectId;
+                    //    $('#project2').val(projectName);
+                    //});
                 }
 
                 $('#travelrequesttemplate').show();
@@ -1717,13 +1729,16 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
                     currentRowNumberFIS = ((index + 1) + 1);
 
-                    angular.element("#ddlCostCenter" + counter).triggerHandler('change');
+                    $scope.SelectedProject[index].Id = value.ProjectId;
+                    $timeout(angular.element("#ddlCostCenter" + (index + 1)).triggerHandler('change'), 0, true);
 
-                    $.get('/api/fis/delay')
-                    .done(function () {
-                        $("#ddlProjects" + counter).val(value.ProjectId);
-                        $scope.$apply();
-                    });
+                    //angular.element("#ddlCostCenter" + counter).triggerHandler('change');
+
+                    //$.get('/api/fis/delay')
+                    //.done(function () {
+                    //    $("#ddlProjects" + counter).val(value.ProjectId);
+                    //    $scope.$apply();
+                    //});
                 })
             });
 
