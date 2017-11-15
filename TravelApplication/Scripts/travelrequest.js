@@ -1641,18 +1641,18 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
         $scope.TravelModel = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
         $scope.FISModel = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
-        $scope.totalMileA = 0;
-        $scope.totalMileB = 0;
-        $scope.totalBusinessMile = 0;
-        $scope.totalBusinessMileAmount = 0;
-        $scope.totalAirfare = 0;
-        $scope.totalPart2NonTravelExpenseAmount = 0;
-        $scope.totalSubmittedForApprovalAmount = 0;
-        $scope.totalPrePaidByMTAAmount = 0;
-        $scope.totalExpenseAmount = 0;
-        $scope.totalCashAdvanceAmount = 0;
-        $scope.totalAmount = 0;
-        $scope.totalFISAmount = 0;
+        $scope.totalMileA = "";
+        $scope.totalMileB = "";
+        $scope.totalBusinessMile = "";
+        $scope.totalBusinessMileAmount = "";
+        $scope.totalAirfare = "";
+        $scope.totalPart2NonTravelExpenseAmount = "";
+        $scope.totalSubmittedForApprovalAmount = "";
+        $scope.totalPrePaidByMTAAmount = "";
+        $scope.totalExpenseAmount = "";
+        $scope.totalCashAdvanceAmount = "";
+        $scope.totalAmount = "";
+        $scope.totalFISAmount = "";
         $scope.SelectedProject = [{}, {}, {}, {}, {}];
 
         setWatch(); 
@@ -1686,8 +1686,8 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 // Set user detail section
                 $("#txtTravelRequestNumber1").val(data.TravelReimbursementDetails.TravelRequestId);
                 $("#txtBadgeNumber").val(data.TravelReimbursementDetails.BadgeNumber);
-                $("#txtTravelPeriodFrom").val(data.TravelReimbursementDetails.DepartureDateTime);
-                $("#txtTravelPeriodTo").val(data.TravelReimbursementDetails.ReturnDateTime);
+                $("#txtTravelPeriodFrom").val(data.TravelReimbursementDetails.StrDepartureDateTime);
+                $("#txtTravelPeriodTo").val(data.TravelReimbursementDetails.StrReturnDateTime);
                 $("#txtVendorNumber").val(data.TravelReimbursementDetails.VendorNumber);
                 $("#txtCostCenterNumber").val(data.TravelReimbursementDetails.CostCenterId);
                 $("#txtName").val(data.TravelReimbursementDetails.Name);
@@ -1695,7 +1695,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 $("#txtDivision").val(data.TravelReimbursementDetails.Division);
                 $("#txtDepartment").val(data.TravelReimbursementDetails.Department);
                 $("#txtCashAdvance").val(data.CashAdvance);
-                $("#txtPurpose").val(data.Purpose);
+                $("#txtPurpose").val(data.TravelReimbursementDetails.Purpose);
                 
                 $scope.totalCashAdvanceAmount = data.CashAdvance;
 
@@ -1707,7 +1707,14 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                     $("#ddlCostCenter" + counter).val(value.CostCenterId);
                     $("#txtAccount" + counter).val(value.LineItem);
                     $("#txtTask" + counter).val(value.Task);
-                    $("#txtAmount" + counter).val(value.Amount);
+                    //$("#txtAmount" + counter).val(value.Amount);
+
+                    $scope.FISModel[index].Amount = value.Amount;
+
+                    $("#rowfis" + (index + 1)).show();
+                    $("#deletefisrow" + (index + 1)).hide();
+
+                    currentRowNumberFIS = ((index + 1) + 1);
 
                     angular.element("#ddlCostCenter" + counter).triggerHandler('change');
 
@@ -1725,20 +1732,20 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 for (var index = 0; index < maxRowCount; index++) {
                     $scope.TravelModel[index].TravelDate = "";
                     $scope.TravelModel[index].City = "";
-                    $scope.TravelModel[index].TotalMiles = 0;
-                    $scope.TravelModel[index].MileageToWork = 0;
-                    $scope.TravelModel[index].BusinessMiles = 0;
-                    $scope.TravelModel[index].BusinessMileAmount = 0;
-                    $scope.TravelModel[index].Parking = 0;
-                    $scope.TravelModel[index].Airfare = 0;
-                    $scope.TravelModel[index].Taxi = 0;
-                    $scope.TravelModel[index].Lodging = 0;
-                    $scope.TravelModel[index].Meals = 0
-                    $scope.TravelModel[index].Registration = 0;
-                    $scope.TravelModel[index].Internet = 0;
-                    $scope.TravelModel[index].Other = 0;
-                    $scope.TravelModel[index].DailyTotal = 0;
-                    $scope.FISModel[index].Amount = 0;
+                    $scope.TravelModel[index].TotalMiles = "";
+                    $scope.TravelModel[index].MileageToWork = "";
+                    $scope.TravelModel[index].BusinessMiles = "";
+                    $scope.TravelModel[index].BusinessMileAmount = "";
+                    $scope.TravelModel[index].Parking = "";
+                    $scope.TravelModel[index].Airfare = "";
+                    $scope.TravelModel[index].Taxi = "";
+                    $scope.TravelModel[index].Lodging = "";
+                    $scope.TravelModel[index].Meals = "";
+                    $scope.TravelModel[index].Registration = "";
+                    $scope.TravelModel[index].Internet = "";
+                    $scope.TravelModel[index].Other = "";
+                    $scope.TravelModel[index].DailyTotal = "";
+                    $scope.FISModel[index].Amount = "";
                 }
 
                 // add travel section row
@@ -1810,12 +1817,19 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                     currentRowNumberFIS -= 1;
 
                     $scope.$apply(function () {
+
+                        var index = (currentRowNumberFIS - 1);
+
                         // reset
                         $("#ddlCostCenter" + currentRowNumberFIS).val("?");
                         $("#txtAccount" + currentRowNumberFIS).val("");
                         $("#ddlProjects" + currentRowNumberFIS).val("?");
                         $("#txtTask" + currentRowNumberFIS).val("");
-                        $("#txtAmount" + currentRowNumberFIS).val("");
+                        //$("#txtAmount" + currentRowNumberFIS).val("");
+
+                        $scope.FISModel[index].Amount = "";
+
+                        updateTotal2($scope.FISModel);
                     });
 
                     $("#rowfis" + currentRowNumberFIS).hide();
