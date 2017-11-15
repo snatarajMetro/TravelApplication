@@ -765,7 +765,9 @@ display:table-header-group;
 
 input.datainput:-ms-input-placeholder,
 input.datainputdate:-ms-input-placeholder,
-input.datainputname:-ms-input-placeholder { 
+input.datainputname:-ms-input-placeholder,
+input.generaldatainput2:-ms-input-placeholder
+ { 
     color: gray;
     font-size:12px;
 }
