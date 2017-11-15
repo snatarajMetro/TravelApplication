@@ -116,5 +116,49 @@ namespace TravelApplication.Controllers.WebAPI
             }
             return response;
         }
+
+        [HttpPost]
+        [Route("api/reimburse/approve")]
+        public HttpResponseMessage Approve(ApproveRequest approveRequest)
+        {
+            HttpResponseMessage response = null;
+
+            try
+            {
+
+                var result = reimbursementService.Approve(approveRequest.ApproverBadgeNumber, approveRequest.TravelRequestId, approveRequest.Comments);
+                response = Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Log the exception message
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Approve was not sucessfull. Please try again.");
+            }
+
+            return response;
+        }
+
+        [HttpPost]
+        [Route("api/reimburse/reject")]
+        public HttpResponseMessage Reject(ApproveRequest approveRequest)
+        {
+            HttpResponseMessage response = null;
+
+            try
+            {
+                // TODO: Implement Reject API. Return true/false
+                var result = reimbursementService.Reject(approveRequest.ApproverBadgeNumber, approveRequest.TravelRequestId, approveRequest.Comments);
+
+                response = Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Log the exception message
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Reject was not sucessfull. Please try again.");
+            }
+
+            return response;
+        }
+
     }
 }
