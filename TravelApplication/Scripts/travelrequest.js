@@ -4,39 +4,40 @@
 app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
     // Estimated Expense section
-    $scope.advanceLodgingAmount = 0.00;
-    $scope.advanceAirfareAmount = 0.00;
-    $scope.advanceRegistrationAmount = 0.00;
-    $scope.advanceMealsAmount = 0.00;
-    $scope.advanceCarRentalAmount = 0.00;
-    $scope.advanceMiscellaneousAmount = 0.00;
-    $scope.estimatedLodgingAmount = 0.00;
-    $scope.estimatedAirfareAmount = 0.00;
-    $scope.estimatedRegistrationAmount = 0.00;
-    $scope.estimatedMealsAmount = 0.00;
-    $scope.estimatedCarRentalAmount = 0.00;
-    $scope.estimatedMiscellaneousAmount = 0.00;
+    //$scope.advanceLodgingAmount = 0.00;
+    //$scope.advanceAirfareAmount = 0.00;
+    //$scope.advanceRegistrationAmount = 0.00;
+    //$scope.advanceMealsAmount = 0.00;
+    //$scope.advanceCarRentalAmount = 0.00;
+    //$scope.advanceMiscellaneousAmount = 0.00;
+    //$scope.estimatedLodgingAmount = 0.00;
+    //$scope.estimatedAirfareAmount = 0.00;
+    //$scope.estimatedRegistrationAmount = 0.00;
+    //$scope.estimatedMealsAmount = 0.00;
+    //$scope.estimatedCarRentalAmount = 0.00;
+    //$scope.estimatedMiscellaneousAmount = 0.00;
 
     $scope.updateTotalAdvanceAmount = function () {
-        $scope.totalAdvanceAmount = (
+
+        $scope.totalAdvanceAmount = parseFloat((
             ($scope.advanceLodgingAmount * 1)
             + ($scope.advanceAirfareAmount * 1)
             + ($scope.advanceRegistrationAmount * 1)
             + ($scope.advanceMealsAmount * 1)
             + ($scope.advanceCarRentalAmount * 1)
             + ($scope.advanceMiscellaneousAmount * 1)
-            );
+            ).toFixed(2));
     }
 
     $scope.updateTotalEstimatedAmount = function () {
-        $scope.totalEstimatedAmount = (
+        $scope.totalEstimatedAmount = parseFloat((
             ($scope.estimatedLodgingAmount * 1)
             + ($scope.estimatedAirfareAmount * 1)
             + ($scope.estimatedRegistrationAmount * 1)
             + ($scope.estimatedMealsAmount * 1)
             + ($scope.estimatedCarRentalAmount * 1)
             + ($scope.estimatedMiscellaneousAmount * 1)
-            );
+            ).toFixed(2));
     }
 
     $scope.BusinessMileRate = 0.555;
@@ -52,7 +53,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
         if (totalFISAmount > 0)
         {
-            $scope.totalFISAmount = (totalFISAmount * 1);
+            $scope.totalFISAmount = parseFloat((totalFISAmount * 1).toFixed(2));
         }
     }
 
@@ -288,21 +289,21 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
     }
 
     // FIS section
-    $scope.totalFISAmount1 = 0.00;
-    $scope.totalFISAmount2 = 0.00;
-    $scope.totalFISAmount3 = 0.00;
-    $scope.totalFISAmount4 = 0.00;
-    $scope.totalFISAmount5 = 0.00;
+    //$scope.totalFISAmount1 = 0.00;
+    //$scope.totalFISAmount2 = 0.00;
+    //$scope.totalFISAmount3 = 0.00;
+    //$scope.totalFISAmount4 = 0.00;
+    //$scope.totalFISAmount5 = 0.00;
     
 
     $scope.updateTotalFISAmount = function () {
-        $scope.totalFISAmount = (
+        $scope.totalFISAmount = parseFloat((
             ($scope.totalFISAmount1 * 1)
             + ($scope.totalFISAmount2 * 1)
             //+ ($scope.totalFISAmount3 * 1)
             //+ ($scope.totalFISAmount4 * 1)
             //+ ($scope.totalFISAmount5 * 1)
-            );
+            ).toFixed(2));
     }
 
     //set fileupload section
@@ -449,10 +450,29 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
     }
 
     $scope.loadTravelRequest = function () {
+
         $.get('/uitemplates/travelrequest.html')
         .done(function (data) {
+
             $('#travelrequesttemplate').html($compile($(data).html())($scope));
             $scope.$apply();
+
+            $scope.advanceLodgingAmount = "";
+            $scope.advanceAirfareAmount = "";
+            $scope.advanceRegistrationAmount = "";
+            $scope.advanceMealsAmount = "";
+            $scope.advanceCarRentalAmount = "";
+            $scope.advanceMiscellaneousAmount = "";
+            $scope.estimatedLodgingAmount = "";
+            $scope.estimatedAirfareAmount = "";
+            $scope.estimatedRegistrationAmount = "";
+            $scope.estimatedMealsAmount = "";
+            $scope.estimatedCarRentalAmount = "";
+            $scope.estimatedMiscellaneousAmount = "";
+            $scope.totalFISAmount = "";
+            $scope.totalFISAmount1 = "";
+            $scope.totalFISAmount2 = "";
+            
 
             $('#travelrequesttemplate').show();
             $("#txtBadgeNumber").focus();
@@ -1540,6 +1560,21 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
         $('#travelrequesttemplate').html('');
         $scope.SelectedProject = [{}, {}, {}, {}, {}];
+        $scope.advanceLodgingAmount = "";
+        $scope.advanceAirfareAmount = "";
+        $scope.advanceRegistrationAmount = "";
+        $scope.advanceMealsAmount = "";
+        $scope.advanceCarRentalAmount = "";
+        $scope.advanceMiscellaneousAmount = "";
+        $scope.estimatedLodgingAmount = "";
+        $scope.estimatedAirfareAmount = "";
+        $scope.estimatedRegistrationAmount = "";
+        $scope.estimatedMealsAmount = "";
+        $scope.estimatedCarRentalAmount = "";
+        $scope.estimatedMiscellaneousAmount = "";
+        $scope.totalFISAmount = "";
+        $scope.totalFISAmount1 = "";
+        $scope.totalFISAmount2 = "";
 
         // get the data from api
         $.get('api/travelrequestNew/' + travelRequestId)
@@ -1570,18 +1605,6 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 $("#txtBadgeNumber").prop("style", "background-color:lightgray;");
 
                 // set estimated expense section
-                $('#txtAdvLodge').val($scope.Data.EstimatedExpenseData.AdvanceLodging);
-                $('#txtTotalEstimatedLodge').val($scope.Data.EstimatedExpenseData.TotalEstimatedLodge);
-                $('#txtAdvAirfare').val($scope.Data.EstimatedExpenseData.AdvanceAirFare);
-                $('#txtTotalEstimatedAirfare').val($scope.Data.EstimatedExpenseData.TotalEstimatedAirFare);
-                $('#txtAdvRegistration').val($scope.Data.EstimatedExpenseData.AdvanceRegistration);
-                $('#txtTotalEstimatedRegistration').val($scope.Data.EstimatedExpenseData.TotalEstimatedRegistration);
-                $('#txtAdvMeals').val($scope.Data.EstimatedExpenseData.AdvanceMeals);
-                $('#txtTotalEstimatedMeals').val($scope.Data.EstimatedExpenseData.TotalEstimatedMeals);
-                $('#txtAdvCarRental').val($scope.Data.EstimatedExpenseData.AdvanceCarRental);
-                $('#txtTotalEstimatedCarRental').val($scope.Data.EstimatedExpenseData.TotalEstimatedCarRental);
-                $('#txtAdvMiscellaneous').val($scope.Data.EstimatedExpenseData.AdvanceMiscellaneous);
-                $('#txtTotalEstimatedMiscellaneous').val($scope.Data.EstimatedExpenseData.TotalEstimatedMiscellaneous);
                 $('#txtAdvanceTotal').val($scope.Data.EstimatedExpenseData.AdvanceTotal);
                 $('#txtEstimatedTotal').val($scope.Data.EstimatedExpenseData.TotalEstimatedTotal);
                 $('#txtHotelNameAndAddress').val($scope.Data.EstimatedExpenseData.HotelNameAndAddress);
@@ -1592,6 +1615,20 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 $('#txtShuttle').val($scope.Data.EstimatedExpenseData.Shuttle);
                 $('#txtCashAdvanceRequested').val($scope.Data.EstimatedExpenseData.CashAdvance);
                 
+                $scope.advanceLodgingAmount = $scope.Data.EstimatedExpenseData.AdvanceLodging;
+                $scope.advanceAirfareAmount = $scope.Data.EstimatedExpenseData.AdvanceAirFare;
+                $scope.advanceRegistrationAmount = $scope.Data.EstimatedExpenseData.AdvanceRegistration;
+                $scope.advanceMealsAmount = $scope.Data.EstimatedExpenseData.AdvanceMeals;
+                $scope.advanceCarRentalAmount = $scope.Data.EstimatedExpenseData.AdvanceCarRental;
+                $scope.advanceMiscellaneousAmount = $scope.Data.EstimatedExpenseData.AdvanceMiscellaneous;
+
+                $scope.estimatedLodgingAmount = $scope.Data.EstimatedExpenseData.TotalEstimatedLodge;
+                $scope.estimatedAirfareAmount = $scope.Data.EstimatedExpenseData.TotalEstimatedAirFare;
+                $scope.estimatedRegistrationAmount = $scope.Data.EstimatedExpenseData.TotalEstimatedRegistration;
+                $scope.estimatedMealsAmount = $scope.Data.EstimatedExpenseData.TotalEstimatedMeals;
+                $scope.estimatedCarRentalAmount = $scope.Data.EstimatedExpenseData.TotalEstimatedCarRental;
+                $scope.estimatedMiscellaneousAmount = $scope.Data.EstimatedExpenseData.TotalEstimatedMiscellaneous;
+
                 if ($scope.Data.EstimatedExpenseData.DateNeededBy.substring(0, 10) != '0001-01-01') {
 
                     $('#txtDateNeededBy').val($scope.Data.EstimatedExpenseData.DateNeededBy.substring(0, 10));
@@ -1606,20 +1643,12 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                     var costCenterName = $scope.Data.FISData.FISDetails[0].CostCenterId;
 
                     $("#ddlCostCenter1").val(costCenterName);
-                    //angular.element("#ddlCostCenter1").triggerHandler('change');
                     $("#txtLineItem1").val($scope.Data.FISData.FISDetails[0].LineItem);
                     $("#txtTask1").val($scope.Data.FISData.FISDetails[0].Task);
-                    $("#txtAmount1").val($scope.Data.FISData.FISDetails[0].Amount);
+                    $scope.totalFISAmount1 = $scope.Data.FISData.FISDetails[0].Amount;
 
                     $scope.SelectedProject[0].Id = $scope.Data.FISData.FISDetails[0].ProjectId;
                     $timeout(angular.element("#ddlCostCenter1").triggerHandler('change'), 0, true);
-
-                    //$.get('/api/fis/delay')
-                    //.done(function () {
-                       
-                    //    var projectName = $scope.Data.FISData.FISDetails[0].ProjectId;
-                    //    $('#project1').val(projectName);
-                    //});
                 }
 
                 // set 2nd row of FIS data
@@ -1628,20 +1657,12 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                     var costCenterName = $scope.Data.FISData.FISDetails[1].CostCenterId;
 
                     $("#ddlCostCenter2").val(costCenterName);
-                    //angular.element("#ddlCostCenter2").triggerHandler('change');
                     $("#txtLineItem2").val($scope.Data.FISData.FISDetails[1].LineItem);
                     $("#txtTask2").val($scope.Data.FISData.FISDetails[1].Task);
-                    $("#txtAmount2").val($scope.Data.FISData.FISDetails[1].Amount);
+                    $scope.totalFISAmount2 = $scope.Data.FISData.FISDetails[1].Amount;
 
                     $scope.SelectedProject[1].Id = $scope.Data.FISData.FISDetails[1].ProjectId;
                     $timeout(angular.element("#ddlCostCenter2").triggerHandler('change'), 0, true);
-
-                    //$.get('/api/fis/delay')
-                    //.done(function () {
-
-                    //    var projectName = $scope.Data.FISData.FISDetails[1].ProjectId;
-                    //    $('#project2').val(projectName);
-                    //});
                 }
 
                 $('#travelrequesttemplate').show();
