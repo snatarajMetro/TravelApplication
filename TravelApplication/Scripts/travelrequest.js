@@ -120,14 +120,15 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         for (var index = 0; index < maxRowCount; index++) {
 
             $scope.TravelModel[index].BusinessMiles = (($scope.TravelModel[index].TotalMiles * 1) - ($scope.TravelModel[index].MileageToWork * 1));
-            $scope.TravelModel[index].BusinessMileAmount = ($scope.TravelModel[index].BusinessMiles * $scope.BusinessMileRate);
+            $scope.TravelModel[index].BusinessMileAmount = parseFloat(($scope.TravelModel[index].BusinessMiles * $scope.BusinessMileRate).toFixed(2));
 
             totalBusinessMile += ($scope.TravelModel[index].BusinessMiles * 1);
             totalBusinessMileAmount += ($scope.TravelModel[index].BusinessMileAmount * 1);
         }
 
+        //alert(round(totalBusinessMileAmount, 2));
         $scope.totalBusinessMile = totalBusinessMile;
-        $scope.totalBusinessMileAmount = totalBusinessMileAmount;
+        $scope.totalBusinessMileAmount = parseFloat(totalBusinessMileAmount.toFixed(2));
     }
 
     function updateDailyTotal(model) {
