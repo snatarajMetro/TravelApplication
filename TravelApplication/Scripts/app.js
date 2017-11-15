@@ -16,6 +16,9 @@ $(document).ready(function () {
     //createnewreimbursementrequest();
     //createTravelRequestReimbursement();
     //editTravelReimbursement(null);
+    //viewexistingtravelrequests();
+    //viewapprovedtravelrequests();
+    //viewexistingreimbursements();
   });
 
 //$(".two-decimals").change(function () {
@@ -726,6 +729,7 @@ function editTravelRequest(container) {
 function editTravelReimbursement(container) {
 
     $('#existingtravelreimbursementtemplate').hide();
+    $('#existingtravelrequeststemplate').hide();
 
     var travelRequestId = $(container).prop('alt');
     //var travelRequestId = 123456;
@@ -809,14 +813,18 @@ function viewapprovedtravelrequests() {
 
 function viewexistingreimbursements() {
 
+    $("#signin").hide();
     $("#action").hide();
     $("#action2").hide();
     $('#travalAction').text('travelreimbursement');
 
-    var scope = angular.element('#existingtravelreimbursementtemplate').scope();
+    var scope = angular.element('#existingtravelrequeststemplate').scope();
     scope.loadExistingTravelReimbursementRequests();
-
-    $('#existingtravelreimbursementtemplate').show();
+    scope.loadApproveAction();
+    scope.loadRejectAction();
+    scope.loadCostCenters();
+    
+    $('#existingtravelrequeststemplate').show();
 }
 
 function showapprovedtravelrequests() {
