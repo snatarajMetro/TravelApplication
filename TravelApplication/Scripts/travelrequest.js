@@ -296,16 +296,33 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
     //$scope.totalFISAmount5 = 0.00;
     
 
-    $scope.updateTotalFISAmount = function () {
-        $scope.totalFISAmount = parseFloat((
-            ($scope.totalFISAmount1 * 1)
-            + ($scope.totalFISAmount2 * 1)
-            //+ ($scope.totalFISAmount3 * 1)
-            //+ ($scope.totalFISAmount4 * 1)
-            //+ ($scope.totalFISAmount5 * 1)
-            ).toFixed(2));
-    }
+    //$scope.updateTotalFISAmount = function () {
+    //    $scope.totalFISAmount = parseFloat((
+    //        ($scope.totalFISAmount1 * 1)
+    //        + ($scope.totalFISAmount2 * 1)
+    //        + ($scope.totalFISAmount3 * 1)
+    //        + ($scope.totalFISAmount4 * 1)
+    //        + ($scope.totalFISAmount5 * 1)
+    //        ).toFixed(2));
+    //}
 
+    $scope.updateTotalFISAmount = function (model) {
+
+        var totalFISAmount = 0;
+
+        if (model) {
+            $scope.totalFISAmount = "";
+
+            for (var index = 0; index < maxRowCount; index++) {
+                totalFISAmount += (model[index].Amount * 1);
+            }
+        }
+
+        if (totalFISAmount > 0) {
+            $scope.totalFISAmount = parseFloat((totalFISAmount * 1).toFixed(2));
+        }
+    }
+    
     //set fileupload section
     $scope.loadFileUpload = function () {
 
@@ -451,6 +468,15 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
     $scope.loadTravelRequest = function () {
 
+        $scope.FISRequestModel = [{}, {}, {}, {}, {}];
+        
+        for (var index = 0; index < maxRowCount; index++) {
+
+            $scope.$watch('FISRequestModel[' + index + '].Amount', function () {
+                updateTotal3($scope.FISRequestModel);
+            });
+        }
+
         $.get('/uitemplates/travelrequest.html')
         .done(function (data) {
 
@@ -470,9 +496,16 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
             $scope.estimatedCarRentalAmount = "";
             $scope.estimatedMiscellaneousAmount = "";
             $scope.totalFISAmount = "";
-            $scope.totalFISAmount1 = "";
-            $scope.totalFISAmount2 = "";
+            //$scope.totalFISAmount1 = "";
+            //$scope.totalFISAmount2 = "";
+            //$scope.totalFISAmount3 = "";
+            //$scope.totalFISAmount4 = "";
+            //$scope.totalFISAmount5 = "";
             
+            // set default values
+            for (var index = 0; index < maxRowCount; index++) {
+                $scope.FISRequestModel[index].Amount = "";
+            }
 
             $('#travelrequesttemplate').show();
             $("#txtBadgeNumber").focus();
@@ -491,9 +524,47 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
             $('input[name="txtReturnDate"]').datepicker(options);
             $('input[name="txtDateNeededBy"]').datepicker(options);
 
-            //$("#txtToday")
-            //    .datepicker({ dateFormat: "mm/dd/yyyy" })
-            //    .datepicker("setDate", new Date());
+            $scope.$apply(function () {
+
+                // add fis section row
+                $("#btnAddRowRequest").on("click", function () {
+
+                    $("#row" + currentRowNumberTravelRequest).show();
+
+                    // disable "add" button if max row count has been reached
+                    if (currentRowNumberTravelRequest == maxRowCount) {
+                        $("#btnAddRowRequest").prop('disabled', 'disabled');
+                    }
+
+                    currentRowNumberTravelRequest++;
+                });
+
+                // delete fis section row
+                $("div.tablebody").on("click", ".deleterowrequest", function (event) {
+
+                    currentRowNumberTravelRequest -= 1;
+
+                    $scope.$apply(function () {
+
+                        var index = (currentRowNumberTravelRequest - 1);
+
+                        // reset
+                        $("#ddlCostCenter" + currentRowNumberTravelRequest).val("?");
+                        $("#txtLineItem" + currentRowNumberFIS).val("");
+                        $("#project" + currentRowNumberFIS).val("?");
+                        $("#txtTask" + currentRowNumberFIS).val("");
+                        //$("#txtAmount" + currentRowNumberFIS).val("");
+
+                        $scope.FISRequestModel[index].Amount = "";
+
+                        updateTotal3($scope.FISRequestModel);
+                    });
+
+                    $("#row" + currentRowNumberTravelRequest).hide();
+                    $("#btnAddRowRequest").prop('disabled', '');
+                });
+            });
+
         });
     }
 
@@ -1560,6 +1631,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
         $('#travelrequesttemplate').html('');
         $scope.SelectedProject = [{}, {}, {}, {}, {}];
+        $scope.FISRequestModel = [{}, {}, {}, {}, {}];
         $scope.advanceLodgingAmount = "";
         $scope.advanceAirfareAmount = "";
         $scope.advanceRegistrationAmount = "";
@@ -1573,8 +1645,19 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         $scope.estimatedCarRentalAmount = "";
         $scope.estimatedMiscellaneousAmount = "";
         $scope.totalFISAmount = "";
-        $scope.totalFISAmount1 = "";
-        $scope.totalFISAmount2 = "";
+        //$scope.totalFISAmount1 = "";
+        //$scope.totalFISAmount2 = "";
+
+        // set default values
+        for (var index = 0; index < maxRowCount; index++) {
+            $scope.FISRequestModel[index].Amount = "";
+        }
+
+        for (var index = 0; index < maxRowCount; index++) {
+            $scope.$watch('FISRequestModel[' + index + '].Amount', function () {
+                updateTotal3($scope.FISRequestModel);
+            });
+        }
 
         // get the data from api
         $.get('api/travelrequestNew/' + travelRequestId)
@@ -1637,32 +1720,80 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 // set fis section
                 $('#txtFISTotal').val($scope.Data.FISData.TotalAmount);
 
-                 //set 1st row of FIS data
-                if ($scope.Data.FISData.FISDetails[0]) {
+                // set FIS expense section
+                if ($scope.Data.FISData) {
+                    //$scope.totalFISAmount = $scope.Data.FIS.TotalAmount;
 
-                    var costCenterName = $scope.Data.FISData.FISDetails[0].CostCenterId;
+                    if ($scope.Data.FISData.FISDetails) {
 
-                    $("#ddlCostCenter1").val(costCenterName);
-                    $("#txtLineItem1").val($scope.Data.FISData.FISDetails[0].LineItem);
-                    $("#txtTask1").val($scope.Data.FISData.FISDetails[0].Task);
-                    $scope.totalFISAmount1 = $scope.Data.FISData.FISDetails[0].Amount;
+                        for (var index = 0; index < $scope.Data.FISData.FISDetails.length; index++) {
 
-                    $scope.SelectedProject[0].Id = $scope.Data.FISData.FISDetails[0].ProjectId;
-                    $timeout(angular.element("#ddlCostCenter1").triggerHandler('change'), 0, true);
+                            var costCenterName = $scope.Data.FISData.FISDetails[index].CostCenterId;
+
+                            $("#ddlCostCenter" + (index + 1)).val(costCenterName);
+                            $("#txtLineItem" + (index + 1)).val($scope.Data.FISData.FISDetails[index].LineItem);
+                            $("#txtTask" + (index + 1)).val($scope.Data.FISData.FISDetails[index].Task);
+
+                            $scope.FISRequestModel[index].Amount = $scope.Data.FISData.FISDetails[index].Amount;
+
+                            $("#row" + (index + 1)).show();
+                            $("#deletefisrow" + (index + 1)).hide();
+
+                            currentRowNumberTravelRequest = ((index + 1) + 1);
+
+                            updateTotal3($scope.FISRequestModel);
+                        }
+                    }
                 }
 
-                // set 2nd row of FIS data
-                if ($scope.Data.FISData.FISDetails[1]) {
+                // add fis section row
+                $("#btnAddRowRequest").on("click", function () {
 
-                    var costCenterName = $scope.Data.FISData.FISDetails[1].CostCenterId;
+                    $("#row" + currentRowNumberTravelRequest).show();
 
-                    $("#ddlCostCenter2").val(costCenterName);
-                    $("#txtLineItem2").val($scope.Data.FISData.FISDetails[1].LineItem);
-                    $("#txtTask2").val($scope.Data.FISData.FISDetails[1].Task);
-                    $scope.totalFISAmount2 = $scope.Data.FISData.FISDetails[1].Amount;
+                    // disable "add" button if max row count has been reached
+                    if (currentRowNumberTravelRequest == maxRowCount) {
+                        $("#btnAddRowRequest").prop('disabled', 'disabled');
+                    }
 
-                    $scope.SelectedProject[1].Id = $scope.Data.FISData.FISDetails[1].ProjectId;
-                    $timeout(angular.element("#ddlCostCenter2").triggerHandler('change'), 0, true);
+                    currentRowNumberTravelRequest++;
+                });
+
+                // delete fis section row
+                $("div.tablebody").on("click", ".deleterowrequest", function (event) {
+
+                    currentRowNumberTravelRequest -= 1;
+
+                    $scope.$apply(function () {
+
+                        var index = (currentRowNumberTravelRequest - 1);
+
+                        // reset
+                        $("#ddlCostCenter" + currentRowNumberTravelRequest).val("?");
+                        $("#txtLineItem" + currentRowNumberTravelRequest).val("");
+                        $("#project" + currentRowNumberTravelRequest).val("?");
+                        $("#txtTask" + currentRowNumberTravelRequest).val("");
+                        //$("#txtAmount" + currentRowNumberFIS).val("");
+
+                        $scope.FISRequestModel[index].Amount = "";
+
+                        updateTotal3($scope.FISRequestModel);
+                    });
+
+                    $("#row" + currentRowNumberTravelRequest).hide();
+                    $("#btnAddRowRequest").prop('disabled', '');
+                });
+
+                if ($scope.Data.FISData) {
+
+                    if ($scope.Data.FISData.FISDetails) {
+                        for (var index2 = 0; index2 < $scope.Data.FISData.FISDetails.length; index2++) {
+
+                            var projectName = $scope.Data.FISData.FISDetails[index2].ProjectId;
+                            $scope.SelectedProject[index2].Id = projectName;
+                            $timeout(angular.element("#ddlCostCenter" + (index2 + 1)).triggerHandler('change'), 0, true);
+                        }
+                    }
                 }
 
                 $('#travelrequesttemplate').show();
@@ -2289,6 +2420,10 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 updateTotal2($scope.FISModel);
             });
 
+            $scope.$watch('FISRequestModel[' + index + '].Amount', function () {
+                updateTotal3($scope.FISRequestModel);
+            });
+
             //$scope.$watch('ddlCostCenter' + (i + 1), function () {
             //    if ($scope.CostCenters) {
             //        //alert('2:' + 'ddlCostCenter' + (i + 1));
@@ -2317,6 +2452,10 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
     function updateTotal2(model) {
         $scope.updateFISTotal(model);
+    }
+
+    function updateTotal3(model) {
+        $scope.updateTotalFISAmount(model);
     }
 
     // load travel reimbursement modal in edit mode

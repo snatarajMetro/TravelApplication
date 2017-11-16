@@ -1757,6 +1757,12 @@ div.ui-grid-cell input.focus {
     width:400px;
 }
 
+.tablepartrequest{
+    margin-top:5px;
+    margin-left:20px;
+    width:400px;
+}
+
 .tablepartfistotal{
     margin-top:5px;
     margin-left:0px;
@@ -2029,6 +2035,14 @@ div.reimbursementdataentry{
 }
 
 .deleterowfis {
+    margin-left:3px;
+    margin-top:7px;
+    padding:2px;
+    font-size:10px;
+}
+
+.deleterowrequest
+{
     margin-left:3px;
     margin-top:7px;
     padding:2px;
