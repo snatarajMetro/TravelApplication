@@ -4,6 +4,7 @@ var selectedRoleId = 0;
 var maxRowCount = 5;
 var currentRowNumber = 3;
 var currentRowNumberFIS = 3;
+var currentRowNumberTravelRequest = 3;
 
 $(document).ready(function () {
 
@@ -29,6 +30,7 @@ $(document).ready(function () {
 
 function setTwoDecimal(el) {
     el.value = parseFloat(el.value).toFixed(2);
+
 }
 
 function handleEnterOnSigIn(e)
@@ -574,20 +576,41 @@ function showApproveSection(container) {
     $('#approvetemplate').show();
 }
 
+function showApproveSection2(container) {
+
+    var travelRequestId = $(container).prop('alt');
+    $('#travalAction').text('travelreimbursement');
+
+    var scope = angular.element('#approvetemplate').scope();
+    scope.loadApproveAction(travelRequestId);
+
+    $('#approvetemplate').show();
+}
+
 function approve() {
 
     var travelRequestId = $('#travelRequestIdForAction').text();
     var badgeNumber = $('#signedInUserBadgeNumber').text();
     var comments = $('#txtComments').val();
+    var action = $('#travalAction').val();
+    var url = "api/travelrequest/approve";
+
+    if (action)
+    {
+        if (action == "travelreimbursement") {
+            url = "api/reimburse/approve";
+        }
+    }
 
     $.ajax({
         type: "POST",
-        url: "api/travelrequest/approve",
+        url: url,
         data: JSON.stringify({ "TravelRequestId": travelRequestId, "ApproverBadgeNumber": badgeNumber, "Comments": comments }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
 
+            $('#travalAction').text('travelrequest');
             $("#approvesuccess").fadeIn("fast");
             $('#approvesuccessmessage').text('Travel request has been successfully approved.');
 
@@ -620,15 +643,24 @@ function reject() {
     var travelRequestId = $('#travelRequestIdForRejectAction').text();
     var badgeNumber = $('#signedInUserBadgeNumber').text();
     var comments = $('#txtCommentsForReject').val();
+    var action = $('#travalAction').val();
+    var url = "api/travelrequest/reject";
+
+    if (action) {
+        if (action == "travelreimbursement") {
+            url = "api/reimburse/reject";
+        }
+    }
 
     $.ajax({
         type: "POST",
-        url: "api/travelrequest/reject",
+        url: url,
         data: JSON.stringify({ "TravelRequestId": travelRequestId, "ApproverBadgeNumber": badgeNumber, "Comments": comments }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
 
+            $('#travalAction').text('travelrequest');
             $("#rejectsuccess").fadeIn("fast");
             $('#rejectsuccessmessage').text('Travel request has been successfully rejected.');
 
@@ -681,6 +713,18 @@ function showRejectSection(container) {
 
     $('#rejecttemplate').show();
 }
+
+function showRejectSection2(container) {
+
+    var travelRequestId = $(container).prop('alt');
+    $('#travalAction').text('travelreimbursement');
+
+    var scope = angular.element('#rejecttemplate').scope();
+    scope.loadRejectAction(travelRequestId);
+
+    $('#rejecttemplate').show();
+}
+
 function deletedocument(container) {
 
     var documentId = $(container).prop('alt');
