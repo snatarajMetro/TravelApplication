@@ -42,8 +42,7 @@ namespace TravelApplication.DAL.Repositories
                             {
                                 response.Add(new TravelRequestDetails()
                                 {
-                                    TravelRequestId = Convert.ToInt32(dataReader["TravelRequestId"]),
-                                    //Description = dataReader["PURPOSE"].ToString(),
+                                    TravelRequestId = Convert.ToInt32(dataReader["TravelRequestId"]),                                  
                                     SubmittedByUser = dataReader["SUBMITTEDBYUSERNAME"].ToString(),
                                     SubmittedDateTime = dataReader["SUBMITTEDDATETIME"].ToString(),
                                     RequiredApprovers = GetApproversListByTravelRequestId(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])),
@@ -172,8 +171,8 @@ namespace TravelApplication.DAL.Repositories
                             Division = dataReader["DIVISION"].ToString(),
                             DepartureDateTime = Convert.ToDateTime(dataReader["DEPARTUREDATETIME"]),
                             ReturnDateTime = Convert.ToDateTime(dataReader["RETURNDATETIME"]),
-                            StrDepartureDateTime = (dataReader["DEPARTUREDATETIME"]).ToString() ?? string.Empty,
-                            StrReturnDateTime = (dataReader["RETURNDATETIME"]).ToString() ?? string.Empty,
+                            StrDepartureDateTime = Convert.ToDateTime(dataReader["DEPARTUREDATETIME"]).ToShortDateString() ?? string.Empty,
+                            StrReturnDateTime = Convert.ToDateTime(dataReader["RETURNDATETIME"]).ToShortDateString() ?? string.Empty,
                             Purpose = dataReader["Purpose"].ToString()
 
                         };
