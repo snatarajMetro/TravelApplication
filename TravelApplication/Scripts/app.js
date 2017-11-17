@@ -135,6 +135,8 @@ function signIn() {
 }
 
 function backtosignin() {
+
+    $("#txtPassword").val("");
     $("#logout").hide();
     $("#signintemplate").hide();
     $("#existingtravelrequeststemplate").hide();
@@ -142,7 +144,7 @@ function backtosignin() {
     $("#invaliduser").hide();
     $("#dataentry").hide();
     $("#signin").show();
-    $("#txtEmail").focus();
+    $("#txtPassword").focus();
 }
 
 function actionselection() {
@@ -775,8 +777,8 @@ function editTravelReimbursement(container) {
     $('#existingtravelreimbursementtemplate').hide();
     $('#existingtravelrequeststemplate').hide();
 
-    var travelRequestId = $(container).prop('alt');
-    //var travelRequestId = 123456;
+    //var travelRequestId = $(container).prop('alt');
+    var travelRequestId = 123456;
     var scope = angular.element('#travelreimbursementtemplate').scope();
     scope.loadTravelReimbursementForEdit(travelRequestId);
     scope.loadCostCenters();
@@ -802,8 +804,8 @@ function createTravelRequestReimbursement(container) {
     $('#approvedtravelrequesttemplate').hide();
     $('#travelRequestId').text(0);
 
-    var travelRequestId = $(container).prop('alt');
-    //travelRequestId = 1234567;
+    //var travelRequestId = $(container).prop('alt');
+    travelRequestId = 1234567;
 
     var scope = angular.element('#travelreimbursementtemplate').scope();
     scope.loadTravelReimbursementRequest(travelRequestId);
