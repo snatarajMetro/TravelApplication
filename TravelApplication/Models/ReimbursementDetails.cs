@@ -35,6 +35,8 @@ namespace TravelApplication.Models
         public int Id { get; set; }
         public string TravelRequestId { get; set; }
         public DateTime Date { get; set; }
+
+        public string DtReimburse { get; set; }
         public string CityStateAndBusinessPurpose { get; set; }
         public int Miles { get; set; }
         public int MileageToWork { get; set; }

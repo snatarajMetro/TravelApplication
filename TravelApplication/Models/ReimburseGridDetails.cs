@@ -20,7 +20,7 @@ namespace TravelApplication.Models
         public bool ApproveActionVisible { get; set; }
         public string Status { get; set; }
         public string StrSubmittedDateTime { get; set; }
-
+        public int ReimbursementId { get; set; }
 
     }
 }

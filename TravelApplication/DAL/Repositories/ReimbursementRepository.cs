@@ -32,7 +32,7 @@ namespace TravelApplication.DAL.Repositories
                     if (selectedRoleId == 1 || selectedRoleId == 2)
                     {
 
-                        string query = string.Format("Select * from TRAVELREQUEST where BADGENUMBER= {0} AND SELECTEDROLEID ={1} AND STATUS = '{2}' order by CREATIONDATETIME desc", submittedBadgeNumber, selectedRoleId, ApprovalStatus.Complete);
+                        string query = string.Format("Select * from TRAVELREQUEST where BADGENUMBER= {0} AND SELECTEDROLEID ={1} AND STATUS = '{2}' AND TRAVELREQUESTID NOT IN (SELECT TRAVELREQUESTID FROM REIMBURSE_TRAVELREQUEST )order by CREATIONDATETIME desc", submittedBadgeNumber, selectedRoleId, ApprovalStatus.Complete);
                         OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
                         command.CommandText = query;
                         DbDataReader dataReader = command.ExecuteReader();
@@ -246,7 +246,7 @@ namespace TravelApplication.DAL.Repositories
             {
                         foreach (var reimbursement in reimbursementDetails.Reimbursement)
                     {
-                        if (!CheckReimburseDataExists(dbConn, reimbursement.Id))
+                        if (!CheckReimburseDataExists(dbConn, reimbursement.Id) && reimbursement.Date != null)
                         {
                             OracleCommand cmd = new OracleCommand();
                             cmd.Connection = (OracleConnection)dbConn;
@@ -846,7 +846,8 @@ namespace TravelApplication.DAL.Repositories
                                     ViewActionVisible = true,
                                     ApproveActionVisible = false,
                                     Status = dataReader["STATUS"].ToString(),
-                                    StrSubmittedDateTime = dataReader["SUBMITTEDDATETIME"].ToString() ?? string.Empty
+                                    StrSubmittedDateTime = dataReader["SUBMITTEDDATETIME"].ToString() ?? string.Empty,
+                                    ReimbursementId = Convert.ToInt32(dataReader["REIMBURSEMENTID"])
                                 });
                             }
                         }
@@ -1147,10 +1148,10 @@ namespace TravelApplication.DAL.Repositories
                             Lodge = Convert.ToInt32(dataReader["LODGE"]),
                             Meals = Convert.ToInt32(dataReader["MEALS"]),
                             Registration = Convert.ToInt32(dataReader["REGISTRATION"]),
-                            Internet  = Convert.ToInt32(dataReader["INTERNET"]),
+                            Internet = Convert.ToInt32(dataReader["INTERNET"]),
                             Others = Convert.ToInt32(dataReader["OTHERS"]),
                             DailyTotal = Convert.ToInt32(dataReader["DAILYTOTAL"]),
-
+                            DtReimburse = Convert.ToDateTime(dataReader["RDate"]).ToShortDateString()
                         });
                         finalResponse = new ReimbursementDetails()
                         {
