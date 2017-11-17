@@ -155,7 +155,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 totalDailyAmount += (model[index].DailyTotal * 1);
             }
 
-            $scope.totalDailyAmount = totalDailyAmount;
+            $scope.totalDailyAmount = parseFloat(totalDailyAmount.toFixed(2));
         }
 
         $scope.totalSubmittedForApprovalAmount = ($scope.totalDailyAmount * 1) + ($scope.totalPart2NonTravelExpenseAmount * 1);
@@ -176,7 +176,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 totalParking += (model[index].Parking * 1);
             }
 
-            $scope.totalParking = totalParking;
+            $scope.totalParking = parseFloat(totalParking.toFixed(2));
             updateDailyTotal(model);
         }  
     }
@@ -190,7 +190,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 totalAirfare += (model[index].Airfare * 1);
             }
 
-            $scope.totalAirfare = totalAirfare;
+            $scope.totalAirfare = parseFloat(totalAirfare.toFixed(2));
             updateDailyTotal(model);
         }
     }
@@ -204,7 +204,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 totalTaxi += (model[index].Taxi * 1);
             }
 
-            $scope.totalTaxi = totalTaxi;
+            $scope.totalTaxi = parseFloat(totalTaxi.toFixed(2));
             updateDailyTotal(model);
         }
     }
@@ -218,7 +218,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 totalLodging += (model[index].Lodging * 1);
             }
 
-            $scope.totalLodging = totalLodging;
+            $scope.totalLodging = parseFloat(totalLodging.toFixed(2));
             updateDailyTotal(model);
         }
     }
@@ -232,7 +232,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 totalMeals += (model[index].Meals * 1);
             }
 
-            $scope.totalMeals = totalMeals;
+            $scope.totalMeals = parseFloat(totalMeals.toFixed(2));
             updateDailyTotal(model);
         }
     }
@@ -246,7 +246,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 totalRegistration += (model[index].Registration * 1);
             }
 
-            $scope.totalRegistration = totalRegistration;
+            $scope.totalRegistration = parseFloat(totalRegistration.toFixed(2));
             updateDailyTotal(model);
         }
     }
@@ -260,7 +260,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 totalInternet += (model[index].Internet * 1);
             }
 
-            $scope.totalInternet = totalInternet;
+            $scope.totalInternet = parseFloat(totalInternet.toFixed(2));
             updateDailyTotal(model);
         }
     }
@@ -274,7 +274,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 totalOther += (model[index].Other * 1);
             }
 
-            $scope.totalOther = totalOther;
+            $scope.totalOther = parseFloat(totalOther.toFixed(2));
             updateDailyTotal(model);
         }
     }
