@@ -229,13 +229,13 @@ function backtoactionselection() {
     $("#existingtravelreimbursementtemplate").hide();
     $("#approvedtravelrequesttemplate").hide();
 
-    //alert(selectedRoleId);
+   // alert(selectedRoleId);
 
     // if selected role is approver, take them back to role selection modal
     if (selectedRoleId == 3) {
         $("#action2").show();
     }
-    else if ($('#travelRequestId').text() != 0) {
+    else if (($('#travelRequestId').text() != 0) && ($('#travalAction').text() == 'travelrequest')) {
         $('#travelRequestId').text(0);
         $("#travelrequesttemplate").hide();
         $("#existingtravelrequeststemplate").show();
@@ -777,8 +777,13 @@ function editTravelReimbursement(container) {
     $('#existingtravelreimbursementtemplate').hide();
     $('#existingtravelrequeststemplate').hide();
 
-    //var travelRequestId = $(container).prop('alt');
-    var travelRequestId = 123456;
+    $('#travalAction').text('travelreimbursement');
+
+    var altObj = $(container).prop('alt');
+    var travelRequestId = altObj.split('|')[0];
+    var travelReimbursementId = altObj.split('|')[1];
+
+    //var travelRequestId = 123456;
     var scope = angular.element('#travelreimbursementtemplate').scope();
     scope.loadTravelReimbursementForEdit(travelRequestId);
     scope.loadCostCenters();
@@ -786,6 +791,7 @@ function editTravelReimbursement(container) {
     $('#travelreimbursementtemplate').show();
 
     $('#travelRequestId').text(travelRequestId);
+    $('#travelReimbursementId').text(travelReimbursementId);
     $('#txtTravelRequestNumber1').text(travelRequestId);
     
 }
@@ -863,6 +869,7 @@ function viewexistingreimbursements() {
     $("#action").hide();
     $("#action2").hide();
     $('#travalAction').text('travelreimbursement');
+    $('#travelReimbursementId').text(0);
 
     var scope = angular.element('#existingtravelrequeststemplate').scope();
     scope.loadExistingTravelReimbursementRequests();
@@ -876,19 +883,26 @@ function viewexistingreimbursements() {
 function showapprovedtravelrequests() {
 
     var travelRequestId = $('#travelRequestId').text();
+   // alert(travelRequestId);
 
-    if (travelRequestId) {
+    if (($('#travalAction').text() == 'travelreimbursement') && ($('#travelReimbursementId').text() != 0)) {
         $('#travelreimbursementtemplate').hide();
-        $('#approvedtravelrequesttemplate').show();
-       // $('#existingtravelreimbursementtemplate').show();
-
-        $('#travelRequestId').text(0);
+        viewexistingreimbursements();
     }
     else {
-        $('#travelreimbursementtemplate').hide();
-        $("#action").hide();
+        if (travelRequestId) {
+            $('#travelreimbursementtemplate').hide();
+            $('#approvedtravelrequesttemplate').show();
+            // $('#existingtravelreimbursementtemplate').show();
 
-        $('#approvedtravelrequesttemplate').show();
+            $('#travelRequestId').text(0);
+        }
+        else {
+            $('#travelreimbursementtemplate').hide();
+            $("#action").hide();
+
+            $('#approvedtravelrequesttemplate').show();
+        }
     }
 }
 
