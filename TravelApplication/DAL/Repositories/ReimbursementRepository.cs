@@ -246,7 +246,7 @@ namespace TravelApplication.DAL.Repositories
             {
                         foreach (var reimbursement in reimbursementDetails.Reimbursement)
                     {
-                        if (!CheckReimburseDataExists(dbConn, reimbursement.Id) && reimbursement.Date != null)
+                        if (!CheckReimburseDataExists(dbConn, reimbursement.Id) && reimbursement.Date != DateTime.MinValue)
                         {
                             OracleCommand cmd = new OracleCommand();
                             cmd.Connection = (OracleConnection)dbConn;
