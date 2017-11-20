@@ -440,6 +440,30 @@ function savedataentry()
                             "Task": $('#txtTask2').val(),
                             "Amount": $('#txtAmount2').val(),
                             "TravelRequestId": travelRequestId
+                        },
+                        {
+                            "CostCenterId": $("#ddlCostCenter3 option:selected").val(),
+                            "LineItem": $('#txtLineItem3').val(),
+                            "ProjectId": $("#project3 option:selected").val(),
+                            "Task": $('#txtTask3').val(),
+                            "Amount": $('#txtAmount3').val(),
+                            "TravelRequestId": travelRequestId
+                        },
+                        {
+                            "CostCenterId": $("#ddlCostCenter4 option:selected").val(),
+                            "LineItem": $('#txtLineItem4').val(),
+                            "ProjectId": $("#project4 option:selected").val(),
+                            "Task": $('#txtTask4').val(),
+                            "Amount": $('#txtAmount4').val(),
+                            "TravelRequestId": travelRequestId
+                        },
+                        {
+                            "CostCenterId": $("#ddlCostCenter5 option:selected").val(),
+                            "LineItem": $('#txtLineItem5').val(),
+                            "ProjectId": $("#project5 option:selected").val(),
+                            "Task": $('#txtTask5').val(),
+                            "Amount": $('#txtAmount5').val(),
+                            "TravelRequestId": travelRequestId
                         }
                     ],
                     "TotalAmount": $('#txtFISTotal').val()
