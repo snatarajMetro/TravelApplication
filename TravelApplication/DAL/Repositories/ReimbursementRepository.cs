@@ -182,7 +182,8 @@ namespace TravelApplication.DAL.Repositories
                     response.CostCenterId = (employeeDetails.Result.CostCenter  ?? string.Empty);
                     response.Department = (employeeDetails.Result.Department  ?? string.Empty);
                     response.Extension = (employeeDetails.Result.EmployeeWorkPhone  ?? string.Empty);
-                    response.VendorNumber = travelRequestRepository.GetVendorNumber(response.BadgeNumber).Result;
+                    var vendorId = travelRequestRepository.GetVendorNumber(response.BadgeNumber).Result;
+                    response.VendorNumber = (vendorId == "null") ? string.Empty : vendorId;
                 }
                 else
                 {
