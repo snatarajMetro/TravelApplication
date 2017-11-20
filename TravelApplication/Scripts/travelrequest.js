@@ -907,6 +907,29 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
        });
     }
 
+    // Refresh the existing reimbursements grid
+    $scope.refreshExistingReimbursements = function () {
+
+        var badgeNumber = $("#signedInUserBadgeNumber").text();
+        var selectedRoleId = $("#selectedRoleId").text();
+        var url = "api/reimburse/reimbursementRequests?badgeNumber=" + badgeNumber + "&roleId=" + selectedRoleId;
+
+        $.get(url)
+       .done(function (data) {
+
+           $scope.existingRequestsGridOptions2.data = data;
+
+           angular.forEach($scope.existingRequestsGridOptions2.data, function (value, index) {
+
+               if (value.SubmittedByUser == null || value.SubmittedByUser == '') {
+                   $scope.columns[2].visible = false;
+               }
+           })
+
+           $scope.$apply();
+       });
+    }
+
     // load data for 1st four approvers dropdown
     $scope.loadCommonApprovers = function (badgeNumber) {
 

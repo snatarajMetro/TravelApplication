@@ -620,7 +620,7 @@ function approve() {
     var travelRequestId = $('#travelRequestIdForAction').text();
     var badgeNumber = $('#signedInUserBadgeNumber').text();
     var comments = $('#txtComments').val();
-    var action = $('#travalAction').val();
+    var action = $('#travalAction').text();
     var url = "api/travelrequest/approve";
 
     if (action)
@@ -649,7 +649,12 @@ function approve() {
 
             // refresh the existing request grid
             var scope = angular.element('#existingtravelrequeststemplate').scope();
-            scope.refreshExistingRequest();
+
+            if (action) {
+                scope.refreshExistingReimbursements();
+            } else {
+                scope.refreshExistingRequest();
+            }
         },
         error: function (xhr, options, error) {
 
