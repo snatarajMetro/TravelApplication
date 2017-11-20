@@ -223,25 +223,27 @@ function viewexistingtravelrequests() {
 
 function backtoactionselection() {
 
+    
     $("#travelrequesttemplate").hide();
     $("#estimatedexpensetemplate").hide();
     $("#existingtravelrequeststemplate").hide();
     $("#existingtravelreimbursementtemplate").hide();
     $("#approvedtravelrequesttemplate").hide();
 
-   // alert(selectedRoleId);
-
     // if selected role is approver, take them back to role selection modal
     if (selectedRoleId == 3) {
+        $('#travelRequestId').text(0);
         $("#action2").show();
     }
     else if (($('#travelRequestId').text() != 0) && ($('#travalAction').text() == 'travelrequest')) {
         $('#travelRequestId').text(0);
         $("#travelrequesttemplate").hide();
-        $("#existingtravelrequeststemplate").show();
+        $("#action").show();
+        //$("#existingtravelrequeststemplate").show();
     }
     else {
         // else, take them to action selection modal
+        $('#travelRequestId').text(0);
         $("#action").show();
     }
 }
