@@ -1228,7 +1228,7 @@ namespace TravelApplication.DAL.Repositories
 		                                                    SELECT
 			                                                    BADGENUMBER
 		                                                    FROM
-			                                                    TRAVELREQUEST_APPROVAL
+			                                                    REIMBURSE_APPROVAL
 		                                                    WHERE
 			                                                    TRAVELREQUESTID = {0}
 		                                                    AND APPROVALDATETIME IS NULL
@@ -1242,7 +1242,7 @@ namespace TravelApplication.DAL.Repositories
                     DbDataReader dataReader = cmd1.ExecuteReader();
 
                     // update travel request for the latest status 
-                    cmd1.CommandText = string.Format(@"UPDATE  REIMBURSE SET                                                  
+                    cmd1.CommandText = string.Format(@"UPDATE  REIMBURSE_TRAVELREQUEST SET                                                  
                                                          STATUS = :p1 
                                                         WHERE TRAVELREQUESTID = {0}", travelRequestId);
                     if (dataReader.HasRows)
@@ -1309,7 +1309,7 @@ namespace TravelApplication.DAL.Repositories
                     OracleCommand cmd1 = new OracleCommand();
                     cmd1.Connection = (OracleConnection)dbConn;
                     // update travel request for the latest status 
-                    cmd1.CommandText = string.Format(@"UPDATE  REIMBURSE SET                                                  
+                    cmd1.CommandText = string.Format(@"UPDATE  REIMBURSE_TRAVELREQUEST SET                                                  
                                                          STATUS = :p1 
                                                         WHERE TRAVELREQUESTID = {0}", travelRequestId);
 

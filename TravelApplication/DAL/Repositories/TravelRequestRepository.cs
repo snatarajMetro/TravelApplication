@@ -915,9 +915,11 @@ namespace TravelApplication.Services
                 {
                     foreach (var fis in request.FISDetails)
                     {
-                        OracleCommand cmd = new OracleCommand();
-                        cmd.Connection = (OracleConnection)dbConn;
-                        cmd.CommandText = string.Format(@"INSERT INTO TRAVELREQUEST_FIS (                                                  
+                        if (!string.IsNullOrEmpty(fis.CostCenterId))
+                        {
+                            OracleCommand cmd = new OracleCommand();
+                            cmd.Connection = (OracleConnection)dbConn;
+                            cmd.CommandText = string.Format(@"INSERT INTO TRAVELREQUEST_FIS (                                                  
                                                         TRAVELREQUESTID,
                                                         COSTCENTERID ,
                                                         LINEITEM ,
@@ -928,15 +930,16 @@ namespace TravelApplication.Services
                                                     )
                                                     VALUES
                                                         (:p1,:p2,:p3,:p4,:p5,:p6,:p7)");
-                        cmd.Parameters.Add(new OracleParameter("p1", travelRequestId));
-                        cmd.Parameters.Add(new OracleParameter("p2", fis.CostCenterId));
-                        cmd.Parameters.Add(new OracleParameter("p3", fis.LineItem));
-                        cmd.Parameters.Add(new OracleParameter("p4", fis.ProjectId));
-                        cmd.Parameters.Add(new OracleParameter("p5", fis.Task));
-                        cmd.Parameters.Add(new OracleParameter("p6", fis.Amount));
-                        cmd.Parameters.Add(new OracleParameter("p7", request.TotalAmount));
-                        var rowsUpdated = cmd.ExecuteNonQuery();
-                        cmd.Dispose();
+                            cmd.Parameters.Add(new OracleParameter("p1", travelRequestId));
+                            cmd.Parameters.Add(new OracleParameter("p2", fis.CostCenterId));
+                            cmd.Parameters.Add(new OracleParameter("p3", fis.LineItem));
+                            cmd.Parameters.Add(new OracleParameter("p4", fis.ProjectId));
+                            cmd.Parameters.Add(new OracleParameter("p5", fis.Task));
+                            cmd.Parameters.Add(new OracleParameter("p6", fis.Amount));
+                            cmd.Parameters.Add(new OracleParameter("p7", request.TotalAmount));
+                            var rowsUpdated = cmd.ExecuteNonQuery();
+                            cmd.Dispose();
+                        }
                     }
                 }
 
@@ -945,9 +948,11 @@ namespace TravelApplication.Services
 
                     foreach (var fis in request.FISDetails)
                     {
-                        OracleCommand cmd = new OracleCommand();
-                        cmd.Connection = (OracleConnection)dbConn;
-                        cmd.CommandText = string.Format(@"UPDATE  TRAVELREQUEST_FIS SET                                                  
+                        if (!string.IsNullOrEmpty(fis.CostCenterId))
+                        {
+                            OracleCommand cmd = new OracleCommand();
+                            cmd.Connection = (OracleConnection)dbConn;
+                            cmd.CommandText = string.Format(@"UPDATE  TRAVELREQUEST_FIS SET                                                  
                                                 TRAVELREQUESTID = :p1,
                                                         COSTCENTERID =:p2,
                                                         LINEITEM =:p3,
@@ -956,15 +961,16 @@ namespace TravelApplication.Services
                                                         AMOUNT =:p6,
                                                         TOTALAMOUNT =:p7
                                                 WHERE TRAVELREQUESTID = {0}", travelRequestId);
-                        cmd.Parameters.Add(new OracleParameter("p1", travelRequestId));
-                        cmd.Parameters.Add(new OracleParameter("p2", fis.CostCenterId));
-                        cmd.Parameters.Add(new OracleParameter("p3", fis.LineItem));
-                        cmd.Parameters.Add(new OracleParameter("p4", fis.ProjectId));
-                        cmd.Parameters.Add(new OracleParameter("p5", fis.Task));
-                        cmd.Parameters.Add(new OracleParameter("p6", fis.Amount));
-                        cmd.Parameters.Add(new OracleParameter("p7", request.TotalAmount));
-                        var rowsUpdated = cmd.ExecuteNonQuery();
-                        cmd.Dispose();
+                            cmd.Parameters.Add(new OracleParameter("p1", travelRequestId));
+                            cmd.Parameters.Add(new OracleParameter("p2", fis.CostCenterId));
+                            cmd.Parameters.Add(new OracleParameter("p3", fis.LineItem));
+                            cmd.Parameters.Add(new OracleParameter("p4", fis.ProjectId));
+                            cmd.Parameters.Add(new OracleParameter("p5", fis.Task));
+                            cmd.Parameters.Add(new OracleParameter("p6", fis.Amount));
+                            cmd.Parameters.Add(new OracleParameter("p7", request.TotalAmount));
+                            var rowsUpdated = cmd.ExecuteNonQuery();
+                            cmd.Dispose();
+                        }
                     }
                 }
             }
