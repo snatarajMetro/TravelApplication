@@ -844,18 +844,18 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 enableFiltering: false,
                 width: 112,
                 headerCellClass: "existingrequestcolumnheader",
-                enableColumnResizing: false,
+                //enableColumnResizing: false,
             }];
 
         $scope.existingRequestsGridOptions3 = {
             enableSorting: false,
-            enableColumnResizing: true,
+            //enableColumnResizing: true,
             columnDefs: $scope.columns,
             enableFiltering: true,
             paginationPageSizes: [10, 15, 20],
             paginationPageSize: 10,
-            onRegisterApi: function (gridApi) {
-                $scope.gridApi = gridApi;
+            onRegisterApi: function (gridApiRequests) {
+                $scope.gridApi = gridApiRequests;
             }
         };
 
@@ -2151,12 +2151,12 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 enableFiltering: false,
                 width: 182,
                 headerCellClass: "existingrequestcolumnheader",
-                enableColumnResizing: false,
+                //enableColumnResizing: false,
             }];
 
         $scope.existingRequestsGridOptions2 = {
             enableSorting: false,
-            enableColumnResizing: true,
+            //enableColumnResizing: true,
             columnDefs: $scope.columns,
             enableFiltering: true,
             paginationPageSizes: [10, 15, 20],
@@ -2289,18 +2289,18 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 cellTemplate: actionTemplate,
                 enableFiltering: false,
                 headerCellClass: "existingrequestcolumnheader",
-                enableColumnResizing: false,
+                //enableColumnResizing: false,
             }];
 
         $scope.existingRequestsGridOptions1 = {
             enableSorting: false,
-            enableColumnResizing: true,
+            //enableColumnResizing: true,
             columnDefs: $scope.columns,
             enableFiltering: true,
             paginationPageSizes: [10, 15, 20],
             paginationPageSize: 10,
-            onRegisterApi: function (gridApi) {
-                $scope.gridApi = gridApi;
+            onRegisterApi: function (gridApi2) {
+                $scope.gridApi = gridApi2;
             }
         };
 
