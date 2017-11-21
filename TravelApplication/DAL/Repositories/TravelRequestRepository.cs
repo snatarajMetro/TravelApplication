@@ -397,8 +397,8 @@ namespace TravelApplication.Services
                         }
                         command.Dispose();
                         dataReader.Close();                  
-                    }                
-                    else
+                    }  
+                    if (selectedRoleId == 3)                    
                     {   
                         string query = string.Format(@"SELECT
 	                                                        *
@@ -439,6 +439,37 @@ namespace TravelApplication.Services
                         }
                         command.Dispose();
                         dataReader.Close();                   
+                    }
+
+                    if (selectedRoleId == 4)
+                    {
+                        string query = string.Format("Select * from TRAVELREQUEST order by CREATIONDATETIME desc", submittedBadgeNumber, selectedRoleId);
+                        OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+                        command.CommandText = query;
+                        DbDataReader dataReader = command.ExecuteReader();
+                        if (dataReader.HasRows)
+                        {
+                            while (dataReader.Read())
+                            {
+                                response.Add(new TravelRequestDetails()
+                                {
+                                    TravelRequestId = Convert.ToInt32(dataReader["TravelRequestId"]),
+                                    //Description = dataReader["PURPOSE"].ToString(),
+                                    SubmittedByUser = dataReader["SUBMITTEDBYUSERNAME"].ToString(),
+                                    SubmittedDateTime = dataReader["SUBMITTEDDATETIME"].ToString(),
+                                    RequiredApprovers = GetApproversListByTravelRequestId(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])),
+                                    LastApproveredByUser = getLastApproverName(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])),
+                                    LastApprovedDateTime = getLastApproverDateTime(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])),
+                                    EditActionVisible = EditActionEligible(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])) ? true : false,
+                                    ViewActionVisible = true,
+                                    ApproveActionVisible = false,
+                                    Status = dataReader["STATUS"].ToString(),
+                                    Purpose = dataReader["PURPOSE"].ToString()
+                                });
+                            }
+                        }
+                        command.Dispose();
+                        dataReader.Close();
                     }
                     dbConn.Close();
                     dbConn.Dispose();

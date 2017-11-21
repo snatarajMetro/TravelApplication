@@ -59,7 +59,7 @@ namespace TravelApplication.DAL.Repositories
                         command.Dispose();
                         dataReader.Close();
                     }
-                    else
+                    if (selectedRoleId == 3)
                     {
                         string query = string.Format(@"SELECT
 	                                                        *
@@ -101,6 +101,36 @@ namespace TravelApplication.DAL.Repositories
                         command.Dispose();
                         dataReader.Close();
                     }
+                    if (selectedRoleId == 4)
+                    {
+                        string query = string.Format("Select * from TRAVELREQUEST where STATUS = '{2}' AND TRAVELREQUESTID NOT IN (SELECT TRAVELREQUESTID FROM REIMBURSE_TRAVELREQUEST )order by CREATIONDATETIME desc", submittedBadgeNumber, selectedRoleId, ApprovalStatus.Complete);
+                        OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+                        command.CommandText = query;
+                        DbDataReader dataReader = command.ExecuteReader();
+                        if (dataReader.HasRows)
+                        {
+                            while (dataReader.Read())
+                            {
+                                response.Add(new TravelRequestDetails()
+                                {
+                                    TravelRequestId = Convert.ToInt32(dataReader["TravelRequestId"]),
+                                    SubmittedByUser = dataReader["SUBMITTEDBYUSERNAME"].ToString(),
+                                    SubmittedDateTime = dataReader["SUBMITTEDDATETIME"].ToString(),
+                                    RequiredApprovers = GetApproversListByTravelRequestId(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])),
+                                    LastApproveredByUser = getLastApproverName(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])),
+                                    LastApprovedDateTime = getLastApproverDateTime(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])),
+                                    EditActionVisible = EditActionEligible(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])) ? true : false,
+                                    ViewActionVisible = true,
+                                    ApproveActionVisible = false,
+                                    Status = dataReader["STATUS"].ToString(),
+                                    Purpose = dataReader["PURPOSE"].ToString()
+                                });
+                            }
+                        }
+                        command.Dispose();
+                        dataReader.Close();
+                    }
+
                     dbConn.Close();
                     dbConn.Dispose();
                     return response;
@@ -855,7 +885,7 @@ namespace TravelApplication.DAL.Repositories
                         command.Dispose();
                         dataReader.Close();
                     }
-                    else
+                    if (selectedRoleId == 3)
                     {
                         string query = string.Format(@"SELECT
                                                          *
@@ -890,6 +920,40 @@ namespace TravelApplication.DAL.Repositories
                                     ViewActionVisible = true,
                                     ApproveActionVisible = getReimburseApprovalSatus(dbConn, Convert.ToInt32(dataReader["TravelRequestId"]), badgeNumber) ? true : false,
                                     Status = dataReader["STATUS"].ToString(),                                   
+                                });
+                            }
+                        }
+                        command.Dispose();
+                        dataReader.Close();
+                    }
+
+                    if (selectedRoleId == 4)
+                    {
+
+                        string query = string.Format("Select * from REIMBURSE_TRAVELREQUEST  order by CREATIONDATETIME desc", badgeNumber, selectedRoleId);
+                        OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+                        command.CommandText = query;
+                        DbDataReader dataReader = command.ExecuteReader();
+                        if (dataReader.HasRows)
+                        {
+                            while (dataReader.Read())
+                            {
+                                response.Add(new ReimburseGridDetails()
+                                {
+                                    TravelRequestId = dataReader["TravelRequestId"].ToString(),
+                                    BadgeNumber = Convert.ToInt32(dataReader["BadgeNumber"].ToString()),
+                                    Purpose = "", //dataReader["PURPOSE"].ToString(),
+                                    SubmittedByUser = dataReader["SUBMITTEDBYUSERNAME"].ToString(),
+                                    SubmittedDateTime = Convert.ToDateTime(dataReader["SUBMITTEDDATETIME"]),
+                                    RequiredApprovers = GetReimburseApproversListByTravelRequestId(dbConn, dataReader["TravelRequestId"].ToString()),
+                                    LastApprovedByUser = getReimburseLastApproverName(dbConn, dataReader["TravelRequestId"].ToString()),
+                                    LastApprovedDateTime = getReimburseLastApproverDateTime(dbConn, dataReader["TravelRequestId"].ToString()),
+                                    EditActionVisible = ReimburseEditActionEligible(dbConn, dataReader["TravelRequestId"].ToString()) ? true : false,
+                                    ViewActionVisible = true,
+                                    ApproveActionVisible = false,
+                                    Status = dataReader["STATUS"].ToString(),
+                                    StrSubmittedDateTime = dataReader["SUBMITTEDDATETIME"].ToString() ?? string.Empty,
+                                    ReimbursementId = Convert.ToInt32(dataReader["REIMBURSEMENTID"])
                                 });
                             }
                         }
