@@ -275,6 +275,13 @@
     <Content Include="Content\fileDropZone.css" />
     <Content Include="Content\font.css" />
     <Content Include="Content\style.css" />
+    <Content Include="Dependencies\angular.min.js" />
+    <Content Include="Dependencies\bootstrap-datepicker.min.js" />
+    <Content Include="Dependencies\bootstrap-datepicker3.css" />
+    <Content Include="Dependencies\ng-currency.js" />
+    <Content Include="Dependencies\roboto.css" />
+    <Content Include="Dependencies\ui-grid.css" />
+    <Content Include="Dependencies\ui-grid.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
