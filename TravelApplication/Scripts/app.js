@@ -955,9 +955,9 @@ function savereimbursementdataentry() {
     var division = jQuery.trim($('#txtDivision').val());
     var department = jQuery.trim($('#txtDepartment').val());
     var purpose = jQuery.trim($('#txtPurpose').val());
+    var reimbursementId = $('#txtReimbursementId').val();
 
     // Get travel inputs
-
     if (canSubmit) {
         $.ajax({
             type: "POST",
@@ -966,6 +966,7 @@ function savereimbursementdataentry() {
             data: JSON.stringify({
                 "ReimbursementTravelRequestDetails": {
                     'TravelRequestId': travelRequestId,
+                    'ReimbursementId': reimbursementId,
                     'BadgeNumber': badgeNumber,
                     'DepartureDateTime': travelPeriodFrom,
                     'ReturnDateTime': travelPeriodTo,

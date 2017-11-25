@@ -2565,6 +2565,8 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 $('#txtPurpose').val($scope.Data.ReimbursementTravelRequestDetails.Purpose);
                 $('#txtDepartment').val($scope.Data.ReimbursementTravelRequestDetails.Department);
                 $('#txtExtension').val($scope.Data.ReimbursementTravelRequestDetails.Extension);
+                $('#txtReimbursementId').val($scope.Data.ReimbursementTravelRequestDetails.ReimbursementId);
+                
 
                 // set travel data section
                 for (var index = 0; index < $scope.Data.ReimbursementDetails.Reimbursement.length; index++) {
@@ -2801,6 +2803,8 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         bar.append("rect")
                 .attr("transform", "translate(" + labelWidth + ", 0)")
                 .attr("height", barHeight)
+                .attr("class", "cursor")
+                .on("click", drillDownTravelRequest)
                 .style("fill", function (d) {
                     return d.color;
                 })
@@ -2906,6 +2910,8 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         bar.append("rect")
                 .attr("transform", "translate(" + labelWidth + ", 0)")
                 .attr("height", barHeight)
+                .attr("class", "cursor")
+                .on("click", drillDownTravelReimbursement)
                 .style("fill", function (d) {
                     return d.color;
                 })
@@ -2949,9 +2955,18 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 .call(xAxis);
     }
 
+    function drillDownTravelReimbursement(d, i) {
+        var status = d.label;
+    }
+
+    function drillDownTravelRequest(d, i) {
+        var status = d.label;
+    }
+
     function loadTravelRequestPieChartGraph()
     {
         var data = [23, 5, 19, 17];
+
         var r = 100;
 
         var color = d3.scale.ordinal()
@@ -2986,12 +3001,14 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         arcs.append("text")
         .attr("transform", function (d) { return "translate(" + arc.centroid(d) + ")"; })
         .attr("text-anchor", "middle")
+        .attr("class", "cursor")
+        .on("click", drillDownTravelRequest)
         .style("fill","white")
         .text(function (d) { return d.data; });
 
         arcs.append("text")
 	   .attr("text-anchor", "middle")
-	    .attr('font-size', '4em')
+	   .attr('font-size', '4em')
 	   .text(64);
 
     }

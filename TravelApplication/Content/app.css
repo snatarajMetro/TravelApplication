@@ -2183,3 +2183,7 @@ svg {
 .arc2 path {
   stroke: #fff;
 }
+
+.cursor{
+    cursor:pointer;
+}
