@@ -2074,7 +2074,7 @@ div.dashboardcontainer {
     left: 0;
     right: 0;
     width: 1270px;
-    height: 600px;
+    height: 900px;
     margin: auto;
     background-color: white;
     box-shadow: 10px 10px 5px #3c3c3c;
@@ -2150,3 +2150,21 @@ svg {
     border:solid 1px gray;
     box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	}
+
+    .arc text {
+  font: 10px sans-serif;
+  text-anchor: middle;
+}
+
+.arc path {
+  stroke: #fff;
+}
+
+.arc2 text {
+  font: 10px sans-serif;
+  text-anchor: middle;
+}
+
+.arc2 path {
+  stroke: #fff;
+}
