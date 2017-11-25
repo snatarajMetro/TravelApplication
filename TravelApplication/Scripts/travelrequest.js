@@ -2731,6 +2731,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 loadTravelReimbursementBarGraph();
 
                 loadTravelRequestPieChartGraph();
+                loadTravelReimbursementPieChartGraph();
             });
         });
     }
@@ -2853,7 +2854,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
         var data = [
                     { label: "New", value: 9, color: "orange" },
-                    { label: "Pending Approval", value: 15, color: "dodgerblue" },
+                    { label: "Pending Approval", value: 35, color: "dodgerblue" },
                     { label: "Rejected", value: 3, color: "red" },
                     { label: "Complete", value: 12, color: "green" }
         ];
@@ -2948,16 +2949,17 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
     function loadTravelRequestPieChartGraph()
     {
-        var data = [10, 50, 80, 35];
+        var data = [23, 5, 19, 17];
         var r = 100;
 
         var color = d3.scale.ordinal()
-                    .range(["red","blue","orange","green"]);
+                    .range(["red","dodgerblue","orange","green"]);
 
         var canvas = d3.select('#travelrequestpiechartsection')
                     .append("svg")
-                    .attr("width", 1500)
-                    .attr("height", 1500);
+                    .attr("class", "svgclass2")
+                    .attr("width", 800)
+                    .attr("height", 800);
 
         var group = canvas.append("g")
                     .attr("transform", "translate(300,300)");
@@ -2982,7 +2984,60 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         arcs.append("text")
         .attr("transform", function (d) { return "translate(" + arc.centroid(d) + ")"; })
         .attr("text-anchor", "middle")
+        .style("fill","white")
         .text(function (d) { return d.data; });
+
+        arcs.append("text")
+	   .attr("text-anchor", "middle")
+	    .attr('font-size', '4em')
+	   .text(64);
+
+    }
+
+    function loadTravelReimbursementPieChartGraph() {
+        var data = [3, 35, 9, 12];
+        var r = 100;
+
+        var color = d3.scale.ordinal()
+                    .range(["red", "dodgerblue", "orange", "green"]);
+
+        var canvas = d3.select('#travelreimbursementpiechartsection')
+                    .append("svg")
+                    .attr("class", "svgclass2")
+                    .attr("width", 800)
+                    .attr("height", 800);
+
+        var group = canvas.append("g")
+                    .attr("transform", "translate(300,300)");
+
+        var arc = d3.svg.arc()
+        .innerRadius(200)
+        .outerRadius(r);
+
+        var pie = d3.layout.pie()
+        .value(function (d) { return d; });
+
+        var arcs = group.selectAll(".arc")
+                .data(pie(data))
+                .enter()
+                .append("g")
+                .attr("class", "arc");
+
+        arcs.append("path")
+        .attr("d", arc)
+        .attr("fill", function (d) { return color(d.data); });
+
+        arcs.append("text")
+        .attr("transform", function (d) { return "translate(" + arc.centroid(d) + ")"; })
+        .attr("text-anchor", "middle")
+        .style("fill", "white")
+        .text(function (d) { return d.data; });
+
+        arcs.append("text")
+	   .attr("text-anchor", "middle")
+	    .attr('font-size', '4em')
+	   .text(59);
+
     }
 
 });

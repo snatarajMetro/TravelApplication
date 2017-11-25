@@ -2074,7 +2074,7 @@ div.dashboardcontainer {
     left: 0;
     right: 0;
     width: 1270px;
-    height: 900px;
+    height: 750px;
     margin: auto;
     background-color: white;
     box-shadow: 10px 10px 5px #3c3c3c;
@@ -2151,8 +2151,23 @@ svg {
     box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	}
 
+
+    .svgclass2{
+	/* border-radius: 3px;
+    border:solid 1px gray;
+    box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
+    top:200px;
+    position:absolute;
+	}
+
+    .svgclass3{
+	border-radius: 3px;
+    border:solid 1px gray;
+    box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	}
+
     .arc text {
-  font: 10px sans-serif;
+  font: 14px sans-serif;
   text-anchor: middle;
 }
 
