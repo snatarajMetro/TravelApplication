@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using TravelApplication.Services;
 
@@ -20,18 +21,48 @@ namespace TravelApplication.Controllers.WebAPI
             HttpResponseMessage response = null;
             try
             {
-                Hashtable myparms = new Hashtable();
-                myparms.Add("p_travelrequestID", travelRequestId);
-                travelRequestReportService.RunReport("Travel_Request.rpt","test",myparms);
-               // response = Request.CreateResponse(HttpStatusCode.OK, result);
+
+                var byteContent = travelRequestReportService.RunReport("Travel_Request.rpt", "test", travelRequestId);
+
+                response = new HttpResponseMessage(HttpStatusCode.OK);
+                response.Content = new ByteArrayContent(byteContent);
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
+                return response;
+
             }
             catch (Exception ex)
             {
                 // TODO: Log the exception message
-                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrive travel request details for the given travel request Id : " + ex.Message);
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrive travel request report for the given travel request Id : " + ex.Message);
+
+            }
+            return response;
+        }
+
+        [HttpGet]
+        [Route("api/travelReimbursementReport/{travelRequestId}")]
+        public HttpResponseMessage GetTravelReimbursementReport(string travelRequestId)
+        {
+            HttpResponseMessage response = null;
+            try
+            {
+
+                var byteContent = travelRequestReportService.RunReport("Travel_Business_Expense.rpt", "test", travelRequestId);
+
+                response = new HttpResponseMessage(HttpStatusCode.OK);
+                response.Content = new ByteArrayContent(byteContent);
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
+                return response;
+
+            }
+            catch (Exception ex)
+            {
+                // TODO: Log the exception message
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrive travel request report for the given travel request Id : " + ex.Message);
 
             }
             return response;
         }
     }
+
 }

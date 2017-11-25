@@ -1216,7 +1216,8 @@ namespace TravelApplication.DAL.Repositories
                             Internet = Convert.ToInt32(dataReader["INTERNET"]),
                             Others = Convert.ToInt32(dataReader["OTHERS"]),
                             DailyTotal = Convert.ToInt32(dataReader["DAILYTOTAL"]),
-                            DtReimburse = Convert.ToDateTime(dataReader["RDate"]).ToShortDateString()
+                            DtReimburse = Convert.ToDateTime(dataReader["RDate"]).ToShortDateString(),
+                            Id = Convert.ToInt32(dataReader["ID"])
                         });
                         finalResponse = new ReimbursementDetails()
                         {

@@ -4,13 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using CrystalDecisions.Shared;
+using System.IO;
 
 namespace TravelApplication.Services
 {
     public class TravelRequestReportService
     {
-        public void RunReport(String reportName, String fileName, Hashtable htParameters)
+        public byte[] RunReport(String reportName, String fileName, string travelRequestId)
         {
+            byte[] response = null;
             ConnectionInfo crConnectionInFo = new ConnectionInfo();
             CrystalDecisions.CrystalReports.Engine.Tables crTables;
             TableLogOnInfo crTableLogonInfo = new TableLogOnInfo();
@@ -22,14 +24,11 @@ namespace TravelApplication.Services
             String fName = fileName;
             dReport.Load(rptPath + reportName);
 
-            foreach (DictionaryEntry de in htParameters)
+            dReport.SetParameterValue("p_travelrequestID", travelRequestId);
+            if (reportName == "Travel_Business_Expense.rpt")
             {
-                String parm_name = System.Convert.ToString(de.Key);  
-                String[] parm_values_array = (System.Convert.ToString(de.Value)).Split(',');
-
-             //   dReport.SetParameterValue("p_travelrequestID", "406");
+                dReport.SetParameterValue("p_request_id", travelRequestId);
             }
-            dReport.SetParameterValue("p_travelrequestID", "406");
             String mOleString = System.Configuration.ConfigurationManager.AppSettings["rptConnectionString"];
             String[] aTags = mOleString.Split(';');
 
@@ -49,8 +48,8 @@ namespace TravelApplication.Services
             crConnectionInFo.ServerName = "mtaora50dev";
             crConnectionInFo.UserID = "taer";
             crConnectionInFo.Password = "taer_dev";
-           
-               
+
+
 
             crTables = dReport.Database.Tables;
             crTableLogonInfo.ConnectionInfo = crConnectionInFo;
@@ -71,15 +70,10 @@ namespace TravelApplication.Services
 
             try
             {
-
-                fName = fName + ".pdf";
-                crDiskFileDestinationOptions.DiskFileName = rptPath + fName;
-                crExportOptions = dReport.ExportOptions;
-
-                crExportOptions.DestinationOptions = crDiskFileDestinationOptions;
-                crExportOptions.ExportDestinationType = ExportDestinationType.DiskFile;
-                crExportOptions.ExportFormatType = ExportFormatType.PortableDocFormat;
-                dReport.Export(crExportOptions);
+                var memoryStream = new MemoryStream();
+                var data = dReport.ExportToStream(ExportFormatType.PortableDocFormat);
+                data.CopyTo(memoryStream);
+                response = memoryStream.ToArray();
             }
             catch (Exception ex)
             {
@@ -92,6 +86,7 @@ namespace TravelApplication.Services
                 dReport.Close();
                 dReport.Dispose();
             }
+            return response;
         }
     }
 }
