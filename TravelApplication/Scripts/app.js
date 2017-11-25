@@ -23,12 +23,6 @@ $(document).ready(function () {
     //viewexistingreimbursements();
   });
 
-//$(".two-decimals").change(function () {
-//    alert('here');
-
-//    this.value = parseFloat(this.value).toFixed(2);
-//});
-
 function setTwoDecimal(el) {
     el.value = parseFloat(el.value).toFixed(2);
 
@@ -69,6 +63,7 @@ function logout() {
     $("#travelreimbursementtemplate").hide();
     $("#existingtravelreimbursementtemplate").hide();
     $("#approvedtravelrequesttemplate").hide();
+    $('#dashboardtemplate').hide();
 
     $("#txtEmail").focus();
 }
@@ -175,6 +170,10 @@ function actionselection() {
         if (selectedRoleId == 3) {
             //viewexistingtravelrequests();
             $("#action2").show();
+        }
+        else if (selectedRoleId == 4) {
+            //alert('show admin section');
+            viewdashboard();
         }
         else {
             // otherwise, show the action selection modal
@@ -1236,4 +1235,9 @@ function viewdashboard() {
 
     $('#dashboardtemplate').show();
    
+}
+
+function backfromdashboard() {
+    $('#dashboardtemplate').hide();
+    $("#signintemplate").show();
 }
