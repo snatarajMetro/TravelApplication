@@ -2532,7 +2532,8 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 $('input[name="txtTravelDate5"]').datepicker(options);
 
                 // set default values
-                    for (var index = 0; index < maxRowCount; index++) {
+                for (var index = 0; index < maxRowCount; index++) {
+                    $scope.TravelModel[index].Id = 0;
                     $scope.TravelModel[index].TravelDate = "";
                     $scope.TravelModel[index].City = "";
                     $scope.TravelModel[index].TotalMiles = 0;
@@ -2567,8 +2568,8 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
                 // set travel data section
                 for (var index = 0; index < $scope.Data.ReimbursementDetails.Reimbursement.length; index++) {
-
-                    $scope.TravelModel[index].TravelDate            = $scope.Data.ReimbursementDetails.Reimbursement[index].Date;
+                    $scope.TravelModel[index].Id                    = $scope.Data.ReimbursementDetails.Reimbursement[index].Id;
+                    $scope.TravelModel[index].TravelDate            = $scope.Data.ReimbursementDetails.Reimbursement[index].DtReimburse;
                     $scope.TravelModel[index].City                  = $scope.Data.ReimbursementDetails.Reimbursement[index].CityStateAndBusinessPurpose;
                     $scope.TravelModel[index].TotalMiles            = $scope.Data.ReimbursementDetails.Reimbursement[index].Miles;
                     $scope.TravelModel[index].MileageToWork         = $scope.Data.ReimbursementDetails.Reimbursement[index].MileageToWork;
@@ -2642,6 +2643,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                         $scope.totalBusinessMile = ($scope.totalBusinessMile * 1) - ($scope.TravelModel[index].BusinessMiles * 1);
                         $scope.totalBusinessMileAmount = ($scope.totalBusinessMileAmount * 1) - ($scope.TravelModel[index].BusinessMileAmount * 1);
 
+                        $scope.TravelModel[index].Id = 0;
                         $scope.TravelModel[index].TravelDate = "";
                         $scope.TravelModel[index].City = "";
                         $scope.TravelModel[index].TotalMiles = 0;
