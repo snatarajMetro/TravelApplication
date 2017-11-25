@@ -10,6 +10,7 @@ $(document).ready(function () {
 
     $("#txtEmail").focus();
 
+    viewdashboard();
     //createnewrequest();
     //editTravelRequest();
 
@@ -1224,4 +1225,15 @@ function backtorolesection() {
     $("#action").hide();
     $("#action2").hide();
     $('#signintemplate').show();
+}
+
+function viewdashboard() {
+
+    $("#signin").hide();
+
+    var scope = angular.element('#dashboardtemplate').scope();
+    scope.loadDashboard();
+
+    $('#dashboardtemplate').show();
+   
 }
