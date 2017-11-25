@@ -10,6 +10,7 @@ $(document).ready(function () {
 
     $("#txtEmail").focus();
 
+    //viewdashboard();
     //createnewrequest();
     //editTravelRequest();
 
@@ -1028,7 +1029,7 @@ function savereimbursementdataentry() {
                 "ReimbursementDetails": {
                     "Reimbursement":[
                         {
-                            "Id":0,
+                            "Id": $('#txtTravelId1').val(),
                             "TravelRequestId": travelRequestId,
                             "Date": $('#txtTravelDate1').val(),
                             "CityStateAndBusinessPurpose": $('#txtCityState1').val(),
@@ -1047,7 +1048,7 @@ function savereimbursementdataentry() {
                             "DailyTotal": $('#txtDailyTotal1').val()
                         },
                         {
-                            "Id": 0,
+                            "Id": $('#txtTravelId2').val(),
                             "TravelRequestId": travelRequestId,
                             "Date": $('#txtTravelDate2').val(),
                             "CityStateAndBusinessPurpose": $('#txtCityState2').val(),
@@ -1066,7 +1067,7 @@ function savereimbursementdataentry() {
                             "DailyTotal": $('#txtDailyTotal2').val()
                         },
                         {
-                            "Id": 0,
+                            "Id": $('#txtTravelId3').val(),
                             "TravelRequestId": travelRequestId,
                             "Date": $('#txtTravelDate3').val(),
                             "CityStateAndBusinessPurpose": $('#txtCityState3').val(),
@@ -1085,7 +1086,7 @@ function savereimbursementdataentry() {
                             "DailyTotal": $('#txtDailyTotal3').val()
                         },
                         {
-                            "Id": 0,
+                            "Id": $('#txtTravelId4').val(),
                             "TravelRequestId": travelRequestId,
                             "Date": $('#txtTravelDate4').val(),
                             "CityStateAndBusinessPurpose": $('#txtCityState4').val(),
@@ -1104,7 +1105,7 @@ function savereimbursementdataentry() {
                             "DailyTotal": $('#txtDailyTotal4').val()
                         },
                         {
-                            "Id": 0,
+                            "Id": $('#txtTravelId5').val(),
                             "TravelRequestId": travelRequestId,
                             "Date": $('#txtTravelDate5').val(),
                             "CityStateAndBusinessPurpose": $('#txtCityState5').val(),
@@ -1224,4 +1225,15 @@ function backtorolesection() {
     $("#action").hide();
     $("#action2").hide();
     $('#signintemplate').show();
+}
+
+function viewdashboard() {
+
+    $("#signin").hide();
+
+    var scope = angular.element('#dashboardtemplate').scope();
+    scope.loadDashboard();
+
+    $('#dashboardtemplate').show();
+   
 }

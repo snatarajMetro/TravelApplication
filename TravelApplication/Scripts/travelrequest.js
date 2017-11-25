@@ -2532,7 +2532,8 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 $('input[name="txtTravelDate5"]').datepicker(options);
 
                 // set default values
-                    for (var index = 0; index < maxRowCount; index++) {
+                for (var index = 0; index < maxRowCount; index++) {
+                    $scope.TravelModel[index].Id = 0;
                     $scope.TravelModel[index].TravelDate = "";
                     $scope.TravelModel[index].City = "";
                     $scope.TravelModel[index].TotalMiles = 0;
@@ -2567,8 +2568,8 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
                 // set travel data section
                 for (var index = 0; index < $scope.Data.ReimbursementDetails.Reimbursement.length; index++) {
-
-                    $scope.TravelModel[index].TravelDate            = $scope.Data.ReimbursementDetails.Reimbursement[index].Date;
+                    $scope.TravelModel[index].Id                    = $scope.Data.ReimbursementDetails.Reimbursement[index].Id;
+                    $scope.TravelModel[index].TravelDate            = $scope.Data.ReimbursementDetails.Reimbursement[index].DtReimburse;
                     $scope.TravelModel[index].City                  = $scope.Data.ReimbursementDetails.Reimbursement[index].CityStateAndBusinessPurpose;
                     $scope.TravelModel[index].TotalMiles            = $scope.Data.ReimbursementDetails.Reimbursement[index].Miles;
                     $scope.TravelModel[index].MileageToWork         = $scope.Data.ReimbursementDetails.Reimbursement[index].MileageToWork;
@@ -2642,6 +2643,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                         $scope.totalBusinessMile = ($scope.totalBusinessMile * 1) - ($scope.TravelModel[index].BusinessMiles * 1);
                         $scope.totalBusinessMileAmount = ($scope.totalBusinessMileAmount * 1) - ($scope.TravelModel[index].BusinessMileAmount * 1);
 
+                        $scope.TravelModel[index].Id = 0;
                         $scope.TravelModel[index].TravelDate = "";
                         $scope.TravelModel[index].City = "";
                         $scope.TravelModel[index].TotalMiles = 0;
@@ -2718,6 +2720,326 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 }
             });
         });
+    }
+
+
+    $scope.loadDashboard = function()
+    {
+        $.get('/uitemplates/dashboard.html')
+        .always(function (data) {
+            $('#dashboardtemplate').html($compile($(data).html())($scope));
+            $scope.$apply(function () {
+                loadTravelRequestBarGraph();
+                loadTravelReimbursementBarGraph();
+
+                loadTravelRequestPieChartGraph();
+                loadTravelReimbursementPieChartGraph();
+            });
+        });
+    }
+
+    function loadTravelRequestBarGraph()
+    {
+        var axisMargin = 20,
+            margin = 20,
+            valueMargin = 7,
+            width = 600,//parseInt(d3.select('body').style('width'), 10),
+            height = 250,//parseInt(d3.select('body').style('height'), 10),
+            barHeight = 25,//(height-axisMargin-margin*2)* 0.4/data.length,
+            barPadding = 20,//(height-axisMargin-margin*2)*0.6/data.length,
+            bar, svg, scale, xAxis, labelWidth = 0;
+
+        var data = [
+                    { label: "New", value: 19, color: "orange" },
+                    { label: "Pending Approval", value: 5, color: "dodgerblue" },
+                    { label: "Rejected", value: 23, color: "red" },
+                    { label: "Complete", value: 17, color: "green" }
+        ];
+
+        max = d3.max(data, function (d) { return d.value; });
+
+        svg = d3.select('#travelrequestbargraphsection')
+                .append("svg")
+                //.attr("style", "outline: thin solid gray;")
+                .attr("class", "svgclass")
+                .attr("width", width)
+                .attr("height", height);
+
+
+        bar = svg.selectAll("g")
+                .data(data)
+                .enter()
+                .append("g");
+
+
+        bar.attr("class", "bar")
+                .attr("cx", 0)
+                .attr("transform", function (d, i) {
+                    return "translate(" + margin + "," + (i * (barHeight + barPadding) + barPadding) + ")";
+                });
+
+        bar.append("text")
+                .attr("class", "label2")
+                .attr("y", barHeight / 2)
+                .attr("dy", ".35em") //vertical align middle		
+                .text(function (d) {
+                    return d.label;
+                })
+                .each(function () {
+                    labelWidth = Math.ceil(Math.max(labelWidth, this.getBBox().width)) + 2;
+                });
+
+        scale = d3.scale.linear()
+                .domain([0, max])
+                .range([0, width - margin * 2 - labelWidth]);
+
+        xAxis = d3.svg.axis()
+                .scale(scale)
+                .tickSize(-height + 2 * margin + axisMargin)
+                .orient("bottom");
+
+        bar.append("rect")
+                .attr("transform", "translate(" + labelWidth + ", 0)")
+                .attr("height", barHeight)
+                .style("fill", function (d) {
+                    return d.color;
+                })
+                .attr("width", function (d) {
+                    return scale(d.value);
+                });
+
+        bar.append("text")
+                .attr("class", "value")
+                .attr("y", barHeight / 2)
+                .attr("dx", -valueMargin + labelWidth) //margin right
+                .attr("dy", ".35em") //vertical align middle
+                .attr("text-anchor", "end")
+                .text(function (d) {
+                    return (d.value);
+                })
+                .style("fill", "white")
+                .attr("x", function (d) {
+                    var width = this.getBBox().width;
+                    return Math.max(width + valueMargin, scale(d.value));
+                });
+
+        svg.append("text")
+            .attr("x", height + 70)
+            .attr("y", barHeight - 10)
+            .attr("text-anchor", "middle")
+            .style("font-size", "13px")
+            .style("font-weight", "bold")
+            .text("TRAVEL REQUESTS");
+
+        svg.append("text")
+            .attr("x", height + 70)
+            .attr("y", barHeight + 215)
+            .attr("text-anchor", "middle")
+            .attr("class", "titlelabel")
+            .text("# of travel requests");
+
+        svg.insert("g", ":first-child")
+                .attr("class", "axisHorizontal")
+                .attr("transform", "translate(" + (margin + labelWidth) + "," + (height - axisMargin - margin) + ")")
+                .call(xAxis);
+    }
+
+    function loadTravelReimbursementBarGraph() {
+        var axisMargin = 20,
+            margin = 20,
+            valueMargin = 7,
+            width = 600,//parseInt(d3.select('body').style('width'), 10),
+            height = 250,//parseInt(d3.select('body').style('height'), 10),
+            barHeight = 25,//(height-axisMargin-margin*2)* 0.4/data.length,
+            barPadding = 20,//(height-axisMargin-margin*2)*0.6/data.length,
+            bar, svg, scale, xAxis, labelWidth = 0;
+
+        var data = [
+                    { label: "New", value: 9, color: "orange" },
+                    { label: "Pending Approval", value: 35, color: "dodgerblue" },
+                    { label: "Rejected", value: 3, color: "red" },
+                    { label: "Complete", value: 12, color: "green" }
+        ];
+
+        max = d3.max(data, function (d) { return d.value; });
+
+        svg = d3.select('#travelreimbursementbargraphsection')
+                .append("svg")
+                //.attr("style", "outline: thin solid gray;")
+                .attr("class", "svgclass")
+                .attr("width", width)
+                .attr("height", height);
+
+
+        bar = svg.selectAll("g")
+                .data(data)
+                .enter()
+                .append("g");
+
+
+        bar.attr("class", "bar")
+                .attr("cx", 0)
+                .attr("transform", function (d, i) {
+                    return "translate(" + margin + "," + (i * (barHeight + barPadding) + barPadding) + ")";
+                });
+
+        bar.append("text")
+                .attr("class", "label2")
+                .attr("y", barHeight / 2)
+                .attr("dy", ".35em") //vertical align middle		
+                .text(function (d) {
+                    return d.label;
+                })
+                .each(function () {
+                    labelWidth = Math.ceil(Math.max(labelWidth, this.getBBox().width)) + 2;
+                });
+
+        scale = d3.scale.linear()
+                .domain([0, max])
+                .range([0, width - margin * 2 - labelWidth]);
+
+        xAxis = d3.svg.axis()
+                .scale(scale)
+                .tickSize(-height + 2 * margin + axisMargin)
+                .orient("bottom");
+
+        bar.append("rect")
+                .attr("transform", "translate(" + labelWidth + ", 0)")
+                .attr("height", barHeight)
+                .style("fill", function (d) {
+                    return d.color;
+                })
+                .attr("width", function (d) {
+                    return scale(d.value);
+                });
+
+        bar.append("text")
+                .attr("class", "value")
+                .attr("y", barHeight / 2)
+                .attr("dx", -valueMargin + labelWidth) //margin right
+                .attr("dy", ".35em") //vertical align middle
+                .attr("text-anchor", "end")
+                .text(function (d) {
+                    return (d.value);
+                })
+                .style("fill", "white")
+                .attr("x", function (d) {
+                    var width = this.getBBox().width;
+                    return Math.max(width + valueMargin, scale(d.value));
+                });
+
+        svg.append("text")
+            .attr("x", height + 70)
+            .attr("y", barHeight - 10)
+            .attr("text-anchor", "middle")
+            .style("font-size", "13px")
+            .style("font-weight", "bold")
+            .text("TRAVEL REIMBURSEMENTS");
+
+        svg.append("text")
+            .attr("x", height + 70)
+            .attr("y", barHeight + 215)
+            .attr("text-anchor", "middle")
+            .attr("class", "titlelabel")
+            .text("# of travel reimbursements");
+
+        svg.insert("g", ":first-child")
+                .attr("class", "axisHorizontal")
+                .attr("transform", "translate(" + (margin + labelWidth) + "," + (height - axisMargin - margin) + ")")
+                .call(xAxis);
+    }
+
+    function loadTravelRequestPieChartGraph()
+    {
+        var data = [23, 5, 19, 17];
+        var r = 100;
+
+        var color = d3.scale.ordinal()
+                    .range(["red","dodgerblue","orange","green"]);
+
+        var canvas = d3.select('#travelrequestpiechartsection')
+                    .append("svg")
+                    .attr("class", "svgclass2")
+                    .attr("width", 800)
+                    .attr("height", 800);
+
+        var group = canvas.append("g")
+                    .attr("transform", "translate(300,300)");
+
+        var arc = d3.svg.arc()
+        .innerRadius(200)
+        .outerRadius(r);
+
+        var pie = d3.layout.pie()
+        .value(function (d) { return d; });
+
+        var arcs = group.selectAll(".arc")
+                .data(pie(data))
+                .enter()
+                .append("g")
+                .attr("class", "arc");
+
+        arcs.append("path")
+        .attr("d", arc)
+        .attr("fill", function (d) { return color(d.data);});
+
+        arcs.append("text")
+        .attr("transform", function (d) { return "translate(" + arc.centroid(d) + ")"; })
+        .attr("text-anchor", "middle")
+        .style("fill","white")
+        .text(function (d) { return d.data; });
+
+        arcs.append("text")
+	   .attr("text-anchor", "middle")
+	    .attr('font-size', '4em')
+	   .text(64);
+
+    }
+
+    function loadTravelReimbursementPieChartGraph() {
+        var data = [3, 35, 9, 12];
+        var r = 100;
+
+        var color = d3.scale.ordinal()
+                    .range(["red", "dodgerblue", "orange", "green"]);
+
+        var canvas = d3.select('#travelreimbursementpiechartsection')
+                    .append("svg")
+                    .attr("class", "svgclass2")
+                    .attr("width", 800)
+                    .attr("height", 800);
+
+        var group = canvas.append("g")
+                    .attr("transform", "translate(300,300)");
+
+        var arc = d3.svg.arc()
+        .innerRadius(200)
+        .outerRadius(r);
+
+        var pie = d3.layout.pie()
+        .value(function (d) { return d; });
+
+        var arcs = group.selectAll(".arc")
+                .data(pie(data))
+                .enter()
+                .append("g")
+                .attr("class", "arc");
+
+        arcs.append("path")
+        .attr("d", arc)
+        .attr("fill", function (d) { return color(d.data); });
+
+        arcs.append("text")
+        .attr("transform", function (d) { return "translate(" + arc.centroid(d) + ")"; })
+        .attr("text-anchor", "middle")
+        .style("fill", "white")
+        .text(function (d) { return d.data; });
+
+        arcs.append("text")
+	   .attr("text-anchor", "middle")
+	    .attr('font-size', '4em')
+	   .text(59);
+
     }
 
 });
