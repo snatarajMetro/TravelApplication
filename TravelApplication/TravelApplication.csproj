@@ -590,6 +590,7 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="UITemplates\approve.html" />
     <Content Include="UITemplates\approvedtravelrequests.html" />
+    <Content Include="UITemplates\dashboard.html" />
     <Content Include="UITemplates\estimatedexpense.html" />
     <Content Include="UITemplates\existingtravelreimbursements.html" />
     <Content Include="UITemplates\existingtravelrequests.html" />

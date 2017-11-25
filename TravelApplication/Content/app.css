@@ -2069,7 +2069,7 @@ div.ui-grid-cell input[class^="reimbursebutton"]
 div.dashboardcontainer {
     position: absolute;
     float:left;
-    top: 0;
+    top: 200px;
     bottom: 0;
     left: 0;
     right: 0;

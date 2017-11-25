@@ -2852,10 +2852,10 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
             bar, svg, scale, xAxis, labelWidth = 0;
 
         var data = [
-                    { label: "New", value: 19, color: "orange" },
-                    { label: "Pending Approval", value: 5, color: "dodgerblue" },
-                    { label: "Rejected", value: 23, color: "red" },
-                    { label: "Complete", value: 17, color: "green" }
+                    { label: "New", value: 9, color: "orange" },
+                    { label: "Pending Approval", value: 15, color: "dodgerblue" },
+                    { label: "Rejected", value: 3, color: "red" },
+                    { label: "Complete", value: 12, color: "green" }
         ];
 
         max = d3.max(data, function (d) { return d.value; });
