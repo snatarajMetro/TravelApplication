@@ -649,7 +649,7 @@ function approve() {
             // refresh the existing request grid
             var scope = angular.element('#existingtravelrequeststemplate').scope();
 
-            if (action) {
+            if (action == "travelreimbursement") {
                 scope.refreshExistingReimbursements();
             } else {
                 scope.refreshExistingRequest();
@@ -675,7 +675,7 @@ function reject() {
     var travelRequestId = $('#travelRequestIdForRejectAction').text();
     var badgeNumber = $('#signedInUserBadgeNumber').text();
     var comments = $('#txtCommentsForReject').val();
-    var action = $('#travalAction').val();
+    var action = $('#travalAction').text();
     var url = "api/travelrequest/reject";
 
     if (action) {
@@ -703,7 +703,11 @@ function reject() {
 
             // refresh the existing request grid
             var scope = angular.element('#existingtravelrequeststemplate').scope();
-            scope.refreshExistingRequest();
+            if (action == "travelreimbursement") {
+                scope.refreshExistingReimbursements();
+            } else {
+                scope.refreshExistingRequest();
+            }
 
         },
         error: function (xhr, options, error) {
