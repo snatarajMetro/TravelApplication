@@ -2966,7 +2966,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
     function loadTravelRequestPieChartGraph()
     {
         var data = [23, 5, 17, 19];
-        var r = 100;
+        var r = 75;
         var totalCount = 64;
 
         var color = d3.scale.ordinal()
@@ -2978,14 +2978,14 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         var canvas = d3.select('#travelrequestpiechartsection')
                     .append("svg")
                     .attr("class", "svgclass2")
-                    .attr("width", 800)
-                    .attr("height", 800);
+                    .attr("width", 200)
+                    .attr("height", 200);
 
         var group = canvas.append("g")
-                    .attr("transform", "translate(300,300)");
+                    .attr("transform", "translate(325,275)");
 
         var arc = d3.svg.arc()
-        .innerRadius(200)
+        .innerRadius(150)
         .outerRadius(r);
 
         var pie = d3.layout.pie()
@@ -3027,7 +3027,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
             .attr("width", 10)
             .attr("height", 10)
             .attr("x", -290)
-            .attr("y", function (d, i) { return -190 + (i * 30); })
+            .attr("y", function (d, i) { return -170 + (i * 30); })
             .style("fill", function (d, i) {
                 var c = color(i);
                 if (i == 3) {
@@ -3039,15 +3039,23 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         arcs.append("text")
             .style("font-size", "10px")
             .attr("x", -276)
-            .attr("y", function (d, i) { return -180 + (i * 30); })
+            .attr("y", function (d, i) { return -162 + (i * 30); })
             .text(function (d, i) {
-                return legendText(i);
+                var c = legendText(i);
+                return c;
             });
+
+        arcs.append("text")
+            .attr("x", -300)
+            .attr("y", 200)
+            .attr("class", "linkpiechart")
+            //.on("click", viewexistingreimbursements2)
+            .text("View all travel requests");
     }
 
     function loadTravelReimbursementPieChartGraph() {
         var data = [3, 35, 12, 9];
-        var r = 100;
+        var r = 75;
         var totalCount = 59;
 
         var color = d3.scale.ordinal()
@@ -3059,14 +3067,14 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         var canvas = d3.select('#travelreimbursementpiechartsection')
                     .append("svg")
                     .attr("class", "svgclass2")
-                    .attr("width", 800)
-                    .attr("height", 800);
+                    .attr("width", 200)
+                    .attr("height", 200);
 
         var group = canvas.append("g")
-                    .attr("transform", "translate(300,300)");
+                    .attr("transform", "translate(325,275)");
 
         var arc = d3.svg.arc()
-        .innerRadius(200)
+        .innerRadius(150)
         .outerRadius(r);
 
         var pie = d3.layout.pie()
@@ -3103,15 +3111,13 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
         var legend = arcs
           .attr("class", "legend");
-          //.attr("transform", function (d, i) { return "translate(0," + i * 20 + ")"; });
 
         arcs.append("rect")
             .attr("width", 10)
             .attr("height", 10)
             .attr("x", -290)
-            .attr("y", function (d, i) { return -190 + (i * 30); })
+            .attr("y", function (d, i) { return -170 + (i * 30); })
             .style("fill", function (d, i) {
-                //alert(i);
                 var c = color(i);
                 if (i == 3) {
                     c = 'orange';
@@ -3120,22 +3126,19 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
             });
 
         arcs.append("text")
-            //.attr("width", 15)
-            //.attr("height", 15)
             .style("font-size","10px")
             .attr("x", -276)
-            .attr("y", function (d, i) { return -180 + (i * 30); })
+            .attr("y", function (d, i) { return -162 + (i * 30); })
             .text(function (d, i) {
-                //alert(i);
-                var c = legendText(i);
-                
+                var c = legendText(i);                
                 return c;
             });
 
-        //legend.append("text")
-        //    .attr("x", 24)
-        //    .attr("y", 9)
-        //    .attr("dy", ".35em")
-        //    .text(function (d) { return d.data; });
+        arcs.append("text")
+            .attr("x", -300)
+            .attr("y", 200)
+            .attr("class", "linkpiechart")
+            //.on("click", viewexistingreimbursements2)
+            .text("View all travel reimbursements");
     }
 });

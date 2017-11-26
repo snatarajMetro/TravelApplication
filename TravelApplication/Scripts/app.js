@@ -25,7 +25,6 @@ $(document).ready(function () {
 
 function setTwoDecimal(el) {
     el.value = parseFloat(el.value).toFixed(2);
-
 }
 
 function handleEnterOnSigIn(e)
