@@ -234,13 +234,13 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Travel_Business_Expense.rpt</DependentUpon>
-      <SubType>Component</SubType>
+	  <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Travel_Request.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Travel_Request.rpt</DependentUpon>
-      <SubType>Component</SubType>
+	  <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\ApprovalService.cs" />
     <Compile Include="Services\DocumentsService.cs" />
@@ -284,6 +284,7 @@
     <Content Include="Dependencies\angular.min.js" />
     <Content Include="Dependencies\bootstrap-datepicker.min.js" />
     <Content Include="Dependencies\bootstrap-datepicker3.css" />
+    <Content Include="Dependencies\d3.v3.min.js" />
     <Content Include="Dependencies\ng-currency.js" />
     <Content Include="Dependencies\roboto.css" />
     <Content Include="Dependencies\ui-grid.css" />
