@@ -144,6 +144,7 @@ namespace TravelApplication.DAL.Repositories
             }
         }
 
+        // Populate reimbursement page with travel details 
         public ReimbursementAllTravelInformation GetTravelRequestInfoForReimbursement(string travelRequestId)
         {
             ReimbursementTravelRequestDetails travelReimbursementDetails = null;
@@ -177,6 +178,7 @@ namespace TravelApplication.DAL.Repositories
             return travelRequestReimbursementDetails;
         }
 
+        // view existing records 
         public ReimbursementTravelRequestDetails GetTravelReimbursementDetails(DbConnection dbConn, string travelRequestId)
         {
             try
@@ -214,6 +216,65 @@ namespace TravelApplication.DAL.Repositories
                     response.Extension = (employeeDetails.Result.EmployeeWorkPhone  ?? string.Empty);
                     var vendorId = travelRequestRepository.GetVendorNumber(response.BadgeNumber).Result;
                     response.VendorNumber = (vendorId == "null") ? string.Empty : vendorId;
+                }
+                else
+                {
+                    throw new Exception("Couldn't retrieve travel request");
+                }
+                command.Dispose();
+                dataReader.Close();
+                return response;
+
+            }
+            catch (Exception ex)
+            {
+                LogMessage.Log("GetTravelRequestDetail : " + ex.Message);
+                throw;
+            }
+        }
+
+        public ReimbursementTravelRequestDetails GetTravelReimbursementDetails2(DbConnection dbConn, string travelRequestId)
+        {
+            try
+            {
+
+                ReimbursementTravelRequestDetails response = null;
+                string query = string.Format("Select * from REIMBURSE_TRAVELREQUEST where TRAVELREQUESTID= {0}", travelRequestId);
+                OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+                command.CommandText = query;
+                DbDataReader dataReader = command.ExecuteReader();
+
+                if (dataReader.HasRows)
+                {
+                    while (dataReader.Read())
+                    {
+
+                        response = new ReimbursementTravelRequestDetails()
+                        {
+                            TravelRequestId = travelRequestId,
+                            BadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]),
+                            Name = dataReader["NAME"].ToString(),
+                            Division = dataReader["DIVISION"].ToString(),
+                            DepartureDateTime = Convert.ToDateTime(dataReader["DEPARTUREDATETIME"]),
+                            ReturnDateTime = Convert.ToDateTime(dataReader["RETURNDATETIME"]),
+                            StrDepartureDateTime = Convert.ToDateTime(dataReader["DEPARTUREDATETIME"]).ToShortDateString() ?? string.Empty,
+                            StrReturnDateTime = Convert.ToDateTime(dataReader["RETURNDATETIME"]).ToShortDateString() ?? string.Empty,
+                            Purpose = dataReader["Purpose"].ToString(),
+                            ReimbursementId = dataReader["REIMBURSEMENTID"].ToString(),
+                            CostCenterId = dataReader["COSTCENTERID"].ToString(),
+                            Department = dataReader["DEPARTMENT"].ToString(),
+                            VendorNumber = dataReader["VENDORNUMBER"].ToString(),
+                            Extension = dataReader["EXT"].ToString()
+
+                        };
+                    }
+
+                    //var employeeDetails = travelRequestRepository.GetEmployeeDetails(response.BadgeNumber);
+                    //response.CostCenterId = (employeeDetails.Result.CostCenter ?? string.Empty);
+                    //response.Department = (employeeDetails.Result.Department ?? string.Empty);
+                    //response.Extension = (employeeDetails.Result.EmployeeWorkPhone ?? string.Empty);
+                    //var vendorId = travelRequestRepository.GetVendorNumber(response.BadgeNumber).Result;
+                    //response.VendorNumber = (vendorId == "null") ? string.Empty : vendorId;
                 }
                 else
                 {
@@ -522,17 +583,18 @@ namespace TravelApplication.DAL.Repositories
                 {
                     OracleCommand cmd = new OracleCommand();
                     cmd.Connection = (OracleConnection)dbConn;
-                    cmd.CommandText = string.Format(@"UPDATE  REIMBURSE_TRAVELREQUEST SET (
-                                                        TRAVELREQUESTID = :p1 ,
-                                                        BADGENUMBER = :p2,
-                                                        NAME =:p3,
-                                                        EXT =:p4
-                                                        DIVISION =:p5,
-                                                        DEPARTMENT = :p6,
-                                                        DEPARTUREDATETIME = :p7,
-                                                        RETURNDATETIME = :p8,
-                                                        LASTUPDATEDDATETIME = :p9                                                                                        ,
-                                                        WHERE REIMBURSEMENTID = {0}", reimbursementDetails.ReimbursementId);
+                    cmd.CommandText = string.Format(@"UPDATE  REIMBURSE_TRAVELREQUEST SET 
+                                                        TRAVELREQUESTID = :p1,
+                    BADGENUMBER = :p2,
+                    NAME =:p3,
+                    EXT =:p4,
+                    DIVISION =:p5,
+                    DEPARTMENT = :p6,
+                    DEPARTUREDATETIME = :p7,
+                    RETURNDATETIME = :p8,
+                    LASTUPDATEDDATETIME = :p9
+ WHERE REIMBURSEMENTID = {0}", reimbursementDetails.ReimbursementId);
+
                     cmd.Parameters.Add(new OracleParameter("p1", reimbursementDetails.TravelRequestId));
                     cmd.Parameters.Add(new OracleParameter("p2", reimbursementDetails.BadgeNumber));
                     cmd.Parameters.Add(new OracleParameter("p3", reimbursementDetails.Name));
@@ -1166,7 +1228,7 @@ namespace TravelApplication.DAL.Repositories
                 using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
                 {
                     
-                    response.ReimbursementTravelRequestDetails = GetTravelReimbursementDetails(dbConn, travelRequestId);
+                    response.ReimbursementTravelRequestDetails = GetTravelReimbursementDetails2(dbConn, travelRequestId);
                     response.ReimbursementDetails =  GetReimbursementDetails(dbConn, travelRequestId);
                     response.FIS = fisRepository.GetFISdetails(dbConn, travelRequestId);
 
