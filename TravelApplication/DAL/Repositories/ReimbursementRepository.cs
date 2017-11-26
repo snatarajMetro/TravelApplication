@@ -827,7 +827,7 @@ namespace TravelApplication.DAL.Repositories
 
                 foreach (var fis in request.FISDetails)
                 {
-                    if (!string.IsNullOrEmpty(fis.CostCenterId))
+                    if (!string.IsNullOrEmpty(fis.CostCenterId) && fis.CostCenterId != "?")
                     {
                         OracleCommand cmd = new OracleCommand();
                         cmd.Connection = (OracleConnection)dbConn;
@@ -1276,9 +1276,9 @@ namespace TravelApplication.DAL.Repositories
 
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                LogMessage.Log(ex.Message);
                 throw;
             }
            
