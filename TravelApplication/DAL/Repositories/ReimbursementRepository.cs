@@ -820,23 +820,28 @@ namespace TravelApplication.DAL.Repositories
         {
             try
             {
-                if (!CheckFISDataExistsInReimburse(dbConn, travelRequestId))
+                OracleCommand cmd1 = new OracleCommand();
+                cmd1.Connection = (OracleConnection)dbConn;
+                cmd1.CommandText = string.Format(@" DELETE FROM REIMBURSE_FIS WHERE TRAVELREQUESTID = {0}", travelRequestId);
+                cmd1.ExecuteNonQuery();
+
+                foreach (var fis in request.FISDetails)
                 {
-                    foreach (var fis in request.FISDetails)
+                    if (!string.IsNullOrEmpty(fis.CostCenterId))
                     {
                         OracleCommand cmd = new OracleCommand();
                         cmd.Connection = (OracleConnection)dbConn;
                         cmd.CommandText = string.Format(@"INSERT INTO REIMBURSE_FIS (                                                  
-                                                        TRAVELREQUESTID,
-                                                        COSTCENTERID ,
-                                                        LINEITEM ,
-                                                        PROJECTID ,
-                                                        TASK ,
-                                                        AMOUNT ,
-                                                        TOTALAMOUNT 
-                                                    )
-                                                    VALUES
-                                                        (:p1,:p2,:p3,:p4,:p5,:p6,:p7)");
+                                                            TRAVELREQUESTID,
+                                                            COSTCENTERID ,
+                                                            LINEITEM ,
+                                                            PROJECTID ,
+                                                            TASK ,
+                                                            AMOUNT ,
+                                                            TOTALAMOUNT 
+                                                        )
+                                                        VALUES
+                                                            (:p1,:p2,:p3,:p4,:p5,:p6,:p7)");
                         cmd.Parameters.Add(new OracleParameter("p1", travelRequestId));
                         cmd.Parameters.Add(new OracleParameter("p2", fis.CostCenterId));
                         cmd.Parameters.Add(new OracleParameter("p3", fis.LineItem));
@@ -847,40 +852,77 @@ namespace TravelApplication.DAL.Repositories
                         var rowsUpdated = cmd.ExecuteNonQuery();
                         cmd.Dispose();
                     }
-                }
-                else
-                {
 
-                    foreach (var fis in request.FISDetails)
-                    {
-                        OracleCommand cmd = new OracleCommand();
-                        cmd.Connection = (OracleConnection)dbConn;
-                        cmd.CommandText = string.Format(@"UPDATE  REIMBURSE_FIS SET                                                  
-                                                TRAVELREQUESTID = :p1,
-                                                        COSTCENTERID =:p2,
-                                                        LINEITEM =:p3,
-                                                        PROJECTID =:p4,
-                                                        TASK =:p5,
-                                                        AMOUNT =:p6,
-                                                        TOTALAMOUNT =:p7
-                                                WHERE TRAVELREQUESTID = {0}", travelRequestId);
-                        cmd.Parameters.Add(new OracleParameter("p1", travelRequestId));
-                        cmd.Parameters.Add(new OracleParameter("p2", fis.CostCenterId));
-                        cmd.Parameters.Add(new OracleParameter("p3", fis.LineItem));
-                        cmd.Parameters.Add(new OracleParameter("p4", fis.ProjectId));
-                        cmd.Parameters.Add(new OracleParameter("p5", fis.Task));
-                        cmd.Parameters.Add(new OracleParameter("p6", fis.Amount));
-                        cmd.Parameters.Add(new OracleParameter("p7", request.TotalAmount));
-                        var rowsUpdated = cmd.ExecuteNonQuery();
-                        cmd.Dispose();
-                    }
                 }
             }
             catch (Exception ex)
             {
                 LogMessage.Log("SaveFISData : " + ex.Message);
-                throw new Exception("Couldn't insert/update record into Travel Request ");
+                throw new Exception("Couldn't insert/update fis record  ");
             }
+            //try
+            //{
+            //    if (!CheckFISDataExistsInReimburse(dbConn, travelRequestId))
+            //    {
+            //        foreach (var fis in request.FISDetails)
+            //        {
+            //            OracleCommand cmd = new OracleCommand();
+            //            cmd.Connection = (OracleConnection)dbConn;
+            //            cmd.CommandText = string.Format(@"INSERT INTO REIMBURSE_FIS (                                                  
+            //                                            TRAVELREQUESTID,
+            //                                            COSTCENTERID ,
+            //                                            LINEITEM ,
+            //                                            PROJECTID ,
+            //                                            TASK ,
+            //                                            AMOUNT ,
+            //                                            TOTALAMOUNT 
+            //                                        )
+            //                                        VALUES
+            //                                            (:p1,:p2,:p3,:p4,:p5,:p6,:p7)");
+            //            cmd.Parameters.Add(new OracleParameter("p1", travelRequestId));
+            //            cmd.Parameters.Add(new OracleParameter("p2", fis.CostCenterId));
+            //            cmd.Parameters.Add(new OracleParameter("p3", fis.LineItem));
+            //            cmd.Parameters.Add(new OracleParameter("p4", fis.ProjectId));
+            //            cmd.Parameters.Add(new OracleParameter("p5", fis.Task));
+            //            cmd.Parameters.Add(new OracleParameter("p6", fis.Amount));
+            //            cmd.Parameters.Add(new OracleParameter("p7", request.TotalAmount));
+            //            var rowsUpdated = cmd.ExecuteNonQuery();
+            //            cmd.Dispose();
+            //        }
+            //    }
+            //    else
+            //    {
+
+            //        foreach (var fis in request.FISDetails)
+            //        {
+            //            OracleCommand cmd = new OracleCommand();
+            //            cmd.Connection = (OracleConnection)dbConn;
+            //            cmd.CommandText = string.Format(@"UPDATE  REIMBURSE_FIS SET                                                  
+            //                                    TRAVELREQUESTID = :p1,
+            //                                            COSTCENTERID =:p2,
+            //                                            LINEITEM =:p3,
+            //                                            PROJECTID =:p4,
+            //                                            TASK =:p5,
+            //                                            AMOUNT =:p6,
+            //                                            TOTALAMOUNT =:p7
+            //                                    WHERE TRAVELREQUESTID = {0}", travelRequestId);
+            //            cmd.Parameters.Add(new OracleParameter("p1", travelRequestId));
+            //            cmd.Parameters.Add(new OracleParameter("p2", fis.CostCenterId));
+            //            cmd.Parameters.Add(new OracleParameter("p3", fis.LineItem));
+            //            cmd.Parameters.Add(new OracleParameter("p4", fis.ProjectId));
+            //            cmd.Parameters.Add(new OracleParameter("p5", fis.Task));
+            //            cmd.Parameters.Add(new OracleParameter("p6", fis.Amount));
+            //            cmd.Parameters.Add(new OracleParameter("p7", request.TotalAmount));
+            //            var rowsUpdated = cmd.ExecuteNonQuery();
+            //            cmd.Dispose();
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    LogMessage.Log("SaveFISData : " + ex.Message);
+            //    throw new Exception("Couldn't insert/update record into Travel Request ");
+            //}
 
 
         }
@@ -1230,7 +1272,7 @@ namespace TravelApplication.DAL.Repositories
                     
                     response.ReimbursementTravelRequestDetails = GetTravelReimbursementDetails2(dbConn, travelRequestId);
                     response.ReimbursementDetails =  GetReimbursementDetails(dbConn, travelRequestId);
-                    response.FIS = fisRepository.GetFISdetails(dbConn, travelRequestId);
+                    response.FIS = fisRepository.GetFISdetailsForReimburse(dbConn, travelRequestId);
 
                 }
             }

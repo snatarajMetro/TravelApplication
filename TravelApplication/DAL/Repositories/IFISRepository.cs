@@ -13,5 +13,6 @@ namespace TravelApplication.DAL.Repositories
         Task<List<CostCenter>> GetCostCenters();
         Task<List<Project>> GetProjectsByCostCenterName(string costCenterName);
         FIS GetFISdetails(DbConnection dbConn, string travelRequestId);
+        FIS GetFISdetailsForReimburse(DbConnection dbConn, string travelRequestId);
     }
 }

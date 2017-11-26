@@ -115,5 +115,43 @@ namespace TravelApplication.DAL.Repositories
                 throw;
             }
         }
+
+        public FIS GetFISdetailsForReimburse(DbConnection dbConn, string travelRequestId)
+        {
+            try
+            {
+
+                FIS response = new FIS();
+                List<FISDetails> fisDetails = new List<FISDetails>();
+                string query = string.Format(@"Select * from Reimburse_Fis where travelRequestid = {0}", travelRequestId);
+                OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+                command.CommandText = query;
+                DbDataReader dataReader = command.ExecuteReader();
+                if (dataReader.HasRows)
+                {
+                    while (dataReader.Read())
+                    {
+                        fisDetails.Add(new FISDetails()
+                        {
+                            CostCenterId = dataReader["COSTCENTERID"].ToString(),
+                            LineItem = dataReader["LINEITEM"].ToString(),
+                            ProjectId = dataReader["PROJECTID"].ToString(),
+                            Task = dataReader["TASK"].ToString(),
+                            Amount = Convert.ToInt32(dataReader["AMOUNT"]),
+                            TravelRequestId = travelRequestId
+                        });
+                        response.TotalAmount = Convert.ToInt32(dataReader["TOTALAMOUNT"]);
+                    }
+                    response.FISDetails = fisDetails;
+                }
+                return response;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
     }
 }
