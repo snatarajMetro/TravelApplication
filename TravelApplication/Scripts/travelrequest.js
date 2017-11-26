@@ -3049,7 +3049,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
             .attr("x", -300)
             .attr("y", 200)
             .attr("class", "linkpiechart")
-            //.on("click", viewexistingreimbursements2)
+            .on("click", viewexistingtravelrequests2)
             .text("View all travel requests");
     }
 
@@ -3138,7 +3138,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
             .attr("x", -300)
             .attr("y", 200)
             .attr("class", "linkpiechart")
-            //.on("click", viewexistingreimbursements2)
+            .on("click", viewexistingreimbursements2)
             .text("View all travel reimbursements");
     }
 });

@@ -1241,3 +1241,37 @@ function backfromdashboard() {
     $('#dashboardtemplate').hide();
     $("#signintemplate").show();
 }
+
+function viewexistingreimbursements2() {
+
+    $("#signin").hide();
+    $("#action").hide();
+    $("#action2").hide();
+    $("#dashboardtemplate").hide();
+    $('#travalAction').text('travelreimbursement');
+    $('#travelReimbursementId').text(0);
+
+    var scope = angular.element('#existingtravelrequeststemplate').scope();
+    scope.loadExistingTravelReimbursementRequests();
+    scope.loadApproveAction();
+    scope.loadRejectAction();
+    scope.loadCostCenters();
+
+    $('#existingtravelrequeststemplate').show();
+}
+
+function viewexistingtravelrequests2() {
+    $("#action").hide();
+    $("#dashboardtemplate").hide();
+
+    $('#travalAction').text('travelrequest');
+
+    //reset estimated expense section
+    var scope = angular.element('#existingtravelrequeststemplate').scope();
+    scope.loadExistingTravelRequests();
+    scope.loadApproveAction();
+    scope.loadRejectAction();
+    scope.loadCostCenters();
+
+    $('#existingtravelrequeststemplate').show();
+}
