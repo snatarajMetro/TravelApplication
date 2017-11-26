@@ -2113,6 +2113,11 @@ svg {
         fill: white;
     }
 
+    .totalCount
+    {
+        font: 19px;
+    }
+
     text.label {
         fill: black;
         fill-opacity: .9;
@@ -2166,8 +2171,13 @@ svg {
     box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	}
 
-    .arc text {
+.arc text {
   font: 14px sans-serif;
+  text-anchor: middle;
+}
+
+text.totalcount {
+  font-size: 25px;
   text-anchor: middle;
 }
 
@@ -2186,4 +2196,41 @@ svg {
 
 .cursor{
     cursor:pointer;
+}
+
+.legend rect {
+ fill:white;
+ stroke:black;
+ opacity:0.8; }
+
+/* New */
+
+.slice path {
+    stroke: #fff;
+    stroke-width: 1px;
+}
+
+.textTop {
+    font-size: 14pt;
+    fill: #bbb;
+}
+
+.textBottom {
+    fill: #444;
+    font-family: 'Segoe UI';
+    font-weight: bold;
+    font-size: 18pt;
+}
+
+.top {
+    border: 1px solid #bbb;
+    color: #777;
+    font-family: 'Segoe UI';
+    padding: 5px;
+    text-decoration: none;
+}
+
+.top:hover {
+    border: 1px solid #555;
+    color: #333;
 }

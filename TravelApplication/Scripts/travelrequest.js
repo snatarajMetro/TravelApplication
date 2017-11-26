@@ -2965,12 +2965,15 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
     function loadTravelRequestPieChartGraph()
     {
-        var data = [23, 5, 19, 17];
-
+        var data = [23, 5, 17, 19];
         var r = 100;
+        var totalCount = 64;
 
         var color = d3.scale.ordinal()
-                    .range(["red","dodgerblue","orange","green"]);
+                    .range(["red", "dodgerblue", "green", "orange"]);
+
+        var legendText = d3.scale.ordinal()
+                    .range(["Rejected", "Pending Approval", "Complete", "New"]);
 
         var canvas = d3.select('#travelrequestpiechartsection')
                     .append("svg")
@@ -2996,29 +2999,62 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
         arcs.append("path")
         .attr("d", arc)
-        .attr("fill", function (d) { return color(d.data);});
+        .attr("fill", function (d) { return color(d.data); });
 
         arcs.append("text")
         .attr("transform", function (d) { return "translate(" + arc.centroid(d) + ")"; })
         .attr("text-anchor", "middle")
-        .attr("class", "cursor")
-        .on("click", drillDownTravelRequest)
-        .style("fill","white")
+        .style("font-size", "18px")
+        .style("fill", "white")
         .text(function (d) { return d.data; });
 
         arcs.append("text")
-	   .attr("text-anchor", "middle")
-	   .attr('font-size', '4em')
-	   .text(64);
+        .attr("class", "totalcount")
+	    .attr("text-anchor", "middle")
+	    .text(totalCount);
 
+        var textTop = arcs.append("text")
+            .attr("dy", ".35em")
+            .style("text-anchor", "middle")
+            .attr("class", "textTop")
+            .text("TOTAL")
+            .attr("y", -30);
+
+        var legend = arcs
+          .attr("class", "legend");
+
+        arcs.append("rect")
+            .attr("width", 10)
+            .attr("height", 10)
+            .attr("x", -290)
+            .attr("y", function (d, i) { return -190 + (i * 30); })
+            .style("fill", function (d, i) {
+                var c = color(i);
+                if (i == 3) {
+                    c = 'orange';
+                }
+                return c;
+            });
+
+        arcs.append("text")
+            .style("font-size", "10px")
+            .attr("x", -276)
+            .attr("y", function (d, i) { return -180 + (i * 30); })
+            .text(function (d, i) {
+                return legendText(i);
+            });
     }
 
     function loadTravelReimbursementPieChartGraph() {
-        var data = [3, 35, 9, 12];
+        var data = [3, 35, 12, 9];
         var r = 100;
+        var totalCount = 59;
 
         var color = d3.scale.ordinal()
-                    .range(["red", "dodgerblue", "orange", "green"]);
+                    .range(["red", "dodgerblue", "green", "orange"]);
+
+        var legendText = d3.scale.ordinal()
+                    .range(["Rejected", "Pending Approval", "Complete", "New"]);
 
         var canvas = d3.select('#travelreimbursementpiechartsection')
                     .append("svg")
@@ -3049,14 +3085,57 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         arcs.append("text")
         .attr("transform", function (d) { return "translate(" + arc.centroid(d) + ")"; })
         .attr("text-anchor", "middle")
+        .style("font-size", "18px")
         .style("fill", "white")
         .text(function (d) { return d.data; });
 
         arcs.append("text")
-	   .attr("text-anchor", "middle")
-	    .attr('font-size', '4em')
-	   .text(59);
+        .attr("class", "totalcount")
+	    .attr("text-anchor", "middle")
+	    .text(totalCount);
 
+        var textTop = arcs.append("text")
+            .attr("dy", ".35em")
+            .style("text-anchor", "middle")
+            .attr("class", "textTop")
+            .text("TOTAL")
+            .attr("y", -30);
+
+        var legend = arcs
+          .attr("class", "legend");
+          //.attr("transform", function (d, i) { return "translate(0," + i * 20 + ")"; });
+
+        arcs.append("rect")
+            .attr("width", 10)
+            .attr("height", 10)
+            .attr("x", -290)
+            .attr("y", function (d, i) { return -190 + (i * 30); })
+            .style("fill", function (d, i) {
+                //alert(i);
+                var c = color(i);
+                if (i == 3) {
+                    c = 'orange';
+                }
+                return c;
+            });
+
+        arcs.append("text")
+            //.attr("width", 15)
+            //.attr("height", 15)
+            .style("font-size","10px")
+            .attr("x", -276)
+            .attr("y", function (d, i) { return -180 + (i * 30); })
+            .text(function (d, i) {
+                //alert(i);
+                var c = legendText(i);
+                
+                return c;
+            });
+
+        //legend.append("text")
+        //    .attr("x", 24)
+        //    .attr("y", 9)
+        //    .attr("dy", ".35em")
+        //    .text(function (d) { return d.data; });
     }
-
 });
