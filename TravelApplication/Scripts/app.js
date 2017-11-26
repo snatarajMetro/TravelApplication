@@ -111,6 +111,7 @@ function signIn() {
                     $("#userName").text(result.UserName);
                     userName = result.UserName;
 
+                    $("#txtPassword").val("");
                     $("#signin").hide();
                     $("#action").hide();
                     $("#logout").show();
