@@ -48,6 +48,8 @@ function logout() {
     $('#travelRequestId').text(0);
     $('#estimatedExpenseId').text(0);
     $('#signedInUserBadgeNumber').text(0);
+    $('#travalAction').text('travelrequest');
+    $('#travelReimbursementId').text(0);
     userName = "";
 
     $("#action").hide();

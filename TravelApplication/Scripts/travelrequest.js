@@ -2966,7 +2966,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
     function loadTravelRequestPieChartGraph()
     {
         var data = [23, 5, 17, 19];
-        var r = 75;
+        var r = 95;
         var totalCount = 64;
 
         var color = d3.scale.ordinal()
@@ -3011,6 +3011,8 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         arcs.append("text")
         .attr("class", "totalcount")
 	    .attr("text-anchor", "middle")
+        .attr("x", 1)
+         .attr("y", 20)
 	    .text(totalCount);
 
         var textTop = arcs.append("text")
@@ -3018,7 +3020,8 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
             .style("text-anchor", "middle")
             .attr("class", "textTop")
             .text("TOTAL")
-            .attr("y", -30);
+            .attr("x", 5)
+            .attr("y", -10);
 
         var legend = arcs
           .attr("class", "legend");
@@ -3037,9 +3040,9 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
             });
 
         arcs.append("text")
-            .style("font-size", "10px")
+            .style("font-size", "12px")
             .attr("x", -276)
-            .attr("y", function (d, i) { return -162 + (i * 30); })
+            .attr("y", function (d, i) { return -160 + (i * 30); })
             .text(function (d, i) {
                 var c = legendText(i);
                 return c;
@@ -3047,7 +3050,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
         arcs.append("text")
             .attr("x", -300)
-            .attr("y", 200)
+            .attr("y", 155)
             .attr("class", "linkpiechart")
             .on("click", viewexistingtravelrequests2)
             .text("View all travel requests");
@@ -3055,7 +3058,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
     function loadTravelReimbursementPieChartGraph() {
         var data = [3, 35, 12, 9];
-        var r = 75;
+        var r = 95;
         var totalCount = 59;
 
         var color = d3.scale.ordinal()
@@ -3100,6 +3103,8 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         arcs.append("text")
         .attr("class", "totalcount")
 	    .attr("text-anchor", "middle")
+        .attr("x", 1)
+         .attr("y", 20)
 	    .text(totalCount);
 
         var textTop = arcs.append("text")
@@ -3107,7 +3112,8 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
             .style("text-anchor", "middle")
             .attr("class", "textTop")
             .text("TOTAL")
-            .attr("y", -30);
+            .attr("x", 5)
+            .attr("y", -10);
 
         var legend = arcs
           .attr("class", "legend");
@@ -3126,17 +3132,17 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
             });
 
         arcs.append("text")
-            .style("font-size","10px")
+            .style("font-size", "12px")
             .attr("x", -276)
-            .attr("y", function (d, i) { return -162 + (i * 30); })
+            .attr("y", function (d, i) { return -160 + (i * 30); })
             .text(function (d, i) {
-                var c = legendText(i);                
+                var c = legendText(i);
                 return c;
             });
 
         arcs.append("text")
             .attr("x", -300)
-            .attr("y", 200)
+            .attr("y", 155)
             .attr("class", "linkpiechart")
             .on("click", viewexistingreimbursements2)
             .text("View all travel reimbursements");

@@ -2072,7 +2072,7 @@ div.dashboardcontainer {
     bottom: 0;
     left: 0;
     right: 0;
-    height:780px;
+    height:720px;
     width:1270px;
     margin:auto;
     margin-top: 60px;
@@ -2257,7 +2257,7 @@ text.totalcount {
     border:solid 1px black;
 }
 
-.linkpiechart{
+.linkpiechart {
     cursor:pointer;
     font-size:15px;
     color:dodgerblue;
