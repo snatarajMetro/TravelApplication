@@ -140,7 +140,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
             for (var index = 0; index < maxRowCount; index++) {
 
-                model[index].DailyTotal = (
+                model[index].DailyTotal = parseFloat((
                         (model[index].BusinessMileAmount * 1)
                         + (model[index].Parking * 1)
                         + (model[index].Airfare * 1)
@@ -150,9 +150,10 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                         + (model[index].Registration * 1)
                         + (model[index].Internet * 1)
                         + (model[index].Other * 1)
-                    );
+                    ).toFixed(2));
 
                 totalDailyAmount += (model[index].DailyTotal * 1);
+
             }
 
             $scope.totalDailyAmount = parseFloat(totalDailyAmount.toFixed(2));
