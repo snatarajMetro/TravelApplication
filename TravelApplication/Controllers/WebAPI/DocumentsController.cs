@@ -43,8 +43,7 @@ namespace TravelApplication.Controllers.WebAPI
                     siteUrl = "http://mtaspw01/collaboration/InformationManagement/ATMS/apps",
                     documentListName = "TravelApp",
                     documentName = uploadedFile.FileName,
-                    folder = badgeNumber.ToString()
-
+                    folder = badgeNumber.ToString() +"-"+ travelRequestId                   
                 };
 
                 documentsService.UploadToSharePoint(travelRequestId, uploadRequest);

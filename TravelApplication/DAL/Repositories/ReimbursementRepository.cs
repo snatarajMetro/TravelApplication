@@ -1052,7 +1052,7 @@ namespace TravelApplication.DAL.Repositories
                                     RequiredApprovers = GetReimburseApproversListByTravelRequestId(dbConn, dataReader["TravelRequestId"].ToString()),
                                     LastApprovedByUser = getReimburseLastApproverName(dbConn, dataReader["TravelRequestId"].ToString()),
                                     LastApprovedDateTime = getReimburseLastApproverDateTime(dbConn, dataReader["TravelRequestId"].ToString()),
-                                    EditActionVisible = ReimburseEditActionEligible(dbConn, dataReader["TravelRequestId"].ToString()) ? true : false,
+                                    EditActionVisible = true , //ReimburseEditActionEligible(dbConn, dataReader["TravelRequestId"].ToString()) ? true : false,
                                     ViewActionVisible = true,
                                     ApproveActionVisible = false,
                                     Status = dataReader["STATUS"].ToString(),
