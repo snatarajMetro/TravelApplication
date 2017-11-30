@@ -931,6 +931,84 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
        });
     }
 
+    $scope.loadSubmitDetails = function (travelRequestId) {
+
+        var url = "api/travelrequest/submitdetails/" + travelRequestId;
+
+        $.get(url)
+        .done(function (data) {
+
+            // Set Department Head
+            if (parseInt(data.TravelRequestSubmitDetail.DepartmentHeadBadgeNumber) == -1) {
+
+                displayOtherSection('otherForDepartmentHead')
+                $("#ddlDepartmentHead").val(data.TravelRequestSubmitDetail.DepartmentHeadBadgeNumber);
+                $("#txtDepartmentHeadBadgeNumber").val(data.TravelRequestSubmitDetail.DepartmentHeadOtherBadgeNumber);
+                $("#txtDepartmentHeadName").val(data.TravelRequestSubmitDetail.DepartmentHeadOtherName);
+            }
+            else if (parseInt(data.TravelRequestSubmitDetail.DepartmentHeadBadgeNumber) > 0) {
+                $("#ddlDepartmentHead").val(parseInt(data.TravelRequestSubmitDetail.DepartmentHeadBadgeNumber));
+            }
+
+            // Set Executive Officer
+            if (parseInt(data.TravelRequestSubmitDetail.ExecutiveOfficerBadgeNumber) == -1) {
+
+                displayOtherSection('otherForExecutiveOfficer')
+                $("#ddlExecutiveOfficer").val(parseInt(data.TravelRequestSubmitDetail.ExecutiveOfficerBadgeNumber));
+                $("#txtExecutiveOfficerBadgeNumber").val(data.TravelRequestSubmitDetail.ExecutiveOfficerOtherBadgeNumber.toString());
+                $("#txtExecutiveOfficerName").val(data.TravelRequestSubmitDetail.ExecutiveOfficerOtherName.toString());
+            }
+            else if (parseInt(data.TravelRequestSubmitDetail.ExecutiveOfficerBadgeNumber) > 0) {
+                $("#ddlExecutiveOfficer").val(parseInt(data.TravelRequestSubmitDetail.ExecutiveOfficerBadgeNumber));
+            }
+
+            // Set CEO International
+            if (parseInt(data.TravelRequestSubmitDetail.CEOInternationalBadgeNumber) == -1) {
+
+                displayOtherSection('otherForCEOForInternational')
+                $("#ddlCEOForInternational").val(parseInt(data.TravelRequestSubmitDetail.CEOInternationalBadgeNumber));
+                $("#txtCEOForInternationalBadgeNumber").val(data.TravelRequestSubmitDetail.CEOInternationalOtherBadgeNumber.toString());
+                $("#txtCEOForInternationalName").val(data.TravelRequestSubmitDetail.CEOInternationalOtherName.toString());
+            }
+            else if (parseInt(data.TravelRequestSubmitDetail.CEOInternationalBadgeNumber) > 0) {
+                $("#ddlCEOForInternational").val(parseInt(data.TravelRequestSubmitDetail.CEOInternationalBadgeNumber));
+            }
+
+            // Set CEO APTA/CTA
+            if (parseInt(data.TravelRequestSubmitDetail.CEOAPTABadgeNumber) == -1) {
+
+                displayOtherSection('otherForCEOForAPTA')
+                $("#ddlCEOForAPTA").val(parseInt(data.TravelRequestSubmitDetail.CEOAPTABadgeNumber));
+                $("#txtCEOForAPTABadgeNumber").val(data.TravelRequestSubmitDetail.CEOAPTAOtherBadgeNumber.toString());
+                $("#txtCEOForAPTAName").val(data.TravelRequestSubmitDetail.CEOAPTAOtherName.toString());
+            }
+            else if (parseInt(data.TravelRequestSubmitDetail.CEOAPTABadgeNumber) > 0) {
+                $("#ddlCEOForAPTA").val(parseInt(data.TravelRequestSubmitDetail.CEOAPTABadgeNumber));
+            }
+
+            // Set Travel Coordinator
+            if (parseInt(data.TravelRequestSubmitDetail.TravelCoordinatorBadgeNumber) == -1) {
+
+                displayOtherSection('otherForTravelCoordinator')
+                $("#ddlTravelCoordinator").val(parseInt(data.TravelRequestSubmitDetail.TravelCoordinatorBadgeNumber));
+                $("#txtTravelCoordinatorBadgeNumber").val(data.TravelRequestSubmitDetail.TravelCoordinatorOtherBadgeNumber.toString());
+                $("#txtTravelCoordinatorName").val(data.TravelRequestSubmitDetail.TravelCoordinatorOtherName.toString());
+            }
+            else if (parseInt(data.TravelRequestSubmitDetail.TravelCoordinatorBadgeNumber) > 0) {
+                $("#ddlTravelCoordinator").val(parseInt(data.TravelRequestSubmitDetail.TravelCoordinatorBadgeNumber));
+            }
+
+            // Set Agree
+            $("#cbAgree").attr("checked", (data.TravelRequestSubmitDetail.Agree == true));
+
+            // Set Submitter Name
+            $("#txtSubmittedByUserName").val(data.TravelRequestSubmitDetail.SubmitterName);
+
+            $scope.$apply();
+            
+        });
+    }
+
     // load data for 1st four approvers dropdown
     $scope.loadCommonApprovers = function (badgeNumber) {
 
@@ -999,6 +1077,11 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
             $(div).hide();
         }
     };
+
+    function displayOtherSection(container) {
+        var div = '#' + container;
+        $(div).show();
+    }
 
     $scope.submitRequest = function () {
 
