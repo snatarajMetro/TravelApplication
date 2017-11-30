@@ -13,7 +13,6 @@ $(document).ready(function () {
     //viewdashboard();
     //createnewrequest();
     //editTravelRequest();
-
     //$("#signin").hide();
     //createnewreimbursementrequest();
     //createTravelRequestReimbursement();
@@ -483,7 +482,7 @@ function savedataentry()
                 scope.loadFileUpload2(result.TravelRequestId);
                 scope.loadCommonApprovers($('#travelRequestBadgeNumber').text());
                 scope.loadTravelCoordinators();
-                //scope.loadSupportingDocuments(travelRequestId);
+                scope.loadSubmitDetails(result.TravelRequestId);
 
                 $("#travelrequesttemplate").hide();
                 $("#fileuploadtemplate").show();
