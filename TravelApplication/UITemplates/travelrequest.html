@@ -120,7 +120,7 @@
                                     <div class="tablecellheader expenserowtitle">Airfare (Prepaid)</div>
                                     <div class="spacer"></div>
                                     <div class="tablecell">
-                                        <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAdvAirfare" class="inputnumber" ng-model="advanceAirfareAmount" ng-change="updateTotalAdvanceAmount()" tabindex=3 />
+                                        <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAdvAirfare" class="inputnumber" ng-model="advanceAirfareAmount" disabled tabindex=3 />
                                     </div>
                                     <div class="spacer"></div>
                                     <div class="tablecell">
@@ -136,7 +136,7 @@
                                     <div class="tablecellheader expenserowtitle">Registration (Prepaid)</div>
                                     <div class="spacer"></div>
                                     <div class="tablecell">
-                                        <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAdvRegistration" class="inputnumber" ng-model="advanceRegistrationAmount" ng-change="updateTotalAdvanceAmount()" tabindex=5 />
+                                        <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAdvRegistration" class="inputnumber" ng-model="advanceRegistrationAmount" disabled tabindex=5 />
                                     </div>
                                     <div class="spacer"></div>
                                     <div class="tablecell">
@@ -168,7 +168,7 @@
                                     <div class="tablecellheader expenserowtitle">Car Rental</div>
                                     <div class="spacer"></div>
                                     <div class="tablecell">
-                                        <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAdvCarRental" class="inputnumber" ng-model="advanceCarRentalAmount"  ng-change="updateTotalAdvanceAmount()" tabindex=9 />
+                                        <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtAdvCarRental" class="inputnumber" ng-model="advanceCarRentalAmount"  disabled tabindex=9 />
                                     </div>
                                     <div class="spacer"></div>
                                     <div class="tablecell">
@@ -229,14 +229,14 @@
                     </div>
                     <div class="estimatedexpensesection" >
                         <div class="pagetitle3">
-                            <span>FIS</span>
+                            <span>Travel Funding Source</span>
                         </div>
                         <div class="">
                             <div class="tablecontainer">
                                 <div class="tableheading">
                                     <div class="tablehead">Cost Center</div>
                                     <div class="spacer"></div>
-                                    <div class="tablehead">Line Item</div>
+                                    <div class="tablehead">Account</div>
                                     <div class="spacer"></div>
                                     <div class="tablehead">Project</div>
                                     <div class="spacer"></div>
