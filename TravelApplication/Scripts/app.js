@@ -287,6 +287,7 @@ function addPlaceHolder(input) {
 function savedataentry()
 {
     var canSubmit = true;
+    var errorMessage = "Some of the required fields are missing. Please try again.";
 
     // Get user inputs
     var badgeNumber = jQuery.trim($('#txtBadgeNumber').val());
@@ -375,6 +376,15 @@ function savedataentry()
 
     if (!returnDate || returnDate.length <= 0) {
         canSubmit = false;
+    }
+
+    // Validation
+    if (canSubmit) {
+
+        if (cashAdvanceRequested > estimatedTotal) {
+            errorMessage = "Cash advance requested cannot be more than total estimated cost. ";
+            canSubmit = false;
+        }
     }
 
     if (canSubmit) {
@@ -508,7 +518,7 @@ function savedataentry()
     else {
 
         $("#submiterror").fadeIn("slow");
-        $('#submiterrormessage').text("Some of the required fields are missing. Please try again.");
+        $('#submiterrormessage').text(errorMessage);
 
         // fade out in 5 seconds
         $("#submiterror").fadeOut(fadeOutTimeInMilliseconds);
