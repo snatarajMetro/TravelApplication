@@ -27,6 +27,12 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
             + ($scope.advanceCarRentalAmount * 1)
             + ($scope.advanceMiscellaneousAmount * 1)
             ).toFixed(2));
+
+        $scope.totalCashAdvanceAmount = parseFloat((
+            ($scope.advanceLodgingAmount * 1)
+            + ($scope.advanceMealsAmount * 1)
+            + ($scope.advanceMiscellaneousAmount * 1)
+            ).toFixed(2));
     }
 
     $scope.updateTotalEstimatedAmount = function () {
