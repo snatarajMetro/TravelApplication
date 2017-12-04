@@ -385,6 +385,39 @@ function savedataentry()
             errorMessage = "Cash advance requested cannot be more than total estimated cost. ";
             canSubmit = false;
         }
+
+        if (canSubmit) {
+
+            for (var index = 1; index < currentRowNumberTravelRequest; index++) {
+
+                var costCenter = $("#ddlCostCenter" + index + " option:selected").val().replace("?", "");
+                var lineItem = $("#txtLineItem" + index).val();
+                var project = $("#project" + index + " option:selected").val().replace("?", "");
+                var task = $("#txtTask" + index).val();
+                var amount = $("#txtAmount" + index).val();
+
+                var dataEntered = ((costCenter.length > 0)
+                    || (lineItem.length > 0)
+                    || (project.length > 0)
+                    || (task.length > 0)
+                    || (amount.length > 0));
+
+                if (dataEntered) {
+
+                    var isValid = ((costCenter.length > 0)
+                                    && (lineItem.length > 0)
+                                    && (project.length > 0)
+                                    && (task.length > 0)
+                                    && (amount.length > 0));
+
+                    if (!isValid) {
+                        errorMessage = "On each row of travel funding source section, if one of the fields has data, all of the remaining fields are required and needs to have data.";
+                        canSubmit = false;
+                        break;
+                    }
+                }  
+            }
+        }
     }
 
     if (canSubmit) {
