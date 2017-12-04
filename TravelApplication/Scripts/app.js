@@ -381,11 +381,13 @@ function savedataentry()
     // Validation
     if (canSubmit) {
 
+        // Validate:  Cash advance requested cannot be greater than total estimatated amount
         if (cashAdvanceRequested > estimatedTotal) {
             errorMessage = "Cash advance requested cannot be more than total estimated cost. ";
             canSubmit = false;
         }
 
+         // Validate:  FIS section
         if (canSubmit) {
 
             for (var index = 1; index < currentRowNumberTravelRequest; index++) {
@@ -416,6 +418,16 @@ function savedataentry()
                         break;
                     }
                 }  
+            }
+        }
+
+        // Validate : Total FIS amount should be equal to the total estimated amount 
+        if (canSubmit) {
+            var totalFISAmount = $('#txtFISTotal').val();
+
+            if (estimatedTotal != totalFISAmount) {
+                errorMessage = "Total travel funding source amount must be equal to total estimated amount.";
+                canSubmit = false;
             }
         }
     }
