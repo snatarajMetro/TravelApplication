@@ -36,6 +36,9 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
     }
 
     $scope.updateTotalEstimatedAmount = function () {
+
+        $scope.FISRequestModel = [{}, {}, {}, {}, {}];
+
         $scope.totalEstimatedAmount = parseFloat((
             ($scope.estimatedLodgingAmount * 1)
             + ($scope.estimatedAirfareAmount * 1)
@@ -44,6 +47,16 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
             + ($scope.estimatedCarRentalAmount * 1)
             + ($scope.estimatedMiscellaneousAmount * 1)
             ).toFixed(2));
+
+        if (($scope.estimatedRegistrationAmount * 1) > 0) {
+            $('#txtLineItem2').val("50915");
+            $('#txtAmount2').val(($scope.estimatedRegistrationAmount * 1));
+            $timeout(angular.element("#txtAmount2").triggerHandler('change'), 0, true);
+        } else {
+            $('#txtLineItem2').val("");
+            $('#txtAmount2').val("");
+            $timeout(angular.element("#txtAmount2").triggerHandler('change'), 0, true);
+        }
     }
 
     $scope.BusinessMileRate = 0.555;
