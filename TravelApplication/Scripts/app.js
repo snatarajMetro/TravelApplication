@@ -381,6 +381,18 @@ function savedataentry()
     // Validation
     if (canSubmit) {
 
+        // Validate: Meeting begin and end date
+        if (meetingBeginDate > meetingEndDate) {
+            errorMessage = "Meeting end date should be greater than or equal to meeting begin date. ";
+            canSubmit = false;
+        }
+
+        // Validate: Departure and Return date
+        if (departureDate > returnDate) {
+            errorMessage = "Return date should be greater than or equal to depature date. ";
+            canSubmit = false;
+        }
+
         // Validate:  Cash advance requested cannot be greater than total estimatated amount
         if (cashAdvanceRequested > estimatedTotal) {
             errorMessage = "Cash advance requested cannot be more than total estimated cost. ";
@@ -875,6 +887,7 @@ function editTravelReimbursement(container) {
     var travelReimbursementId = altObj.split('|')[1];
 
     //var travelRequestId = 123456;
+    //var travelReimbursementId = 3456;
     var scope = angular.element('#travelreimbursementtemplate').scope();
     scope.loadTravelReimbursementForEdit(travelRequestId);
     scope.loadCostCenters();
