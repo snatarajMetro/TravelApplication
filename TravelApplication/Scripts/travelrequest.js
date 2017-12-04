@@ -2691,7 +2691,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                     $scope.TravelModel[index].DailyTotal            = $scope.Data.ReimbursementDetails.Reimbursement[index].DailyTotal;
 
                     $("#row" + (index + 1)).show();
-                    $("#deleterow" + (index + 1)).hide();
+                    //$("#deleterow" + (index + 1)).hide();
 
                     currentRowNumber = ((index + 1) + 1);
                 }
@@ -2713,7 +2713,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                             $scope.FISModel[index].Amount = $scope.Data.FIS.FISDetails[index].Amount;
 
                             $("#rowfis" + (index + 1)).show();
-                            $("#deletefisrow" + (index + 1)).hide();
+                            //$("#deletefisrow" + (index + 1)).hide();
 
                             currentRowNumberFIS = ((index + 1) + 1);
                         }
