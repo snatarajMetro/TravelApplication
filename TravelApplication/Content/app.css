@@ -349,7 +349,7 @@ div.actioncontainer {
     left: 0;
     right: 0;
     width: 370px;
-    height: 220px;
+    height: 226px;
     margin: auto;
     background-color: white;
     box-shadow: 10px 10px 5px #3c3c3c;
@@ -2262,4 +2262,11 @@ text.totalcount {
     font-size:15px;
     color:dodgerblue;
     text-decoration:underline;
+}
+
+.approveralert{
+    font-size:11px;
+    padding-left:9px;
+    color:red;
+    margin-bottom:2px;
 }

@@ -20,6 +20,7 @@ $(document).ready(function () {
     //viewexistingtravelrequests();
     //viewapprovedtravelrequests();
     //viewexistingreimbursements();
+    //showApproveSection();
   });
 
 function setTwoDecimal(el) {
@@ -664,12 +665,19 @@ function cancelAction() {
 
 function showApproveSection(container) {
 
-    var travelRequestId = $(container).prop('alt');
+    var altObj = $(container).prop('alt');
+    var travelRequestId = altObj.split('|')[0];
+    var showAlertText = altObj.split('|')[1];
 
     var scope = angular.element('#approvetemplate').scope();
     scope.loadApproveAction(travelRequestId);
-
     $('#approvetemplate').show();
+
+    if (showAlertText) {
+        $('#approverAlert').show();
+    } else {
+        $('#approverAlert').hide();
+    }
 }
 
 function showApproveSection2(container) {
