@@ -172,6 +172,7 @@
     <Compile Include="Common\enum.cs" />
     <Compile Include="Controllers\MVC\HomeController.cs" />
     <Compile Include="Controllers\MVC\LoginController.cs" />
+    <Compile Include="Controllers\MVC\TravelRequestController.cs" />
     <Compile Include="Controllers\WebAPI\ApprovalController.cs" />
     <Compile Include="Controllers\WebAPI\DocumentsController.cs" />
     <Compile Include="Controllers\WebAPI\EmailController.cs" />
@@ -198,6 +199,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ApproveModel.cs" />
     <Compile Include="Models\Approver.cs" />
     <Compile Include="Models\ApproveRequest.cs" />
     <Compile Include="Models\BootstrapTableJSONModel.cs" />
@@ -234,13 +236,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Travel_Business_Expense.rpt</DependentUpon>
-	  <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Travel_Request.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Travel_Request.rpt</DependentUpon>
-	  <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\ApprovalService.cs" />
     <Compile Include="Services\DocumentsService.cs" />
@@ -597,6 +597,7 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="UITemplates\approve.html" />
     <Content Include="UITemplates\approvedtravelrequests.html" />
+    <Content Include="UITemplates\ApproveRequest.html" />
     <Content Include="UITemplates\dashboard.html" />
     <Content Include="UITemplates\estimatedexpense.html" />
     <Content Include="UITemplates\existingtravelreimbursements.html" />
@@ -631,6 +632,7 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Login\Index2.cshtml" />
     <Content Include="Views\Shared\_Layout2.cshtml" />
+    <Content Include="Views\TravelRequest\Approve.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

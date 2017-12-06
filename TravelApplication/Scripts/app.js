@@ -1357,3 +1357,22 @@ function viewexistingtravelrequests2() {
 
     $('#existingtravelrequeststemplate').show();
 }
+
+function emailapprove() {
+    var travelRequestId = $("#travelRequestId").text();
+    var badgeNumber = $("#badgeNumber").text();
+    var comments = $("#txtComments").text();
+    //$.ajax({
+    //    type: "POST",
+    //    url: "/api/travelrequest/approve",
+    //    data: JSON.stringify({ "TravelRequestId": travelRequestId, "BadgeNumber": badgeNumber, "Comments": comments }),
+    //    contentType: "application/json; charset=utf-8",
+    //    dataType: "json",
+    //    success: function (data) {
+    //        alert('success');
+    //    },
+    //    error: function (xhr, options, error) {
+    //        alert('error');
+    //    }
+    //});
+}

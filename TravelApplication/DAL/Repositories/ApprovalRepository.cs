@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -144,6 +145,28 @@ namespace TravelApplication.DAL.Repositories
                 throw new Exception(ex.Message);
             }
             
+        }
+
+        public string GetApprovalRequestEmailBody(string userName, int travaleRequestId, string badgeNumber)
+        {
+            string emailBody = string.Empty;
+            string baseUrl = "http://localhost:2462/";
+
+            using (StreamReader reader = new StreamReader("~/uitemplates/ApproveRequest.html"))
+            {
+                emailBody = reader.ReadToEnd();
+
+                if (!string.IsNullOrEmpty(emailBody))
+                {
+                    emailBody = emailBody
+                                    .Replace("{BASEURL}", baseUrl)
+                                    .Replace("{USERNAME}", userName)
+                                    .Replace("{TRAVELREQUESTID}", travaleRequestId.ToString())
+                                    .Replace("{BADGENUMBER}", badgeNumber);
+                }
+            }
+
+            return emailBody;
         }
 
         private string getEmailAddressByBadgeNumber(string departmentHeadBadgeNumber)

@@ -2270,3 +2270,14 @@ text.totalcount {
     color:red;
     margin-bottom:2px;
 }
+
+.titleforApprove{
+    font-size:12px;
+    margin-left:10px;
+}
+
+.approvebuttonforemail{
+    position: absolute;
+    margin-left:250px;
+    margin-top:132px;
+}
