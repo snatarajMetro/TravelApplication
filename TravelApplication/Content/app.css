@@ -928,7 +928,7 @@ div.dataentry2{
 }
 
 .supportingDocumentGrid {
-width:668px;
+width:700px;
 height:235px;
 }
 
@@ -939,6 +939,7 @@ height:235px;
 
 .viewDocument {
     margin-left:15px;
+    margin-top:3px;
     width:30px;
     height:30px;
 }
@@ -2262,4 +2263,11 @@ text.totalcount {
     font-size:15px;
     color:dodgerblue;
     text-decoration:underline;
+}
+
+.supportingDocumentZoneUpload {
+    margin-left:15px;
+    width:30px;
+    height:30px;
+    cursor:pointer;
 }

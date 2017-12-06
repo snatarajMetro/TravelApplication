@@ -474,6 +474,52 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                     file.previewElement.classList.add("dz-error");
                 }
             });
+
+            // Add upload listners
+            //for (var index = 1; index < 3; index++) {
+            //    $("#supportingDocumentZoneUpload" + index).dropzone({
+            //        url: "api/documents/upload",
+            //        thumbnailWidth: 10,
+            //        thumbnailHeight: 10,
+            //        maxFilesize: 5, // MB
+            //        addRemoveLinks: true,
+            //        acceptedFiles: ".jpeg,.png,.gif,.txt,.pdf,.docx,.xlxs",
+            //        init: function () {
+            //            var self = this;
+            //            // config
+            //            self.options.addRemoveLinks = true;
+            //            self.options.dictRemoveFile = "Delete";
+            //            // on file added
+            //            self.on("addedfile", function (progress) {
+            //                var travelRequestId = $('#travelRequestId').text();
+            //                var badgeNumber = $('#travelRequestBadgeNumber').text();
+            //                var uploadUrl = "/api/documents/upload?travelRequestId=" + travelRequestId + "&badgeNumber=" + badgeNumber;
+            //                self.options.url = uploadUrl;
+            //            });
+            //            // on file added
+            //            self.on("success", function (file, response) {
+            //                this.removeFile(file);
+            //            });
+            //            // File upload Progress
+            //            self.on("totaluploadprogress", function (progress) {
+            //                $('.roller').width(progress + '%');
+            //            });
+            //            self.on("queuecomplete", function (progress) {
+            //                $('.meter').delay(999).slideUp(999);
+            //                var travelRequestId = $('#travelRequestId').text();
+            //                // reload supporting document grid
+            //                $scope.loadSupportingDocuments(travelRequestId);
+            //            });
+            //        },
+            //        success: function (file, response) {
+            //            var imgName = response;
+            //            file.previewElement.classList.add("dz-success");
+            //        },
+            //        error: function (file, response) {
+            //            file.previewElement.classList.add("dz-error");
+            //        }
+            //    });
+            //}
         });
     }
 
@@ -700,6 +746,10 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
     $scope.loadSupportingDocuments = function (travelRequestNumber) {
 
+        var cellTemplate2 = "<a href='{{row.entity.DownloadUrl}}'><img title='View/Download Document' class='viewDocument' src='/Images/download.png' width='30' height='30' /></a><a href='#'><img title='Delete Document' class='viewDocument' src='/Images/delete2.png' width='20' height='20' alt='{{row.entity.Id}}' onclick=deletedocument(this); /></a>";
+
+        //var cellTemplate2 = "<a><img title='Upload Document' class='dz-clickable supportingDocumentZoneUpload' id='supportingDocumentZoneUpload{{row.entity.Id}}' src='/Images/upload.png' width='30' height='30' /></a><a href='{{row.entity.DownloadUrl}}'><img title='View/Download Document' class='viewDocument' src='/Images/download.png' width='30' height='30' /></a><a href='#'><img title='Delete Document' class='viewDocument' src='/Images/delete2.png' width='20' height='20' alt='{{row.entity.Id}}' onclick=deletedocument(this); /></a>";
+
         $scope.gridOptions = {
             enableSorting: false,
             rowHeight: 34,
@@ -721,9 +771,9 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
             {
                 field: 'actions',
                 headerCellClass: 'headerStyle',
-                width: '100',
+                width: '150',
                 displayName: 'Actions',
-                cellTemplate: "<a href='{{row.entity.DownloadUrl}}'><img title='View/Download Document' class='viewDocument' src='/Images/download.png' width='30' height='30' /></a><a href='#'><img title='Delete Document' class='viewDocument' src='/Images/delete2.png' width='20' height='20' alt='{{row.entity.Id}}' onclick=deletedocument(this); /></a>",
+                cellTemplate: cellTemplate2,
                 enableFiltering: false,
                 enableColumnMenu: false
             }
@@ -740,7 +790,6 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
             dataType: "json",
             success: function (data) {
                 var result = JSON.parse(data);
-
                 $scope.gridOptions.data = result;
                 $scope.$apply();
             },
