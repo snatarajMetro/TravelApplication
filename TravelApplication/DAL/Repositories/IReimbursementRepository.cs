@@ -17,7 +17,7 @@ namespace TravelApplication.DAL.Repositories
         ReimbursementInput GetAllReimbursementDetails(string travelRequestId);
         List<ReimburseGridDetails> GetReimbursementRequestsList(int badgeNumber, int selectedRoleId);
 
-        bool Approve(int badgeNumber, int travelRequestId, string comments);
-        bool Reject(int badgeNumber, int travelRequestId, string comments);
+        bool Approve(int badgeNumber, string travelRequestId, string comments);
+        bool Reject(int badgeNumber, string travelRequestId, string comments);
     }
 }

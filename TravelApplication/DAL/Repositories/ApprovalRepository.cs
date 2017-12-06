@@ -109,8 +109,9 @@ namespace TravelApplication.DAL.Repositories
 
 
                 string link = string.Format("<a href=\"http://localhost:2462/\">here</a>");
+                string btnApprove = string.Format("<button type=\"button\">Click Me!</button>");
                 string subject = string.Format(@"Travel Request Approval for Id - {0} ", submitTravelRequestData.TravelRequestId);
-                string body = string.Format(@"Please visit Travel application website "+link+ " to Approve/Reject for travel request Id : {0}", submitTravelRequestData.TravelRequestId);
+                string body = string.Format(@"Please visit Travel application website "+link+ " to Approve/Reject for travel request Id : {0}  btnApprove ", submitTravelRequestData.TravelRequestId);
                 sendEmail(submitTravelRequestData.DepartmentHeadBadgeNumber, body,subject);
                 return true;
 
@@ -224,7 +225,7 @@ namespace TravelApplication.DAL.Repositories
                     dbConn.Dispose();
 
 
-                    string link = string.Format("<a href=\"http://localhost:2462/\">here</a>");
+                    string link = string.Format("<a href=\"http://localhost:2462/\"><img src =\"c:\\temp\\approve1.png\" height=\"40\" width = \"40\"></a>");
                     string subject = string.Format(@"Travel Request Approval for Id - {0} ", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
                     string body = string.Format(@"Please visit Travel application website " + link + " to Approve/Reject for travel request Id : {0}", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
                     sendEmail(submitTravelRequest.HeirarchichalApprovalRequest.ApproverList[0].ApproverBadgeNumber.ToString(), body, subject);
@@ -353,6 +354,11 @@ namespace TravelApplication.DAL.Repositories
 
                 throw new Exception(ex.Message);
             }
+        }
+
+        public bool UpdateApproveStatus(EmailApprovalDetails emailApproveDetails)
+        {
+            throw new NotImplementedException();
         }
     }
 

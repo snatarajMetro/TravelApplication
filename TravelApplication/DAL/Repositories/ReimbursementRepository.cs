@@ -1368,7 +1368,7 @@ namespace TravelApplication.DAL.Repositories
             }
         }
 
-        public bool Approve(int approverBadgeNumber, int travelRequestId, string comments)
+        public bool Approve(int approverBadgeNumber, string travelRequestId, string comments)
         {
             try
             {
@@ -1453,7 +1453,7 @@ namespace TravelApplication.DAL.Repositories
             }
         }
 
-        public bool Reject(int ApproverBadgeNumber, int travelRequestId, string comments)
+        public bool Reject(int ApproverBadgeNumber, string travelRequestId, string comments)
         {
             try
             {

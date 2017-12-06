@@ -48,13 +48,13 @@ namespace TravelApplication.Services
 
         }
 
-        public bool Approve(int badgeNumber, int travelRequestId, string comments)
+        public bool Approve(int badgeNumber, string travelRequestId, string comments)
         {
             var result = reimbursementRepository.Approve(badgeNumber, travelRequestId, comments);
             return result;
         }
 
-        public bool Reject(int badgeNumber, int travelRequestId, string comments)
+        public bool Reject(int badgeNumber, string travelRequestId, string comments)
         {
             var result = reimbursementRepository.Reject(badgeNumber, travelRequestId, comments);
             return result;

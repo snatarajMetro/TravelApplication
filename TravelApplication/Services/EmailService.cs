@@ -57,7 +57,7 @@ namespace TravelApplication.Services
                 emailMessage.Body = body;
                 emailMessage.IsBodyHtml = true;
 
-                // To add cc email address if exists
+               /* // To add cc email address if exists
                 if (!string.IsNullOrEmpty(cc))
                 {
                     string[] sendCClist = cc.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
@@ -82,7 +82,7 @@ namespace TravelApplication.Services
                 {
                     Attachment emailAttachment = new Attachment(attachmentFile);
                     emailMessage.Attachments.Add(emailAttachment);
-                }
+                }*/
 
                 // To create SmtpClient object
                 SmtpClient smtpClient = default(SmtpClient);
@@ -93,7 +93,9 @@ namespace TravelApplication.Services
                 else
                 {                    
                     smtpClient = new SmtpClient(ConfigurationManager.AppSettings["emailServer"]);
+
                 }
+
 
                 smtpClient.Send(emailMessage);
                 return true;

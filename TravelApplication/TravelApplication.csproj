@@ -203,6 +203,7 @@
     <Compile Include="Models\BootstrapTableJSONModel.cs" />
     <Compile Include="Models\CostCenter.cs" />
     <Compile Include="Models\Email.cs" />
+    <Compile Include="Models\EmailApprovalDetails.cs" />
     <Compile Include="Models\EmployeeDetails.cs" />
     <Compile Include="Models\EstimatedExpense.cs" />
     <Compile Include="Models\FIS.cs" />
@@ -225,6 +226,7 @@
     <Compile Include="Models\TravelRequestInput.cs" />
     <Compile Include="Models\TravelRequestInputResponse.cs" />
     <Compile Include="Models\ReimbursementAllTravelInformation.cs" />
+    <Compile Include="Models\TravelRequestSubmitDetail.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\UserResponse.cs" />
     <Compile Include="Models\UserRole.cs" />
@@ -234,13 +236,13 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Travel_Business_Expense.rpt</DependentUpon>
-	  <SubType>Component</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Travel_Request.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Travel_Request.rpt</DependentUpon>
-	  <SubType>Component</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\ApprovalService.cs" />
     <Compile Include="Services\DocumentsService.cs" />

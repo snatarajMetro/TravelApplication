@@ -394,7 +394,7 @@ function savedataentry()
         }
 
         // Validate:  Cash advance requested cannot be greater than total estimatated amount
-        if (cashAdvanceRequested > estimatedTotal) {
+        if ((cashAdvanceRequested * 1)  > (estimatedTotal*1)) {
             errorMessage = "Cash advance requested cannot be more than total estimated cost. ";
             canSubmit = false;
         }

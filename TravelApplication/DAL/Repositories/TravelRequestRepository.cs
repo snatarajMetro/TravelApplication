@@ -485,7 +485,7 @@ namespace TravelApplication.Services
         }
 
 
-        public bool Approve(int approverBadgeNumber, int travelRequestId, string comments)
+        public bool Approve(int approverBadgeNumber, string travelRequestId, string comments)
         {
             try
             {
@@ -570,7 +570,7 @@ namespace TravelApplication.Services
             }
         }
 
-        public bool Reject(int ApproverBadgeNumber, int travelRequestId, string comments)
+        public bool Reject(int ApproverBadgeNumber, string travelRequestId, string comments)
         {
             try
             {
@@ -1054,6 +1054,109 @@ namespace TravelApplication.Services
             //}
 
 
+        }
+
+
+        public TravelRequestSubmitDetailResponse GetSubmitDetails(int travelRequestId)
+        {
+            TravelRequestSubmitDetailResponse response = null;
+            TravelRequestSubmitDetail travelRequestSubmitDetail = null;
+            try
+            {
+                using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+                {
+                    string query = string.Format("select TRAVELREQUESTID,BADGENUMBER,APPROVALORDER from TRAVELREQUEST_APPROVAL where TRAVELREQUESTID='{0}'", travelRequestId);
+
+                        OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+                        command.CommandText = query;
+                        DbDataReader dataReader = command.ExecuteReader();
+                        travelRequestSubmitDetail = new TravelRequestSubmitDetail();
+                        if (dataReader.HasRows)
+                        {
+                            while (dataReader.Read())
+                            {
+                            switch (Convert.ToInt32(dataReader["APPROVALORDER"]))
+                            {
+                                case 1:
+                                    travelRequestSubmitDetail.DepartmentHeadBadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]);
+                                    break;
+                                case 2:
+                                    travelRequestSubmitDetail.ExecutiveOfficerBadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]);
+                                    break;
+                                case 3:
+                                    travelRequestSubmitDetail.CEOInternationalBadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]);
+                                    break;
+                                case 4:
+                                    travelRequestSubmitDetail.CEOAPTABadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]);
+                                    break;
+                                case 5:
+                                    travelRequestSubmitDetail.TravelCoordinatorBadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]);
+                                    break;
+                            }
+                            travelRequestSubmitDetail.TravelRequestId = dataReader["TRAVELREQUESTID"].ToString();
+                            string agree = string.Empty;
+                            string submitter = string.Empty;
+                            //  travelRequestSubmitDetail.Agree = GetAgeedAcknowledgement(dbConn, travelRequestId);
+                            GetSubmitterName(dbConn, travelRequestId,out agree,out submitter);
+                            travelRequestSubmitDetail.SubmitterName = submitter;
+                            travelRequestSubmitDetail.Agree = (agree == "Y")? true : false;
+
+                            }
+                        }
+                        command.Dispose();
+                        dataReader.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            response = new TravelRequestSubmitDetailResponse();
+            response.TravelRequestSubmitDetail = travelRequestSubmitDetail;
+            return response;
+        }
+
+        private void GetSubmitterName(DbConnection dbConn, int travelRequestId,out string agree, out string submitter)
+        {
+            try
+            {
+
+                string response = string.Empty;
+                agree = string.Empty;
+                submitter = string.Empty;
+                string query = string.Format("Select * from TRAVELREQUEST where TRAVELREQUESTID= {0}", travelRequestId);
+                OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+                command.CommandText = query;
+                DbDataReader dataReader = command.ExecuteReader();
+                if (dataReader.HasRows)
+                {
+                    while (dataReader.Read())
+                    {
+
+                        submitter = dataReader["SUBMITTEDBYUSERNAME"].ToString();
+                        agree = dataReader["AGREE"].ToString();
+                    }
+                }
+                else
+                {
+                    throw new Exception("Couldn't retrieve submitter name");
+                }
+                command.Dispose();
+                dataReader.Close();
+              //  return response;
+
+            }
+            catch (Exception ex)
+            {
+                LogMessage.Log("GetSubmitterName : " + ex.Message);
+                throw;
+            }
+        }
+
+        private bool GetAgeedAcknowledgement(DbConnection dbConn, int travelRequestId)
+        {
+            throw new NotImplementedException();
         }
 
 

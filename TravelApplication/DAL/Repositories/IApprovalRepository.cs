@@ -15,5 +15,6 @@ namespace TravelApplication.DAL.Repositories
         bool SubmitTravelRequestNew(SubmitTravelRequest submitTravelRequest);
         SubmitTravelRequest GetApproverDetails(string travelRequestId);
         bool SubmitReimburse(SubmitReimburseData submitReimburseData);
+        bool UpdateApproveStatus(EmailApprovalDetails emailApproveDetails);
     }
 }

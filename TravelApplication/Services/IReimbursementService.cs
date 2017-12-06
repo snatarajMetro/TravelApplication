@@ -13,7 +13,7 @@ namespace TravelApplication.Services
         string SaveTravelRequestReimbursement(ReimbursementInput reimbursementRequest);
         List<ReimburseGridDetails> GetReimbursementRequests(int badgeNumber, int roleId);
         ReimbursementInput GetReimbursementDetails(string travelRequestId);
-        bool Approve(int badgeNumber, int travelRequestId, string comments);
-        bool Reject(int badgeNumber, int travelRequestId, string comments);
+        bool Approve(int badgeNumber, string travelRequestId, string comments);
+        bool Reject(int badgeNumber, string travelRequestId, string comments);
     }
 }

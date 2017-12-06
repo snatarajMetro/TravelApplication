@@ -11,13 +11,13 @@ namespace TravelApplication.Services
     {
         ITravelRequestRepository travelRequestRepo = new TravelRequestRepository();
 
-        public bool Approve(int badgeNumber, int travelRequestId, string comments)
+        public bool Approve(int badgeNumber, string travelRequestId, string comments)
         {
             var result = travelRequestRepo.Approve(badgeNumber, travelRequestId, comments);
             return result;
         }
 
-        public bool Reject(int badgeNumber, int travelRequestId, string comments)
+        public bool Reject(int badgeNumber, string travelRequestId, string comments)
         {
             var result = travelRequestRepo.Reject(badgeNumber, travelRequestId, comments);
             return result;
@@ -74,6 +74,11 @@ namespace TravelApplication.Services
             TravelRequestInput result = travelRequestRepo.GetTravelRequestDetailNew(travelRequestId);
             return result;
         }
-       
+
+        public  TravelRequestSubmitDetailResponse GetSubmitDetails(int travelRequestId)
+        {
+            TravelRequestSubmitDetailResponse result = travelRequestRepo.GetSubmitDetails(travelRequestId);
+            return result;
+        }
     }
 }

@@ -196,6 +196,27 @@ namespace TravelApplication.Controllers.WebAPI
             return response;
         }
 
+        [HttpGet]
+        [Route("api/travelrequest/submitdetails/{travelRequestId}")]
+        public HttpResponseMessage GetSubmitDetails(int travelRequestId)
+        {
+            HttpResponseMessage response = null;
+            TravelRequestSubmitDetailResponse result = null;
+            try
+            {
+                result = travelRequestService.GetSubmitDetails(travelRequestId);
+
+                response = Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Log the exception message
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+            return response;
+        }
+
+
     }
 
 }

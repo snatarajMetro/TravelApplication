@@ -12,6 +12,8 @@ namespace TravelApplication.Services
     {
         IApprovalRepository approvalRepository = new ApprovalRepository();
 
+        ITravelRequestRepository travelRequestRepository = new TravelRequestRepository();
+
         public SubmitTravelRequest GetapproverDetails(string travelRequestId)
         {
             SubmitTravelRequest result = approvalRepository.GetApproverDetails(travelRequestId);
@@ -30,7 +32,7 @@ namespace TravelApplication.Services
         public List<HeirarchichalPosition> GetTAAprovers()
         {
             List<HeirarchichalPosition> result = new List<HeirarchichalPosition>();
-            result.Add(new HeirarchichalPosition() { BadgeNumber = -1, Name = "Other" });
+            //result.Add(new HeirarchichalPosition() { BadgeNumber = -1, Name = "Other" });
             result.Add(new HeirarchichalPosition() { BadgeNumber = 85163, Name = "MARIA BANUELOS" });
             return result;
         }
@@ -52,5 +54,13 @@ namespace TravelApplication.Services
             var result = approvalRepository.SubmitTravelRequestNew(submitTravelRequest);
             return result;
         }
+
+        public bool UpdateApproveStatus(EmailApprovalDetails emailApproveDetails)
+        {
+            var result = travelRequestRepository.Approve(emailApproveDetails.BadgeNumber, emailApproveDetails.TravelRequestId,emailApproveDetails.Reason);
+            return result;
+        }
+
+     
     }
 }

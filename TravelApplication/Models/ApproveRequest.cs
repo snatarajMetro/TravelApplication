@@ -8,7 +8,7 @@ namespace TravelApplication.Models
     public class ApproveRequest
     {
         public int ApproverBadgeNumber { get; set; }
-        public int TravelRequestId { get; set; }
+        public string TravelRequestId { get; set; }
         public string Comments { get; set; }
         public int SubmittedBadgeNumber { get; set; }
         public int TravelRequestBadgeNumber { get; set; }
