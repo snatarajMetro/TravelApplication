@@ -1,0 +1,36 @@
+﻿@model TravelApplication.Models.ApproveModel
+
+@{
+    Layout = null;
+    var travelRequestId = Model.TravelRequestId;
+    var badgeNumber = Model.BadgeNumber;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <link href="/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/app.css" rel="stylesheet" type="text/css" />
+    <script src="/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="/Dependencies/angular.min.js"></script>
+    <script src="/Scripts/travelrequest.js"></script>
+    <script src="/Scripts/app.js"></script>
+</head>
+<body>
+    <div id="approvesection">
+        <div>
+            <span class="titleforApprove">Travel Request Id: <span id="travelRequestId">@travelRequestId</span></span><br />
+            <span class="titleforApprove">Badge #: <span id="badgeNumber">@badgeNumber</span></span>
+        </div>
+        <div style="float:left;" class="approvaltitle">
+            <span class="commentsTitle">Comments</span>
+            <textarea id="txtComments" width="100" class="actioncomments"></textarea>
+        </div>
+        <div class="approvebuttonforemail">
+            <input class="btn btn-success approvebutton" type="button" id="btnApprove" name="btnApprove" value="Approve" onclick="emailapprove()" />
+        </div>
+    </div>
+</body>
+</html>

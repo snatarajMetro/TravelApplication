@@ -20,6 +20,7 @@ $(document).ready(function () {
     //viewexistingtravelrequests();
     //viewapprovedtravelrequests();
     //viewexistingreimbursements();
+    //showApproveSection();
   });
 
 function setTwoDecimal(el) {
@@ -664,12 +665,19 @@ function cancelAction() {
 
 function showApproveSection(container) {
 
-    var travelRequestId = $(container).prop('alt');
+    var altObj = $(container).prop('alt');
+    var travelRequestId = altObj.split('|')[0];
+    var showAlertText = altObj.split('|')[1];
 
     var scope = angular.element('#approvetemplate').scope();
     scope.loadApproveAction(travelRequestId);
-
     $('#approvetemplate').show();
+
+    if (showAlertText) {
+        $('#approverAlert').show();
+    } else {
+        $('#approverAlert').hide();
+    }
 }
 
 function showApproveSection2(container) {
@@ -1348,4 +1356,23 @@ function viewexistingtravelrequests2() {
     scope.loadCostCenters();
 
     $('#existingtravelrequeststemplate').show();
+}
+
+function emailapprove() {
+    var travelRequestId = $("#travelRequestId").text();
+    var badgeNumber = $("#badgeNumber").text();
+    var comments = $("#txtComments").text();
+    //$.ajax({
+    //    type: "POST",
+    //    url: "/api/travelrequest/approve",
+    //    data: JSON.stringify({ "TravelRequestId": travelRequestId, "BadgeNumber": badgeNumber, "Comments": comments }),
+    //    contentType: "application/json; charset=utf-8",
+    //    dataType: "json",
+    //    success: function (data) {
+    //        alert('success');
+    //    },
+    //    error: function (xhr, options, error) {
+    //        alert('error');
+    //    }
+    //});
 }
