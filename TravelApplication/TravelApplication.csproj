@@ -323,6 +323,7 @@
     <Content Include="Images\reject1.png" />
     <Content Include="Images\reject2.jpg" />
     <Content Include="Images\sn.png" />
+    <Content Include="Images\upload.png" />
     <Content Include="Images\view.png" />
     <Content Include="Images\viewOld.png" />
     <Content Include="Images\createNew.png" />
