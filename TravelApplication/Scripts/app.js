@@ -21,6 +21,15 @@ $(document).ready(function () {
     //viewapprovedtravelrequests();
     //viewexistingreimbursements();
     //showApproveSection();
+
+    //var scope = angular.element('#fileuploadtemplate').scope();
+    //scope.loadFileUpload2(123456);
+    //scope.loadCommonApprovers("12345");
+    //scope.loadTravelCoordinators();
+    //scope.loadSubmitDetails(123456);
+
+    //$("#travelrequesttemplate").hide();
+    //$("#fileuploadtemplate").show();
   });
 
 function setTwoDecimal(el) {
