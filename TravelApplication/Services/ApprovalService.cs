@@ -57,7 +57,7 @@ namespace TravelApplication.Services
 
         public bool UpdateApproveStatus(EmailApprovalDetails emailApproveDetails)
         {
-            var result = travelRequestRepository.Approve(emailApproveDetails.BadgeNumber, emailApproveDetails.TravelRequestId,emailApproveDetails.Reason);
+            var result = travelRequestRepository.Approve(emailApproveDetails.BadgeNumber, emailApproveDetails.TravelRequestId,emailApproveDetails.Comments);
             return result;
         }
 

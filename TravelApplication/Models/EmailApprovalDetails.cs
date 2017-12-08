@@ -7,7 +7,7 @@ namespace TravelApplication.Models
 {
     public class EmailApprovalDetails
     {
-        public string Reason { get; set; }
+        public string Comments { get; set; }
 
         public string TravelRequestId { get; set; }
 

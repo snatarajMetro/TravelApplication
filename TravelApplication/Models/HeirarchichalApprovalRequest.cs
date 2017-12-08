@@ -8,7 +8,9 @@ namespace TravelApplication.Models
     public class HeirarchichalApprovalRequest
     {
         public string TravelRequestId { get; set; }
-        public int BadgeNumber { get; set; }
+        public int SubmittedBadgeNumber { get; set; }
+
+        public int SignedInBadgeNumber { get; set; }
         public List<HeirarchichalOrder> ApproverList { get; set; }
         public bool AgreedToTermsAndConditions { get; set; }
 

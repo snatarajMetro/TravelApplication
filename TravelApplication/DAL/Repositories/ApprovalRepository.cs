@@ -64,6 +64,7 @@ namespace TravelApplication.DAL.Repositories
 
             dbConn = ConnectionFactory.GetOpenDefaultConnection();
                 int count = 1;
+              
                 foreach (var item in approvalOrderList)
                 {
                         if (!string.IsNullOrEmpty(item.BadgeId))
@@ -113,7 +114,7 @@ namespace TravelApplication.DAL.Repositories
                 string btnApprove = string.Format("<button type=\"button\">Click Me!</button>");
                 string subject = string.Format(@"Travel Request Approval for Id - {0} ", submitTravelRequestData.TravelRequestId);
                 string body = string.Format(@"Please visit Travel application website "+link+ " to Approve/Reject for travel request Id : {0}  btnApprove ", submitTravelRequestData.TravelRequestId);
-                sendEmail(submitTravelRequestData.DepartmentHeadBadgeNumber, body,subject);
+                sendEmail(Convert.ToInt32(submitTravelRequestData.DepartmentHeadBadgeNumber), subject, submitTravelRequestData.TravelRequestId.ToString());
                 return true;
 
             }
@@ -125,15 +126,16 @@ namespace TravelApplication.DAL.Repositories
 
         }
 
-        public void sendEmail(string departmentHeadBadgeNumber,string body, string subject)
+        public void sendEmail(int departmentHeadBadgeNumber, string subject, string travelRequestId)
         {
             try
             {
+                var emailAndFirstName = getEmailAddressByBadgeNumber(departmentHeadBadgeNumber);
                 var email = new Email()
                 {
                     FromAddress = "natarajs@metro.net",
-                    ToAddress = getEmailAddressByBadgeNumber(departmentHeadBadgeNumber),
-                    Body = body,
+                    ToAddress = emailAndFirstName[0],
+                    Body = GetApprovalRequestEmailBody(emailAndFirstName[1],travelRequestId, departmentHeadBadgeNumber),
                     Subject = subject
                 };
                 var endpointUrl = "http://localhost:2462/api/email/sendemail";
@@ -148,12 +150,13 @@ namespace TravelApplication.DAL.Repositories
             
         }
 
-        public string GetApprovalRequestEmailBody(string userName, int travaleRequestId, string badgeNumber)
+        public string GetApprovalRequestEmailBody(string userName, string travelRequestId, int badgeNumber)
         {
             string emailBody = string.Empty;
             string baseUrl = "http://localhost:2462/";
 
-            using (StreamReader reader = new StreamReader("~/uitemplates/ApproveRequest.html"))
+            var x = System.Web.Hosting.HostingEnvironment.MapPath("~/UITemplates");
+            using (StreamReader reader = new StreamReader( x+"/ApproveRequest.html"))
             {
                 emailBody = reader.ReadToEnd();
 
@@ -162,20 +165,20 @@ namespace TravelApplication.DAL.Repositories
                     emailBody = emailBody
                                     .Replace("{BASEURL}", baseUrl)
                                     .Replace("{USERNAME}", userName)
-                                    .Replace("{TRAVELREQUESTID}", travaleRequestId.ToString())
-                                    .Replace("{BADGENUMBER}", badgeNumber);
+                                    .Replace("{TRAVELREQUESTID}", travelRequestId.ToString())
+                                    .Replace("{BADGENUMBER}", badgeNumber.ToString());
                 }
             }
 
             return emailBody;
         }
 
-        private string getEmailAddressByBadgeNumber(string departmentHeadBadgeNumber)
+        private List<string> getEmailAddressByBadgeNumber(int departmentHeadBadgeNumber)
         {
-            string result = string.Empty;
+            List<string> result = new List<string>();
             using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
             {
-                string query = string.Format("select EMAIL from USERS where BadgeNumber = {0}  ", departmentHeadBadgeNumber);
+                string query = string.Format("select EMAIL,FIRSTNAME from USERS where BadgeNumber = {0}  ", departmentHeadBadgeNumber);
                 OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
                 command.CommandText = query;
                 DbDataReader dataReader = command.ExecuteReader();
@@ -184,7 +187,8 @@ namespace TravelApplication.DAL.Repositories
                 {
                     while (dataReader.Read())
                     {
-                         result = dataReader["EMAIL"].ToString();
+                         result.Add(dataReader["EMAIL"].ToString());
+                        result.Add(dataReader["FIRSTNAME"].ToString());
                     }
                 }
 
@@ -251,7 +255,7 @@ namespace TravelApplication.DAL.Repositories
                     string link = string.Format("<a href=\"http://localhost:2462/\"><img src =\"c:\\temp\\approve1.png\" height=\"40\" width = \"40\"></a>");
                     string subject = string.Format(@"Travel Request Approval for Id - {0} ", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
                     string body = string.Format(@"Please visit Travel application website " + link + " to Approve/Reject for travel request Id : {0}", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
-                    sendEmail(submitTravelRequest.HeirarchichalApprovalRequest.ApproverList[0].ApproverBadgeNumber.ToString(), body, subject);
+                    sendEmail(submitTravelRequest.HeirarchichalApprovalRequest.ApproverList[0].ApproverBadgeNumber, subject, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
                     return true;
                 }
 
@@ -367,7 +371,7 @@ namespace TravelApplication.DAL.Repositories
                     string link = string.Format("<a href=\"http://localhost:2462/\">here</a>");
                     string subject = string.Format(@"Reimbursement Request Approval for Travel Request Id - {0} ", submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId);
                     string body = string.Format(@"Please visit Travel application website " + link + " to Approve/Reject for travel request Id : {0}", submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId);
-                    sendEmail(submitReimburseData.HeirarchichalApprovalRequest.ApproverList[0].ApproverBadgeNumber.ToString(), body, subject);
+                    sendEmail(submitReimburseData.HeirarchichalApprovalRequest.ApproverList[0].ApproverBadgeNumber, subject, submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId);
                     return true;
                 }
 
