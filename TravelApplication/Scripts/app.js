@@ -10,6 +10,17 @@ $(document).ready(function () {
 
     $("#txtEmail").focus();
 
+    $(function () {
+
+        $(".dropdown-menu li a").click(function () {
+
+            $("#btnRejectReason").html($(this).text().substring(0, 25) + '&nbsp;&nbsp;<span class="caret" style="float:right;margin-top:7px;"></span>');
+            $("#btnRejectReason").prop("title", $(this).text());
+            $("#txtCommentsForReject").focus();
+        });
+
+    });
+
     //viewdashboard();
     //createnewrequest();
     //editTravelRequest();
@@ -22,14 +33,6 @@ $(document).ready(function () {
     //viewexistingreimbursements();
     //showApproveSection();
 
-    //var scope = angular.element('#fileuploadtemplate').scope();
-    //scope.loadFileUpload2(123456);
-    //scope.loadCommonApprovers("12345");
-    //scope.loadTravelCoordinators();
-    //scope.loadSubmitDetails(123456);
-
-    //$("#travelrequesttemplate").hide();
-    //$("#fileuploadtemplate").show();
   });
 
 function setTwoDecimal(el) {
