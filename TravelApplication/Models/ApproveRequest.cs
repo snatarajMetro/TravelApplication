@@ -12,5 +12,6 @@ namespace TravelApplication.Models
         public string Comments { get; set; }
         public int SubmittedBadgeNumber { get; set; }
         public int TravelRequestBadgeNumber { get; set; }
+        public string RejectReason { get; set; }
     }
 }

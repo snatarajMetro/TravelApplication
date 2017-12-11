@@ -1332,14 +1332,16 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         // Department Head
         var departmentHeadBadgeNumber = $("#ddlDepartmentHead option:selected").val();
         var departmentHeadName = "";
+        var departmentHeadOtherBadgeNumber = -1;
 
         if (departmentHeadBadgeNumber && departmentHeadBadgeNumber != '?') {
 
-            if (departmentHeadBadgeNumber == '-1') {
-                departmentHeadBadgeNumber = $('#txtDepartmentHeadBadgeNumber').val();
+            if (departmentHeadBadgeNumber == '-1') {              
+                departmentHeadOtherBadgeNumber = $('#txtDepartmentHeadBadgeNumber').val();
                 departmentHeadName = $('#txtDepartmentHeadName').val();
             }
             else {
+                departmentHeadOtherBadgeNumber = -1;
                 departmentHeadName = $("#ddlDepartmentHead option:selected").text();
             }
 
@@ -1352,14 +1354,16 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         // Executive Officer
         var executiveOfficerBadgeNumber = $("#ddlExecutiveOfficer option:selected").val();
         var executiveOfficerName = "";
+        var executiveOfficerOtherBadgeNumber = -1;
 
         if (executiveOfficerBadgeNumber && executiveOfficerBadgeNumber != '?') {
 
             if (executiveOfficerBadgeNumber == '-1') {
-                executiveOfficerBadgeNumber = $('#txtExecutiveOfficerBadgeNumber').val();
+                executiveOfficerOtherBadgeNumber = $('#txtExecutiveOfficerBadgeNumber').val();
                 executiveOfficerName = $('#txtExecutiveOfficerName').val();
             }
             else {
+                executiveOfficerOtherBadgeNumber = -1;
                 executiveOfficerName = $("#ddlExecutiveOfficer option:selected").text();
             }
         }
@@ -1370,14 +1374,16 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         // CEO (For International)
         var ceoForInternationalBadgeNumber = $("#ddlCEOForInternational option:selected").val();
         var ceoForInternationalName = "";
+        var ceoForInternationalOtherBadgeNumber = -1;
 
         if (ceoForInternationalBadgeNumber && ceoForInternationalBadgeNumber != '?') {
 
             if (ceoForInternationalBadgeNumber == '-1') {
-                ceoForInternationalBadgeNumber = $('#txtCEOForInternationalBadgeNumber').val();
+                ceoForInternationalOtherBadgeNumber = $('#txtCEOForInternationalBadgeNumber').val();
                 ceoForInternationalName = $('#txtCEOForInternationalName').val();
             }
             else {
+                ceoForInternationalOtherBadgeNumber = -1;
                 ceoForInternationalName = $("#ddlCEOForInternational option:selected").text();
             }
         }
@@ -1388,14 +1394,16 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         // CEO (For APTA/CTA conference)
         var ceoForAPTABadgeNumber = $("#ddlCEOForAPTA option:selected").val();
         var ceoForAPTAName = "";
+        var ceoForAPTAOtherBadgeNumber = -1;
 
         if (ceoForAPTABadgeNumber && ceoForAPTABadgeNumber != '?') {
 
             if (ceoForAPTABadgeNumber == '-1') {
-                ceoForAPTABadgeNumber = $('#txtCEOForAPTABadgeNumber').val();
+                ceoForAPTAOtherBadgeNumber = $('#txtCEOForAPTABadgeNumber').val();
                 ceoForAPTAName = $('#txtCEOForAPTAName').val();
             }
             else {
+                ceoForAPTAOtherBadgeNumber = -1;
                 ceoForAPTAName = $("#ddlCEOForAPTA option:selected").text();
             }
         }
@@ -1406,6 +1414,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         // Travel Co-ordinator
         var travelCoordinatorBadgeNumber = $("#ddlTravelCoordinator option:selected").val();
         var travelCoordinatorName = "";
+        var travelCoordinatorOtherBadgeNumber = -1;
 
         if (travelCoordinatorBadgeNumber && travelCoordinatorBadgeNumber != '?') {
 
@@ -1454,26 +1463,31 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                             {
                                 "ApproverName": departmentHeadName,
                                 "ApproverBadgeNumber": departmentHeadBadgeNumber,
+                                "ApproverOtherBadgeNumber": departmentHeadOtherBadgeNumber,
                                 "ApprovalOrder":1
                             },
                             {
                                 "ApproverName": executiveOfficerName,
                                 "ApproverBadgeNumber": executiveOfficerBadgeNumber,
+                                "ApproverOtherBadgeNumber": executiveOfficerOtherBadgeNumber,                               
                                 "ApprovalOrder": 2
                             },
                             {
                                 "ApproverName": ceoForInternationalName,
                                 "ApproverBadgeNumber": ceoForInternationalBadgeNumber,
+                                "ApproverOtherBadgeNumber": ceoForInternationalOtherBadgeNumber,                              
                                 "ApprovalOrder": 3
                             },
                             {
                                 "ApproverName": ceoForAPTAName,
                                 "ApproverBadgeNumber": ceoForAPTABadgeNumber,
+                                "ApproverOtherBadgeNumber": ceoForAPTAOtherBadgeNumber,
                                 "ApprovalOrder": 4
                             },
                             {
                                 "ApproverName": travelCoordinatorName,
                                 "ApproverBadgeNumber": travelCoordinatorBadgeNumber,
+                                "ApproverOtherBadgeNumber": travelCoordinatorOtherBadgeNumber,                               
                                 "ApprovalOrder": 5
                             }
                         ]
@@ -1522,14 +1536,16 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         // Department Head
         var departmentHeadBadgeNumber = $("#ddlDepartmentHead option:selected").val();
         var departmentHeadName = "";
+        var departmentHeadOtherBadgeNumber = -1;
 
         if (departmentHeadBadgeNumber && departmentHeadBadgeNumber != '?') {
 
             if (departmentHeadBadgeNumber == '-1') {
-                departmentHeadBadgeNumber = $('#txtDepartmentHeadBadgeNumber').val();
+                departmentHeadOtherBadgeNumber = $('#txtDepartmentHeadBadgeNumber').val();
                 departmentHeadName = $('#txtDepartmentHeadName').val();
             }
             else {
+                departmentHeadOtherBadgeNumber = -1;
                 departmentHeadName = $("#ddlDepartmentHead option:selected").text();
             }
 
@@ -1542,14 +1558,16 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         // Executive Officer
         var executiveOfficerBadgeNumber = $("#ddlExecutiveOfficer option:selected").val();
         var executiveOfficerName = "";
+        var executiveOfficerOtherBadgeNumber = -1;
 
         if (executiveOfficerBadgeNumber && executiveOfficerBadgeNumber != '?') {
 
             if (executiveOfficerBadgeNumber == '-1') {
-                executiveOfficerBadgeNumber = $('#txtExecutiveOfficerBadgeNumber').val();
+                executiveOfficerOtherBadgeNumber = $('#txtExecutiveOfficerBadgeNumber').val();
                 executiveOfficerName = $('#txtExecutiveOfficerName').val();
             }
             else {
+                executiveOfficerOtherBadgeNumber = -1;
                 executiveOfficerName = $("#ddlExecutiveOfficer option:selected").text();
             }
         }
@@ -1560,14 +1578,16 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         // CEO (For International)
         var ceoForInternationalBadgeNumber = $("#ddlCEOForInternational option:selected").val();
         var ceoForInternationalName = "";
+        var ceoForInternationalOtherBadgeNumber = -1;
 
         if (ceoForInternationalBadgeNumber && ceoForInternationalBadgeNumber != '?') {
 
             if (ceoForInternationalBadgeNumber == '-1') {
-                ceoForInternationalBadgeNumber = $('#txtCEOForInternationalBadgeNumber').val();
+                ceoForInternationalOtherBadgeNumber = $('#txtCEOForInternationalBadgeNumber').val();
                 ceoForInternationalName = $('#txtCEOForInternationalName').val();
             }
             else {
+                ceoForInternationalOtherBadgeNumber = -1;
                 ceoForInternationalName = $("#ddlCEOForInternational option:selected").text();
             }
         }
@@ -1578,14 +1598,16 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         // CEO (For APTA/CTA conference)
         var ceoForAPTABadgeNumber = $("#ddlCEOForAPTA option:selected").val();
         var ceoForAPTAName = "";
+        var ceoForAPTAOtherBadgeNumber = -1;
 
         if (ceoForAPTABadgeNumber && ceoForAPTABadgeNumber != '?') {
 
             if (ceoForAPTABadgeNumber == '-1') {
-                ceoForAPTABadgeNumber = $('#txtCEOForAPTABadgeNumber').val();
+                ceoForAPTAOtherBadgeNumber = $('#txtCEOForAPTABadgeNumber').val();
                 ceoForAPTAName = $('#txtCEOForAPTAName').val();
             }
             else {
+                ceoForAPTAOtherBadgeNumber = -1;
                 ceoForAPTAName = $("#ddlCEOForAPTA option:selected").text();
             }
         }
@@ -1596,14 +1618,16 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         // Travel Co-ordinator
         var travelCoordinatorBadgeNumber = $("#ddlTravelCoordinator option:selected").val();
         var travelCoordinatorName = "";
+        var travelCoordinatorOtherBadgeNumber = -1;
 
         if (travelCoordinatorBadgeNumber && travelCoordinatorBadgeNumber != '?') {
 
             if (travelCoordinatorBadgeNumber == '-1') {
-                travelCoordinatorBadgeNumber = $('#txtTravelCoordinatorBadgeNumber').val();
+                travelCoordinatorOtherBadgeNumber = $('#txtTravelCoordinatorBadgeNumber').val();
                 travelCoordinatorName = $('#txtTravelCoordinatorName').val();
             }
             else {
+                travelCoordinatorOtherBadgeNumber = -1;
                 travelCoordinatorName = $("#ddlTravelCoordinator option:selected").text();
             }
 
@@ -1640,28 +1664,33 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                         "SubmittedByUserName": submittedByUserName,
                         "ApproverList": [
                             {
+                                "ApproverName": travelCoordinatorName,
+                                "ApproverBadgeNumber": travelCoordinatorBadgeNumber,
+                                "ApproverOtherBadgeNumber": travelCoordinatorOtherBadgeNumber,  
+                                "ApprovalOrder": 1
+                            },
+                            {
                                 "ApproverName": departmentHeadName,
                                 "ApproverBadgeNumber": departmentHeadBadgeNumber,
-                                "ApprovalOrder": 1
+                                "ApproverOtherBadgeNumber": departmentHeadOtherBadgeNumber,                               
+                                "ApprovalOrder": 2
                             },
                             {
                                 "ApproverName": executiveOfficerName,
                                 "ApproverBadgeNumber": executiveOfficerBadgeNumber,
-                                "ApprovalOrder": 2
+                                "ApproverOtherBadgeNumber": executiveOfficerOtherBadgeNumber,                            
+                                "ApprovalOrder": 3
                             },
                             {
                                 "ApproverName": ceoForInternationalName,
                                 "ApproverBadgeNumber": ceoForInternationalBadgeNumber,
-                                "ApprovalOrder": 3
+                                "ApproverOtherBadgeNumber": ceoForInternationalOtherBadgeNumber,
+                                "ApprovalOrder": 4
                             },
                             {
                                 "ApproverName": ceoForAPTAName,
                                 "ApproverBadgeNumber": ceoForAPTABadgeNumber,
-                                "ApprovalOrder": 4
-                            },
-                            {
-                                "ApproverName": travelCoordinatorName,
-                                "ApproverBadgeNumber": travelCoordinatorBadgeNumber,
+                                "ApproverOtherBadgeNumber": ceoForAPTAOtherBadgeNumber,
                                 "ApprovalOrder": 5
                             }
                         ]

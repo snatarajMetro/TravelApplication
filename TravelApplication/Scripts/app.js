@@ -10,6 +10,18 @@ $(document).ready(function () {
 
     $("#txtEmail").focus();
 
+    $(function () {
+
+        $(".dropdown-menu li a").click(function () {
+
+            $("#btnRejectReason").html($(this).text().substring(0, 25) + '&nbsp;&nbsp;<span class="caret" style="float:right;margin-top:7px;"></span>');
+            $("#btnRejectReason").text($(this).text());
+            $("#btnRejectReason").prop("title", $(this).text());
+            $("#txtCommentsForReject").focus();
+        });
+
+    });
+
     //viewdashboard();
     //createnewrequest();
     //editTravelRequest();
@@ -22,14 +34,6 @@ $(document).ready(function () {
     //viewexistingreimbursements();
     //showApproveSection();
 
-    //var scope = angular.element('#fileuploadtemplate').scope();
-    //scope.loadFileUpload2(123456);
-    //scope.loadCommonApprovers("12345");
-    //scope.loadTravelCoordinators();
-    //scope.loadSubmitDetails(123456);
-
-    //$("#travelrequesttemplate").hide();
-    //$("#fileuploadtemplate").show();
   });
 
 function setTwoDecimal(el) {
@@ -761,6 +765,7 @@ function reject() {
     var travelRequestId = $('#travelRequestIdForRejectAction').text();
     var badgeNumber = $('#signedInUserBadgeNumber').text();
     var comments = $('#txtCommentsForReject').val();
+    var rejectReason = $("#btnRejectReason").text();
     var action = $('#travalAction').text();
     var url = "api/travelrequest/reject";
 
@@ -773,7 +778,12 @@ function reject() {
     $.ajax({
         type: "POST",
         url: url,
-        data: JSON.stringify({ "TravelRequestId": travelRequestId, "ApproverBadgeNumber": badgeNumber, "Comments": comments }),
+        data: JSON.stringify({
+            "TravelRequestId": travelRequestId,
+            "ApproverBadgeNumber": badgeNumber,
+            "Comments": comments,
+            "RejectReason": rejectReason
+        }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
