@@ -220,7 +220,7 @@ namespace TravelApplication.DAL.Repositories
                                                                 BADGENUMBER,
                                                                 APPROVERNAME,
                                                                 APPROVALSTATUS,
-                                                                APPROVALORDER
+                                                                APPROVALORDER 
                                                             )
                                                             VALUES
                                                                 (:p1,:p2,:p3,:p4,:p5)";
@@ -228,7 +228,7 @@ namespace TravelApplication.DAL.Repositories
                         cmd2.Parameters.Add(new OracleParameter("p2", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestBadgeNumber));
                         cmd2.Parameters.Add(new OracleParameter("p3", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestName));
                         cmd2.Parameters.Add(new OracleParameter("p4", Common.ApprovalStatus.Pending.ToString()));
-                        cmd2.Parameters.Add(new OracleParameter("p5", "0"));
+                        cmd2.Parameters.Add(new OracleParameter("p5", "0"));                     
                         var rowsUpdated = cmd2.ExecuteNonQuery();
                         cmd2.Dispose();
                     }
@@ -245,15 +245,17 @@ namespace TravelApplication.DAL.Repositories
                                                             BADGENUMBER,
                                                             APPROVERNAME,
                                                             APPROVALSTATUS,
-                                                            APPROVALORDER
+                                                            APPROVALORDER,
+                                                            APPROVEROTHERBADGENUMBER
                                                         )
                                                         VALUES
-                                                            (:p1,:p2,:p3,:p4,:p5)";
+                                                            (:p1,:p2,:p3,:p4,:p5,:p6)";
                             cmd.Parameters.Add(new OracleParameter("p1", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId));
                             cmd.Parameters.Add(new OracleParameter("p2", item.ApproverBadgeNumber));
                             cmd.Parameters.Add(new OracleParameter("p3", item.ApproverName));
                             cmd.Parameters.Add(new OracleParameter("p4", Common.ApprovalStatus.Pending.ToString()));
                             cmd.Parameters.Add(new OracleParameter("p5", item.ApprovalOrder));
+                            cmd.Parameters.Add(new OracleParameter("p6", item.ApproverOtherBadgeNumber));
                             var rowsUpdated = cmd.ExecuteNonQuery();
                             cmd.Dispose();
                         }
@@ -285,7 +287,15 @@ namespace TravelApplication.DAL.Repositories
 
                     } else
                     {
-                        sendEmail(submitTravelRequest.HeirarchichalApprovalRequest.ApproverList[0].ApproverBadgeNumber, subject, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
+                        if(submitTravelRequest.HeirarchichalApprovalRequest.ApproverList[0].ApproverBadgeNumber == -1)
+                        {
+                            sendEmail(submitTravelRequest.HeirarchichalApprovalRequest.ApproverList[0].ApproverOtherBadgeNumber, subject, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
+                        }
+                        else
+                        {
+                            sendEmail(submitTravelRequest.HeirarchichalApprovalRequest.ApproverList[0].ApproverBadgeNumber, subject, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
+                        }
+                        
                     }
                     
                     return true;
@@ -320,7 +330,8 @@ namespace TravelApplication.DAL.Repositories
                         {
                             ApproverBadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]),
                             ApproverName = dataReader["APPROVERNAME"].ToString(),
-                            ApprovalOrder = Convert.ToInt32(dataReader["APPROVALORDER"])
+                            ApprovalOrder = Convert.ToInt32(dataReader["APPROVALORDER"]),
+                            ApproverOtherBadgeNumber = Convert.ToInt32(dataReader["APPROVEROTHERBADGENUMBER"])
                         });
                     }
                 }

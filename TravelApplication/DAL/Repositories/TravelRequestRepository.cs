@@ -1065,7 +1065,7 @@ namespace TravelApplication.Services
             {
                 using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
                 {
-                    string query = string.Format("select TRAVELREQUESTID,BADGENUMBER,APPROVALORDER from TRAVELREQUEST_APPROVAL where TRAVELREQUESTID='{0}'", travelRequestId);
+                    string query = string.Format("select TRAVELREQUESTID,BADGENUMBER,APPROVALORDER,APPROVEROTHERBADGENUMBER, APPROVERNAME from TRAVELREQUEST_APPROVAL where TRAVELREQUESTID='{0}'", travelRequestId);
 
                         OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
                         command.CommandText = query;
@@ -1078,19 +1078,29 @@ namespace TravelApplication.Services
                             switch (Convert.ToInt32(dataReader["APPROVALORDER"]))
                             {
                                 case 1:
+                                   
                                     travelRequestSubmitDetail.DepartmentHeadBadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]);
+                                    travelRequestSubmitDetail.DepartmentHeadOtherBadgeNumber = Convert.ToInt32(dataReader["APPROVEROTHERBADGENUMBER"]);
+                                    travelRequestSubmitDetail.DepartmentHeadOtherName = dataReader["APPROVERNAME"].ToString();
                                     break;
                                 case 2:
                                     travelRequestSubmitDetail.ExecutiveOfficerBadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]);
+                                    travelRequestSubmitDetail.ExecutiveOfficerOtherBadgeNumber = Convert.ToInt32(dataReader["APPROVEROTHERBADGENUMBER"]);
+                                    travelRequestSubmitDetail.ExecutiveOfficerOtherName = dataReader["APPROVERNAME"].ToString();
                                     break;
                                 case 3:
                                     travelRequestSubmitDetail.CEOInternationalBadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]);
+                                    travelRequestSubmitDetail.CEOInternationalOtherBadgeNumber = Convert.ToInt32(dataReader["APPROVEROTHERBADGENUMBER"]);
+                                    travelRequestSubmitDetail.CEOAPTAOtherName = dataReader["APPROVERNAME"].ToString();
                                     break;
                                 case 4:
                                     travelRequestSubmitDetail.CEOAPTABadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]);
+                                    travelRequestSubmitDetail.CEOAPTAOtherBadgeNumber = Convert.ToInt32(dataReader["APPROVEROTHERBADGENUMBER"]);
+                                    travelRequestSubmitDetail.CEOAPTAOtherName = dataReader["APPROVERNAME"].ToString();
                                     break;
                                 case 5:
                                     travelRequestSubmitDetail.TravelCoordinatorBadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]);
+                                   
                                     break;
                             }
                             travelRequestSubmitDetail.TravelRequestId = dataReader["TRAVELREQUESTID"].ToString();
