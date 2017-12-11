@@ -24,6 +24,7 @@ namespace TravelApplication.Models
         public string ApproverPosition { get; set; }
         public string ApproverName { get; set; }
         public int ApproverBadgeNumber { get; set; }
+        public int ApproverOtherBadgeNumber { get; set; }
         public int ApprovalOrder { get; set; }
     }
 }
