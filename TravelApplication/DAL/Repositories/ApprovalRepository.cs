@@ -205,8 +205,33 @@ namespace TravelApplication.DAL.Repositories
         {
             try
             {
-                using(dbConn = ConnectionFactory.GetOpenDefaultConnection())
+                var isSubmitterRequesting = false;
+                using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
                     {
+                    OracleCommand cmd2 = new OracleCommand();
+                    if (submitTravelRequest.HeirarchichalApprovalRequest.SignedInBadgeNumber != submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestBadgeNumber)
+                    {
+                        // submit to approval 
+                        isSubmitterRequesting = true;
+
+                        cmd2.Connection = (OracleConnection)dbConn;
+                        cmd2.CommandText = @"INSERT INTO TRAVELREQUEST_APPROVAL (                                                  
+                                                                TRAVELREQUESTID,
+                                                                BADGENUMBER,
+                                                                APPROVERNAME,
+                                                                APPROVALSTATUS,
+                                                                APPROVALORDER
+                                                            )
+                                                            VALUES
+                                                                (:p1,:p2,:p3,:p4,:p5)";
+                        cmd2.Parameters.Add(new OracleParameter("p1", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId));
+                        cmd2.Parameters.Add(new OracleParameter("p2", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestBadgeNumber));
+                        cmd2.Parameters.Add(new OracleParameter("p3", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestName));
+                        cmd2.Parameters.Add(new OracleParameter("p4", Common.ApprovalStatus.Pending.ToString()));
+                        cmd2.Parameters.Add(new OracleParameter("p5", "0"));
+                        var rowsUpdated = cmd2.ExecuteNonQuery();
+                        cmd2.Dispose();
+                    }
                     foreach (var item in submitTravelRequest.HeirarchichalApprovalRequest.ApproverList)
                     {
                         if ( item.ApproverBadgeNumber != 0)
@@ -252,10 +277,17 @@ namespace TravelApplication.DAL.Repositories
                     dbConn.Dispose();
 
 
-                    string link = string.Format("<a href=\"http://localhost:2462/\"><img src =\"c:\\temp\\approve1.png\" height=\"40\" width = \"40\"></a>");
-                    string subject = string.Format(@"Travel Request Approval for Id - {0} ", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
-                    string body = string.Format(@"Please visit Travel application website " + link + " to Approve/Reject for travel request Id : {0}", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
-                    sendEmail(submitTravelRequest.HeirarchichalApprovalRequest.ApproverList[0].ApproverBadgeNumber, subject, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
+                     string subject = string.Format(@"Travel Request Approval for Id - {0} ", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
+                   
+                    if (isSubmitterRequesting)
+                    {
+                        sendEmail(submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestBadgeNumber, subject, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
+
+                    } else
+                    {
+                        sendEmail(submitTravelRequest.HeirarchichalApprovalRequest.ApproverList[0].ApproverBadgeNumber, subject, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
+                    }
+                    
                     return true;
                 }
 

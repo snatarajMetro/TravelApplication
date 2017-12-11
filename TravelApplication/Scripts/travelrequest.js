@@ -1325,7 +1325,9 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
         var canSubmit = false;
         var travelRequestId = $('#travelRequestId').text();
-        var badgeNumber = $('#signedInUserBadgeNumber').text();
+        var signedInBadgeNumber = $('#signedInUserBadgeNumber').text();
+        var travelRequestBadgeNumber = $('#travelRequestBadgeNumber').text();
+        var txtName = $('#txtName').val();
 
         // Department Head
         var departmentHeadBadgeNumber = $("#ddlDepartmentHead option:selected").val();
@@ -1443,7 +1445,9 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 data: JSON.stringify({
                     "HeirarchichalApprovalRequest":{
                         "TravelRequestId": travelRequestId,
-                        "BadgeNumber": badgeNumber,
+                        "SignedInBadgeNumber": signedInBadgeNumber,
+                        "TravelRequestBadgeNumber": travelRequestBadgeNumber,
+                        "TravelRequestName":txtName,
                         "AgreedToTermsAndConditions": agreedToTermsAndConditions,
                         "SubmittedByUserName": submittedByUserName,
                         "ApproverList": [
