@@ -10,18 +10,6 @@ $(document).ready(function () {
 
     $("#txtEmail").focus();
 
-    $(function () {
-
-        $(".dropdown-menu li a").click(function () {
-
-            $("#btnRejectReason").html($(this).text().substring(0, 25) + '&nbsp;&nbsp;<span class="caret" style="float:right;margin-top:7px;"></span>');
-            $("#btnRejectReason").text($(this).text());
-            $("#btnRejectReason").prop("title", $(this).text());
-            $("#txtCommentsForReject").focus();
-        });
-
-    });
-
     //viewdashboard();
     //createnewrequest();
     //editTravelRequest();
@@ -765,7 +753,7 @@ function reject() {
     var travelRequestId = $('#travelRequestIdForRejectAction').text();
     var badgeNumber = $('#signedInUserBadgeNumber').text();
     var comments = $('#txtCommentsForReject').val();
-    var rejectReason = $("#btnRejectReason").text();
+    var rejectReason = $("#btnRejectReason").attr('title');
     var action = $('#travalAction').text();
     var url = "api/travelrequest/reject";
 
@@ -1398,4 +1386,15 @@ function emailapprove() {
             alert('error');
         }
     });
+}
+
+function setRejectReason(container)
+{
+    var data = $(container).html();
+
+    $("#btnRejectReason").html(data.substring(0, 25) + '&nbsp;&nbsp;<span class="caret" style="float:right;margin-top:7px;"></span>');
+    $("#btnRejectReason").prop("title", data);
+    $("#txtCommentsForReject").focus();
+
+    return false;
 }
