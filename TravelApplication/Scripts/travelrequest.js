@@ -910,7 +910,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 name: 'Actions',
                 cellTemplate: actionTemplate,
                 enableFiltering: false,
-                width: 112,
+                width: 135,
                 headerCellClass: "existingrequestcolumnheader",
                 //enableColumnResizing: false,
             }];
