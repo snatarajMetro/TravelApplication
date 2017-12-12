@@ -411,7 +411,7 @@ namespace TravelApplication.Services
 		                                                        FROM
 			                                                        TRAVELREQUEST_APPROVAL
 		                                                        WHERE
-			                                                        BADGENUMBER = {0}
+			                                                        BADGENUMBER = {0} OR APPROVEROTHERBADGENUMBER ={0}
 	                                                        )   order by CREATIONDATETIME desc", submittedBadgeNumber);
                         OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
                         command.CommandText = query;
@@ -462,7 +462,7 @@ namespace TravelApplication.Services
                                     LastApprovedDateTime = getLastApproverDateTime(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])),
                                     EditActionVisible = true, //EditActionEligible(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])) ? true : false,
                                     ViewActionVisible = true,
-                                    ApproveActionVisible = false,
+                                    ApproveActionVisible = getApprovalSatus(dbConn, Convert.ToInt32(dataReader["TravelRequestId"]), submittedBadgeNumber) ? true : false,
                                     Status = dataReader["STATUS"].ToString(),
                                     Purpose = dataReader["PURPOSE"].ToString()
                                 });
@@ -499,7 +499,7 @@ namespace TravelApplication.Services
                                                         APPROVERCOMMENTS = :p1,
                                                         APPROVALSTATUS = :p2 ,
                                                         APPROVALDATETIME = :p3
-                                                        WHERE TRAVELREQUESTID = {0} AND BADGENUMBER = {1} ", travelRequestId, approverBadgeNumber);
+                                                        WHERE TRAVELREQUESTID = {0} AND BADGENUMBER = {1} OR APPROVEROTHERBADGENUMBER ={1}", travelRequestId, approverBadgeNumber);
                     cmd.Parameters.Add(new OracleParameter("p1", comments));
                     cmd.Parameters.Add(new OracleParameter("p2", ApprovalStatus.Approved.ToString()));
                     cmd.Parameters.Add(new OracleParameter("p3", DateTime.Now));             
@@ -1575,7 +1575,7 @@ namespace TravelApplication.Services
                                             FROM
 	                                            (
 		                                            SELECT
-			                                            BadgeNumber
+			                                            BadgeNumber, APPROVEROTHERBADGENUMBER
 		                                            FROM
 			                                            TRAVELREQUEST_APPROVAL
 		                                            WHERE
@@ -1595,6 +1595,10 @@ namespace TravelApplication.Services
                 while (dataReader.Read())
                 {
                     response = Convert.ToInt32(dataReader["BADGENUMBER"].ToString());
+                    if (response == -1)
+                    {
+                        response = Convert.ToInt32(dataReader["APPROVEROTHERBADGENUMBER"].ToString());
+                    }
                 }
             }
             command.Dispose();

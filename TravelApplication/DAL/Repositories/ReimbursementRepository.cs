@@ -1054,7 +1054,7 @@ namespace TravelApplication.DAL.Repositories
                                     LastApprovedDateTime = getReimburseLastApproverDateTime(dbConn, dataReader["TravelRequestId"].ToString()),
                                     EditActionVisible = true , //ReimburseEditActionEligible(dbConn, dataReader["TravelRequestId"].ToString()) ? true : false,
                                     ViewActionVisible = true,
-                                    ApproveActionVisible = false,
+                                    ApproveActionVisible = getReimburseApprovalSatus(dbConn, Convert.ToInt32(dataReader["TravelRequestId"]), badgeNumber) ? true : false,
                                     Status = dataReader["STATUS"].ToString(),
                                     StrSubmittedDateTime = dataReader["SUBMITTEDDATETIME"].ToString() ?? string.Empty,
                                     ReimbursementId = Convert.ToInt32(dataReader["REIMBURSEMENTID"])
@@ -1352,10 +1352,10 @@ namespace TravelApplication.DAL.Repositories
                      
  
                 }
-                else
-                {
-                    throw new Exception("Couldn't retrieve reimbursement details");
-                }
+                //else
+                //{
+                //    throw new Exception("Couldn't retrieve reimbursement details");
+                //}
                 command.Dispose();
                 dataReader.Close();
                 return finalResponse;
