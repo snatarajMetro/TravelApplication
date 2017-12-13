@@ -1241,6 +1241,7 @@ function savereimbursementdataentry() {
                     "SubtractPaidByMTA": $('#txtTotalPrePaidByMTA').val(),
                     "TotalExpenses": $('#txtTotalExpenses').val(),
                     "SubtractCashAdvance": $('#txtCashAdvance').val(),
+                    "SubtractPersonalAdvance": $('#txtPersonalAdvance').val(),
                     "Total": $('#txtTotal').val()
                 }
             }),

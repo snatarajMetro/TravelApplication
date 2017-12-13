@@ -27,6 +27,7 @@ namespace TravelApplication.Models
         public decimal SubtractPaidByMTA { get; set; }
         public decimal TotalExpenses { get; set; }
         public decimal SubtractCashAdvance { get; set; }
+        public decimal SubtractPersonalAdvance { get; set; }
         public decimal Total { get; set; }
     }
 

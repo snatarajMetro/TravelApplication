@@ -140,7 +140,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
     function updatetotalExpenseAmount() {
         $scope.totalExpenseAmount   = ($scope.totalSubmittedForApprovalAmount * 1) - ($scope.totalPrePaidByMTAAmount * 1);     
-        $scope.totalAmount          = $scope.totalExpenseAmount - ($scope.totalCashAdvanceAmount * 1)
+        $scope.totalAmount = parseFloat(($scope.totalExpenseAmount - ($scope.totalCashAdvanceAmount * 1) - ($scope.totalPersonalAdvanceAmount * 1)).toFixed(2));
     }
 
     function updateBusinessMile () {
@@ -195,6 +195,10 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
     }
 
     $scope.updatePrePaidByMTAAmount = function () {
+        updatetotalExpenseAmount();
+    }
+
+    $scope.updatePersonalAdvanceAmount = function () {
         updatetotalExpenseAmount();
     }
 
@@ -2046,6 +2050,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         $scope.totalPrePaidByMTAAmount = "";
         $scope.totalExpenseAmount = "";
         $scope.totalCashAdvanceAmount = "";
+        $scope.totalPersonalAdvanceAmount = "";
         $scope.totalAmount = "";
         $scope.totalFISAmount = "";
         $scope.SelectedProject = [{}, {}, {}, {}, {}];
@@ -2700,6 +2705,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         $scope.totalPrePaidByMTAAmount = 0;
         $scope.totalExpenseAmount = 0;
         $scope.totalCashAdvanceAmount = 0;
+        $scope.totalPersonalAdvanceAmount = 0;
         $scope.totalAmount = 0;
         $scope.totalFISAmount = 0;
         $scope.SelectedProject = [{}, {}, {}, {}, {}];
