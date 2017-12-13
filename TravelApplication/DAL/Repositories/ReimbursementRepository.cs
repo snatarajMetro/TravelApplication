@@ -32,7 +32,7 @@ namespace TravelApplication.DAL.Repositories
                     if (selectedRoleId == 1 || selectedRoleId == 2)
                     {
 
-                        string query = string.Format("Select * from TRAVELREQUEST where BADGENUMBER= {0} AND SELECTEDROLEID ={1} AND STATUS = '{2}' AND TRAVELREQUESTID NOT IN (SELECT TRAVELREQUESTID FROM REIMBURSE_TRAVELREQUEST )order by CREATIONDATETIME desc", submittedBadgeNumber, selectedRoleId, ApprovalStatus.Complete);
+                        string query = string.Format("Select * from TRAVELREQUEST where BADGENUMBER= {0} AND STATUS = '{2}' AND TRAVELREQUESTID NOT IN (SELECT TRAVELREQUESTID FROM REIMBURSE_TRAVELREQUEST )order by CREATIONDATETIME desc", submittedBadgeNumber, selectedRoleId, ApprovalStatus.Complete);
                         OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
                         command.CommandText = query;
                         DbDataReader dataReader = command.ExecuteReader();
@@ -753,7 +753,7 @@ namespace TravelApplication.DAL.Repositories
                                             FROM
 	                                            (
 		                                            SELECT
-			                                            BadgeNumber
+			                                            BadgeNumber, APPROVEROTHERBADGENUMBER
 		                                            FROM
 			                                            REIMBURSE_APPROVAL
 		                                            WHERE
@@ -773,6 +773,10 @@ namespace TravelApplication.DAL.Repositories
                 while (dataReader.Read())
                 {
                     response = Convert.ToInt32(dataReader["BADGENUMBER"].ToString());
+                    if (response == -1)
+                    {
+                        response = Convert.ToInt32(dataReader["APPROVEROTHERBADGENUMBER"].ToString());
+                    }
                 }
             }
             command.Dispose();
@@ -959,7 +963,7 @@ namespace TravelApplication.DAL.Repositories
                     if (selectedRoleId == 1 || selectedRoleId == 2)
                     {
 
-                        string query = string.Format("Select * from REIMBURSE_TRAVELREQUEST where BADGENUMBER= {0} AND SELECTEDROLEID ={1}  order by CREATIONDATETIME desc", badgeNumber, selectedRoleId);
+                        string query = string.Format("Select * from REIMBURSE_TRAVELREQUEST where BADGENUMBER= {0}   order by CREATIONDATETIME desc", badgeNumber, selectedRoleId);
                         OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
                         command.CommandText = query;
                         DbDataReader dataReader = command.ExecuteReader();
@@ -1002,7 +1006,7 @@ namespace TravelApplication.DAL.Repositories
                                                           FROM
                                                            REIMBURSE_APPROVAL
                                                           WHERE
-                                                           BADGENUMBER = {0}
+                                                           BADGENUMBER = {0} OR APPROVEROTHERBADGENUMBER = {0}
                                                          )   order by CREATIONDATETIME desc", badgeNumber);
                         OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
                         command.CommandText = query;
@@ -1382,7 +1386,7 @@ namespace TravelApplication.DAL.Repositories
                                                         APPROVERCOMMENTS = :p1,
                                                         APPROVALSTATUS = :p2 ,
                                                         APPROVALDATETIME = :p3
-                                                        WHERE TRAVELREQUESTID = {0} AND BADGENUMBER = {1} ", travelRequestId, approverBadgeNumber);
+                                                        WHERE TRAVELREQUESTID = {0} AND BADGENUMBER = {1} OR APPROVEROTHERBADGENUMBER = {1} ", travelRequestId, approverBadgeNumber);
                     cmd.Parameters.Add(new OracleParameter("p1", comments));
                     cmd.Parameters.Add(new OracleParameter("p2", ApprovalStatus.Approved.ToString()));
                     cmd.Parameters.Add(new OracleParameter("p3", DateTime.Now));
@@ -1391,11 +1395,11 @@ namespace TravelApplication.DAL.Repositories
                     // Get the approval badgeNumber 
                     var result = 0;
                     string query = string.Format(@"SELECT
-	                                                    BADGENUMBER
+	                                                    BADGENUMBER, APPROVEROTHERBADGENUMBER
                                                     FROM
 	                                                    (
 		                                                    SELECT
-			                                                    BADGENUMBER
+			                                                    BADGENUMBER,APPROVEROTHERBADGENUMBER
 		                                                    FROM
 			                                                    REIMBURSE_APPROVAL
 		                                                    WHERE
@@ -1419,6 +1423,10 @@ namespace TravelApplication.DAL.Repositories
                         while (dataReader.Read())
                         {
                             result = Convert.ToInt32(dataReader["BADGENUMBER"].ToString());
+                            if (result == -1)
+                            {
+                                result = Convert.ToInt32(dataReader["APPROVEROTHERBADGENUMBER"].ToString());
+                            }
                         }
                         if (result != null || result != 0)
                         {
