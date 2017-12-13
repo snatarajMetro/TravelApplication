@@ -216,6 +216,27 @@ namespace TravelApplication.Controllers.WebAPI
             return response;
         }
 
+        [HttpPost]
+        [Route("api/travelrequest/cancel")]
+        public HttpResponseMessage Cancel(ApproveRequest approveRequest)
+        {
+            HttpResponseMessage response = null;
+
+            try
+            {
+                //TODO: Implement Cancel API
+                //var result = travelRequestService.Cancel(approveRequest.ApproverBadgeNumber, approveRequest.TravelRequestId, approveRequest.TravelRequestBadgeNumber, approveRequest.Comments);
+                var result = true;
+                response = Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception)
+            {
+                // TODO: Log the exception message
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Cancel was not sucessfull. Please try again.");
+            }
+
+            return response;
+        }
 
     }
 
