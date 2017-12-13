@@ -1409,3 +1409,12 @@ function setRejectReason(container)
 
     return false;
 }
+
+function showCancelSection(container) {
+
+    //var travelRequestId = $(container).prop('alt');
+
+    //var scope = angular.element('#approvetemplate').scope();
+    //scope.loadApproveAction(travelRequestId);
+    //$('#approvetemplate').show();
+}

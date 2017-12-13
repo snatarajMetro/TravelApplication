@@ -830,7 +830,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
     // load existing travel requests
     $scope.loadExistingTravelRequests = function () {
 
-        var actionTemplate = '<div style="float:left;" ng-if="row.entity.ViewActionVisible == true"><a target="_blank" href="api/travelrequestReport/{{row.entity.TravelRequestId}}"><img title="View" class="actionImage" src="/Images/view.png" /></a></div><div style="float:left;" ng-if="row.entity.EditActionVisible == true"><img title="Edit" class="actionImage" src="/Images/edit.png" alt="{{row.entity.TravelRequestId}}" onclick="editTravelRequest(this);" /></div> <div style="float:left;" ng-if="row.entity.ApproveActionVisible == true"><img title="Approve" class="actionImage" src="/Images/approve1.png" alt="{{row.entity.TravelRequestId}}|{{row.entity.ShowAlert}}" onclick="showApproveSection(this);" /><img title="Reject" class="actionImage2" src="/Images/reject1.png" alt="{{row.entity.TravelRequestId}}" onclick="showRejectSection(this);" /></div>';
+        var actionTemplate = '<div style="float:left;" ng-if="row.entity.ViewActionVisible == true"><a target="_blank" href="api/travelrequestReport/{{row.entity.TravelRequestId}}"><img title="View" class="actionImage" src="/Images/view.png" /></a></div><div style="float:left;" ng-if="row.entity.EditActionVisible == true"><img title="Edit" class="actionImage" src="/Images/edit.png" alt="{{row.entity.TravelRequestId}}" onclick="editTravelRequest(this);" /></div><div style="float:left;"><img title="Cancel" class="actionImage" src="/Images/cancel.jpg" alt="{{row.entity.TravelRequestId}}" onclick="showCancelSection(this);" /></div><div style="float:left;" ng-if="row.entity.ApproveActionVisible == true"><img title="Approve" class="actionImage" src="/Images/approve1.png" alt="{{row.entity.TravelRequestId}}|{{row.entity.ShowAlert}}" onclick="showApproveSection(this);" /><img title="Reject" class="actionImage2" src="/Images/reject1.png" alt="{{row.entity.TravelRequestId}}" onclick="showRejectSection(this);" /></div>';
 
         $scope.columns = [{
                 field: 'TravelRequestId',
@@ -925,7 +925,7 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 name: 'Actions',
                 cellTemplate: actionTemplate,
                 enableFiltering: false,
-                width: 135,
+                width: 155,
                 headerCellClass: "existingrequestcolumnheader",
                 //enableColumnResizing: false,
             }];
