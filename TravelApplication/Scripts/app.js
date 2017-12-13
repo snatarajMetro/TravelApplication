@@ -12,6 +12,7 @@ $(document).ready(function () {
 
     //viewdashboard();
     //createnewrequest();
+    //$("#selectedRoleId").text(4);
     //editTravelRequest();
     //$("#signin").hide();
     //createnewreimbursementrequest();
@@ -337,6 +338,11 @@ function savedataentry()
     var cashAdvanceRequested = $('#txtCashAdvanceRequested').val();
     var dateNeededBy = $('#txtDateNeededBy').val();
 
+    // Other Estimated costs
+    var totalOtherEstimatedLodge = $('#txtTotalOtherEstimatedLodge').val();
+    var totalOtherEstimatedAirFare = $('#txtTotalOtherEstimatedAirfare').val();
+    var totalOtherEstimatedMeals = $('#txtTotalOtherEstimatedMeals').val();
+    var totalOtherEstimatedTotal = $('#txtOtherEstimatedTotal').val();
 
     if (!badgeNumber || badgeNumber.length <= 0)
     {
@@ -492,7 +498,11 @@ function savedataentry()
                     'AdvanceTotal': advanceTotal,
                     'TotalEstimatedTotal': estimatedTotal,
                     'CashAdvance': cashAdvanceRequested,
-                    'DateNeededBy': dateNeededBy
+                    'DateNeededBy': dateNeededBy,
+                    'TotalOtherEstimatedLodge': totalOtherEstimatedLodge,
+                    'TotalOtherEstimatedAirFare': totalOtherEstimatedAirFare,
+                    'TotalOtherEstimatedMeals': totalOtherEstimatedMeals,
+                    'TotalOtherEstimatedTotal': totalOtherEstimatedTotal
                 },
                 "FISData":
                 {
