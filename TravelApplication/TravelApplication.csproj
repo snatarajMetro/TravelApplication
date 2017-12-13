@@ -27,6 +27,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -308,6 +309,7 @@
     <Content Include="Images\approve.png" />
     <Content Include="Images\approve1.png" />
     <Content Include="Images\approve2.png" />
+    <Content Include="Images\cancel.jpg" />
     <Content Include="Images\delete.png" />
     <Content Include="Images\delete2.png" />
     <Content Include="Images\download.png" />
