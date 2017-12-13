@@ -59,6 +59,17 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         }
     }
 
+    $scope.updateTotalOtherEstimatedAmount = function () {
+
+        $scope.FISRequestModel = [{}, {}, {}, {}, {}];
+
+        $scope.totalOtherEstimatedAmount = parseFloat((
+            ($scope.estimatedOtherLodgingAmount * 1)
+            + ($scope.estimatedOtherAirfareAmount * 1)
+            + ($scope.estimatedOtherMealsAmount * 1)
+        ).toFixed(2));
+    }
+
     $scope.BusinessMileRate = 0.555;
 
     $scope.updateFISTotal = function (model) {
@@ -1852,6 +1863,10 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
         $scope.estimatedCarRentalAmount = "";
         $scope.estimatedMiscellaneousAmount = "";
         $scope.totalFISAmount = "";
+        $scope.estimatedOtherLodgingAmount = "";
+        $scope.estimatedOtherAirfareAmount = "";
+        $scope.estimatedOtherMealsAmount = "";
+
         //$scope.totalFISAmount1 = "";
         //$scope.totalFISAmount2 = "";
 
