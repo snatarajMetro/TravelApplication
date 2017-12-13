@@ -629,6 +629,8 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                     $("#row" + currentRowNumberTravelRequest).hide();
                     $("#btnAddRowRequest").prop('disabled', '');
                 });
+
+                //$(".otherestimatecostsection").removeAttr("style");
             });
 
         });
