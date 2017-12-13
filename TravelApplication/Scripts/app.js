@@ -1412,9 +1412,66 @@ function setRejectReason(container)
 
 function showCancelSection(container) {
 
-    //var travelRequestId = $(container).prop('alt');
+    var altObj = $(container).prop('alt');
+    var travelRequestId = altObj.split('|')[0];
+    var travelRequestBadgeNumber = altObj.split('|')[1];
 
-    //var scope = angular.element('#approvetemplate').scope();
-    //scope.loadApproveAction(travelRequestId);
-    //$('#approvetemplate').show();
+    var scope = angular.element('#approvetemplate').scope();
+    scope.loadCancelAction(travelRequestId, travelRequestBadgeNumber);
+    $('#approvetemplate').show();
+}
+
+function cancel() {
+
+    var travelRequestId = $('#travelRequestIdForAction').text();
+    var badgeNumber = $('#signedInUserBadgeNumber').text();
+    var travelrequestBadgeNumber = $('#travelrequestBadgeNumber').text();
+    var comments = $('#txtComments').val();
+    var action = $('#travalAction').text();
+    var url = "api/travelrequest/cancel";
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: JSON.stringify({
+            "TravelRequestId": travelRequestId,
+            "ApproverBadgeNumber": badgeNumber,
+            "TravelRequestBadgeNumber": travelrequestBadgeNumber,
+            "Comments": comments
+        }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+
+            $('#travalAction').text('travelrequest');
+            $("#approvesuccess").fadeIn("fast");
+            $('#approvesuccessmessage').text('Travel request has been successfully canceled.');
+
+            // fade out in 5 seconds
+            $("#approvesuccess").fadeOut("slow");
+
+            $("#approvetemplate").fadeOut("slow");
+
+            // refresh the existing request grid
+            var scope = angular.element('#existingtravelrequeststemplate').scope();
+
+            if (action == "travelreimbursement") {
+                scope.refreshExistingReimbursements();
+            } else {
+                scope.refreshExistingRequest();
+            }
+        },
+        error: function (xhr, options, error) {
+
+            if (xhr.status == 500) {
+                var errorMessage = xhr.responseText;
+
+                $("#approveerror").fadeIn("slow");
+                $('#approveerrormessage').text(errorMessage);
+
+                // fade out in 5 seconds
+                $("#approveerror").fadeOut(fadeOutTimeInMilliseconds);
+            }
+        }
+    });
 }

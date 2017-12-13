@@ -1,0 +1,33 @@
+﻿<div id="cancel">
+    <div class="main actioncontainer">
+        <div id="content" class="content estimatedexpense">
+            <div class="approvaltitle">
+                <span class="travelrequestlabelforaction">Travel Request # :</span>
+                <span id="travelRequestIdForAction" class="travelrequestidforaction">0</span>
+                <span id="travelrequestBadgeNumber" class="travelrequestidforaction" style="display:none;">0</span>
+            </div>
+            <div id="approvesection">
+                <div id="approverAlert" name="approverAlert" class="approveralert" style="display:none;">The submitted date is less than a month away from the meeting date.</div>
+                <div style="float:left;" class="approvaltitle">
+                    <span class="commentsTitle">Comments</span>
+                    <textarea id="txtComments" width="100" class="actioncomments" />
+                </div>
+                <div class="actionbutton">
+                    <input class="btn btn-danger approvebutton" type="button" id="btnApprove" name="btnApprove" value="Cancel" onclick="cancel()" />
+                </div>
+                <div class="cancelbutton">
+                    <input class="btn btn-primary signinbutton" type="button" name="btnCancel" value="Close" onclick="cancelAction()" />
+                </div>
+                <span id="badgeNumberToAction"></span>
+                <div id="approvesuccess" class="main successcontainerok" style="visibility:hidden;">
+                    <span class="dialogSuccess" id="approvesuccessmessage"></span>
+                    <a href="#" class="close-thick" onclick="return closeapprovesuccess();"></a>
+                </div>
+                <div id="approveerror" class="main errorcontainer3" style="display:none">
+                    <span class="dialogerror" id="approveerrormessage"></span>
+                    <a href="#" class="close-thick" onclick="return closeapproveerror();"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
