@@ -629,8 +629,6 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                     $("#row" + currentRowNumberTravelRequest).hide();
                     $("#btnAddRowRequest").prop('disabled', '');
                 });
-
-                //$(".otherestimatecostsection").removeAttr("style");
             });
 
         });
@@ -1928,6 +1926,14 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
                 // set fis section
                 $('#txtFISTotal').val($scope.Data.FISData.TotalAmount);
+
+                // Display Other estimated cost section, only if logged-in as "Admin" role
+                var selectedRoleId = $("#selectedRoleId").text();
+
+                // Admin role
+                if (selectedRoleId == 4) {
+                    $(".otherestimatecostsection").removeAttr("style");
+                }
 
                 // set FIS expense section
                 if ($scope.Data.FISData) {
