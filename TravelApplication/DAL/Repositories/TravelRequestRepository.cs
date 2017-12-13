@@ -508,11 +508,11 @@ namespace TravelApplication.Services
                     // Get the approval badgeNumber 
                     var result = 0;
                     string query = string.Format(@"SELECT
-	                                                    BADGENUMBER
+	                                                    BADGENUMBER,APPROVEROTHERBADGENUMBER
                                                     FROM
 	                                                    (
 		                                                    SELECT
-			                                                    BADGENUMBER
+			                                                    BADGENUMBER, APPROVEROTHERBADGENUMBER
 		                                                    FROM
 			                                                    TRAVELREQUEST_APPROVAL
 		                                                    WHERE
@@ -536,6 +536,10 @@ namespace TravelApplication.Services
                         while (dataReader.Read())
                         {
                             result = Convert.ToInt32(dataReader["BADGENUMBER"].ToString());
+                            if (result == -1)
+                            {
+                                result = Convert.ToInt32(dataReader["APPROVEROTHERBADGENUMBER"].ToString());
+                            }
                         }
                         if (result != null || result != 0)
                         {
