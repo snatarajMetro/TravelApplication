@@ -24,5 +24,8 @@ namespace TravelApplication.Models
         public string StrDepartureDateTime { get; set; }
         public string StrReturnDateTime { get; set; }
 
+        public decimal TAEstimatedLodge { get; set; }
+        public decimal TAEstimatedAirFare { get; set; }
+        public decimal TAEstimatedMeals { get; set; }
     }
 }

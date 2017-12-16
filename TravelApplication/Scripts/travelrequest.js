@@ -2114,6 +2114,11 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 
                 $scope.totalCashAdvanceAmount = data.CashAdvance;
 
+                // Set TA other expense amounts
+                $("#lblTAAirfare").html("$" + data.TravelReimbursementDetails.TAEstimatedAirFare);
+                $("#lblTALodging").html("$" + data.TravelReimbursementDetails.TAEstimatedLodge);
+                $("#lblTAMeals").html("$" + data.TravelReimbursementDetails.TAEstimatedMeals);
+
                 // Set FIS section
                 angular.forEach(data.Fis.FISDetails, function (value, index) {
 

@@ -32,5 +32,7 @@ namespace TravelApplication.Models
         public int BadgeNumber { get; set; }
 
         public string Purpose { get; set; }
+
+        public bool CancelActionVisible { get; set; }
     }
 }
