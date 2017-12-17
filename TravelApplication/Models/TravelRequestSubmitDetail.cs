@@ -42,6 +42,8 @@ namespace TravelApplication.Models
         public bool Agree { get; set; }
 
         public string SubmitterName { get; set; }
+
+        public bool RejectedTravelRequest { get; set; }
     }
 
     public class TravelRequestSubmitDetailResponse

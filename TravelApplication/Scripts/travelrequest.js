@@ -1068,6 +1068,13 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 $("#ddlCEOForAPTA").val(parseInt(data.TravelRequestSubmitDetail.CEOAPTABadgeNumber));
             }
 
+            
+            if (data.TravelRequestSubmitDetail.RejectedTravelRequest) {
+                // Hide following approvers when editing a rejected travel request
+                // Executive Officer, CEO International, CEO APTA/CTA
+                $("#additionalApprovers").hide();
+            }
+
             // Set Travel Coordinator
             if (parseInt(data.TravelRequestSubmitDetail.TravelCoordinatorBadgeNumber) == -1) {
 
