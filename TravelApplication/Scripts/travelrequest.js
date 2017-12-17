@@ -1,7 +1,7 @@
 ﻿var app = angular.module('travelApp', ['ui.grid', 'ui.grid.pagination','ui.grid.resizeColumns']);
 //var app = angular.module('travelApp', ['ui.grid']);
 
-app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
+app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridConstants) {
 
     // Estimated Expense section
     //$scope.advanceLodgingAmount = 0.00;
@@ -828,9 +828,10 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
     }
 
     // load existing travel requests
-    $scope.loadExistingTravelRequests = function () {
+    $scope.loadExistingTravelRequests = function (status) {
 
         var actionTemplate = '<div style="float:left;" ng-if="row.entity.ViewActionVisible == true"><a target="_blank" href="api/travelrequestReport/{{row.entity.TravelRequestId}}"><img title="View" class="actionImage" src="/Images/view.png" /></a></div><div style="float:left;" ng-if="row.entity.EditActionVisible == true"><img title="Edit" class="actionImage" src="/Images/edit.png" alt="{{row.entity.TravelRequestId}}" onclick="editTravelRequest(this);" /></div><div style="float:left;"><img title="Cancel" class="actionImage" src="/Images/cancel.jpg" alt="{{row.entity.TravelRequestId}}|{{row.entity.BadgeNumber}}" onclick="showCancelSection(this);" /></div><div style="float:left;" ng-if="row.entity.ApproveActionVisible == true"><img title="Approve" class="actionImage" src="/Images/approve1.png" alt="{{row.entity.TravelRequestId}}|{{row.entity.ShowAlert}}" onclick="showApproveSection(this);" /><img title="Reject" class="actionImage2" src="/Images/reject1.png" alt="{{row.entity.TravelRequestId}}" onclick="showRejectSection(this);" /></div>';
+        //alert(status);
 
         $scope.columns = [{
                 field: 'TravelRequestId',
@@ -918,7 +919,18 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 headerCellClass: "existingrequestcolumnheader",
                 cellClass: "existingrequestcolumnvalue",
                 filter: {
-                    placeholder: '🔎 search'
+                    placeholder: 'search',
+                    term:status,
+                    type: uiGridConstants.filter.SELECT,
+                    selectOptions: [
+                        { value:"", label: 'All' },
+                        { value: "Cancelled", label: 'Cancelled' },
+                        { value: "Completed", label: 'Completed' },
+                        { value: "New", label: 'New' },
+                        { value: "Pending", label: 'Pending' },
+                        { value: "Rejected", label: 'Rejected' }
+                    ],
+                    disableCancelFilterButton: true
                 }
             },
             {
@@ -2987,15 +2999,16 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
             valueMargin = 7,
             width = 600,//parseInt(d3.select('body').style('width'), 10),
             height = 250,//parseInt(d3.select('body').style('height'), 10),
-            barHeight = 25,//(height-axisMargin-margin*2)* 0.4/data.length,
-            barPadding = 20,//(height-axisMargin-margin*2)*0.6/data.length,
+            barHeight = 22,//(height-axisMargin-margin*2)* 0.4/data.length,
+            barPadding = 18,//(height-axisMargin-margin*2)*0.6/data.length,
             bar, svg, scale, xAxis, labelWidth = 0;
 
         var data = [
                     { label: "New", value: 19, color: "orange" },
-                    { label: "Pending Approval", value: 5, color: "dodgerblue" },
+                    { label: "Pending", value: 5, color: "dodgerblue" },
                     { label: "Rejected", value: 23, color: "red" },
-                    { label: "Complete", value: 17, color: "green" }
+                    { label: "Completed", value: 17, color: "green" },
+                    { label: "Cancelled", value: 9, color: "purple" }
         ];
 
         max = d3.max(data, function (d) { return d.value; });
@@ -3094,15 +3107,16 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
             valueMargin = 7,
             width = 600,//parseInt(d3.select('body').style('width'), 10),
             height = 250,//parseInt(d3.select('body').style('height'), 10),
-            barHeight = 25,//(height-axisMargin-margin*2)* 0.4/data.length,
-            barPadding = 20,//(height-axisMargin-margin*2)*0.6/data.length,
+            barHeight = 22,//(height-axisMargin-margin*2)* 0.4/data.length,
+            barPadding = 18,//(height-axisMargin-margin*2)*0.6/data.length,
             bar, svg, scale, xAxis, labelWidth = 0;
 
         var data = [
                     { label: "New", value: 9, color: "orange" },
-                    { label: "Pending Approval", value: 35, color: "dodgerblue" },
+                    { label: "Pending", value: 35, color: "dodgerblue" },
                     { label: "Rejected", value: 3, color: "red" },
-                    { label: "Complete", value: 12, color: "green" }
+                    { label: "Completed", value: 12, color: "green" },
+                    { label: "Cancelled", value: 7, color: "purple" }
         ];
 
         max = d3.max(data, function (d) { return d.value; });
@@ -3201,19 +3215,22 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
 
     function drillDownTravelRequest(d, i) {
         var status = d.label;
+        $('#dashboardtemplate').hide();
+        $('#fromDashboard').text("true");
+        viewexistingtravelrequests(status);
     }
 
     function loadTravelRequestPieChartGraph()
     {
-        var data = [23, 5, 17, 19];
+        var data = [23, 5, 17, 19, 9];
         var r = 95;
-        var totalCount = 64;
+        var totalCount = 73;
 
         var color = d3.scale.ordinal()
-                    .range(["red", "dodgerblue", "green", "orange"]);
+                    .range(["red", "dodgerblue", "green", "orange","purple"]);
 
         var legendText = d3.scale.ordinal()
-                    .range(["Rejected", "Pending Approval", "Complete", "New"]);
+                    .range(["Rejected", "Pending", "Completed", "New", "Cancelled"]);
 
         var canvas = d3.select('#travelrequestpiechartsection')
                     .append("svg")
@@ -3238,8 +3255,15 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 .attr("class", "arc");
 
         arcs.append("path")
-        .attr("d", arc)
-        .attr("fill", function (d) { return color(d.data); });
+            .attr("d", arc)
+            .attr("class", "cursor")
+            .on("click", function (d, i) {
+                var status = legendText(i);
+                $('#dashboardtemplate').hide();
+                $('#fromDashboard').text("true");
+                viewexistingtravelrequests(status);
+            })
+            .attr("fill", function (d) { return color(d.data); });
 
         arcs.append("text")
         .attr("transform", function (d) { return "translate(" + arc.centroid(d) + ")"; })
@@ -3292,20 +3316,24 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
             .attr("x", -300)
             .attr("y", 155)
             .attr("class", "linkpiechart")
-            .on("click", viewexistingtravelrequests2)
+            .on("click", function (d, i) {
+                $('#dashboardtemplate').hide();
+                $('#fromDashboard').text("true");
+                viewexistingtravelrequests("");
+            })
             .text("View all travel requests");
     }
 
     function loadTravelReimbursementPieChartGraph() {
-        var data = [3, 35, 12, 9];
+        var data = [3, 35, 12, 9, 7];
         var r = 95;
-        var totalCount = 59;
+        var totalCount = 66;
 
         var color = d3.scale.ordinal()
-                    .range(["red", "dodgerblue", "green", "orange"]);
+                    .range(["red", "dodgerblue", "green", "orange", "purple"]);
 
         var legendText = d3.scale.ordinal()
-                    .range(["Rejected", "Pending Approval", "Complete", "New"]);
+                    .range(["Rejected", "Pending", "Completed", "New", "Cancelled"]);
 
         var canvas = d3.select('#travelreimbursementpiechartsection')
                     .append("svg")
@@ -3368,6 +3396,9 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
                 if (i == 3) {
                     c = 'orange';
                 }
+                else if (i == 4) {
+                    c = 'purple';
+                }
                 return c;
             });
 
@@ -3384,7 +3415,11 @@ app.controller('travelAppCtrl', function ($scope, $compile,$timeout) {
             .attr("x", -300)
             .attr("y", 155)
             .attr("class", "linkpiechart")
-            .on("click", viewexistingreimbursements2)
+            .on("click", function (d, i) {
+                $('#dashboardtemplate').hide();
+                $('#fromDashboard').text("true");
+                viewexistingtravelrequests("");
+            })
             .text("View all travel reimbursements");
     }
 });

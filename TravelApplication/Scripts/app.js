@@ -23,6 +23,7 @@ $(document).ready(function () {
     //viewexistingreimbursements();
     //showApproveSection();
 
+    
   });
 
 function setTwoDecimal(el) {
@@ -210,14 +211,14 @@ function createnewrequest() {
     scope.loadCostCenters();
 }
 
-function viewexistingtravelrequests() {
+function viewexistingtravelrequests(status) {
     $("#action").hide();
 
     $('#travalAction').text('travelrequest');
 
     //reset estimated expense section
     var scope = angular.element('#existingtravelrequeststemplate').scope();
-    scope.loadExistingTravelRequests();
+    scope.loadExistingTravelRequests(status);
     scope.loadApproveAction();
     scope.loadRejectAction();
     scope.loadCostCenters();
@@ -246,9 +247,16 @@ function backtoactionselection() {
         //$("#existingtravelrequeststemplate").show();
     }
     else {
-        // else, take them to action selection modal
-        $('#travelRequestId').text(0);
-        $("#action").show();
+        if ($('#fromDashboard').text() == "true") {
+            $('#fromDashboard').text("false");
+            $('#existingtravelrequeststemplate').hide();
+            $('#dashboardtemplate').show();
+        }
+        else {
+            // else, take them to action selection modal
+            $('#travelRequestId').text(0);
+            $("#action").show();
+        }
     }
 }
 
