@@ -2994,16 +2994,25 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         .always(function (data) {
             $('#dashboardtemplate').html($compile($(data).html())($scope));
             $scope.$apply(function () {
-                loadTravelRequestBarGraph();
-                loadTravelReimbursementBarGraph();
 
-                loadTravelRequestPieChartGraph();
-                loadTravelReimbursementPieChartGraph();
+                // get the data from travel request dashboard
+                $.get('api/travelrequest/dashboard')
+                    .done(function (result) {
+                        loadTravelRequestBarGraph(JSON.parse(result));
+                        loadTravelRequestPieChartGraph(JSON.parse(result));
+                    });
+
+                // get the data from travel reimbursement dashboard
+                $.get('api/travelreimbursement/dashboard')
+                    .done(function (result) {
+                        loadTravelReimbursementBarGraph(JSON.parse(result));
+                        loadTravelReimbursementPieChartGraph(JSON.parse(result));
+                    });
             });
         });
     }
 
-    function loadTravelRequestBarGraph()
+    function loadTravelRequestBarGraph(data)
     {
         var axisMargin = 20,
             margin = 20,
@@ -3014,15 +3023,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             barPadding = 18,//(height-axisMargin-margin*2)*0.6/data.length,
             bar, svg, scale, xAxis, labelWidth = 0;
 
-        var data = [
-                    { label: "New", value: 19, color: "orange" },
-                    { label: "Pending", value: 5, color: "dodgerblue" },
-                    { label: "Rejected", value: 23, color: "red" },
-                    { label: "Completed", value: 17, color: "green" },
-                    { label: "Cancelled", value: 9, color: "purple" }
-        ];
-
-        max = d3.max(data, function (d) { return d.value; });
+        max = d3.max(data, function (d) { return d.Value; });
 
         svg = d3.select('#travelrequestbargraphsection')
                 .append("svg")
@@ -3049,7 +3050,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 .attr("y", barHeight / 2)
                 .attr("dy", ".35em") //vertical align middle		
                 .text(function (d) {
-                    return d.label;
+                    return d.Label;
                 })
                 .each(function () {
                     labelWidth = Math.ceil(Math.max(labelWidth, this.getBBox().width)) + 2;
@@ -3070,10 +3071,10 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 .attr("class", "cursor")
                 .on("click", drillDownTravelRequest)
                 .style("fill", function (d) {
-                    return d.color;
+                    return d.Color;
                 })
                 .attr("width", function (d) {
-                    return scale(d.value);
+                    return scale(d.Value);
                 });
 
         bar.append("text")
@@ -3083,12 +3084,12 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 .attr("dy", ".35em") //vertical align middle
                 .attr("text-anchor", "end")
                 .text(function (d) {
-                    return (d.value);
+                    return (d.Value);
                 })
                 .style("fill", "white")
                 .attr("x", function (d) {
                     var width = this.getBBox().width;
-                    return Math.max(width + valueMargin, scale(d.value));
+                    return Math.max(width + valueMargin, scale(d.Value));
                 });
 
         svg.append("text")
@@ -3112,7 +3113,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 .call(xAxis);
     }
 
-    function loadTravelReimbursementBarGraph() {
+    function loadTravelReimbursementBarGraph(data) {
         var axisMargin = 20,
             margin = 20,
             valueMargin = 7,
@@ -3122,82 +3123,74 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             barPadding = 18,//(height-axisMargin-margin*2)*0.6/data.length,
             bar, svg, scale, xAxis, labelWidth = 0;
 
-        var data = [
-                    { label: "New", value: 9, color: "orange" },
-                    { label: "Pending", value: 35, color: "dodgerblue" },
-                    { label: "Rejected", value: 3, color: "red" },
-                    { label: "Completed", value: 12, color: "green" },
-                    { label: "Cancelled", value: 7, color: "purple" }
-        ];
-
-        max = d3.max(data, function (d) { return d.value; });
+        max = d3.max(data, function (d) { return d.Value; });
 
         svg = d3.select('#travelreimbursementbargraphsection')
-                .append("svg")
-                //.attr("style", "outline: thin solid gray;")
-                .attr("class", "svgclass")
-                .attr("width", width)
-                .attr("height", height);
+            .append("svg")
+            //.attr("style", "outline: thin solid gray;")
+            .attr("class", "svgclass")
+            .attr("width", width)
+            .attr("height", height);
 
 
         bar = svg.selectAll("g")
-                .data(data)
-                .enter()
-                .append("g");
+            .data(data)
+            .enter()
+            .append("g");
 
 
         bar.attr("class", "bar")
-                .attr("cx", 0)
-                .attr("transform", function (d, i) {
-                    return "translate(" + margin + "," + (i * (barHeight + barPadding) + barPadding) + ")";
-                });
+            .attr("cx", 0)
+            .attr("transform", function (d, i) {
+                return "translate(" + margin + "," + (i * (barHeight + barPadding) + barPadding) + ")";
+            });
 
         bar.append("text")
-                .attr("class", "label2")
-                .attr("y", barHeight / 2)
-                .attr("dy", ".35em") //vertical align middle		
-                .text(function (d) {
-                    return d.label;
-                })
-                .each(function () {
-                    labelWidth = Math.ceil(Math.max(labelWidth, this.getBBox().width)) + 2;
-                });
+            .attr("class", "label2")
+            .attr("y", barHeight / 2)
+            .attr("dy", ".35em") //vertical align middle		
+            .text(function (d) {
+                return d.Label;
+            })
+            .each(function () {
+                labelWidth = Math.ceil(Math.max(labelWidth, this.getBBox().width)) + 2;
+            });
 
         scale = d3.scale.linear()
-                .domain([0, max])
-                .range([0, width - margin * 2 - labelWidth]);
+            .domain([0, max])
+            .range([0, width - margin * 2 - labelWidth]);
 
         xAxis = d3.svg.axis()
-                .scale(scale)
-                .tickSize(-height + 2 * margin + axisMargin)
-                .orient("bottom");
+            .scale(scale)
+            .tickSize(-height + 2 * margin + axisMargin)
+            .orient("bottom");
 
         bar.append("rect")
-                .attr("transform", "translate(" + labelWidth + ", 0)")
-                .attr("height", barHeight)
-                .attr("class", "cursor")
-                .on("click", drillDownTravelReimbursement)
-                .style("fill", function (d) {
-                    return d.color;
-                })
-                .attr("width", function (d) {
-                    return scale(d.value);
-                });
+            .attr("transform", "translate(" + labelWidth + ", 0)")
+            .attr("height", barHeight)
+            .attr("class", "cursor")
+            .on("click", drillDownTravelReimbursement)
+            .style("fill", function (d) {
+                return d.Color;
+            })
+            .attr("width", function (d) {
+                return scale(d.Value);
+            });
 
         bar.append("text")
-                .attr("class", "value")
-                .attr("y", barHeight / 2)
-                .attr("dx", -valueMargin + labelWidth) //margin right
-                .attr("dy", ".35em") //vertical align middle
-                .attr("text-anchor", "end")
-                .text(function (d) {
-                    return (d.value);
-                })
-                .style("fill", "white")
-                .attr("x", function (d) {
-                    var width = this.getBBox().width;
-                    return Math.max(width + valueMargin, scale(d.value));
-                });
+            .attr("class", "value")
+            .attr("y", barHeight / 2)
+            .attr("dx", -valueMargin + labelWidth) //margin right
+            .attr("dy", ".35em") //vertical align middle
+            .attr("text-anchor", "end")
+            .text(function (d) {
+                return (d.Value);
+            })
+            .style("fill", "white")
+            .attr("x", function (d) {
+                var width = this.getBBox().width;
+                return Math.max(width + valueMargin, scale(d.Value));
+            });
 
         svg.append("text")
             .attr("x", height + 70)
@@ -3215,58 +3208,52 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             .text("# of travel reimbursements");
 
         svg.insert("g", ":first-child")
-                .attr("class", "axisHorizontal")
-                .attr("transform", "translate(" + (margin + labelWidth) + "," + (height - axisMargin - margin) + ")")
-                .call(xAxis);
+            .attr("class", "axisHorizontal")
+            .attr("transform", "translate(" + (margin + labelWidth) + "," + (height - axisMargin - margin) + ")")
+            .call(xAxis);
     }
 
-    function drillDownTravelReimbursement(d, i) {
-        var status = d.label;
-        $('#dashboardtemplate').hide();
-        $('#fromDashboard').text("true");
-        viewexistingreimbursements(status);
-    }
+    function loadTravelRequestPieChartGraph(data) {
+        var values = [];
+        var colors = [];
+        var legends = [];
+        var totalCount = 0;
+        var outerRadius = 95;
+        var innerRadius = 150;
 
-    function drillDownTravelRequest(d, i) {
-        var status = d.label;
-        $('#dashboardtemplate').hide();
-        $('#fromDashboard').text("true");
-        viewexistingtravelrequests(status);
-    }
+        for (index in data) {
 
-    function loadTravelRequestPieChartGraph()
-    {
-        var data = [23, 5, 17, 19, 9];
-        var r = 95;
-        var totalCount = 73;
+            values.push(data[index].Value);
+            colors.push(data[index].Color);
+            legends.push(data[index].Label);
 
-        var color = d3.scale.ordinal()
-                    .range(["red", "dodgerblue", "green", "orange","purple"]);
+            totalCount += data[index].Value;
+        }
 
-        var legendText = d3.scale.ordinal()
-                    .range(["Rejected", "Pending", "Completed", "New", "Cancelled"]);
+        var color = d3.scale.ordinal().range(colors);
+        var legendText = d3.scale.ordinal().range(legends);
 
         var canvas = d3.select('#travelrequestpiechartsection')
-                    .append("svg")
-                    .attr("class", "svgclass2")
-                    .attr("width", 200)
-                    .attr("height", 200);
+            .append("svg")
+            .attr("class", "svgclass2")
+            .attr("width", 200)
+            .attr("height", 200);
 
         var group = canvas.append("g")
-                    .attr("transform", "translate(325,275)");
+            .attr("transform", "translate(325,275)");
 
         var arc = d3.svg.arc()
-        .innerRadius(150)
-        .outerRadius(r);
+            .innerRadius(innerRadius)
+            .outerRadius(outerRadius);
 
         var pie = d3.layout.pie()
-        .value(function (d) { return d; });
+            .value(function (d) { return d; });
 
         var arcs = group.selectAll(".arc")
-                .data(pie(data))
-                .enter()
-                .append("g")
-                .attr("class", "arc");
+            .data(pie(values))
+            .enter()
+            .append("g")
+            .attr("class", "arc");
 
         arcs.append("path")
             .attr("d", arc)
@@ -3280,18 +3267,18 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             .attr("fill", function (d) { return color(d.data); });
 
         arcs.append("text")
-        .attr("transform", function (d) { return "translate(" + arc.centroid(d) + ")"; })
-        .attr("text-anchor", "middle")
-        .style("font-size", "18px")
-        .style("fill", "white")
-        .text(function (d) { return d.data; });
+            .attr("transform", function (d) { return "translate(" + arc.centroid(d) + ")"; })
+            .attr("text-anchor", "middle")
+            .style("font-size", "18px")
+            .style("fill", "white")
+            .text(function (d) { return d.data; });
 
         arcs.append("text")
-        .attr("class", "totalcount")
-	    .attr("text-anchor", "middle")
-        .attr("x", 1)
-         .attr("y", 20)
-	    .text(totalCount);
+            .attr("class", "totalcount")
+            .attr("text-anchor", "middle")
+            .attr("x", 1)
+            .attr("y", 20)
+            .text(totalCount);
 
         var textTop = arcs.append("text")
             .attr("dy", ".35em")
@@ -3302,7 +3289,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             .attr("y", -10);
 
         var legend = arcs
-          .attr("class", "legend");
+            .attr("class", "legend");
 
         arcs.append("rect")
             .attr("width", 10)
@@ -3310,11 +3297,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             .attr("x", -290)
             .attr("y", function (d, i) { return -170 + (i * 30); })
             .style("fill", function (d, i) {
-                var c = color(i);
-                if (i == 3) {
-                    c = 'orange';
-                }
-                return c;
+                return colors[i];
             });
 
         arcs.append("text")
@@ -3338,7 +3321,238 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             .text("View all travel requests");
     }
 
-    function loadTravelReimbursementPieChartGraph() {
+    function loadTravelReimbursementPieChartGraph(data) {
+        var values = [];
+        var colors = [];
+        var legends = [];
+        var totalCount = 0;
+        var outerRadius = 95;
+        var innerRadius = 150;
+
+        for (index in data) {
+
+            values.push(data[index].Value);
+            colors.push(data[index].Color);
+            legends.push(data[index].Label);
+
+            totalCount += data[index].Value;
+        }
+
+        var color = d3.scale.ordinal().range(colors);
+        var legendText = d3.scale.ordinal().range(legends);
+
+        var canvas = d3.select('#travelreimbursementpiechartsection')
+            .append("svg")
+            .attr("class", "svgclass2")
+            .attr("width", 200)
+            .attr("height", 200);
+
+        var group = canvas.append("g")
+            .attr("transform", "translate(325,275)");
+
+        var arc = d3.svg.arc()
+            .innerRadius(innerRadius)
+            .outerRadius(outerRadius);
+
+        var pie = d3.layout.pie()
+            .value(function (d) { return d; });
+
+        var arcs = group.selectAll(".arc")
+            .data(pie(values))
+            .enter()
+            .append("g")
+            .attr("class", "arc");
+
+        arcs.append("path")
+            .attr("d", arc)
+            .attr("class", "cursor")
+            .on("click", function (d, i) {
+                var status = legendText(i);
+                $('#dashboardtemplate').hide();
+                $('#fromDashboard').text("true");
+                viewexistingreimbursements(status);
+            })
+            .attr("fill", function (d) { return color(d.data); });
+
+        arcs.append("text")
+            .attr("transform", function (d) { return "translate(" + arc.centroid(d) + ")"; })
+            .attr("text-anchor", "middle")
+            .style("font-size", "18px")
+            .style("fill", "white")
+            .text(function (d) { return d.data; });
+
+        arcs.append("text")
+            .attr("class", "totalcount")
+            .attr("text-anchor", "middle")
+            .attr("x", 1)
+            .attr("y", 20)
+            .text(totalCount);
+
+        var textTop = arcs.append("text")
+            .attr("dy", ".35em")
+            .style("text-anchor", "middle")
+            .attr("class", "textTop")
+            .text("TOTAL")
+            .attr("x", 5)
+            .attr("y", -10);
+
+        var legend = arcs
+            .attr("class", "legend");
+
+        arcs.append("rect")
+            .attr("width", 10)
+            .attr("height", 10)
+            .attr("x", -290)
+            .attr("y", function (d, i) { return -170 + (i * 30); })
+            .style("fill", function (d, i) {
+                return colors[i];
+            });
+
+        arcs.append("text")
+            .style("font-size", "12px")
+            .attr("x", -276)
+            .attr("y", function (d, i) { return -160 + (i * 30); })
+            .text(function (d, i) {
+                var c = legendText(i);
+                return c;
+            });
+
+        arcs.append("text")
+            .attr("x", -300)
+            .attr("y", 155)
+            .attr("class", "linkpiechart")
+            .on("click", function (d, i) {
+                $('#dashboardtemplate').hide();
+                $('#fromDashboard').text("true");
+                viewexistingreimbursements("");
+            })
+            .text("View all travel reimbursements");
+    }
+
+    function drillDownTravelReimbursement(d, i) {
+        var status = d.label;
+        $('#dashboardtemplate').hide();
+        $('#fromDashboard').text("true");
+        viewexistingreimbursements(status);
+    }
+
+    function drillDownTravelRequest(d, i) {
+        var status = d.label;
+        $('#dashboardtemplate').hide();
+        $('#fromDashboard').text("true");
+        viewexistingtravelrequests(status);
+    }
+
+    function loadTravelReimbursementBarGraphOld() {
+
+        var axisMargin = 20,
+            margin = 20,
+            valueMargin = 7,
+            width = 600,//parseInt(d3.select('body').style('width'), 10),
+            height = 250,//parseInt(d3.select('body').style('height'), 10),
+            barHeight = 22,//(height-axisMargin-margin*2)* 0.4/data.length,
+            barPadding = 18,//(height-axisMargin-margin*2)*0.6/data.length,
+            bar, svg, scale, xAxis, labelWidth = 0;
+
+        var data = [
+            { label: "New", value: 9, color: "orange" },
+            { label: "Pending", value: 35, color: "dodgerblue" },
+            { label: "Rejected", value: 3, color: "red" },
+            { label: "Completed", value: 12, color: "green" },
+            { label: "Cancelled", value: 7, color: "purple" }
+        ];
+
+        max = d3.max(data, function (d) { return d.value; });
+
+        svg = d3.select('#travelreimbursementbargraphsection')
+            .append("svg")
+            //.attr("style", "outline: thin solid gray;")
+            .attr("class", "svgclass")
+            .attr("width", width)
+            .attr("height", height);
+
+
+        bar = svg.selectAll("g")
+            .data(data)
+            .enter()
+            .append("g");
+
+
+        bar.attr("class", "bar")
+            .attr("cx", 0)
+            .attr("transform", function (d, i) {
+                return "translate(" + margin + "," + (i * (barHeight + barPadding) + barPadding) + ")";
+            });
+
+        bar.append("text")
+            .attr("class", "label2")
+            .attr("y", barHeight / 2)
+            .attr("dy", ".35em") //vertical align middle		
+            .text(function (d) {
+                return d.label;
+            })
+            .each(function () {
+                labelWidth = Math.ceil(Math.max(labelWidth, this.getBBox().width)) + 2;
+            });
+
+        scale = d3.scale.linear()
+            .domain([0, max])
+            .range([0, width - margin * 2 - labelWidth]);
+
+        xAxis = d3.svg.axis()
+            .scale(scale)
+            .tickSize(-height + 2 * margin + axisMargin)
+            .orient("bottom");
+
+        bar.append("rect")
+            .attr("transform", "translate(" + labelWidth + ", 0)")
+            .attr("height", barHeight)
+            .attr("class", "cursor")
+            .on("click", drillDownTravelReimbursement)
+            .style("fill", function (d) {
+                return d.color;
+            })
+            .attr("width", function (d) {
+                return scale(d.value);
+            });
+
+        bar.append("text")
+            .attr("class", "value")
+            .attr("y", barHeight / 2)
+            .attr("dx", -valueMargin + labelWidth) //margin right
+            .attr("dy", ".35em") //vertical align middle
+            .attr("text-anchor", "end")
+            .text(function (d) {
+                return (d.value);
+            })
+            .style("fill", "white")
+            .attr("x", function (d) {
+                var width = this.getBBox().width;
+                return Math.max(width + valueMargin, scale(d.value));
+            });
+
+        svg.append("text")
+            .attr("x", height + 70)
+            .attr("y", barHeight - 10)
+            .attr("text-anchor", "middle")
+            .style("font-size", "13px")
+            .style("font-weight", "bold")
+            .text("TRAVEL REIMBURSEMENTS");
+
+        svg.append("text")
+            .attr("x", height + 70)
+            .attr("y", barHeight + 215)
+            .attr("text-anchor", "middle")
+            .attr("class", "titlelabel")
+            .text("# of travel reimbursements");
+
+        svg.insert("g", ":first-child")
+            .attr("class", "axisHorizontal")
+            .attr("transform", "translate(" + (margin + labelWidth) + "," + (height - axisMargin - margin) + ")")
+            .call(xAxis);
+    }
+
+    function loadTravelReimbursementPieChartGraphOld() {
         var data = [3, 35, 12, 9, 7];
         var r = 95;
         var totalCount = 66;

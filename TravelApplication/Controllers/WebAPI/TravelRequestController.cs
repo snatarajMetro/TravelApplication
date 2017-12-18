@@ -238,8 +238,64 @@ namespace TravelApplication.Controllers.WebAPI
             return response;
         }
 
+        [HttpGet]
+        [Route("api/travelrequest/dashboard")]
+        public HttpResponseMessage GetTravelRequestDashboard()
+        {
+            HttpResponseMessage response = null;
+
+            var result = new List<TravelRequestDashboard>();
+            result.Add(new TravelRequestDashboard() { Label = "New", Color = "orange", Value = 19 });
+            result.Add(new TravelRequestDashboard() { Label = "Pending", Color = "dodgerblue", Value = 5 });
+            result.Add(new TravelRequestDashboard() { Label = "Rejected", Color = "red", Value = 23 });
+            result.Add(new TravelRequestDashboard() { Label = "Completed", Color = "green", Value = 17 });
+            result.Add(new TravelRequestDashboard() { Label = "Cancelled", Color = "purple", Value = 9 });
+
+            var data = new JavaScriptSerializer().Serialize(result);
+
+            response = Request.CreateResponse(HttpStatusCode.OK, data);
+
+            return response;
+        }
+
+        [HttpGet]
+        [Route("api/travelreimbursement/dashboard")]
+        public HttpResponseMessage GetTravelReimbursementtDashboard()
+        {
+            HttpResponseMessage response = null;
+
+            var result = new List<TravelReimbursementDashboard>();
+            result.Add(new TravelReimbursementDashboard() { Label = "New", Color = "orange", Value = 9 });
+            result.Add(new TravelReimbursementDashboard() { Label = "Pending", Color = "dodgerblue", Value = 35 });
+            result.Add(new TravelReimbursementDashboard() { Label = "Rejected", Color = "red", Value = 3 });
+            result.Add(new TravelReimbursementDashboard() { Label = "Completed", Color = "green", Value = 12 });
+            result.Add(new TravelReimbursementDashboard() { Label = "Cancelled", Color = "purple", Value = 7 });
+
+            var data = new JavaScriptSerializer().Serialize(result);
+
+            response = Request.CreateResponse(HttpStatusCode.OK, data);
+
+            return response;
+        }
     }
 
+    public class TravelRequestDashboard
+    {
+        public string Label { get; set; }
+
+        public int Value { get; set; }
+
+        public string Color { get; set; }
+    }
+
+    public class TravelReimbursementDashboard
+    {
+        public string Label { get; set; }
+
+        public int Value { get; set; }
+
+        public string Color { get; set; }
+    }
 }
 
   
