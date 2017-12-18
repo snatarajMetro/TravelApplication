@@ -915,7 +915,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             {
                 field: 'Status',
                 displayName: 'Status',
-                //width: 120,
+                width: 120,
                 headerCellClass: "existingrequestcolumnheader",
                 cellClass: "existingrequestcolumnvalue",
                 filter: {
@@ -2292,7 +2292,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         });
     }
 
-    $scope.loadExistingTravelReimbursementRequests = function () {
+    $scope.loadExistingTravelReimbursementRequests = function (status) {
 
         var actionTemplate = '<div style="float:left;" ng-if="row.entity.ViewActionVisible == true"><a target="_blank" href="api/travelReimbursementReport/{{row.entity.TravelRequestId}}"><img title="View" class="actionImage" src="/Images/view.png" /></a></div><div style="float:left;" ng-if="row.entity.EditActionVisible == true"><img title="Edit" class="actionImage" src="/Images/edit.png" alt="{{row.entity.TravelRequestId}}|{{row.entity.ReimbursementId}}" onclick="editTravelReimbursement(this);" /></div> <div ng-if="row.entity.ApproveActionVisible == true"><img title="Approve" class="actionImage" src="/Images/approve1.png" alt="{{row.entity.TravelRequestId}}" onclick="showApproveSection2(this);" /><img title="Reject" class="actionImage2" src="/Images/reject1.png" alt="{{row.entity.TravelRequestId}}" onclick="showRejectSection2(this);" /></div>';
 
@@ -2389,11 +2389,22 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             {
                 field: 'Status',
                 displayName: 'Status',
-                //width: 120,
+                width: 120,
                 headerCellClass: "existingrequestcolumnheader",
                 cellClass: "existingrequestcolumnvalue",
                 filter: {
-                    placeholder: '🔎 search'
+                    placeholder: 'search',
+                    term: status,
+                    type: uiGridConstants.filter.SELECT,
+                    selectOptions: [
+                        { value: "", label: 'All' },
+                        { value: "Cancelled", label: 'Cancelled' },
+                        { value: "Completed", label: 'Completed' },
+                        { value: "New", label: 'New' },
+                        { value: "Pending", label: 'Pending' },
+                        { value: "Rejected", label: 'Rejected' }
+                    ],
+                    disableCancelFilterButton: true
                 }
             },
             {
@@ -3211,6 +3222,9 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
     function drillDownTravelReimbursement(d, i) {
         var status = d.label;
+        $('#dashboardtemplate').hide();
+        $('#fromDashboard').text("true");
+        viewexistingreimbursements(status);
     }
 
     function drillDownTravelRequest(d, i) {
@@ -3358,8 +3372,15 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 .attr("class", "arc");
 
         arcs.append("path")
-        .attr("d", arc)
-        .attr("fill", function (d) { return color(d.data); });
+            .attr("d", arc)
+            .attr("class", "cursor")
+            .on("click", function (d, i) {
+                var status = legendText(i);
+                $('#dashboardtemplate').hide();
+                $('#fromDashboard').text("true");
+                viewexistingreimbursements(status);
+            })
+            .attr("fill", function (d) { return color(d.data); });
 
         arcs.append("text")
         .attr("transform", function (d) { return "translate(" + arc.centroid(d) + ")"; })
@@ -3418,7 +3439,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             .on("click", function (d, i) {
                 $('#dashboardtemplate').hide();
                 $('#fromDashboard').text("true");
-                viewexistingtravelrequests("");
+                viewexistingreimbursements("");
             })
             .text("View all travel reimbursements");
     }

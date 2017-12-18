@@ -53,6 +53,7 @@ function logout() {
     $('#signedInUserBadgeNumber').text(0);
     $('#travalAction').text('travelrequest');
     $('#travelReimbursementId').text(0);
+    $('#fromDashboard').text("false");
     userName = "";
 
     $("#action").hide();
@@ -212,9 +213,11 @@ function createnewrequest() {
 }
 
 function viewexistingtravelrequests(status) {
-    $("#action").hide();
-
+    $("#action").hide();   
     $('#travalAction').text('travelrequest');
+    if (!status) {
+        status = "";
+    }
 
     //reset estimated expense section
     var scope = angular.element('#existingtravelrequeststemplate').scope();
@@ -1000,16 +1003,19 @@ function viewapprovedtravelrequests() {
     $('#approvedtravelrequesttemplate').show();
 }
 
-function viewexistingreimbursements() {
+function viewexistingreimbursements(status) {
 
     $("#signin").hide();
     $("#action").hide();
     $("#action2").hide();
     $('#travalAction').text('travelreimbursement');
     $('#travelReimbursementId').text(0);
+    if (!status) {
+        status = "";
+    }
 
     var scope = angular.element('#existingtravelrequeststemplate').scope();
-    scope.loadExistingTravelReimbursementRequests();
+    scope.loadExistingTravelReimbursementRequests(status);
     scope.loadApproveAction();
     scope.loadRejectAction();
     scope.loadCostCenters();
