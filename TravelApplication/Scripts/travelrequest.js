@@ -3428,14 +3428,14 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
     }
 
     function drillDownTravelReimbursement(d, i) {
-        var status = d.label;
+        var status = d.Label;
         $('#dashboardtemplate').hide();
         $('#fromDashboard').text("true");
         viewexistingreimbursements(status);
     }
 
     function drillDownTravelRequest(d, i) {
-        var status = d.label;
+        var status = d.Label;
         $('#dashboardtemplate').hide();
         $('#fromDashboard').text("true");
         viewexistingtravelrequests(status);
