@@ -11,6 +11,8 @@ namespace TravelApplication.Common
         Pending,
         Approved,
         Rejected,
-        Complete
+        Complete,
+        Cancelled
+
     }
 }

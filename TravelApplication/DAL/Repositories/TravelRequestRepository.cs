@@ -574,7 +574,7 @@ namespace TravelApplication.Services
             }
         }
 
-        public bool Reject(int ApproverBadgeNumber, string travelRequestId, string comments)
+        public bool Reject(int ApproverBadgeNumber, string travelRequestId, string comments, string reason)
         {
             try
             {
@@ -587,11 +587,13 @@ namespace TravelApplication.Services
                     cmd.CommandText = string.Format(@"UPDATE  TRAVELREQUEST_APPROVAL SET                                                  
                                                         APPROVERCOMMENTS = :p1,
                                                         APPROVALSTATUS = :p2 ,
-                                                        APPROVALDATETIME = :p3
+                                                        APPROVALDATETIME = :p3,
+                                                        REJECTREASON = :p4
                                                         WHERE TRAVELREQUESTID = {0} AND BADGENUMBER = {1} ", travelRequestId, ApproverBadgeNumber);
                     cmd.Parameters.Add(new OracleParameter("p1", comments));
                     cmd.Parameters.Add(new OracleParameter("p2", ApprovalStatus.Rejected.ToString()));
                     cmd.Parameters.Add(new OracleParameter("p3", DateTime.Now));
+                    cmd.Parameters.Add(new OracleParameter("p4", reason));
                     var rowsUpdated = cmd.ExecuteNonQuery();
                     cmd.Dispose();
 
@@ -612,10 +614,9 @@ namespace TravelApplication.Services
                     dbConn.Dispose();
  
                     //Send Email submitter and traveller 
-                    //string link = string.Format("<a href=\"http://localhost:2462/\">here</a>");
-                    //string subject = string.Format(@"Travel Request Approval for Id - {0} ", travelRequestId);
+                    string subject = string.Format(@"Travel Rejection  for Id - {0} ", travelRequestId);
                     //string body = string.Format(@"Please visit Travel application website " + link + " to Approve/Reject for travel request Id : {0}", travelRequestId);
-                    //sendEmail(result.ToString(), body, subject);
+                   // sendEmail(result.ToString(),  subject);
                 }
 
                 return true;

@@ -143,7 +143,7 @@ namespace TravelApplication.Controllers.WebAPI
             try
             {
                 // TODO: Implement Reject API. Return true/false
-                var result = travelRequestService.Reject(approveRequest.ApproverBadgeNumber, approveRequest.TravelRequestId, approveRequest.Comments);
+                var result = travelRequestService.Reject(approveRequest.ApproverBadgeNumber, approveRequest.TravelRequestId, approveRequest.Comments, approveRequest.RejectReason);
 
                 response = Request.CreateResponse(HttpStatusCode.OK, result);
             }
@@ -225,8 +225,8 @@ namespace TravelApplication.Controllers.WebAPI
             try
             {
                 //TODO: Implement Cancel API
-                //var result = travelRequestService.Cancel(approveRequest.ApproverBadgeNumber, approveRequest.TravelRequestId, approveRequest.TravelRequestBadgeNumber, approveRequest.Comments);
-                var result = true;
+                var result = travelRequestService.Cancel(approveRequest.TravelRequestId, approveRequest.TravelRequestBadgeNumber, approveRequest.Comments);
+                //var result = true;
                 response = Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception)

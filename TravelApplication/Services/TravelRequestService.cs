@@ -17,9 +17,9 @@ namespace TravelApplication.Services
             return result;
         }
 
-        public bool Reject(int badgeNumber, string travelRequestId, string comments)
+        public bool Reject(int badgeNumber, string travelRequestId, string comments, string reason)
         {
-            var result = travelRequestRepo.Reject(badgeNumber, travelRequestId, comments);
+            var result = travelRequestRepo.Reject(badgeNumber, travelRequestId, comments, reason);
             return result;
         }
 
@@ -78,6 +78,12 @@ namespace TravelApplication.Services
         public  TravelRequestSubmitDetailResponse GetSubmitDetails(int travelRequestId)
         {
             TravelRequestSubmitDetailResponse result = travelRequestRepo.GetSubmitDetails(travelRequestId);
+            return result;
+        }
+
+        public bool Cancel(string travelRequestId, int travelRequestBadgeNumber, string comments)
+        {
+            var result = travelRequestRepo.Cancel(travelRequestId, travelRequestBadgeNumber, comments);
             return result;
         }
     }
