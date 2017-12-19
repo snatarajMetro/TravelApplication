@@ -23,6 +23,7 @@ $(document).ready(function () {
     //viewexistingreimbursements();
     //showApproveSection();
 
+    
   });
 
 function setTwoDecimal(el) {
@@ -52,6 +53,7 @@ function logout() {
     $('#signedInUserBadgeNumber').text(0);
     $('#travalAction').text('travelrequest');
     $('#travelReimbursementId').text(0);
+    $('#fromDashboard').text("false");
     userName = "";
 
     $("#action").hide();
@@ -210,14 +212,16 @@ function createnewrequest() {
     scope.loadCostCenters();
 }
 
-function viewexistingtravelrequests() {
-    $("#action").hide();
-
+function viewexistingtravelrequests(status) {
+    $("#action").hide();   
     $('#travalAction').text('travelrequest');
+    if (!status) {
+        status = "";
+    }
 
     //reset estimated expense section
     var scope = angular.element('#existingtravelrequeststemplate').scope();
-    scope.loadExistingTravelRequests();
+    scope.loadExistingTravelRequests(status);
     scope.loadApproveAction();
     scope.loadRejectAction();
     scope.loadCostCenters();
@@ -246,9 +250,16 @@ function backtoactionselection() {
         //$("#existingtravelrequeststemplate").show();
     }
     else {
-        // else, take them to action selection modal
-        $('#travelRequestId').text(0);
-        $("#action").show();
+        if ($('#fromDashboard').text() == "true") {
+            $('#fromDashboard').text("false");
+            $('#existingtravelrequeststemplate').hide();
+            $('#dashboardtemplate').show();
+        }
+        else {
+            // else, take them to action selection modal
+            $('#travelRequestId').text(0);
+            $("#action").show();
+        }
     }
 }
 
@@ -992,16 +1003,19 @@ function viewapprovedtravelrequests() {
     $('#approvedtravelrequesttemplate').show();
 }
 
-function viewexistingreimbursements() {
+function viewexistingreimbursements(status) {
 
     $("#signin").hide();
     $("#action").hide();
     $("#action2").hide();
     $('#travalAction').text('travelreimbursement');
     $('#travelReimbursementId').text(0);
+    if (!status) {
+        status = "";
+    }
 
     var scope = angular.element('#existingtravelrequeststemplate').scope();
-    scope.loadExistingTravelReimbursementRequests();
+    scope.loadExistingTravelReimbursementRequests(status);
     scope.loadApproveAction();
     scope.loadRejectAction();
     scope.loadCostCenters();

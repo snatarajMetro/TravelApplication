@@ -2310,3 +2310,14 @@ div.rejectactioncontainer {
 .taamount{
     font-weight:normal;
 }
+
+.ui-grid-filter-select {
+    background-color: #f8f2f2;
+    max-width:100px;
+    height:25px;
+}
+
+select.ui-grid-filter-select option[value=""] {
+    display:none;
+    /*background-color:green;*/
+}
