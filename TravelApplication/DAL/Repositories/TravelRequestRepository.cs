@@ -391,7 +391,8 @@ namespace TravelApplication.Services
                                     ViewActionVisible = true,
                                     ApproveActionVisible = false,
                                     Status = dataReader["STATUS"].ToString(),
-                                    Purpose = dataReader["PURPOSE"].ToString()
+                                    Purpose = dataReader["PURPOSE"].ToString(),
+                                    CancelActionVisible = true
                                 });
                             }
                         }
@@ -433,7 +434,8 @@ namespace TravelApplication.Services
                                     ViewActionVisible = true,
                                     ApproveActionVisible = getApprovalSatus(dbConn,Convert.ToInt32(dataReader["TravelRequestId"]), submittedBadgeNumber) ? true : false,
                                     Status = dataReader["STATUS"].ToString(),
-                                    Purpose = dataReader["Purpose"].ToString()
+                                    Purpose = dataReader["Purpose"].ToString(),
+                                    CancelActionVisible = false
                                 });
                             }
                         }
@@ -464,7 +466,8 @@ namespace TravelApplication.Services
                                     ViewActionVisible = true,
                                     ApproveActionVisible = getApprovalSatus(dbConn, Convert.ToInt32(dataReader["TravelRequestId"]), submittedBadgeNumber) ? true : false,
                                     Status = dataReader["STATUS"].ToString(),
-                                    Purpose = dataReader["PURPOSE"].ToString()
+                                    Purpose = dataReader["PURPOSE"].ToString(),
+                                    CancelActionVisible = false
                                 });
                             }
                         }
@@ -1174,6 +1177,24 @@ namespace TravelApplication.Services
             throw new NotImplementedException();
         }
 
+        public bool Cancel(string travelRequestId, int travelRequestBadgeNumber, string comments)
+        {
+            using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+            {
+                //Update travel request _approval
+                OracleCommand cmd = new OracleCommand();
+                cmd.Connection = (OracleConnection)dbConn;
+                cmd.CommandText = string.Format(@"UPDATE  TRAVELREQUEST SET                                                  
+                                                         STATUS = :p1 
+                                                        WHERE TRAVELREQUESTID = {0}", travelRequestId);
+                cmd.Parameters.Add(new OracleParameter("p1", ApprovalStatus.Cancelled.ToString()));
+                cmd.ExecuteNonQuery();
+            }
+
+            return true;
+        }
+
+
 
         #region   REIMBURSE Section
 
@@ -1669,6 +1690,7 @@ namespace TravelApplication.Services
             return result;
         }
 
+       
 
 
         #endregion
