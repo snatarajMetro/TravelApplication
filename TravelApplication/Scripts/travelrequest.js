@@ -204,113 +204,129 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
     $scope.updateParkingTotal = function (model) {
 
-        var totalParking = 0;
+        var totalParking = -1;
 
         if (model) {
             for (var index = 0; index < maxRowCount; index++) {
                 totalParking += (model[index].Parking * 1);
             }
 
-            $scope.totalParking = parseFloat(totalParking.toFixed(2));
-            updateDailyTotal(model);
+            if (totalParking >= 0) {
+                $scope.totalParking = parseFloat(totalParking.toFixed(2)) + 1;
+                updateDailyTotal(model);
+            }
         }  
     }
 
     $scope.updateAirfareTotal = function (model) {
 
-        var totalAirfare = 0;
+        var totalAirfare = -1;
 
         if (model) {
             for (var index = 0; index < maxRowCount; index++) {
                 totalAirfare += (model[index].Airfare * 1);
             }
 
-            $scope.totalAirfare = parseFloat(totalAirfare.toFixed(2));
-            updateDailyTotal(model);
+            if (totalAirfare >= 0) {
+                $scope.totalAirfare = parseFloat(totalAirfare.toFixed(2)) + 1;
+                updateDailyTotal(model);
+            }
         }
     }
 
     $scope.updateTaxiTotal = function (model) {
 
-        var totalTaxi = 0;
+        var totalTaxi = -1;
 
         if (model) {
             for (var index = 0; index < maxRowCount; index++) {
                 totalTaxi += (model[index].Taxi * 1);
             }
 
-            $scope.totalTaxi = parseFloat(totalTaxi.toFixed(2));
-            updateDailyTotal(model);
+            if (totalTaxi >= 0) {
+                $scope.totalTaxi = parseFloat(totalTaxi.toFixed(2)) + 1;
+                updateDailyTotal(model);
+            }
         }
     }
 
     $scope.updateLodgingTotal = function (model) {
 
-        var totalLodging = 0;
+        var totalLodging = -1;
 
         if (model) {
             for (var index = 0; index < maxRowCount; index++) {
                 totalLodging += (model[index].Lodging * 1);
             }
 
-            $scope.totalLodging = parseFloat(totalLodging.toFixed(2));
-            updateDailyTotal(model);
+            if (totalLodging >= 0) {
+                $scope.totalLodging = parseFloat(totalLodging.toFixed(2)) + 1;
+                updateDailyTotal(model);
+            }
         }
     }
 
     $scope.updateMealTotal = function (model) {
 
-        var totalMeals = 0;
+        var totalMeals = -1;
 
         if (model) {
             for (var index = 0; index < maxRowCount; index++) {
                 totalMeals += (model[index].Meals * 1);
             }
 
-            $scope.totalMeals = parseFloat(totalMeals.toFixed(2));
-            updateDailyTotal(model);
+            if (totalMeals >= 0) {
+                $scope.totalMeals = parseFloat(totalMeals.toFixed(2)) + 1;
+                updateDailyTotal(model);
+            }
         }
     }
 
     $scope.updateRegistrationTotal = function (model) {
 
-        var totalRegistration = 0;
+        var totalRegistration = -1;
 
         if (model) {
             for (var index = 0; index < maxRowCount; index++) {
                 totalRegistration += (model[index].Registration * 1);
             }
 
-            $scope.totalRegistration = parseFloat(totalRegistration.toFixed(2));
-            updateDailyTotal(model);
+            if (totalRegistration >= 0) {
+                $scope.totalRegistration = parseFloat(totalRegistration.toFixed(2)) + 1;
+                updateDailyTotal(model);
+            }
         }
     }
 
     $scope.updateInternetTotal = function (model) {
 
-        var totalInternet = 0;
+        var totalInternet = -1;
 
         if (model) {
             for (var index = 0; index < maxRowCount; index++) {
                 totalInternet += (model[index].Internet * 1);
             }
 
-            $scope.totalInternet = parseFloat(totalInternet.toFixed(2));
-            updateDailyTotal(model);
+            if (totalInternet >= 0) {
+                $scope.totalInternet = parseFloat(totalInternet.toFixed(2)) + 1;
+                updateDailyTotal(model);
+            }
         }
     }
 
     $scope.updateOtherTotal = function (model) {
 
-        var totalOther = 0;
+        var totalOther = -1;
 
         if (model) {
             for (var index = 0; index < maxRowCount; index++) {
                 totalOther += (model[index].Other * 1);
             }
 
-            $scope.totalOther = parseFloat(totalOther.toFixed(2));
-            updateDailyTotal(model);
+            if (totalOther >= 0) {
+                $scope.totalOther = parseFloat(totalOther.toFixed(2)) + 1;
+                updateDailyTotal(model);
+            }
         }
     }
 
