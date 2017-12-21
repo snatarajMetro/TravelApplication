@@ -54,6 +54,7 @@ function logout() {
     $('#travalAction').text('travelrequest');
     $('#travelReimbursementId').text(0);
     $('#fromDashboard').text("false");
+    $('#estimatedExpenseId').text(0);
     userName = "";
 
     $("#action").hide();
@@ -237,6 +238,7 @@ function backtoactionselection() {
     $("#existingtravelrequeststemplate").hide();
     $("#existingtravelreimbursementtemplate").hide();
     $("#approvedtravelrequesttemplate").hide();
+    $('#estimatedExpenseId').text(0);
 
     // if selected role is approver, take them back to role selection modal
     if (selectedRoleId == 3) {
@@ -348,6 +350,7 @@ function savedataentry()
     var estimatedTotal = $('#txtEstimatedTotal').val();
     var cashAdvanceRequested = $('#txtCashAdvanceRequested').val();
     var dateNeededBy = $('#txtDateNeededBy').val();
+    var estimatedExpenseId = $('#estimatedExpenseId').text();
 
     // Other Estimated costs
     var totalOtherEstimatedLodge = $('#txtTotalOtherEstimatedLodge').val();
@@ -486,7 +489,7 @@ function savedataentry()
                     'Purpose': purpose
                 },
                 "EstimatedExpenseData": {
-                    'EstimatedExpenseId': 0,
+                    'EstimatedExpenseId': estimatedExpenseId,
                     'TravelRequestId': travelRequestId,
                     'AdvanceLodging': advLodge,
                     'TotalEstimatedLodge': totalEstimatedLodge,
@@ -567,6 +570,7 @@ function savedataentry()
 
                 $('#travelRequestBadgeNumber').text(result.BadgeNumber);
                 $('#travelRequestId').text(result.TravelRequestId);
+                $('#estimatedExpenseId').text(0);
 
                 var scope = angular.element('#fileuploadtemplate').scope();
                 scope.loadFileUpload2(result.TravelRequestId);
@@ -677,6 +681,7 @@ function showaction() {
     $('#btnSubmit').prop("disabled", false);
     $('#btnBack').prop("disabled", false);
     $("#fileuploadtemplate").hide();
+    $('#estimatedExpenseId').text(0);
     $("#action").show();
 }
 

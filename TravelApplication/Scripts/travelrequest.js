@@ -1973,6 +1973,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 $('#txtAgencyName').val($scope.Data.EstimatedExpenseData.AgencyNameAndReservation);
                 $('#txtShuttle').val($scope.Data.EstimatedExpenseData.Shuttle);
                 $('#txtCashAdvanceRequested').val($scope.Data.EstimatedExpenseData.CashAdvance);
+                $('#estimatedExpenseId').text($scope.Data.EstimatedExpenseData.EstimatedExpenseId);
                 
                 $scope.advanceLodgingAmount = $scope.Data.EstimatedExpenseData.AdvanceLodging;
                 $scope.advanceAirfareAmount = $scope.Data.EstimatedExpenseData.AdvanceAirFare;
