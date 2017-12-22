@@ -452,6 +452,11 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         $.get('/uitemplates/uploadandsubmit.html')
         .done(function (data) {
             $('#fileuploadtemplate').html($compile($(data).html())($scope));
+
+            // Change the text of submit button to "Close" when "Admin" logs in
+            if ($("#selectedRoleId").text() == "4"){
+                $("#btnSubmit").val("Close");
+            }
             $scope.$apply();
 
             Dropzone.autoDiscover = false;
@@ -1378,6 +1383,13 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         var signedInBadgeNumber = $('#signedInUserBadgeNumber').text();
         var travelRequestBadgeNumber = $('#travelRequestBadgeNumber').text();
         var txtName = $('#txtName').val();
+        var action = $("#btnSubmit").val();
+
+        if (action == "Close") {
+            $("#fileuploadtemplate").hide();
+            viewexistingtravelrequests();
+            return;
+        }
 
         // Department Head
         var departmentHeadBadgeNumber = $("#ddlDepartmentHead option:selected").val();
