@@ -697,14 +697,9 @@ function showApproveSection(container) {
     var showAlertText = altObj.split('|')[1];
 
     var scope = angular.element('#approvetemplate').scope();
-    scope.loadApproveAction(travelRequestId);
-    $('#approvetemplate').show();
+    scope.loadApproveAction(travelRequestId, showAlertText);
 
-    if (showAlertText) {
-        $('#approverAlert').show();
-    } else {
-        $('#approverAlert').hide();
-    }
+    $('#approvetemplate').show();
 }
 
 function showApproveSection2(container) {
@@ -955,8 +950,8 @@ function createTravelRequestReimbursement(container) {
     $('#approvedtravelrequesttemplate').hide();
     $('#travelRequestId').text(0);
 
-    var travelRequestId = $(container).prop('alt');
-    //travelRequestId = 1234567;
+    //var travelRequestId = $(container).prop('alt');
+    travelRequestId = 1234567;
 
     var scope = angular.element('#travelreimbursementtemplate').scope();
     scope.loadTravelReimbursementRequest(travelRequestId);

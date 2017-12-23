@@ -157,7 +157,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             totalBusinessMileAmount += ($scope.TravelModel[index].BusinessMileAmount * 1);
         }
 
-        //alert(round(totalBusinessMileAmount, 2));
+        //alert(totalBusinessMile);
         $scope.totalBusinessMile = totalBusinessMile;
         $scope.totalBusinessMileAmount = parseFloat(totalBusinessMileAmount.toFixed(2));
     }
@@ -185,7 +185,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 totalDailyAmount += (model[index].DailyTotal * 1);
 
             }
-
+            //alert(totalDailyAmount);
             $scope.totalDailyAmount = parseFloat(totalDailyAmount.toFixed(2));
         }
 
@@ -1817,13 +1817,19 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
     }
 
     // load approve action
-    $scope.loadApproveAction = function (travelRequestId) {
+    $scope.loadApproveAction = function (travelRequestId, showAlertText) {
 
         $.get('/uitemplates/approve.html')
         .done(function (data) {
             $('#approvetemplate').html($compile($(data).html())($scope));
 
             $('#travelRequestIdForAction').text(travelRequestId);
+            if (showAlertText) {
+                $('#approverAlert').show();
+                $('#approvercontainer').prop("class", "main approveactioncontainerwithalert");
+
+            }
+
             $scope.$apply();
 
             $('#txtComments').focus();
