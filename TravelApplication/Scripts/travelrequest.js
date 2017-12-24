@@ -1103,6 +1103,12 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
             
             if (data.TravelRequestSubmitDetail.RejectedTravelRequest) {
+
+                // Reset
+                $("#ddlExecutiveOfficer").val("?");
+                $("#ddlCEOForInternational").val("?");
+                $("#ddlCEOForAPTA").val("?");
+
                 // Hide following approvers when editing a rejected travel request
                 // Executive Officer, CEO International, CEO APTA/CTA
                 $("#additionalApprovers").hide();
