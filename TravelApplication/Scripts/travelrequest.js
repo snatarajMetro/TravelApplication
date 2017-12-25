@@ -114,7 +114,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             $scope.totalMileA = (totalA * 1);
 
            updateBusinessMile();
-           updateDailyTotal();
+           updateDailyTotal(model);
         }
         
     }
@@ -185,7 +185,6 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 totalDailyAmount += (model[index].DailyTotal * 1);
 
             }
-            //alert(totalDailyAmount);
             $scope.totalDailyAmount = parseFloat(totalDailyAmount.toFixed(2));
         }
 
