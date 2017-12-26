@@ -2028,6 +2028,16 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 $scope.estimatedCarRentalAmount = $scope.Data.EstimatedExpenseData.TotalEstimatedCarRental;
                 $scope.estimatedMiscellaneousAmount = $scope.Data.EstimatedExpenseData.TotalEstimatedMiscellaneous;
 
+                $scope.estimatedOtherLodgingAmount = $scope.Data.EstimatedExpenseData.TotalOtherEstimatedLodge;
+                $scope.estimatedOtherAirfareAmount = $scope.Data.EstimatedExpenseData.TotalOtherEstimatedAirFare;
+                $scope.estimatedOtherMealsAmount = $scope.Data.EstimatedExpenseData.TotalOtherEstimatedMeals;
+                $scope.totalOtherEstimatedAmount = $scope.Data.EstimatedExpenseData.TotalOtherEstimatedTotal;
+
+                $scope.estimatedActualLodgingAmount = $scope.Data.EstimatedExpenseData.TotalActualEstimatedLodge;
+                $scope.estimatedActualAirfareAmount = $scope.Data.EstimatedExpenseData.TotalActualEstimatedAirFare;
+                $scope.estimatedActualMealsAmount = $scope.Data.EstimatedExpenseData.TotalActualEstimatedMeals;
+                $scope.totalActualEstimatedAmount = $scope.Data.EstimatedExpenseData.TotalActualEstimatedTotal;
+
                 if ($scope.Data.EstimatedExpenseData.DateNeededBy.substring(0, 10) != '0001-01-01') {
 
                     $('#txtDateNeededBy').val($scope.Data.EstimatedExpenseData.DateNeededBy.substring(0, 10));

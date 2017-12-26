@@ -10,6 +10,10 @@ $(document).ready(function () {
 
     $("#txtEmail").focus();
 
+    //var scope = angular.element('#fileuploadtemplate').scope();
+    //scope.loadFileUpload2(123456);
+    //$("#fileuploadtemplate").show();
+
     //viewdashboard();
     //createnewrequest();
     //$("#selectedRoleId").text(4);
@@ -22,8 +26,6 @@ $(document).ready(function () {
     //viewapprovedtravelrequests();
     //viewexistingreimbursements();
     //showApproveSection();
-
-    
   });
 
 function setTwoDecimal(el) {
@@ -358,6 +360,12 @@ function savedataentry()
     var totalOtherEstimatedMeals = $('#txtTotalOtherEstimatedMeals').val();
     var totalOtherEstimatedTotal = $('#txtOtherEstimatedTotal').val();
 
+    // Actual Estimated costs
+    var totalActualEstimatedLodge = $('#txtTotalActualEstimatedLodge').val();
+    var totalActualEstimatedAirFare = $('#txtTotalActualEstimatedAirfare').val();
+    var totalActualEstimatedMeals = $('#txtTotalActualEstimatedMeals').val();
+    var totalActualEstimatedTotal = $('#txtActualEstimatedTotal').val();
+
     if (!badgeNumber || badgeNumber.length <= 0)
     {
         canSubmit = false;
@@ -516,7 +524,11 @@ function savedataentry()
                     'TotalOtherEstimatedLodge': totalOtherEstimatedLodge,
                     'TotalOtherEstimatedAirFare': totalOtherEstimatedAirFare,
                     'TotalOtherEstimatedMeals': totalOtherEstimatedMeals,
-                    'TotalOtherEstimatedTotal': totalOtherEstimatedTotal
+                    'TotalOtherEstimatedTotal': totalOtherEstimatedTotal,
+                    'TotalActualEstimatedLodge': totalActualEstimatedLodge,
+                    'TotalActualEstimatedAirFare': totalActualEstimatedAirFare,
+                    'TotalActualEstimatedMeals': totalActualEstimatedMeals,
+                    'TotalActualEstimatedTotal': totalActualEstimatedTotal
                 },
                 "FISData":
                 {
@@ -950,8 +962,8 @@ function createTravelRequestReimbursement(container) {
     $('#approvedtravelrequesttemplate').hide();
     $('#travelRequestId').text(0);
 
-    //var travelRequestId = $(container).prop('alt');
-    travelRequestId = 1234567;
+    var travelRequestId = $(container).prop('alt');
+    //var travelRequestId = 1234567;
 
     var scope = angular.element('#travelreimbursementtemplate').scope();
     scope.loadTravelReimbursementRequest(travelRequestId);
