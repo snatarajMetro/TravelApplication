@@ -68,6 +68,19 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             + ($scope.estimatedOtherAirfareAmount * 1)
             + ($scope.estimatedOtherMealsAmount * 1)
         ).toFixed(2));
+
+    }
+
+    $scope.updateTotalActualEstimatedAmount = function () {
+
+        $scope.FISRequestModel = [{}, {}, {}, {}, {}];
+
+        $scope.totalActualEstimatedAmount = parseFloat((
+            ($scope.estimatedActualLodgingAmount * 1)
+            + ($scope.estimatedActualAirfareAmount * 1)
+            + ($scope.estimatedActualMealsAmount * 1)
+        ).toFixed(2));
+
     }
 
     $scope.BusinessMileRate = 0.555;
@@ -1943,6 +1956,9 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         $scope.estimatedOtherLodgingAmount = "";
         $scope.estimatedOtherAirfareAmount = "";
         $scope.estimatedOtherMealsAmount = "";
+        $scope.estimatedActualLodgingAmount = "";
+        $scope.estimatedActualAirfareAmount = "";
+        $scope.estimatedActualMealsAmount = "";
 
         //$scope.totalFISAmount1 = "";
         //$scope.totalFISAmount2 = "";

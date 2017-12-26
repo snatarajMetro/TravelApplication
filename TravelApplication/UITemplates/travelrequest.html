@@ -98,6 +98,8 @@
                                 <div class="tableheadnew">Estimated&nbsp;Cost</div>
                                 <div class="spacer otherestimatecostsection" style="display:none;"></div>
                                 <div class="tableheadnew otherestimatecostsection" style="display:none;">Approved&nbsp;Cost</div>
+                                <div class="spacer otherestimatecostsection"></div>
+                                <div class="tableheadnew otherestimatecostsection" style="display:none;">Actual&nbsp;Cost (per diem)</div>
                                 <div class="spacer"></div>
                                 <div class="tablehead">Fill in all information as indicated</div>
                                 <div class="tablehead"></div>
@@ -116,6 +118,10 @@
                                     <div class="spacer otherestimatecostsection" style="display:none;"></div>
                                     <div class="tablecell otherestimatecostsection" style="display:none;">
                                         <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTotalOtherEstimatedLodge" class="inputnumber" tabindex=2 ng-model="estimatedOtherLodgingAmount" ng-change="updateTotalOtherEstimatedAmount()" />
+                                    </div>
+                                    <div class="spacer otherestimatecostsection" style="display:none;"></div>
+                                    <div class="tablecell otherestimatecostsection" style="display:none;">
+                                        <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTotalActualEstimatedLodge" class="inputnumber" tabindex=2 ng-model="estimatedActualLodgingAmount" ng-change="updateTotalActualEstimatedAmount()" />
                                     </div>
                                     <div class="spacer"></div>
                                     <div class="tablecellheader expenserowtitle">Hotel Name and Address</div>
@@ -137,6 +143,10 @@
                                     <div class="tablecell otherestimatecostsection" style="display:none;">
                                         <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTotalOtherEstimatedAirfare" class="inputnumber" tabindex=4 ng-model="estimatedOtherAirfareAmount" ng-change="updateTotalOtherEstimatedAmount()" />
                                     </div>
+                                    <div class="spacer otherestimatecostsection" style="display:none;"></div>
+                                    <div class="tablecell otherestimatecostsection" style="display:none;">
+                                        <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTotalActualEstimatedAirfare" class="inputnumber" tabindex=4 ng-model="estimatedActualAirfareAmount" ng-change="updateTotalActualEstimatedAmount()" />
+                                    </div>
                                     <div class="spacer"></div>
                                     <div class="tablecellheader expenserowtitle">Schedule</div>
                                     <div class="tablecell">
@@ -156,6 +166,10 @@
                                     <div class="spacer otherestimatecostsection" style="display:none;"></div>
                                     <div class="tablecell otherestimatecostsection" style="display:none;">
                                         <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="N/A" id="txtTotalOtherEstimatedRegistration" class="inputnumber" tabindex=6 disabled />
+                                    </div>
+                                    <div class="spacer otherestimatecostsection" style="display:none;"></div>
+                                    <div class="tablecell otherestimatecostsection" style="display:none;">
+                                        <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="N/A" id="txtTotalActualEstimatedRegistration" class="inputnumber" tabindex=6 disabled />
                                     </div>
                                     <div class="spacer"></div>
                                     <div class="tablecellheader expenserowtitle">Payable to and Address</div>
@@ -177,6 +191,10 @@
                                     <div class="tablecell otherestimatecostsection" style="display:none;">
                                         <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTotalOtherEstimatedMeals" class="inputnumber" tabindex=8 ng-model="estimatedOtherMealsAmount" ng-change="updateTotalOtherEstimatedAmount()" />
                                     </div>
+                                    <div class="spacer otherestimatecostsection" style="display:none;"></div>
+                                    <div class="tablecell otherestimatecostsection" style="display:none;">
+                                        <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtTotalActualEstimatedMeals" class="inputnumber" tabindex=8 ng-model="estimatedActualMealsAmount" ng-change="updateTotalActualEstimatedAmount()" />
+                                    </div>
                                     <div class="spacer"></div>
                                     <div class="tablecellheader expenserowtitle">Notes</div>
                                     <div class="tablecell">
@@ -196,6 +214,10 @@
                                     <div class="spacer otherestimatecostsection" style="display:none;"></div>
                                     <div class="tablecell otherestimatecostsection" style="display:none;">
                                         <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="N/A" id="txtTotalOtherEstimatedCarRental" class="inputnumber" tabindex=10 disabled />
+                                    </div>
+                                    <div class="spacer otherestimatecostsection" style="display:none;"></div>
+                                    <div class="tablecell otherestimatecostsection" style="display:none;">
+                                        <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="N/A" id="txtTotalActualEstimatedCarRental" class="inputnumber" tabindex=10 disabled />
                                     </div>
                                     <div class="spacer"></div>
                                     <div class="tablecellheader expenserowtitle">Agency Name and Reservation #</div>
@@ -217,6 +239,10 @@
                                     <div class="tablecell otherestimatecostsection" style="display:none;">
                                         <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="N/A" id="txtTotalOtherEstimatedMiscellaneous" class="inputnumber" tabindex=12 disabled />
                                     </div>
+                                    <div class="spacer otherestimatecostsection" style="display:none;"></div>
+                                    <div class="tablecell otherestimatecostsection" style="display:none;">
+                                        <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="N/A" id="txtTotalActualEstimatedMiscellaneous" class="inputnumber" tabindex=12 disabled />
+                                    </div>
                                     <div class="spacer"></div>
                                     <div class="tablecellheader expenserowtitle">Shuttle, taxi etc.</div>
                                     <div class="tablecell">
@@ -237,6 +263,10 @@
                                     <div class="tablecell otherestimatecostsection" style="display:none;">
                                         <input type="number" min="0.00" max="999999999.99" step="0.01" placeholder="0.00" id="txtOtherEstimatedTotal" readonly disabled class="inputnumber totalbgcolor" ng-model="totalOtherEstimatedAmount" />
                                     </div>
+                                    <div class="spacer otherestimatecostsection" style="display:none;"></div>
+                                    <div class="tablecell otherestimatecostsection" style="display:none;">
+                                        <input type="number" min="0.00" max="999999999.99" step="0.01" placeholder="0.00" id="txtActualEstimatedTotal" readonly disabled class="inputnumber totalbgcolor" ng-model="totalActualEstimatedAmount" />
+                                    </div>
                                     <div class="spacer"></div>
                                     <div class="tablecellheader expenserowtitle">Cash Advance Requested $</div>
                                     <div class="tablecell">
@@ -250,6 +280,8 @@
                                     <div class="spacer"></div>
                                     <div class="tablecell"></div>
                                     <div class="spacer otherestimatecostsection" style="display:none;"></div>
+                                    <div class="tablecell otherestimatecostsection" style="display:none;"></div>
+                                    <div class="tablecell otherestimatecostsection" style="display:none;"></div>
                                     <div class="tablecell otherestimatecostsection" style="display:none;"></div>
                                     <div class="spacer"></div>
                                     <div class="tablecellheader expenserowtitle">Date Needed by</div>
