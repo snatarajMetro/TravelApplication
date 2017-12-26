@@ -27,5 +27,7 @@ namespace TravelApplication.Models
         public decimal TAEstimatedLodge { get; set; }
         public decimal TAEstimatedAirFare { get; set; }
         public decimal TAEstimatedMeals { get; set; }
+        public decimal TAActualLodge { get; set; }
+        public decimal TAActualMeals { get; set; }
     }
 }

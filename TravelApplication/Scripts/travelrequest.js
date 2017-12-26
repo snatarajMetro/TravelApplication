@@ -2206,6 +2206,8 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 $("#lblTAAirfare").html("$" + data.TravelReimbursementDetails.TAEstimatedAirFare);
                 $("#lblTALodging").html("$" + data.TravelReimbursementDetails.TAEstimatedLodge);
                 $("#lblTAMeals").html("$" + data.TravelReimbursementDetails.TAEstimatedMeals);
+                $("#lblTAActualLodging").html("$" + data.TravelReimbursementDetails.TAActualLodge);
+                $("#lblTAActualMeals").html("$" + data.TravelReimbursementDetails.TAActualMeals);
 
                 // Set FIS section
                 angular.forEach(data.Fis.FISDetails, function (value, index) {
