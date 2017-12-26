@@ -31,6 +31,7 @@ namespace TravelApplication.Models
         public string Shuttle { get; set; }
         public decimal CashAdvance { get; set; }
         public DateTime DateNeededBy { get; set; }
+        public decimal PersonalTravelExpense { get; set; }
 
         public decimal TotalOtherEstimatedLodge { get; set; }
         public decimal TotalOtherEstimatedAirFare { get; set; }

@@ -26,6 +26,7 @@ $(document).ready(function () {
     //viewapprovedtravelrequests();
     //viewexistingreimbursements();
     //showApproveSection();
+    //showCancelSection();
   });
 
 function setTwoDecimal(el) {
@@ -365,6 +366,7 @@ function savedataentry()
     var totalActualEstimatedAirFare = $('#txtTotalActualEstimatedAirfare').val();
     var totalActualEstimatedMeals = $('#txtTotalActualEstimatedMeals').val();
     var totalActualEstimatedTotal = $('#txtActualEstimatedTotal').val();
+    var personalTravelExpense = $('#txtPersonalTravelExpense').val();
 
     if (!badgeNumber || badgeNumber.length <= 0)
     {
@@ -528,7 +530,8 @@ function savedataentry()
                     'TotalActualEstimatedLodge': totalActualEstimatedLodge,
                     'TotalActualEstimatedAirFare': totalActualEstimatedAirFare,
                     'TotalActualEstimatedMeals': totalActualEstimatedMeals,
-                    'TotalActualEstimatedTotal': totalActualEstimatedTotal
+                    'TotalActualEstimatedTotal': totalActualEstimatedTotal,
+                    'PersonalTravelExpense': personalTravelExpense
                 },
                 "FISData":
                 {
@@ -1441,6 +1444,9 @@ function showCancelSection(container) {
     var altObj = $(container).prop('alt');
     var travelRequestId = altObj.split('|')[0];
     var travelRequestBadgeNumber = altObj.split('|')[1];
+
+    //var travelRequestId = 123456;
+    //var travelRequestBadgeNumber = 454567;
 
     var scope = angular.element('#approvetemplate').scope();
     scope.loadCancelAction(travelRequestId, travelRequestBadgeNumber);

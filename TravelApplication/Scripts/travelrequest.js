@@ -2037,6 +2037,8 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 $scope.estimatedActualAirfareAmount = $scope.Data.EstimatedExpenseData.TotalActualEstimatedAirFare;
                 $scope.estimatedActualMealsAmount = $scope.Data.EstimatedExpenseData.TotalActualEstimatedMeals;
                 $scope.totalActualEstimatedAmount = $scope.Data.EstimatedExpenseData.TotalActualEstimatedTotal;
+                $scope.personalTravelExpense = $scope.Data.EstimatedExpenseData.PersonalTravelExpense;
+                
 
                 if ($scope.Data.EstimatedExpenseData.DateNeededBy.substring(0, 10) != '0001-01-01') {
 
