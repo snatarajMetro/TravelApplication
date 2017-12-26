@@ -10,6 +10,6 @@ namespace TravelApplication.Models
         public ReimbursementTravelRequestDetails TravelReimbursementDetails { get; set; }
         public FIS Fis { get; set; }
         public decimal CashAdvance { get; set; }
-
+        public decimal PersonalTravelExpense { get; set; }
     }
 }

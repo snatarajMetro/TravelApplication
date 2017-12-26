@@ -2200,6 +2200,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 $("#txtPurpose").val(data.TravelReimbursementDetails.Purpose);
                 
                 $scope.totalCashAdvanceAmount = data.CashAdvance;
+                $scope.totalPersonalAdvanceAmount = data.PersonalTravelExpense;
 
                 // Set TA other expense amounts
                 $("#lblTAAirfare").html("$" + data.TravelReimbursementDetails.TAEstimatedAirFare);
