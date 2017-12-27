@@ -205,7 +205,7 @@ namespace TravelApplication.DAL.Repositories
                             ReturnDateTime = Convert.ToDateTime(dataReader["RETURNDATETIME"]),
                             StrDepartureDateTime = Convert.ToDateTime(dataReader["DEPARTUREDATETIME"]).ToShortDateString() ?? string.Empty,
                             StrReturnDateTime = Convert.ToDateTime(dataReader["RETURNDATETIME"]).ToShortDateString() ?? string.Empty,
-                            Purpose = dataReader["Purpose"].ToString()
+                            Purpose = dataReader["Purpose"].ToString()                              
 
                         };
                     }
@@ -221,8 +221,33 @@ namespace TravelApplication.DAL.Repositories
                 {
                     throw new Exception("Couldn't retrieve travel request");
                 }
-                command.Dispose();
-                dataReader.Close();
+
+                string query1 = string.Format("Select TAESTIMATEDAIRFARE,TAESTIMATEDLODGE, TAESTIMATEDMEALS from TRAVELREQUEST_ESTIMATEDEXPENSE where TRAVELREQUESTID= {0}", travelRequestId);
+                OracleCommand command1 = new OracleCommand(query1, (OracleConnection)dbConn);
+                command1.CommandText = query1;
+                DbDataReader dataReader1 = command1.ExecuteReader();
+
+                if (dataReader1.HasRows)
+                {
+                    while (dataReader1.Read())
+                    {
+
+                        response.TAEstimatedAirFare =  Convert.ToDecimal(dataReader1["TAESTIMATEDAIRFARE"]);
+                        response.TAEstimatedLodge = Convert.ToInt32(dataReader1["TAESTIMATEDLODGE"]);
+                        response.TAEstimatedMeals = Convert.ToInt32(dataReader1["TAESTIMATEDMEALS"]);
+                    }
+
+                }
+                else
+                {
+                    throw new Exception("Couldn't retrieve travel request");
+                }
+
+                // Get TA estimated amount
+
+
+                command1.Dispose();
+                dataReader1.Close();
                 return response;
 
             }

@@ -155,5 +155,25 @@ namespace TravelApplication.Controllers.WebAPI
 
             return response;
         }
+
+        [HttpPost]
+        [Route("api/approval/Reject")]
+        public HttpResponseMessage Reject(EmailApprovalDetails emailApproveDetails)
+        {
+            HttpResponseMessage response = null;
+
+            try
+            {
+                var result = approvalService.UpdateApproveStatus(emailApproveDetails);
+                response = Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Log the exception message
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Travel request was not successfully submited. Please try again.");
+            }
+
+            return response;
+        }
     }
 }

@@ -392,7 +392,8 @@ namespace TravelApplication.Services
                                     ApproveActionVisible = false,
                                     Status = dataReader["STATUS"].ToString(),
                                     Purpose = dataReader["PURPOSE"].ToString(),
-                                    CancelActionVisible = true
+                                    CancelActionVisible = CancelActionEligible(dbConn, dataReader["TravelRequestId"].ToString()) ? true : false
+
                                 });
                             }
                         }
@@ -435,7 +436,8 @@ namespace TravelApplication.Services
                                     ApproveActionVisible = getApprovalSatus(dbConn,Convert.ToInt32(dataReader["TravelRequestId"]), submittedBadgeNumber) ? true : false,
                                     Status = dataReader["STATUS"].ToString(),
                                     Purpose = dataReader["Purpose"].ToString(),
-                                    CancelActionVisible = false
+                                    CancelActionVisible = false,
+                                    ShowAlert = (Convert.ToDateTime(dataReader["DEPARTUREDATETIME"]).AddDays(30) >= DateTime.Today) ? true : false
                                 });
                             }
                         }
@@ -487,6 +489,35 @@ namespace TravelApplication.Services
             }
         }
 
+        private bool CancelActionEligible(DbConnection dbConn, string travelRequestId)
+        {
+            string response = "";
+            string query = string.Format(@"SELECT
+	                                        STATUS
+                                        FROM
+	                                        TRAVELREQUEST 
+                                        WHERE
+	                                        TRAVELREQUESTID = {0}  ", travelRequestId);
+
+            OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+            command.CommandText = query;
+            DbDataReader dataReader = command.ExecuteReader();
+            if (dataReader.HasRows)
+            {
+                while (dataReader.Read())
+                {
+                    response = dataReader["STATUS"].ToString();
+                }
+            }
+            command.Dispose();
+            dataReader.Close();
+
+            if (response != ApprovalStatus.Cancelled.ToString())
+            {
+                return true;
+            }
+            return false;
+        }
 
         public bool Approve(int approverBadgeNumber, string travelRequestId, string comments)
         {
@@ -599,17 +630,24 @@ namespace TravelApplication.Services
                     cmd.Parameters.Add(new OracleParameter("p4", reason));
                     var rowsUpdated = cmd.ExecuteNonQuery();
                     cmd.Dispose();
-
+                    
+                    var rejectTravelRequest = string.Empty;
+                    if (ApproverBadgeNumber == 85163)
+                    {
+                        rejectTravelRequest = "true";
+                    }
                     //Update travel request _approval
                     OracleCommand cmd1 = new OracleCommand();
                     cmd1.Connection = (OracleConnection)dbConn;
                     // update travel request for the latest status 
                     cmd1.CommandText = string.Format(@"UPDATE  TRAVELREQUEST SET                                                  
-                                                         STATUS = :p1 
+                                                         STATUS = :p1,
+                                                         REJECTTRAVELREQUEST = :p2 
                                                         WHERE TRAVELREQUESTID = {0}", travelRequestId);
  
                     cmd1.Parameters.Add(new OracleParameter("p1", ApprovalStatus.Rejected.ToString()));
-                
+                    cmd1.Parameters.Add(new OracleParameter("p2", rejectTravelRequest));
+
                     var rowsUpdated1 = cmd1.ExecuteNonQuery();
 
                     cmd1.Dispose();
@@ -809,8 +847,11 @@ namespace TravelApplication.Services
 						AGENCYNAMEANDRESERVATION,
 						SHUTTLE,
 						CASHADVANCE,
-						DATENEEDEDBY					 
-						 ) VALUES (:p1 ,:p2,:p3,:p4,:p5,:p6,:p7,:p8,:p9,:p10,:p11,:p12,:p13,:p14,:p15,:p16,:p17,:p18,:p19,:p20,:p21,:p22,:p23 ) returning ESTIMATEDEXPENSEID into : estimatedExpenseId ";
+						DATENEEDEDBY,
+				        TAESTIMATEDLODGE,
+                        TAESTIMATEDAIRFARE,
+                        TAESTIMATEDMEALS 
+						 ) VALUES (:p1 ,:p2,:p3,:p4,:p5,:p6,:p7,:p8,:p9,:p10,:p11,:p12,:p13,:p14,:p15,:p16,:p17,:p18,:p19,:p20,:p21,:p22,:p23,:p24,:p25,:p26 ) returning ESTIMATEDEXPENSEID into : estimatedExpenseId ";
                         cmd.Parameters.Add(new OracleParameter("p1", travelRequestId));
                         cmd.Parameters.Add(new OracleParameter("p2", request.AdvanceLodging));
                         cmd.Parameters.Add(new OracleParameter("p3", request.AdvanceAirFare));
@@ -834,6 +875,9 @@ namespace TravelApplication.Services
                         cmd.Parameters.Add(new OracleParameter("p21", request.Shuttle));
                         cmd.Parameters.Add(new OracleParameter("p22", request.CashAdvance));
                         cmd.Parameters.Add(new OracleParameter("p23", request.DateNeededBy));
+                        cmd.Parameters.Add(new OracleParameter("p24", request.TotalOtherEstimatedLodge));
+                        cmd.Parameters.Add(new OracleParameter("p25", request.TotalOtherEstimatedAirFare));
+                        cmd.Parameters.Add(new OracleParameter("p26", request.TotalOtherEstimatedMeals));
                         cmd.Parameters.Add("estimatedExpenseId", OracleDbType.Int32, ParameterDirection.ReturnValue);
                         var rowsUpdated = cmd.ExecuteNonQuery();
                         estimatedExpenseId = Decimal.ToInt32(((Oracle.ManagedDataAccess.Types.OracleDecimal)(cmd.Parameters["estimatedExpenseId"].Value)).Value);
@@ -872,7 +916,10 @@ namespace TravelApplication.Services
 						AGENCYNAMEANDRESERVATION = :p20,
 						SHUTTLE = :p21,
 						CASHADVANCE = :p22,
-						DATENEEDEDBY  = :p23
+						DATENEEDEDBY  = :p23,
+                        TAESTIMATEDLODGE = :p24,
+                        TAESTIMATEDAIRFARE = :p25,
+                        TAESTIMATEDMEALS = :26
                         WHERE TRAVELREQUESTID = {0}", request.TravelRequestId);
                         cmd.Parameters.Add(new OracleParameter("p1", request.TravelRequestId));
                         cmd.Parameters.Add(new OracleParameter("p2", request.AdvanceLodging));
@@ -897,6 +944,9 @@ namespace TravelApplication.Services
                         cmd.Parameters.Add(new OracleParameter("p21", request.Shuttle));
                         cmd.Parameters.Add(new OracleParameter("p22", request.CashAdvance));
                         cmd.Parameters.Add(new OracleParameter("p23", request.DateNeededBy));
+                        cmd.Parameters.Add(new OracleParameter("p24", request.TotalOtherEstimatedLodge));
+                        cmd.Parameters.Add(new OracleParameter("p25", request.TotalOtherEstimatedAirFare));
+                        cmd.Parameters.Add(new OracleParameter("p26", request.TotalOtherEstimatedMeals));
                         var rowsUpdated = cmd.ExecuteNonQuery();
                         estimatedExpenseId = request.EstimatedExpenseId;
                         cmd.Dispose();
@@ -1112,6 +1162,8 @@ namespace TravelApplication.Services
                                     break;
                             }
                             travelRequestSubmitDetail.TravelRequestId = dataReader["TRAVELREQUESTID"].ToString();
+                            travelRequestSubmitDetail.RejectedTravelRequest = GetRejectedTravelRequestStatus(dbConn, dataReader["TRAVELREQUESTID"].ToString());
+
                             string agree = string.Empty;
                             string submitter = string.Empty;
                             //  travelRequestSubmitDetail.Agree = GetAgeedAcknowledgement(dbConn, travelRequestId);
@@ -1133,6 +1185,40 @@ namespace TravelApplication.Services
             response = new TravelRequestSubmitDetailResponse();
             response.TravelRequestSubmitDetail = travelRequestSubmitDetail;
             return response;
+        }
+
+        private bool GetRejectedTravelRequestStatus(DbConnection dbconn, string travelRequestId)
+        {
+            var result = false;
+            try
+            {
+                string query = string.Format(@"select REJECTTRAVELREQUEST FROM TRAVELREQUEST where TRAVELREQUESTID= {0}", travelRequestId);
+                OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+                command.CommandText = query;
+                DbDataReader dataReader = command.ExecuteReader();
+                if (dataReader.HasRows)
+                {
+                    while (dataReader.Read())
+                    {
+
+                        result = (dataReader["REJECTTRAVELREQUEST"].ToString()) == "true" ? true : false;
+
+                    }
+                }
+                else
+                {
+                    throw new Exception("Couldn't retrieve rejected travel request status");
+                }
+                command.Dispose();
+                dataReader.Close();
+            }
+            catch (Exception ex)
+            {
+                LogMessage.Log("GetRejectedTravelRequestStatus : " + ex.Message);
+                throw;
+            }
+            return result;
+
         }
 
         private void GetSubmitterName(DbConnection dbConn, int travelRequestId,out string agree, out string submitter)
@@ -1661,7 +1747,7 @@ namespace TravelApplication.Services
             command.Dispose();
             dataReader.Close();
 
-            if (response == ApprovalStatus.New.ToString())
+            if (response == ApprovalStatus.New.ToString() || response == ApprovalStatus.Rejected.ToString())
             {
                 return true;
             }

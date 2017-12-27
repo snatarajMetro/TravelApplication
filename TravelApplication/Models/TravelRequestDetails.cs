@@ -34,5 +34,6 @@ namespace TravelApplication.Models
         public string Purpose { get; set; }
 
         public bool CancelActionVisible { get; set; }
+        public bool ShowAlert { get; set; }
     }
 }

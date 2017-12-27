@@ -206,9 +206,14 @@ namespace TravelApplication.DAL.Repositories
             try
             {
                 var isSubmitterRequesting = false;
+               
                 using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
                     {
                     OracleCommand cmd2 = new OracleCommand();
+
+                    cmd2.Connection = (OracleConnection)dbConn;
+                    cmd2.CommandText = string.Format(@"Delete from TRAVELREQUEST_APPROVAL where TravelRequestId = {0}", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
+                    cmd2.ExecuteNonQuery();
                     if (submitTravelRequest.HeirarchichalApprovalRequest.SignedInBadgeNumber != submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestBadgeNumber)
                     {
                         // submit to approval 
