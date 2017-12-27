@@ -302,3 +302,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 TravelApplication/logs/log.txt
+TravelApplication/Models/TravelRequestDetails.cs

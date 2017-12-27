@@ -10,6 +10,10 @@ $(document).ready(function () {
 
     $("#txtEmail").focus();
 
+    //var scope = angular.element('#fileuploadtemplate').scope();
+    //scope.loadFileUpload2(123456);
+    //$("#fileuploadtemplate").show();
+
     //viewdashboard();
     //createnewrequest();
     //$("#selectedRoleId").text(4);
@@ -22,8 +26,7 @@ $(document).ready(function () {
     //viewapprovedtravelrequests();
     //viewexistingreimbursements();
     //showApproveSection();
-
-    
+    //showCancelSection();
   });
 
 function setTwoDecimal(el) {
@@ -358,6 +361,13 @@ function savedataentry()
     var totalOtherEstimatedMeals = $('#txtTotalOtherEstimatedMeals').val();
     var totalOtherEstimatedTotal = $('#txtOtherEstimatedTotal').val();
 
+    // Actual Estimated costs
+    var totalActualEstimatedLodge = $('#txtTotalActualEstimatedLodge').val();
+    var totalActualEstimatedAirFare = $('#txtTotalActualEstimatedAirfare').val();
+    var totalActualEstimatedMeals = $('#txtTotalActualEstimatedMeals').val();
+    var totalActualEstimatedTotal = $('#txtActualEstimatedTotal').val();
+    var personalTravelExpense = $('#txtPersonalTravelExpense').val();
+
     if (!badgeNumber || badgeNumber.length <= 0)
     {
         canSubmit = false;
@@ -516,7 +526,12 @@ function savedataentry()
                     'TotalOtherEstimatedLodge': totalOtherEstimatedLodge,
                     'TotalOtherEstimatedAirFare': totalOtherEstimatedAirFare,
                     'TotalOtherEstimatedMeals': totalOtherEstimatedMeals,
-                    'TotalOtherEstimatedTotal': totalOtherEstimatedTotal
+                    'TotalOtherEstimatedTotal': totalOtherEstimatedTotal,
+                    'TotalActualEstimatedLodge': totalActualEstimatedLodge,
+                    'TotalActualEstimatedAirFare': totalActualEstimatedAirFare,
+                    'TotalActualEstimatedMeals': totalActualEstimatedMeals,
+                    'TotalActualEstimatedTotal': totalActualEstimatedTotal,
+                    'PersonalTravelExpense': personalTravelExpense
                 },
                 "FISData":
                 {
@@ -697,14 +712,9 @@ function showApproveSection(container) {
     var showAlertText = altObj.split('|')[1];
 
     var scope = angular.element('#approvetemplate').scope();
-    scope.loadApproveAction(travelRequestId);
-    $('#approvetemplate').show();
+    scope.loadApproveAction(travelRequestId, showAlertText);
 
-    if (showAlertText) {
-        $('#approverAlert').show();
-    } else {
-        $('#approverAlert').hide();
-    }
+    $('#approvetemplate').show();
 }
 
 function showApproveSection2(container) {
@@ -956,7 +966,7 @@ function createTravelRequestReimbursement(container) {
     $('#travelRequestId').text(0);
 
     var travelRequestId = $(container).prop('alt');
-    //travelRequestId = 1234567;
+    //var travelRequestId = 1234567;
 
     var scope = angular.element('#travelreimbursementtemplate').scope();
     scope.loadTravelReimbursementRequest(travelRequestId);
@@ -1434,6 +1444,9 @@ function showCancelSection(container) {
     var altObj = $(container).prop('alt');
     var travelRequestId = altObj.split('|')[0];
     var travelRequestBadgeNumber = altObj.split('|')[1];
+
+    //var travelRequestId = 123456;
+    //var travelRequestBadgeNumber = 454567;
 
     var scope = angular.element('#approvetemplate').scope();
     scope.loadCancelAction(travelRequestId, travelRequestBadgeNumber);

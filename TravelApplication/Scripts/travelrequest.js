@@ -68,6 +68,19 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             + ($scope.estimatedOtherAirfareAmount * 1)
             + ($scope.estimatedOtherMealsAmount * 1)
         ).toFixed(2));
+
+    }
+
+    $scope.updateTotalActualEstimatedAmount = function () {
+
+        $scope.FISRequestModel = [{}, {}, {}, {}, {}];
+
+        $scope.totalActualEstimatedAmount = parseFloat((
+            ($scope.estimatedActualLodgingAmount * 1)
+            + ($scope.estimatedActualAirfareAmount * 1)
+            + ($scope.estimatedActualMealsAmount * 1)
+        ).toFixed(2));
+
     }
 
     $scope.BusinessMileRate = 0.555;
@@ -114,7 +127,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             $scope.totalMileA = (totalA * 1);
 
            updateBusinessMile();
-           updateDailyTotal();
+           updateDailyTotal(model);
         }
         
     }
@@ -157,7 +170,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             totalBusinessMileAmount += ($scope.TravelModel[index].BusinessMileAmount * 1);
         }
 
-        //alert(round(totalBusinessMileAmount, 2));
+        //alert(totalBusinessMile);
         $scope.totalBusinessMile = totalBusinessMile;
         $scope.totalBusinessMileAmount = parseFloat(totalBusinessMileAmount.toFixed(2));
     }
@@ -185,7 +198,6 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 totalDailyAmount += (model[index].DailyTotal * 1);
 
             }
-
             $scope.totalDailyAmount = parseFloat(totalDailyAmount.toFixed(2));
         }
 
@@ -851,7 +863,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
     // load existing travel requests
     $scope.loadExistingTravelRequests = function (status) {
 
-        var actionTemplate = '<div style="float:left;" ng-if="row.entity.ViewActionVisible == true"><a target="_blank" href="api/travelrequestReport/{{row.entity.TravelRequestId}}"><img title="View" class="actionImage" src="/Images/view.png" /></a></div><div style="float:left;" ng-if="row.entity.EditActionVisible == true"><img title="Edit" class="actionImage" src="/Images/edit.png" alt="{{row.entity.TravelRequestId}}" onclick="editTravelRequest(this);" /></div><div style="float:left;" ng-if="row.entity.CancelActionVisible == true"><img title="Cancel" class="actionImage" src="/Images/cancel.jpg" alt="{{row.entity.TravelRequestId}}|{{row.entity.BadgeNumber}}" onclick="showCancelSection(this);" /></div><div style="float:left;" ng-if="row.entity.ApproveActionVisible == true"><img title="Approve" class="actionImage" src="/Images/approve1.png" alt="{{row.entity.TravelRequestId}}|{{row.entity.ShowAlert}}" onclick="showApproveSection(this);" /><img title="Reject" class="actionImage2" src="/Images/reject1.png" alt="{{row.entity.TravelRequestId}}" onclick="showRejectSection(this);" /></div>';
+        var actionTemplate = '<div style="float:left;" ng-if="row.entity.ViewActionVisible == true"><a target="_blank" href="api/travelrequestReport/{{row.entity.TravelRequestId}}"><img title="View" class="actionImage" src="/Images/view.png" /></a></div><div style="float:left;" ng-if="row.entity.EditActionVisible == true"><img title="Edit" class="actionImage" src="/Images/edit.png" alt="{{row.entity.TravelRequestId}}" onclick="editTravelRequest(this);" /></div><div style="float:left;" ng-if="row.entity.CancelActionVisible == true"><img title="Cancel" class="actionImage" src="/Images/cancel.jpg" alt="{{row.entity.TravelRequestId}}|{{row.entity.BadgeNumber}}" onclick="showCancelSection(this);" /></div><div style="float:left;" ng-if="row.entity.ApproveActionVisible == true"><img title="Approve" class="actionImage" src="/Images/approve1.png" alt="{{row.entity.TravelRequestId}}|{{row.entity.ShowApproverAlert}}" onclick="showApproveSection(this);" /><img title="Reject" class="actionImage2" src="/Images/reject1.png" alt="{{row.entity.TravelRequestId}}" onclick="showRejectSection(this);" /></div>';
         //alert(status);
 
         $scope.columns = [{
@@ -1103,6 +1115,12 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
             
             if (data.TravelRequestSubmitDetail.RejectedTravelRequest) {
+
+                // Reset
+                $("#ddlExecutiveOfficer").val("?");
+                $("#ddlCEOForInternational").val("?");
+                $("#ddlCEOForAPTA").val("?");
+
                 // Hide following approvers when editing a rejected travel request
                 // Executive Officer, CEO International, CEO APTA/CTA
                 $("#additionalApprovers").hide();
@@ -1817,13 +1835,19 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
     }
 
     // load approve action
-    $scope.loadApproveAction = function (travelRequestId) {
+    $scope.loadApproveAction = function (travelRequestId, showAlertText) {
 
         $.get('/uitemplates/approve.html')
         .done(function (data) {
             $('#approvetemplate').html($compile($(data).html())($scope));
 
             $('#travelRequestIdForAction').text(travelRequestId);
+
+            if (showAlertText == 'true') {
+                $('#approverAlert').show();
+                $('#approvercontainer').prop("class", "main approveactioncontainerwithalert");
+            }
+
             $scope.$apply();
 
             $('#txtComments').focus();
@@ -1932,6 +1956,9 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         $scope.estimatedOtherLodgingAmount = "";
         $scope.estimatedOtherAirfareAmount = "";
         $scope.estimatedOtherMealsAmount = "";
+        $scope.estimatedActualLodgingAmount = "";
+        $scope.estimatedActualAirfareAmount = "";
+        $scope.estimatedActualMealsAmount = "";
 
         //$scope.totalFISAmount1 = "";
         //$scope.totalFISAmount2 = "";
@@ -2000,6 +2027,18 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 $scope.estimatedMealsAmount = $scope.Data.EstimatedExpenseData.TotalEstimatedMeals;
                 $scope.estimatedCarRentalAmount = $scope.Data.EstimatedExpenseData.TotalEstimatedCarRental;
                 $scope.estimatedMiscellaneousAmount = $scope.Data.EstimatedExpenseData.TotalEstimatedMiscellaneous;
+
+                $scope.estimatedOtherLodgingAmount = $scope.Data.EstimatedExpenseData.TotalOtherEstimatedLodge;
+                $scope.estimatedOtherAirfareAmount = $scope.Data.EstimatedExpenseData.TotalOtherEstimatedAirFare;
+                $scope.estimatedOtherMealsAmount = $scope.Data.EstimatedExpenseData.TotalOtherEstimatedMeals;
+                $scope.totalOtherEstimatedAmount = $scope.Data.EstimatedExpenseData.TotalOtherEstimatedTotal;
+
+                $scope.estimatedActualLodgingAmount = $scope.Data.EstimatedExpenseData.TotalActualEstimatedLodge;
+                $scope.estimatedActualAirfareAmount = $scope.Data.EstimatedExpenseData.TotalActualEstimatedAirFare;
+                $scope.estimatedActualMealsAmount = $scope.Data.EstimatedExpenseData.TotalActualEstimatedMeals;
+                $scope.totalActualEstimatedAmount = $scope.Data.EstimatedExpenseData.TotalActualEstimatedTotal;
+                $scope.personalTravelExpense = $scope.Data.EstimatedExpenseData.PersonalTravelExpense;
+                
 
                 if ($scope.Data.EstimatedExpenseData.DateNeededBy.substring(0, 10) != '0001-01-01') {
 
@@ -2161,11 +2200,14 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 $("#txtPurpose").val(data.TravelReimbursementDetails.Purpose);
                 
                 $scope.totalCashAdvanceAmount = data.CashAdvance;
+                $scope.totalPersonalAdvanceAmount = data.PersonalTravelExpense;
 
                 // Set TA other expense amounts
                 $("#lblTAAirfare").html("$" + data.TravelReimbursementDetails.TAEstimatedAirFare);
                 $("#lblTALodging").html("$" + data.TravelReimbursementDetails.TAEstimatedLodge);
                 $("#lblTAMeals").html("$" + data.TravelReimbursementDetails.TAEstimatedMeals);
+                $("#lblTAActualLodging").html("$" + data.TravelReimbursementDetails.TAActualLodge);
+                $("#lblTAActualMeals").html("$" + data.TravelReimbursementDetails.TAActualMeals);
 
                 // Set FIS section
                 angular.forEach(data.Fis.FISDetails, function (value, index) {

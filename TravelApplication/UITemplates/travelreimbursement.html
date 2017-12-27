@@ -92,7 +92,14 @@
                 <div class="row">
                     <div class="column">
                         <div>
-                            <span style="color:blue;">Note: Airfare: <label id="lblTAAirfare" name="lblTAAirfare" class="taamount" />, Lodging(per day): <label id="lblTALodging" name="lblTALodging" class="taamount" />, Meals(per day): <label id="lblTAMeals" name="lblTAMeals" class="taamount" /></span>
+                            <span style="color:blue;" class="taamount">
+                                Note:
+                                Airfare: <label id="lblTAAirfare" name="lblTAAirfare" class="taamount" />,
+                                Lodging(per day): <label id="lblTALodging" name="lblTALodging" class="taamount" />,
+                                Meals(per day): <label id="lblTAMeals" name="lblTAMeals" class="taamount" />,
+                                Lodging(actual, per diem): <label id="lblTAActualLodging" name="lblTAActualLodging" class="taamount" />,
+                                Meals(actual, per diem): <label id="lblTAActualMeals" name="lblTAActualMeals" class="taamount" />
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -626,9 +633,9 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="padding-top:5px;" class="calculationtext">SUBSTRACT:  Personal  Advance</td>
+                                                <td style="padding-top:5px;" class="calculationtext">SUBSTRACT:  Personal  Travel Expense</td>
                                                 <td style="padding:0px;">
-                                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtPersonalAdvance" name="txtPersonalAdvance" ng-model="totalPersonalAdvanceAmount" ng-change="updatePersonalAdvanceAmount()" class="inputtransportationnumber totalbgcolor" />
+                                                    <input type="number" min="0.00" max="999999.99" step="0.01" placeholder="0.00" id="txtPersonalAdvance" name="txtPersonalAdvance" ng-model="totalPersonalAdvanceAmount" ng-change="updatePersonalAdvanceAmount()" class="inputtransportationnumber totalbgcolor" readonly />
                                                 </td>
                                             </tr>
                                             <tr>
