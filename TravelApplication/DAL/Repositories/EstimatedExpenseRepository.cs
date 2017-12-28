@@ -243,7 +243,14 @@ namespace TravelApplication.DAL.Repositories
                         Schedule = dataReader["SCHEDULE"].ToString(),
                         CashAdvance = Convert.ToInt32(dataReader["CASHADVANCE"]),
                         DateNeededBy = Convert.ToDateTime(dataReader["DATENEEDEDBY"]),
-                        Note = dataReader["NOTE"].ToString()
+                        Note = dataReader["NOTE"].ToString(),
+                        TotalOtherEstimatedLodge = Convert.ToInt32(dataReader["APPROVEDLODGE"]),
+                        TotalOtherEstimatedAirFare = Convert.ToInt32(dataReader["APPROVEDAIRFARE"]),
+                        TotalOtherEstimatedMeals = Convert.ToInt32(dataReader["APPROVEDMEALS"]),
+                        TotalActualEstimatedLodge = Convert.ToInt32(dataReader["ACTUALLODGE"]),
+                        TotalActualEstimatedAirFare = Convert.ToInt32(dataReader["ACTUALAIRFARE"]),
+                        TotalActualEstimatedMeals = Convert.ToInt32(dataReader["ACTUALMEALS"])
+
                     };
                 }
             }
