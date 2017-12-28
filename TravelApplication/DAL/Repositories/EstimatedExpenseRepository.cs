@@ -6,6 +6,7 @@ using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using TravelApplication.Class.Common;
 using TravelApplication.DAL.DBProvider;
 using TravelApplication.Models;
 
@@ -214,6 +215,9 @@ namespace TravelApplication.DAL.Repositories
             OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
             command.CommandText = query;
             DbDataReader dataReader = command.ExecuteReader();
+            try
+            {
+            
             if (dataReader.HasRows)
             {
                 while (dataReader.Read())
@@ -249,14 +253,22 @@ namespace TravelApplication.DAL.Repositories
                         TotalOtherEstimatedMeals = Convert.ToInt32(dataReader["APPROVEDMEALS"]),
                         TotalActualEstimatedLodge = Convert.ToInt32(dataReader["ACTUALLODGE"]),
                         TotalActualEstimatedAirFare = Convert.ToInt32(dataReader["ACTUALAIRFARE"]),
-                        TotalActualEstimatedMeals = Convert.ToInt32(dataReader["ACTUALMEALS"])
-
-                    };
+                        TotalActualEstimatedMeals = Convert.ToInt32(dataReader["ACTUALMEALS"]),
+                        PersonalTravelExpense = (string.IsNullOrEmpty(dataReader["PERSONALTRAVELEXPENSE"].ToString())) ? 0 : Convert.ToDecimal(dataReader["PERSONALTRAVELEXPENSE"])
+                    };                        
                 }
+
             }
             else
             {
                 throw new Exception("Couldn't retrieve travel request");
+            }
+
+            }
+            catch (Exception ex)
+            {
+                LogMessage.Log("GetTravelRequestDetailNew" + ex.Message);
+                throw;
             }
             command.Dispose();
             return response;

@@ -853,8 +853,9 @@ namespace TravelApplication.Services
                         APPROVEDMEALS,
                         ACTUALLODGE,
                         ACTUALAIRFARE,
-                        ACTUALMEALS
-						 ) VALUES (:p1 ,:p2,:p3,:p4,:p5,:p6,:p7,:p8,:p9,:p10,:p11,:p12,:p13,:p14,:p15,:p16,:p17,:p18,:p19,:p20,:p21,:p22,:p23,:p24,:p25,:p26, :p27, :p28, :p29 ) returning ESTIMATEDEXPENSEID into : estimatedExpenseId ";
+                        ACTUALMEALS,
+                        PERSONALTRAVELEXPENSE
+						 ) VALUES (:p1 ,:p2,:p3,:p4,:p5,:p6,:p7,:p8,:p9,:p10,:p11,:p12,:p13,:p14,:p15,:p16,:p17,:p18,:p19,:p20,:p21,:p22,:p23,:p24,:p25,:p26, :p27, :p28, :p29,:p30 ) returning ESTIMATEDEXPENSEID into : estimatedExpenseId ";
                         cmd.Parameters.Add(new OracleParameter("p1", travelRequestId));
                         cmd.Parameters.Add(new OracleParameter("p2", request.AdvanceLodging));
                         cmd.Parameters.Add(new OracleParameter("p3", request.AdvanceAirFare));
@@ -884,6 +885,7 @@ namespace TravelApplication.Services
                         cmd.Parameters.Add(new OracleParameter("p27", request.TotalActualEstimatedLodge));
                         cmd.Parameters.Add(new OracleParameter("p28", request.TotalActualEstimatedAirFare));
                         cmd.Parameters.Add(new OracleParameter("p29", request.TotalActualEstimatedMeals));
+                        cmd.Parameters.Add(new OracleParameter("p30", request.PersonalTravelExpense));
                         cmd.Parameters.Add("estimatedExpenseId", OracleDbType.Int32, ParameterDirection.ReturnValue);
                         var rowsUpdated = cmd.ExecuteNonQuery();
                         estimatedExpenseId = Decimal.ToInt32(((Oracle.ManagedDataAccess.Types.OracleDecimal)(cmd.Parameters["estimatedExpenseId"].Value)).Value);
@@ -928,7 +930,8 @@ namespace TravelApplication.Services
                         APPROVEDMEALS = :26,
                         ACTUALLODGE = :p27,
                         ACTUALAIRFARE = :p28,
-                        ACTUALMEALS = :29
+                        ACTUALMEALS = :p29,
+                        PERSONALTRAVELEXPENSE = :p30
                         WHERE TRAVELREQUESTID = {0}", request.TravelRequestId);
                         cmd.Parameters.Add(new OracleParameter("p1", request.TravelRequestId));
                         cmd.Parameters.Add(new OracleParameter("p2", request.AdvanceLodging));
@@ -959,6 +962,7 @@ namespace TravelApplication.Services
                         cmd.Parameters.Add(new OracleParameter("p27", request.TotalActualEstimatedLodge));
                         cmd.Parameters.Add(new OracleParameter("p28", request.TotalActualEstimatedAirFare));
                         cmd.Parameters.Add(new OracleParameter("p29", request.TotalActualEstimatedMeals));
+                        cmd.Parameters.Add(new OracleParameter("p30", request.PersonalTravelExpense));
                         var rowsUpdated = cmd.ExecuteNonQuery();
                         estimatedExpenseId = request.EstimatedExpenseId;
                         cmd.Dispose();
