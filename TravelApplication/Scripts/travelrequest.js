@@ -1164,6 +1164,9 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 $scope.CEOsForInternational = data;
                 $scope.CEOsForAPTA          = data;
                 $scope.$apply();
+
+                //$('#ddlDepartmentHead').val(1003);
+                //$('#ddlExecutiveOfficer').val(1001);
             },
             error: function (xhr, options, error) {
             }
