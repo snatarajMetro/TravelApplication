@@ -308,6 +308,29 @@ namespace TravelApplication.DAL.Repositories
                 {
                     throw new Exception("Couldn't retrieve travel request");
                 }
+
+                string query1 = string.Format("Select APPROVEDAIRFARE,APPROVEDLODGE, APPROVEDLODGE, ACTUALLODGE, ACTUALMEALS from TRAVELREQUEST_ESTIMATEDEXPENSE where TRAVELREQUESTID= {0}", travelRequestId);
+                OracleCommand command1 = new OracleCommand(query1, (OracleConnection)dbConn);
+                command1.CommandText = query1;
+                DbDataReader dataReader1 = command1.ExecuteReader();
+
+                if (dataReader1.HasRows)
+                {
+                    while (dataReader1.Read())
+                    {
+
+                        response.TAEstimatedAirFare = Convert.ToDecimal(dataReader1["APPROVEDAIRFARE"]);
+                        response.TAEstimatedLodge = Convert.ToInt32(dataReader1["APPROVEDLODGE"]);
+                        response.TAEstimatedMeals = Convert.ToInt32(dataReader1["APPROVEDLODGE"]);
+                        response.TAActualLodge = Convert.ToInt32(dataReader1["ACTUALLODGE"]);
+                        response.TAActualMeals = Convert.ToInt32(dataReader1["ACTUALMEALS"]);
+                    }
+
+                }
+                else
+                {
+                    throw new Exception("Couldn't retrieve travel request");
+                }
                 command.Dispose();
                 dataReader.Close();
                 return response;
@@ -315,7 +338,7 @@ namespace TravelApplication.DAL.Repositories
             }
             catch (Exception ex)
             {
-                LogMessage.Log("GetTravelRequestDetail : " + ex.Message);
+                LogMessage.Log("GetTravelRequestDetail2 : " + ex.Message);
                 throw;
             }
         }
@@ -406,10 +429,11 @@ namespace TravelApplication.DAL.Repositories
                                                                 SUBTRACTPAIDBYMTA ,
                                                                 TOTALEXPENSES ,
                                                                 SUBTRACTCASHADVANCE,
-                                                                TOTAL
+                                                                TOTAL,
+                                                                SUBTRACTPERSONALTRAVELEXPENSE
                                                             )
                                                             VALUES
-                                                                (:p1,:p2,:p3,:p4,:p5,:p6,:p7,:p8,:p9,:p10,:p11,:p12,:p13,:p14,:p15,:p16,:p17,:p18,:p19,:p20,:p21,:p22,:p23,:p24,:p25,:p26,:p27,:p28,:p29,:p30,:p31,:p32,:p33,:p34,:p35,:p36)");
+                                                                (:p1,:p2,:p3,:p4,:p5,:p6,:p7,:p8,:p9,:p10,:p11,:p12,:p13,:p14,:p15,:p16,:p17,:p18,:p19,:p20,:p21,:p22,:p23,:p24,:p25,:p26,:p27,:p28,:p29,:p30,:p31,:p32,:p33,:p34,:p35,:p36, :p37)");
                             cmd.Parameters.Add(new OracleParameter("p1", reimbursement.TravelRequestId));
                             cmd.Parameters.Add(new OracleParameter("p2", reimbursement.Date));
                             cmd.Parameters.Add(new OracleParameter("p3", reimbursement.CityStateAndBusinessPurpose));
@@ -446,8 +470,9 @@ namespace TravelApplication.DAL.Repositories
                             cmd.Parameters.Add(new OracleParameter("p34", reimbursementDetails.TotalExpenses));
                             cmd.Parameters.Add(new OracleParameter("p35", reimbursementDetails.SubtractCashAdvance));
                             cmd.Parameters.Add(new OracleParameter("p36", reimbursementDetails.Total));
+                            cmd.Parameters.Add(new OracleParameter("p37", reimbursementDetails.SubtractPersonalAdvance));
 
-                            var rowsUpdated = cmd.ExecuteNonQuery();
+                        var rowsUpdated = cmd.ExecuteNonQuery();
                             cmd.Dispose();
                         }
                 else
@@ -490,7 +515,8 @@ namespace TravelApplication.DAL.Repositories
                                                         SUBTRACTPAIDBYMTA= :p33,
                                                         TOTALEXPENSES = :p34,
                                                         SUBTRACTCASHADVANCE= :p35,
-                                                        TOTAL = :36
+                                                        TOTAL = :p36,
+                                                        SUBTRACTPERSONALTRAVELEXPENSE = :p37
                                                         WHERE ID = {0}", reimbursement.Id);
                         cmd.Parameters.Add(new OracleParameter("p1", reimbursement.TravelRequestId));
                         cmd.Parameters.Add(new OracleParameter("p2", reimbursement.Date));
@@ -528,6 +554,7 @@ namespace TravelApplication.DAL.Repositories
                         cmd.Parameters.Add(new OracleParameter("p34", reimbursementDetails.TotalExpenses));
                         cmd.Parameters.Add(new OracleParameter("p35", reimbursementDetails.SubtractCashAdvance));
                         cmd.Parameters.Add(new OracleParameter("p36", reimbursementDetails.Total));
+                        cmd.Parameters.Add(new OracleParameter("p37", reimbursementDetails.SubtractPersonalAdvance));
 
                         var rowsUpdated = cmd.ExecuteNonQuery();
                         cmd.Dispose();
@@ -1359,6 +1386,7 @@ namespace TravelApplication.DAL.Repositories
                         {
                             Reimbursement = response,
                             SubtractCashAdvance = Convert.ToInt32(dataReader["SUBTRACTCASHADVANCE"]),
+                            SubtractPersonalAdvance = (string.IsNullOrEmpty(dataReader["SUBTRACTPERSONALTRAVELEXPENSE"].ToString())) ? 0 : Convert.ToDecimal(dataReader["SUBTRACTPERSONALTRAVELEXPENSE"]),
                             SubtractPaidByMTA = Convert.ToInt32(dataReader["SUBTRACTPAIDBYMTA"]),
                             Total = Convert.ToInt32(dataReader["TOTAL"]),
                             TotalAirFare = Convert.ToInt32(dataReader["TOTALAIRFARE"]),
