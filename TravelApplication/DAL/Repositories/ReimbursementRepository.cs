@@ -166,7 +166,8 @@ namespace TravelApplication.DAL.Repositories
                 {
                     TravelReimbursementDetails = travelReimbursementDetails,
                     Fis = fisDetails,
-                    CashAdvance = estimatedExpense.CashAdvance
+                    CashAdvance = estimatedExpense.CashAdvance,
+                    PersonalTravelExpense = estimatedExpense.PersonalTravelExpense
                 };
             }
             catch (Exception ex)
@@ -222,7 +223,7 @@ namespace TravelApplication.DAL.Repositories
                     throw new Exception("Couldn't retrieve travel request");
                 }
 
-                string query1 = string.Format("Select TAESTIMATEDAIRFARE,TAESTIMATEDLODGE, TAESTIMATEDMEALS from TRAVELREQUEST_ESTIMATEDEXPENSE where TRAVELREQUESTID= {0}", travelRequestId);
+                string query1 = string.Format("Select APPROVEDAIRFARE,APPROVEDLODGE, APPROVEDLODGE, ACTUALLODGE, ACTUALMEALS from TRAVELREQUEST_ESTIMATEDEXPENSE where TRAVELREQUESTID= {0}", travelRequestId);
                 OracleCommand command1 = new OracleCommand(query1, (OracleConnection)dbConn);
                 command1.CommandText = query1;
                 DbDataReader dataReader1 = command1.ExecuteReader();
@@ -232,9 +233,11 @@ namespace TravelApplication.DAL.Repositories
                     while (dataReader1.Read())
                     {
 
-                        response.TAEstimatedAirFare =  Convert.ToDecimal(dataReader1["TAESTIMATEDAIRFARE"]);
-                        response.TAEstimatedLodge = Convert.ToInt32(dataReader1["TAESTIMATEDLODGE"]);
-                        response.TAEstimatedMeals = Convert.ToInt32(dataReader1["TAESTIMATEDMEALS"]);
+                        response.TAEstimatedAirFare =  Convert.ToDecimal(dataReader1["APPROVEDAIRFARE"]);
+                        response.TAEstimatedLodge = Convert.ToInt32(dataReader1["APPROVEDLODGE"]);
+                        response.TAEstimatedMeals = Convert.ToInt32(dataReader1["APPROVEDLODGE"]);
+                        response.TAActualLodge = Convert.ToInt32(dataReader1["ACTUALLODGE"]);
+                        response.TAActualMeals = Convert.ToInt32(dataReader1["ACTUALMEALS"]);
                     }
 
                 }
