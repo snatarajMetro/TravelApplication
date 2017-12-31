@@ -27,6 +27,7 @@ $(document).ready(function () {
     //viewexistingreimbursements();
     //showApproveSection();
     //showCancelSection();
+    //showRejectSection();
   });
 
 function setTwoDecimal(el) {
@@ -864,8 +865,11 @@ function closerejectsuccess() {
 function showRejectSection(container) {
 
     var travelRequestId = $(container).prop('alt');
+    //var travelRequestId = 123456;
+    var selectedRoleId = $("#selectedRoleId").text();
+
     var scope = angular.element('#rejecttemplate').scope();
-    scope.loadRejectAction(travelRequestId);
+    scope.loadRejectAction(travelRequestId, selectedRoleId);
 
     $('#rejecttemplate').show();
 }
@@ -873,10 +877,11 @@ function showRejectSection(container) {
 function showRejectSection2(container) {
 
     var travelRequestId = $(container).prop('alt');
-    $('#travalAction').text('travelreimbursement');
+    var selectedRoleId = $("#selectedRoleId").text();
 
+    $('#travalAction').text('travelreimbursement');
     var scope = angular.element('#rejecttemplate').scope();
-    scope.loadRejectAction(travelRequestId);
+    scope.loadRejectAction(travelRequestId, selectedRoleId);
 
     $('#rejecttemplate').show();
 }
@@ -965,8 +970,8 @@ function createTravelRequestReimbursement(container) {
     $('#approvedtravelrequesttemplate').hide();
     $('#travelRequestId').text(0);
 
-    var travelRequestId = $(container).prop('alt');
-    //var travelRequestId = 1234567;
+    //var travelRequestId = $(container).prop('alt');
+    var travelRequestId = 1234567;
 
     var scope = angular.element('#travelreimbursementtemplate').scope();
     scope.loadTravelReimbursementRequest(travelRequestId);

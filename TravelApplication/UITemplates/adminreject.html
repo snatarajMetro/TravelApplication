@@ -1,0 +1,44 @@
+﻿<div id="adminreject">
+    <div class="main rejectactioncontainer">
+        <div id="content" class="content estimatedexpense">
+            <div class="approvaltitle">
+                <span class="travelrequestlabelforaction">Travel Request # :</span>
+                <span id="travelRequestIdForRejectAction" class="travelrequestidforaction">0</span>
+            </div>
+            <div id="rejectsection">
+                <div class="dropdown approvaltitle">
+                    <span class="commentsTitle">Reject Reason</span><br />
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" id="btnRejectReason" name="btnRejectReason" style="min-width:150px;min-height:35px;">
+                        Select&nbsp;&nbsp;
+                        <span class="caret" style="float:right;margin-top:7px;"></span>
+                    </button>
+                    <ul class="dropdown-menu rejectreasondropdown">
+                        <li><a href="#" onclick="setRejectReason(this);">TBD: Option 1</a></li>
+                        <li><a href="#" onclick="setRejectReason(this);">TBD: Option 2</a></li>
+                        <li><a href="#" onclick="setRejectReason(this);">TBD: Option 3</a></li>
+                        <li><a href="#" onclick="setRejectReason(this);">TBD: Other</a></li>
+                    </ul>
+                </div>
+                <div style="float:left;clear:both;" class="approvaltitle">
+                    <span class="commentsTitle">Comments</span>
+                    <textarea id="txtCommentsForReject" width="100" class="actioncomments" />
+                </div>
+                <div class="actionbutton">
+                    <input class="btn btn-danger rejectbutton" type="button" id="btnReject" name="btnReject" value="Reject" onclick="reject()" />
+                </div>
+                <div class="cancelbutton">
+                    <input class="btn btn-primary signinbutton" type="button" name="btnCancel" value="Cancel" onclick="cancelAction()" />
+                </div>
+                <span id="badgeNumberToAction" style="visibility:hidden"></span>
+                <div id="rejectsuccess" class="main successcontainerok" style="display:none">
+                    <span class="dialogSuccess" id="rejectsuccessmessage"></span>
+                    <a href="#" class="close-thick" onclick="return closerejectsuccess();"></a>
+                </div>
+                <div id="rejecterror" class="main errorcontainer" style="display:none">
+                    <span class="dialogerror" id="rejecterrormessage"></span>
+                    <a href="#" class="close-thick" onclick="return closerejecterror();"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

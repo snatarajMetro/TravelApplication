@@ -1858,9 +1858,14 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
     }
 
     // load reject action
-    $scope.loadRejectAction = function (travelRequestId) {
+    $scope.loadRejectAction = function (travelRequestId, selectedRoleId) {
 
-        $.get('/uitemplates/reject.html')
+        var url = "/uitemplates/reject.html";
+        //if (selectedRoleId == 4) {
+        //    url = "/uitemplates/adminreject.html";
+        //}
+
+        $.get(url)
         .done(function (data) {
             $('#rejecttemplate').html($compile($(data).html())($scope));
 
