@@ -602,6 +602,7 @@
     <Content Include="Scripts\travelapp.js" />
     <Content Include="Scripts\travelrequest.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="UITemplates\adminreject.html" />
     <Content Include="UITemplates\approve.html" />
     <Content Include="UITemplates\approvedtravelrequests.html" />
     <Content Include="UITemplates\ApproveRequest.html" />
