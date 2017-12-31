@@ -2391,3 +2391,37 @@ select.ui-grid-filter-select option[value=""] {
     font-size:11px;
     color:red;
 }
+
+.pagetitlerejectapprovers {
+    font-size: 12px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+div.adminrejectactioncontainer {
+    position: absolute;
+    float: left;
+    top: 50px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 570px;
+    height: 560px;
+    margin: auto;
+    background-color: white;
+    box-shadow: 10px 10px 5px #3c3c3c;
+    border-radius: 3px;
+    border: solid 1px black;
+}
+
+.rejectactionbutton {
+    position: absolute;
+    margin-left: 120px;
+    margin-top: 420px;
+}
+
+.rejectcancelbutton {
+    position: absolute;
+    margin-left: 345px;
+    margin-top: 420px;
+}

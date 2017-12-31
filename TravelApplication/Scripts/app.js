@@ -16,6 +16,7 @@ $(document).ready(function () {
 
     //viewdashboard();
     //createnewrequest();
+    //$('#travelRequestBadgeNumber').text("1234");
     //$("#selectedRoleId").text(4);
     //editTravelRequest();
     //$("#signin").hide();

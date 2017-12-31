@@ -1,5 +1,5 @@
 ﻿<div id="adminreject">
-    <div class="main rejectactioncontainer">
+    <div class="main adminrejectactioncontainer">
         <div id="content" class="content estimatedexpense">
             <div class="approvaltitle">
                 <span class="travelrequestlabelforaction">Travel Request # :</span>
@@ -23,10 +23,106 @@
                     <span class="commentsTitle">Comments</span>
                     <textarea id="txtCommentsForReject" width="100" class="actioncomments" />
                 </div>
-                <div class="actionbutton">
+                <div style="float:left;clear:both;" class="row">
+                    <div id="submitsection">
+                        <div class="pagetitlerejectapprovers">
+                            <span>Re-assign Approvers</span>
+                        </div>
+                        <div class="submitsection">
+                            <div style="padding-top:2px;">
+                                <div style="float:left;" class="approvaltitle"><span>Department Head</span>&nbsp;<sup class="required">*</sup></div>
+                                <div ng-app="travelApp" ng-controller="travelAppCtrl">
+                                    <div style="float:left;">
+                                        <select class="inputdropdown submitUser" id="ddlDepartmentHead" name="ddlDepartmentHead"
+                                                ng-model="ddlDepartmentHead"
+                                                ng-change="displayOther('otherForDepartmentHead', 'txtDepartmentHeadBadgeNumber', 'txtDepartmentHeadName', ddlDepartmentHead)"
+                                                ng-options="department.Name for department in DepartmentHeads track by department.BadgeNumber"></select>
+                                    </div>
+                                    <div id="otherForDepartmentHead" class="" style="display:none;">
+                                        <span class="label2 approvaltitle">Badge #</span>
+                                        <input type="text" placeholder="Badge Number" id="txtDepartmentHeadBadgeNumber" name="txtDepartmentHeadBadgeNumber" width="50" ng-model="departmentHeadBadgeNumber" class="badgeNumberForSubmit" onblur="setOtherUserName('txtDepartmentHeadBadgeNumber', 'txtDepartmentHeadName')" />
+                                        <span class="label2 approvaltitle">Name</span>
+                                        <input type="text" placeholder="Name" id="txtDepartmentHeadName" name="txtDepartmentHeadName" width="50" class="approverNameForSubmit" readonly />
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="additionalApprovers">
+                                <div style="clear:both;padding-top:10px;">
+                                    <div style="float:left;" class="approvaltitle"><span>Executive Officer</span></div>
+                                    <div ng-app="travelApp" ng-controller="travelAppCtrl">
+                                        <div>
+                                            <select class="inputdropdown submitUser" id="ddlExecutiveOfficer" name="ddlExecutiveOfficer"
+                                                    ng-model="ddlExecutiveOfficer"
+                                                    ng-change="displayOther('otherForExecutiveOfficer', 'txtExecutiveOfficerBadgeNumber', 'txtExecutiveOfficerName', ddlExecutiveOfficer)"
+                                                    ng-options="officer.Name for officer in ExecutiveOfficers track by officer.BadgeNumber"></select>
+                                        </div>
+                                        <div id="otherForExecutiveOfficer" class="otherBadgeNumberContainer" style="display:none;">
+                                            <span class="label2 approvaltitle">Badge #</span>
+                                            <input type="text" placeholder="Badge Number" id="txtExecutiveOfficerBadgeNumber" name="txtExecutiveOfficerBadgeNumber" width="50" ng-model="executiveOfficerBadgeNumber" class="badgeNumberForSubmit" onblur="setOtherUserName('txtExecutiveOfficerBadgeNumber', 'txtExecutiveOfficerName')" />
+                                            <span class="label2 approvaltitle">Name</span>
+                                            <input type="text" placeholder="Name" id="txtExecutiveOfficerName" name="txtExecutiveOfficerName" width="50" class="approverNameForSubmit" readonly />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="clear:both;padding-top:10px;">
+                                    <div style="float:left;" class="approvaltitle"><span>CEO (For International)</span></div>
+                                    <div ng-app="travelApp" ng-controller="travelAppCtrl">
+                                        <div>
+                                            <select class="inputdropdown submitUser" id="ddlCEOForInternational" name="ddlCEOForInternational"
+                                                    ng-model="ddlCEOForInternational"
+                                                    ng-change="displayOther('otherForCEOForInternational', 'txtCEOForInternationalBadgeNumber', 'txtCEOForInternationalName', ddlCEOForInternational)"
+                                                    ng-options="officer.Name for officer in CEOsForInternational track by officer.BadgeNumber"></select>
+                                        </div>
+                                        <div id="otherForCEOForInternational" class="otherBadgeNumberContainer" style="display:none;">
+                                            <span class="label2 approvaltitle">Badge #</span>
+                                            <input type="text" placeholder="Badge Number" id="txtCEOForInternationalBadgeNumber" name="txtCEOForInternationalBadgeNumber" width="50" ng-model="ceoForInternationalBadgeNumber" class="badgeNumberForSubmit" onblur="setOtherUserName('txtCEOForInternationalBadgeNumber', 'txtCEOForInternationalName')" />
+                                            <span class="label2 approvaltitle">Name</span>
+                                            <input type="text" placeholder="Name" id="txtCEOForInternationalName" name="txtCEOForInternationalName" width="50" class="approverNameForSubmit" readonly />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="clear:both;padding-top:10px;">
+                                    <div style="float:left;" class="approvaltitle"><span>CEO (For APTA/CTA conference)</span></div>
+                                    <div ng-app="travelApp" ng-controller="travelAppCtrl">
+                                        <div>
+                                            <select class="inputdropdown submitUser" id="ddlCEOForAPTA" name="ddlCEOForAPTA"
+                                                    ng-model="ddlCEOForAPTA"
+                                                    ng-change="displayOther('otherForCEOForAPTA', 'txtCEOForAPTABadgeNumber', 'txtCEOForAPTAName', ddlCEOForAPTA)"
+                                                    ng-options="officer.Name for officer in CEOsForAPTA track by officer.BadgeNumber"></select>
+                                        </div>
+                                        <div id="otherForCEOForAPTA" class="otherBadgeNumberContainer" style="display:none;">
+                                            <span class="label2 approvaltitle">Badge #</span>
+                                            <input type="text" placeholder="Badge Number" id="txtCEOForAPTABadgeNumber" name="txtCEOForAPTABadgeNumber" width="50" ng-model="ceoForAPTABadgeNumber" class="badgeNumberForSubmit" onblur="setOtherUserName('txtCEOForAPTABadgeNumber', 'txtCEOForAPTAName')" />
+                                            <span class="label2 approvaltitle">Name</span>
+                                            <input type="text" placeholder="Name" id="txtCEOForAPTAName" name="txtCEOForAPTAName" width="50" class="approverNameForSubmit" readonly />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="clear:both;padding-top:10px;">
+                                <div style="float:left;" class="approvaltitle"><span>Travel Program Administrator</span><sup class="required">*</sup></div>
+                                <div ng-app="travelApp" ng-controller="travelAppCtrl">
+                                    <div>
+                                        <select class="inputdropdown submitUser" id="ddlTravelCoordinator" name="ddlTravelCoordinator"
+                                                ng-model="ddlTravelCoordinator"
+                                                ng-change="displayOther('otherForTravelCoordinator', 'txtTravelCoordinatorBadgeNumber', 'txtTravelCoordinatorName', ddlTravelCoordinator)"
+                                                ng-options="officer.Name for officer in TravelCoordinators track by officer.BadgeNumber"></select>
+                                    </div>
+                                    <div id="otherForTravelCoordinator" class="otherBadgeNumberContainer" style="display:none;">
+                                        <span class="label2 approvaltitle">Badge #</span>
+                                        <input type="text" placeholder="Badge Number" id="txtTravelCoordinatorBadgeNumber" name="txtTravelCoordinatorBadgeNumber" width="50" ng-model="travelCoordinatorBadgeNumber" class="badgeNumberForSubmit" onblur="setOtherUserName('txtTravelCoordinatorBadgeNumber', 'txtTravelCoordinatorName')" />
+                                        <span class="label2 approvaltitle">Name</span>
+                                        <input type="text" placeholder="Name" id="txtTravelCoordinatorName" name="txtTravelCoordinatorName" width="50" class="approverNameForSubmit" readonly />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="rejectactionbutton">
                     <input class="btn btn-danger rejectbutton" type="button" id="btnReject" name="btnReject" value="Reject" onclick="reject()" />
                 </div>
-                <div class="cancelbutton">
+                <div class="rejectcancelbutton">
                     <input class="btn btn-primary signinbutton" type="button" name="btnCancel" value="Cancel" onclick="cancelAction()" />
                 </div>
                 <span id="badgeNumberToAction" style="visibility:hidden"></span>

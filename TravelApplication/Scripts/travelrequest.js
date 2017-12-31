@@ -1150,7 +1150,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
     }
 
     // load data for 1st four approvers dropdown
-    $scope.loadCommonApprovers = function (badgeNumber) {
+    $scope.loadCommonApprovers = function (badgeNumber, selectedApprovers) {
 
         $.ajax({
             type: "GET",
@@ -1165,15 +1165,20 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 $scope.CEOsForAPTA          = data;
                 $scope.$apply();
 
-                //$('#ddlDepartmentHead').val(1003);
-                //$('#ddlExecutiveOfficer').val(1001);
+                if (selectedApprovers) {
+                    
+                    $('#ddlDepartmentHead').val(selectedApprovers.DepartmentHead);
+                    $('#ddlExecutiveOfficer').val(selectedApprovers.ExecutiveOfficer);
+                    $('#ddlCEOForInternational').val(selectedApprovers.CEOForInternational);
+                    $('#ddlCEOForAPTA').val(selectedApprovers.CEOForAPTA);
+                }
             },
             error: function (xhr, options, error) {
             }
         });
     }
 
-    $scope.loadTravelCoordinators = function () {
+    $scope.loadTravelCoordinators = function (selectedApprovers) {
 
         $.ajax({
             type: "GET",
@@ -1184,6 +1189,10 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
                 $scope.TravelCoordinators = data;
                 $scope.$apply();
+
+                if (selectedApprovers) {
+                    $("#ddlTravelCoordinator").val(selectedApprovers.TravelCoordinator);
+                }
             },
             error: function (xhr, options, error) {
             }
@@ -1861,9 +1870,20 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
     $scope.loadRejectAction = function (travelRequestId, selectedRoleId) {
 
         var url = "/uitemplates/reject.html";
-        //if (selectedRoleId == 4) {
-        //    url = "/uitemplates/adminreject.html";
-        //}
+        var selectedApprovers = {};
+
+        // Get selected approvers if admin role
+        if (selectedRoleId == 4) {
+            url = "/uitemplates/adminreject.html";
+
+            //var selectedApprovers = {
+            //    "DepartmentHead": 1002,
+            //    "ExecutiveOfficer": 0,
+            //    "CEOForInternational": 1003,
+            //    "CEOForAPTA": 1001,
+            //    "TravelCoordinator": 1234,
+            //};
+        }
 
         $.get(url)
         .done(function (data) {
@@ -1871,6 +1891,11 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
             $('#travelRequestIdForRejectAction').text(travelRequestId);
             $scope.$apply();
+
+            if (selectedRoleId == 4) {
+                $scope.loadCommonApprovers($('#travelRequestBadgeNumber').text(), selectedApprovers);
+                $scope.loadTravelCoordinators(selectedApprovers);
+            }
 
             $('#txtCommentsForReject').focus();
         });
