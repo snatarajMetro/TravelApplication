@@ -1876,7 +1876,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         if (selectedRoleId == 4) {
             url = "/uitemplates/adminreject.html";
 
-            //var selectedApprovers = {
+            //selectedApprovers = {
             //    "DepartmentHead": 1002,
             //    "ExecutiveOfficer": 0,
             //    "CEOForInternational": 1003,

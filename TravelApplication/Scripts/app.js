@@ -794,11 +794,26 @@ function reject() {
     var rejectReason = $("#btnRejectReason").attr('title');
     var action = $('#travalAction').text();
     var url = "api/travelrequest/reject";
+    var selectedRoleId = $("#selectedRoleId").text();
+    var departmentHeadBadgeNumber = "";
+    var executiveOfficerBadgeNumber = "";
+    var ceoForInternationalBadgeNumber = "";
+    var ceoForAPTABadgeNumber = "";
+    var travelCoordinatorBadgeNumber = "";
 
     if (action) {
         if (action == "travelreimbursement") {
             url = "api/reimburse/reject";
         }
+    }
+
+    // Get approvers when an admin rejects
+    if (selectedRoleId == 4) {
+        departmentHeadBadgeNumber = $("#ddlDepartmentHead option:selected").val();
+        executiveOfficerBadgeNumber = $("#ddlExecutiveOfficer option:selected").val();
+        ceoForInternationalBadgeNumber = $("#ddlCEOForInternational option:selected").val();
+        ceoForAPTABadgeNumber = $("#ddlCEOForAPTA option:selected").val();
+        travelCoordinatorBadgeNumber = $("#ddlTravelCoordinator option:selected").val();
     }
 
     $.ajax({
@@ -808,7 +823,12 @@ function reject() {
             "TravelRequestId": travelRequestId,
             "ApproverBadgeNumber": badgeNumber,
             "Comments": comments,
-            "RejectReason": rejectReason
+            "RejectReason": rejectReason,
+            "DepartmentHeadBadgeNumber": departmentHeadBadgeNumber,   
+            "ExecutiveOfficerBadgeNumber": executiveOfficerBadgeNumber,   
+            "CEOForInternationalBadgeNumber": ceoForInternationalBadgeNumber,      
+            "CEOForAPTABadgeNumber": ceoForAPTABadgeNumber,     
+            "TravelCoordinatorBadgeNumber": travelCoordinatorBadgeNumber,
         }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",

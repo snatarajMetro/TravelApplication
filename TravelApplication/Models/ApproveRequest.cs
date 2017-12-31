@@ -13,5 +13,10 @@ namespace TravelApplication.Models
         public int SubmittedBadgeNumber { get; set; }
         public int TravelRequestBadgeNumber { get; set; }
         public string RejectReason { get; set; }
+        public string DepartmentHeadBadgeNumber { get; set; }
+        public string ExecutiveOfficerBadgeNumber { get; set; }
+        public string CEOForInternationalBadgeNumber { get; set; }
+        public string CEOForAPTABadgeNumber { get; set; }
+        public string TravelCoordinatorBadgeNumber { get; set; }
     }
 }
