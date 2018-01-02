@@ -2934,7 +2934,13 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 $('#txtExtension').val($scope.Data.ReimbursementTravelRequestDetails.Extension);
                 $('#txtReimbursementId').val($scope.Data.ReimbursementTravelRequestDetails.ReimbursementId);
                 
-
+                // Set TA other expense amounts
+                $("#lblTAAirfare").html("$" + $scope.Data.ReimbursementTravelRequestDetails.TAEstimatedAirFare);
+                $("#lblTALodging").html("$" + $scope.Data.ReimbursementTravelRequestDetails.TAEstimatedLodge);
+                $("#lblTAMeals").html("$" + $scope.Data.ReimbursementTravelRequestDetails.TAEstimatedMeals);
+                $("#lblTAActualLodging").html("$" + $scope.Data.ReimbursementTravelRequestDetails.TAActualLodge);
+                $("#lblTAActualMeals").html("$" + $scope.Data.ReimbursementTravelRequestDetails.TAActualMeals);
+               
                 // set travel data section
                 for (var index = 0; index < $scope.Data.ReimbursementDetails.Reimbursement.length; index++) {
                     $scope.TravelModel[index].Id                    = $scope.Data.ReimbursementDetails.Reimbursement[index].Id;

@@ -303,3 +303,4 @@ $RECYCLE.BIN/
 *.lnk
 TravelApplication/logs/log.txt
 TravelApplication/Models/TravelRequestDetails.cs
+*.cs
