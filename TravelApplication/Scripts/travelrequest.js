@@ -1992,7 +1992,8 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         $scope.estimatedActualLodgingAmount = "";
         $scope.estimatedActualAirfareAmount = "";
         $scope.estimatedActualMealsAmount = "";
-
+        $scope.totalCashAdvanceAmount = "";
+        $scope.personalTravelExpense = "";
         //$scope.totalFISAmount1 = "";
         //$scope.totalFISAmount2 = "";
 
@@ -2044,7 +2045,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 $('#txtNotes').val($scope.Data.EstimatedExpenseData.Note);
                 $('#txtAgencyName').val($scope.Data.EstimatedExpenseData.AgencyNameAndReservation);
                 $('#txtShuttle').val($scope.Data.EstimatedExpenseData.Shuttle);
-                $('#txtCashAdvanceRequested').val($scope.Data.EstimatedExpenseData.CashAdvance);
+                //$('#txtCashAdvanceRequested').val($scope.Data.EstimatedExpenseData.CashAdvance);
                 $('#estimatedExpenseId').text($scope.Data.EstimatedExpenseData.EstimatedExpenseId);
                 
                 $scope.advanceLodgingAmount = $scope.Data.EstimatedExpenseData.AdvanceLodging;
@@ -2070,8 +2071,14 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 $scope.estimatedActualAirfareAmount = $scope.Data.EstimatedExpenseData.TotalActualEstimatedAirFare;
                 $scope.estimatedActualMealsAmount = $scope.Data.EstimatedExpenseData.TotalActualEstimatedMeals;
                 $scope.totalActualEstimatedAmount = $scope.Data.EstimatedExpenseData.TotalActualEstimatedTotal;
-                $scope.personalTravelExpense = $scope.Data.EstimatedExpenseData.PersonalTravelExpense;
-                
+
+                if ($scope.Data.EstimatedExpenseData.PersonalTravelExpense > 0) {
+                    $scope.personalTravelExpense = $scope.Data.EstimatedExpenseData.PersonalTravelExpense;
+                }
+
+                if ($scope.Data.EstimatedExpenseData.CashAdvance > 0) {
+                    $scope.totalCashAdvanceAmount = $scope.Data.EstimatedExpenseData.CashAdvance;
+                }
 
                 if ($scope.Data.EstimatedExpenseData.DateNeededBy.substring(0, 10) != '0001-01-01') {
 
