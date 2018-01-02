@@ -437,7 +437,8 @@ namespace TravelApplication.Services
                                     Status = dataReader["STATUS"].ToString(),
                                     Purpose = dataReader["Purpose"].ToString(),
                                     CancelActionVisible = false,
-                                    ShowAlert = (Convert.ToDateTime(dataReader["DEPARTUREDATETIME"]).AddDays(30) >= DateTime.Today) ? true : false
+                                    ShowApproverAlert = (Convert.ToDateTime(dataReader["DEPARTUREDATETIME"])- DateTime.Today).TotalDays <= 30  ? true : false
+                                     
                                 });
                             }
                         }
@@ -469,7 +470,8 @@ namespace TravelApplication.Services
                                     ApproveActionVisible = getApprovalSatus(dbConn, Convert.ToInt32(dataReader["TravelRequestId"]), submittedBadgeNumber) ? true : false,
                                     Status = dataReader["STATUS"].ToString(),
                                     Purpose = dataReader["PURPOSE"].ToString(),
-                                    CancelActionVisible = false
+                                    CancelActionVisible = false,
+                                    ShowApproverAlert = (Convert.ToDateTime(dataReader["DEPARTUREDATETIME"]) - DateTime.Today).TotalDays <= 30 ? true : false
                                 });
                             }
                         }
