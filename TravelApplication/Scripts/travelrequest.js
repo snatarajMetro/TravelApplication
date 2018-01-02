@@ -108,7 +108,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
     }
 
     $scope.updateSubmittedForApprovalAmount = function () {
-        $scope.totalSubmittedForApprovalAmount = $scope.totalDailyAmount + $scope.totalPart2NonTravelExpenseAmount;
+        $scope.totalSubmittedForApprovalAmount = parseFloat((($scope.totalDailyAmount * 1) + ($scope.totalPart2NonTravelExpenseAmount * 1)).toFixed(2));
         updatetotalExpenseAmount();
     }
 
@@ -201,7 +201,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             $scope.totalDailyAmount = parseFloat(totalDailyAmount.toFixed(2));
         }
 
-        $scope.totalSubmittedForApprovalAmount = ($scope.totalDailyAmount * 1) + ($scope.totalPart2NonTravelExpenseAmount * 1);
+        $scope.totalSubmittedForApprovalAmount = parseFloat((($scope.totalDailyAmount * 1) + ($scope.totalPart2NonTravelExpenseAmount * 1)).toFixed(2));
 
         updatetotalExpenseAmount();
     }
@@ -2231,7 +2231,8 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 $("#txtDepartment").val(data.TravelReimbursementDetails.Department);
                 $("#txtCashAdvance").val(data.CashAdvance);
                 $("#txtPurpose").val(data.TravelReimbursementDetails.Purpose);
-                
+
+                // set advance amounts
                 $scope.totalCashAdvanceAmount = data.CashAdvance;
                 $scope.totalPersonalAdvanceAmount = data.PersonalTravelExpense;
 
@@ -2854,9 +2855,9 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         $scope.FISModel = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
         $scope.totalBusinessMile = 0;
         $scope.totalAirfare = 0;
-        $scope.totalPart2NonTravelExpenseAmount = 0;
-        $scope.totalSubmittedForApprovalAmount = 0;
-        $scope.totalPrePaidByMTAAmount = 0;
+        $scope.totalPart2NonTravelExpenseAmount = "";
+        $scope.totalSubmittedForApprovalAmount = "";
+        $scope.totalPrePaidByMTAAmount = "";
         $scope.totalExpenseAmount = 0;
         $scope.totalCashAdvanceAmount = 0;
         $scope.totalPersonalAdvanceAmount = 0;
@@ -2934,7 +2935,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 $('#txtExtension').val($scope.Data.ReimbursementTravelRequestDetails.Extension);
                 $('#txtReimbursementId').val($scope.Data.ReimbursementTravelRequestDetails.ReimbursementId);
                 
-                // Set TA other expense amounts
+                // set TA other expense amounts
                 $("#lblTAAirfare").html("$" + $scope.Data.ReimbursementTravelRequestDetails.TAEstimatedAirFare);
                 $("#lblTALodging").html("$" + $scope.Data.ReimbursementTravelRequestDetails.TAEstimatedLodge);
                 $("#lblTAMeals").html("$" + $scope.Data.ReimbursementTravelRequestDetails.TAEstimatedMeals);
@@ -2965,6 +2966,10 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
                     currentRowNumber = ((index + 1) + 1);
                 }
+
+                // set advance amounts
+                $scope.totalCashAdvanceAmount = $scope.Data.ReimbursementDetails.SubtractCashAdvance;
+                $scope.totalPersonalAdvanceAmount = $scope.Data.ReimbursementDetails.SubtractPersonalAdvance;
 
                 // set FIS expense section
                 if ($scope.Data.FIS) {
