@@ -223,7 +223,7 @@ namespace TravelApplication.DAL.Repositories
                     throw new Exception("Couldn't retrieve travel request");
                 }
 
-                string query1 = string.Format("Select APPROVEDAIRFARE,APPROVEDLODGE, APPROVEDLODGE, ACTUALLODGE, ACTUALMEALS from TRAVELREQUEST_ESTIMATEDEXPENSE where TRAVELREQUESTID= {0}", travelRequestId);
+                string query1 = string.Format("Select APPROVEDAIRFARE,APPROVEDLODGE, APPROVEDMEALS, ACTUALLODGE, ACTUALMEALS from TRAVELREQUEST_ESTIMATEDEXPENSE where TRAVELREQUESTID= {0}", travelRequestId);
                 OracleCommand command1 = new OracleCommand(query1, (OracleConnection)dbConn);
                 command1.CommandText = query1;
                 DbDataReader dataReader1 = command1.ExecuteReader();
@@ -235,7 +235,7 @@ namespace TravelApplication.DAL.Repositories
 
                         response.TAEstimatedAirFare =  Convert.ToDecimal(dataReader1["APPROVEDAIRFARE"]);
                         response.TAEstimatedLodge = Convert.ToInt32(dataReader1["APPROVEDLODGE"]);
-                        response.TAEstimatedMeals = Convert.ToInt32(dataReader1["APPROVEDLODGE"]);
+                        response.TAEstimatedMeals = Convert.ToInt32(dataReader1["APPROVEDMEALS"]);
                         response.TAActualLodge = Convert.ToInt32(dataReader1["ACTUALLODGE"]);
                         response.TAActualMeals = Convert.ToInt32(dataReader1["ACTUALMEALS"]);
                     }
