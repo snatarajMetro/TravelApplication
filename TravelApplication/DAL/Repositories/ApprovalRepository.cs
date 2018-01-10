@@ -9,12 +9,15 @@ using System.Threading.Tasks;
 using System.Web;
 using TravelApplication.DAL.DBProvider;
 using TravelApplication.Models;
+using TravelApplication.Services;
 
 namespace TravelApplication.DAL.Repositories
 {
     public class ApprovalRepository : IApprovalRepository
     {
         private DbConnection dbConn;
+
+       // TravelRequestRepository travelRequestRepo = new TravelRequestRepository();
         public async Task<List<HeirarchichalPosition>> GetHeirarchichalPositions(int badgeNumber)
         {
             List<HeirarchichalPosition>  heirarchichalPosition = new List<HeirarchichalPosition>();
@@ -280,27 +283,31 @@ namespace TravelApplication.DAL.Repositories
                     cmd1.Parameters.Add(new OracleParameter("p4", (submitTravelRequest.HeirarchichalApprovalRequest.AgreedToTermsAndConditions) ? "Y" : "N"));
                     var rowsUpdated1 = cmd1.ExecuteNonQuery();
                     cmd1.Dispose();
+
+
+                    var result = getNextApproverBadgeNumber(dbConn, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
+
                     dbConn.Close();
                     dbConn.Dispose();
 
 
                      string subject = string.Format(@"Travel Request Approval for Id - {0} ", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
-                   
+
                     if (isSubmitterRequesting)
                     {
                         sendEmail(submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestBadgeNumber, subject, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
-
-                    } else
+                    }
+                    //} else
+                    //{
+                    //    if(submitTravelRequest.HeirarchichalApprovalRequest.ApproverList[0].ApproverBadgeNumber == -1)
+                    //    {
+                    //        sendEmail(submitTravelRequest.HeirarchichalApprovalRequest.ApproverList[0].ApproverOtherBadgeNumber, subject, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
+                    //    }
+                    else
                     {
-                        if(submitTravelRequest.HeirarchichalApprovalRequest.ApproverList[0].ApproverBadgeNumber == -1)
-                        {
-                            sendEmail(submitTravelRequest.HeirarchichalApprovalRequest.ApproverList[0].ApproverOtherBadgeNumber, subject, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
-                        }
-                        else
-                        {
-                            sendEmail(submitTravelRequest.HeirarchichalApprovalRequest.ApproverList[0].ApproverBadgeNumber, subject, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
-                        }
-                        
+                        sendEmail(result, subject, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
+                        //}
+
                     }
                     
                     return true;
@@ -439,6 +446,9 @@ namespace TravelApplication.DAL.Repositories
                     cmd1.Parameters.Add(new OracleParameter("p4", (submitReimburseData.HeirarchichalApprovalRequest.AgreedToTermsAndConditions) ? "Y" : "N"));
                     var rowsUpdated1 = cmd1.ExecuteNonQuery();
                     cmd1.Dispose();
+
+                    var result = getNextApproverBadgeNumber(dbConn, submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId);
+
                     dbConn.Close();
                     dbConn.Dispose();
 
@@ -451,14 +461,14 @@ namespace TravelApplication.DAL.Repositories
                     }
                     else
                     {
-                        if(submitReimburseData.HeirarchichalApprovalRequest.ApproverList[0].ApproverBadgeNumber == -1)
-                        {
-                            sendEmail(submitReimburseData.HeirarchichalApprovalRequest.ApproverList[0].ApproverOtherBadgeNumber, subject, submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId);
-                        }
-                        else
-                        {
-                            sendEmail(submitReimburseData.HeirarchichalApprovalRequest.ApproverList[0].ApproverBadgeNumber, subject, submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId);
-                        }
+                        //if(submitReimburseData.HeirarchichalApprovalRequest.ApproverList[0].ApproverBadgeNumber == -1)
+                        //{
+                        //    sendEmail(submitReimburseData.HeirarchichalApprovalRequest.ApproverList[0].ApproverOtherBadgeNumber, subject, submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId);
+                        //}
+                        //else
+                        //{
+                            sendEmail(result, subject, submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId);
+                        //}
                     }
                   
                     return true;
@@ -476,12 +486,69 @@ namespace TravelApplication.DAL.Repositories
         {
             throw new NotImplementedException();
         }
+
+        #region  Private methods
+
+
+       
+
+        public int getNextApproverBadgeNumber(DbConnection dbConn, string travelRequestId)
+        {
+            var result = 0;
+            string query = string.Format(@"SELECT
+	                                                    BADGENUMBER,APPROVEROTHERBADGENUMBER
+                                                    FROM
+	                                                    (
+		                                                    SELECT
+			                                                    BADGENUMBER, APPROVEROTHERBADGENUMBER
+		                                                    FROM
+			                                                    TRAVELREQUEST_APPROVAL
+		                                                    WHERE
+			                                                    TRAVELREQUESTID = {0}
+		                                                    AND APPROVALDATETIME IS NULL
+		                                                    ORDER BY
+			                                                    APPROVALORDER 
+	                                                    )
+                                                    WHERE
+	                                                    ROWNUM = 1", travelRequestId);
+            OracleCommand cmd1 = new OracleCommand(query, (OracleConnection)dbConn);
+            cmd1.CommandText = query;
+            DbDataReader dataReader = cmd1.ExecuteReader();
+
+            if (dataReader.HasRows)
+            {
+                while (dataReader.Read())
+                {
+                    result = Convert.ToInt32(dataReader["BADGENUMBER"].ToString());
+                    if (result == -1)
+                    {
+                        result = Convert.ToInt32(dataReader["APPROVEROTHERBADGENUMBER"].ToString());
+                    }
+                }
+
+            }
+            else
+            {
+                result = 0;
+            }
+            cmd1.Dispose();
+            dataReader.Close();
+            // dbConn.Close();
+            // dbConn.Dispose();
+            return result;
+        }
+
+
+        #endregion
     }
 
-        public class BadgeInfo
+    public class BadgeInfo
         {
             public string  Name { get; set; }
             public string  BadgeId { get; set; }
         }
-       
+
+
+   
+
 }
