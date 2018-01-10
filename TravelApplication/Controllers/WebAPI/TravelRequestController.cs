@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Script.Serialization;
+using TravelApplication.Class.Common;
 using TravelApplication.Models;
 using TravelApplication.Services;
 
@@ -29,6 +30,7 @@ namespace TravelApplication.Controllers.WebAPI
             catch (Exception ex)
             {
                 // TODO: Log the exception message
+                LogMessage.Log("GetEmployeeDetails :" + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, string.Format(@"The badge# {0} you have entered is invalid. Please try again.", badgeNumber));
 
             }
@@ -49,7 +51,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
+                LogMessage.Log("api/travelrequest/save :" + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't save travel request : " + ex.Message);
 
             }
@@ -85,7 +87,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
+                LogMessage.Log("GetTravelRequestDetails :" + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrive travel request details for the given travel request Id : " + ex.Message);
 
             }
@@ -106,7 +108,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
+                LogMessage.Log("GetTravelrequestList :" + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrieve EmployeeInfo for Badge # : " + ex.Message);
 
             }
@@ -127,7 +129,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
+                LogMessage.Log("api/travelrequest/approve :" + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Approve was not sucessfull. Please try again.");
             }
 
@@ -149,7 +151,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
+                LogMessage.Log("api/travelrequest/reject :" + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Reject was not sucessfull. Please try again.");
             }
 
@@ -170,7 +172,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
+                LogMessage.Log("api/travelrequest/saveNew :" + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't save travel request : " + ex.Message);
 
             }
@@ -189,7 +191,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
+                LogMessage.Log("GetTravelRequestDetailsNew:" + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrive travel request details for the given travel request Id : " + ex.Message);
 
             }
@@ -210,7 +212,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
+                LogMessage.Log("GetSubmitDetails:" + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
             return response;
@@ -229,9 +231,9 @@ namespace TravelApplication.Controllers.WebAPI
                 //var result = true;
                 response = Request.CreateResponse(HttpStatusCode.OK, result);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // TODO: Log the exception message
+                LogMessage.Log("api/travelrequest/cancel:" + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Cancel was not sucessfull. Please try again.");
             }
 
