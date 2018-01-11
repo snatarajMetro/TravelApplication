@@ -471,90 +471,144 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             }
             $scope.$apply();
 
+            Dropzone.autoDiscover = false;
+
+            $("#supportingDocumentZone").dropzone({
+                url: "api/documents/upload",
+                thumbnailWidth: 10,
+                thumbnailHeight: 10,
+                maxFilesize: 5, // MB
+                addRemoveLinks: true,
+                acceptedFiles: ".jpeg,.png,.gif,.txt,.pdf,.docx,.xlxs",
+                init: function () {
+                    var self = this;
+                    // config
+                    self.options.addRemoveLinks = true;
+                    self.options.dictRemoveFile = "Delete";
+
+                    // on file added
+                    self.on("addedfile", function (progress) {
+                        var travelRequestId = $('#travelRequestId').text();
+                        var badgeNumber = $('#travelRequestBadgeNumber').text();
+
+                        var uploadUrl = "/api/documents/upload?travelRequestId=" + travelRequestId + "&badgeNumber=" + badgeNumber;
+                        self.options.url = uploadUrl;
+                    });
+
+                    // on file added
+                    self.on("success", function (file, response) {
+                        this.removeFile(file);
+                    });
+
+                    // File upload Progress
+                    self.on("totaluploadprogress", function (progress) {
+                        $('.roller').width(progress + '%');
+                    });
+
+                    self.on("queuecomplete", function (progress) {
+                        $('.meter').delay(999).slideUp(999);
+
+                        var travelRequestId = $('#travelRequestId').text();
+
+                        // reload supporting document grid
+                        $scope.loadSupportingDocuments(travelRequestId);
+                    });
+                },
+                success: function (file, response) {
+                    var imgName = response;
+                    file.previewElement.classList.add("dz-success");
+                },
+                error: function (file, response) {
+                    file.previewElement.classList.add("dz-error");
+                }
+            });
+
             // Add upload listners
             for (var index = 1; index < 6; index++) {
                 
-                // TODO: Base this on existing document result set
-                if (index == 2) {
-                    $("#supportingDocumentZone" + index + " .dz-message")
-                       .css("background", "lightgray")
-                       .css("height", "30px");
-                    $("#uploaddocumenttext" + index).html("File has been uploaded");
-                    $("#uploaddocumenticon" + index).show();
-                }
-                else {
-                    setUpDropzone(index);
-                }
+                $("#supportingDocumentZone" + index).dropzone({
+                    url: "api/documents/upload",
+                    thumbnailWidth: 10,
+                    thumbnailHeight: 10,
+                    maxFilesize: 5, // MB
+                    addRemoveLinks: true,
+                    acceptedFiles: ".jpeg,.png,.gif,.txt,.pdf,.docx,.xlxs",
+                    init: function () {
+                        var self = this;
+                        // config
+                        self.options.addRemoveLinks = true;
+                        self.options.dictRemoveFile = "Delete";
+
+                        //if (index == 2 || index == 4) {
+
+                        //    self.removeEventListeners();
+                        //}
+
+                        // on file added
+                        self.on("addedfile", function (progress) {
+                            var travelRequestId = $('#travelRequestId').text();
+                            var badgeNumber = $('#travelRequestBadgeNumber').text();
+                            var uploadUrl = "/api/documents/upload?travelRequestId=" + travelRequestId + "&badgeNumber=" + badgeNumber;
+                            self.options.url = uploadUrl;
+                        });
+
+                        // on file added
+                        self.on("success", function (file, response) {
+                            //this.removeFile(file);
+                        });
+
+                        // on file delete
+                        self.on("removedfile", function (file) {
+                            var travelRequestId = $('#travelRequestId').text();
+                            var documentId = 4;
+                            var deleteUrl = ""; //"/api/documents/deletedocument?travelRequestId=" + travelRequestId + "&documentId=" + documentId;
+
+                            // delete the file
+                            $.ajax({
+                                url: deleteUrl,
+                                type: "DELETE"
+                            });
+
+                            // reload supporting document grid
+                            //$scope.loadSupportingDocuments(travelRequestId);
+                        });
+
+                        // File upload Progress
+                        self.on("totaluploadprogress", function (progress) {
+                            $('.roller').width(progress + '%');
+                        });
+                        self.on("queuecomplete", function (progress) {
+                            $('.meter').delay(999).slideUp(999);
+                            var travelRequestId = $('#travelRequestId').text();
+                            //var travelRequestId = 12345;
+                            // reload supporting document grid
+                            $scope.loadSupportingDocuments(travelRequestId);
+                        });
+                    },
+                    success: function (file, response) {
+                        file.previewElement.classList.add("dz-success");
+                        $(".dz-success-mark svg").css("background", "green");
+                        $(".dz-error-mark").css("display", "none");
+                    },
+                    error: function (file, response) {
+                        file.previewElement.classList.add("dz-error");
+                    }
+                });
             }
+
+            //var dz = Dropzone.forElement("#supportingDocumentZone1");
+            //dz.removeEventListeners();
+            //$("#uploaddocumenttext1").html("File already attached <br/> Agenda 1623525913.txt");
+            //$("#supportingDocumentZone1").css("background-color", "lightgray");
         });
     }
 
-    // set fis section
+    //set fis section
     $scope.loadFIS = function () {
         $.get('/uitemplates/fis.html')
         .done(function (data) {
             $('#datatemplate').html($compile($(data).html())($scope));
             $scope.$apply();
-        });
-    }
-
-    function setUpDropzone(index)
-    {
-        Dropzone.autoDiscover = false;
-
-        var obj = $("#supportingDocumentZone" + index);
-
-        obj.dropzone({
-            url: "api/documents/upload",
-            thumbnailWidth: 10,
-            thumbnailHeight: 10,
-            maxFilesize: 5, // MB
-            addRemoveLinks: true,
-            acceptedFiles: ".jpeg,.png,.gif,.txt,.pdf,.docx,.xlxs",
-            init: function () {
-                var self = this;
-
-                // on file added
-                self.on("addedfile", function (progress) {
-                    var travelRequestId = $('#travelRequestId').text();
-                    var badgeNumber = $('#travelRequestBadgeNumber').text();
-                    var uploadUrl = "/api/documents/upload?travelRequestId=" + travelRequestId + "&badgeNumber=" + badgeNumber;
-                    self.options.url = uploadUrl;
-                });
-
-                // on file added
-                self.on("success", function (file, response) {
-                    this.removeFile(file);
-                });
-
-                // File upload Progress
-                self.on("totaluploadprogress", function (progress) {
-                    $('.roller').width(progress + '%');
-                });
-                self.on("queuecomplete", function (progress) {
-                    $('.meter').delay(999).slideUp(999);
-                    var travelRequestId = $('#travelRequestId').text();
-                    
-                    // reload supporting document grid
-                    $scope.loadSupportingDocuments(travelRequestId);
-                });
-            },
-            success: function (file, response) {
-                file.previewElement.classList.add("dz-success");
-                $(".dz-success-mark svg").css("background", "green");
-                $(".dz-error-mark").css("display", "none");
-
-                this.removeEventListeners();
-
-                $("#supportingDocumentZone" + index + " .dz-message")
-                    .css("background", "lightgray")
-                    .css("height", "30px");
-                $("#uploaddocumenttext" + index).html("File successfully uploaded");
-                $("#uploaddocumenticon" + index).show();
-            },
-            error: function (file, response) {
-                file.previewElement.classList.add("dz-error");
-            }
         });
     }
 

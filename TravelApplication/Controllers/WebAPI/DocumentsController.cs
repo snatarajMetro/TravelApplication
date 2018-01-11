@@ -24,30 +24,30 @@ namespace TravelApplication.Controllers.WebAPI
             HttpResponseMessage msg = null;
             try
             {
-                //var request = HttpContext.Current.Request;
-                //HttpFileCollection allFiles = request.Files;
-                //HttpPostedFile uploadedFile = allFiles[0];
-                //FileInfo uploadedFileInfo = new FileInfo(uploadedFile.FileName);
-                //String extension = uploadedFileInfo.Extension;
+                var request = HttpContext.Current.Request;
+                HttpFileCollection allFiles = request.Files;
+                HttpPostedFile uploadedFile = allFiles[0];
+                FileInfo uploadedFileInfo = new FileInfo(uploadedFile.FileName);
+                String extension = uploadedFileInfo.Extension;
 
-                //int imageLength = uploadedFile.ContentLength;
-                //string imageType = uploadedFile.ContentType;
+                int imageLength = uploadedFile.ContentLength;
+                string imageType = uploadedFile.ContentType;
 
-                //byte[] binaryImagedata = new byte[imageLength];
-                //uploadedFile.InputStream.Read(binaryImagedata, 0, imageLength);
+                byte[] binaryImagedata = new byte[imageLength];
+                uploadedFile.InputStream.Read(binaryImagedata, 0, imageLength);
 
-                //var endpointUrl = "http://apitest.metro.net/Document/SharePoint/UploadDocument";
+                var endpointUrl = "http://apitest.metro.net/Document/SharePoint/UploadDocument";
 
-                //SharePointUpload uploadRequest = new SharePointUpload()
-                //{
-                //    documentStream = binaryImagedata, //System.IO.File.ReadAllBytes(@"c:\Temp\new.docx"),
-                //    siteUrl = "http://mtaspw01/collaboration/InformationManagement/ATMS/apps",
-                //    documentListName = "TravelApp",
-                //    documentName = uploadedFile.FileName,
-                //    folder = badgeNumber.ToString() +"-"+ travelRequestId                   
-                //};
+                SharePointUpload uploadRequest = new SharePointUpload()
+                {
+                    documentStream = binaryImagedata, //System.IO.File.ReadAllBytes(@"c:\Temp\new.docx"),
+                    siteUrl = "http://mtaspw01/collaboration/InformationManagement/ATMS/apps",
+                    documentListName = "TravelApp",
+                    documentName = uploadedFile.FileName,
+                    folder = badgeNumber.ToString() +"-"+ travelRequestId                   
+                };
 
-                //documentsService.UploadToSharePoint(travelRequestId, uploadRequest);
+                documentsService.UploadToSharePoint(travelRequestId, uploadRequest);
 
                 msg = Request.CreateResponse(HttpStatusCode.OK);
 
@@ -69,21 +69,7 @@ namespace TravelApplication.Controllers.WebAPI
 
             try
             {
-                //var supportingDocuments = documentService.GetAllDocumentsByTravelId(travelRequestId, badgeNumber);
-
-                var supportingDocuments = new List<SupportingDocument>();
-                Random rnd = new Random();
-
-                for (int i = 0; i < 5; i++)
-                {
-                    var dt = DateTime.Now.AddDays(rnd.Next(30)).AddMinutes(rnd.Next(56));
-                    supportingDocuments.Add(new SupportingDocument() {
-                         FileName = string.Format(@"Document{0}.txt", dt.ToFileTime()),
-                         Id = i + 1,
-                         TravelRequestId = travelRequestId,
-                         UploadDateTime = dt.ToString()
-                    });
-                }
+                var supportingDocuments = documentService.GetAllDocumentsByTravelId(travelRequestId, badgeNumber);
 
                 var data = new JavaScriptSerializer().Serialize(supportingDocuments.OrderByDescending(item => item.Id));
 
