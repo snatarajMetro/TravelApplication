@@ -11,21 +11,60 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div style="float:left;">
+                                <div class="uploaddocumenttitle"><span>Agenda</span></div>
+                                <div class="dropzone dz-clickable supportingDocumentZone1" id="supportingDocumentZone1">
+                                    <div class="dz-default dz-message" data-dz-message="" style="margin-top:55px;">
+                                        <span class="supportingDocumentZoneText" id="uploaddocumenttext1">Click here to<br /> upload document 1</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="float:left;">
+                                <div class="uploaddocumenttitle"><span>Document 2</span></div>
+                                <div class="dropzone dz-clickable supportingDocumentZone1" id="supportingDocumentZone2">
+                                    <div class="dz-default dz-message" data-dz-message="" style="margin-top:55px;">
+                                        <span class="supportingDocumentZoneText">Click here to<br /> upload document 2</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="float:left;">
+                                <div class="uploaddocumenttitle"><span>Document 3</span></div>
+                                <div class="dropzone dz-clickable supportingDocumentZone1" id="supportingDocumentZone3">
+                                    <div class="dz-default dz-message" data-dz-message="" style="margin-top:55px;">
+                                        <span class="supportingDocumentZoneText">Click here to<br /> upload document 3</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="float:left;">
+                                <div class="uploaddocumenttitle"><span>Document 4</span></div>
+                                <div class="dropzone dz-clickable supportingDocumentZone1" id="supportingDocumentZone4">
+                                    <div class="dz-default dz-message" data-dz-message="" style="margin-top:55px;">
+                                        <span class="supportingDocumentZoneText">Click here to<br /> upload document 4</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="float:left;">
+                                <div class="uploaddocumenttitle"><span>Others</span></div>
+                                <div class="dropzone dz-clickable supportingDocumentZone1" id="supportingDocumentZone5">
+                                    <div class="dz-default dz-message" data-dz-message="" style="margin-top:55px;">
+                                        <span class="supportingDocumentZoneText">Click here to<br /> upload other documents</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="row">
                             <div class="dropzone dz-clickable supportingDocumentZone" id="supportingDocumentZone">
                                 <div class="dz-default dz-message" data-dz-message="">
                                     <span>Drop files here to upload</span>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="row">
                             <div id="supportingDocuments" class="supportingDocumentSection">
                                 <div ng-app="travelApp" ng-controller="travelAppCtrl">
                                     <div ui-grid="gridOptions" ui-grid-pagination ui-grid-cell-contents class="supportingDocumentGrid"></div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-
                         </div>
                         <div class="row">
                             <div class="column">
@@ -132,10 +171,13 @@
                                 <div class="agreement">
                                     <span>
                                         <input type="checkbox" id="cbAgree" name="cbAgree" value="1" class="agreecheckbox" />
-                                        <sup class="required">*</sup>&nbsp;<span class="agreetext">I hereby certify that all expenditures reported here are legitimate expenses chargeable to the 
+                                        <sup class="required">*</sup>&nbsp;<span class="agreetext">
+                                            I hereby certify that all expenditures reported here are legitimate expenses chargeable to the
                                             Los Angeles County Metropolitan Transportation Authority. As a condition of <br /> recieving a Travel Advance, I agree that the Los Angeles County Metropolitan Transportation Authority
                                             may deduct the amount of my Travel Advance from my pay check,<b>
-                                            in the <br />event I fail to submit a Travel and Business Expence Report (ACCS-501) with appropriate documentation within 30 days of my return.</b></span>
+                                                in the <br />event I fail to submit a Travel and Business Expence Report (ACCS-501) with appropriate documentation within 30 days of my return.
+                                            </b>
+                                        </span>
                                     </span>
                                 </div>
                                 <div style="margin-top:2px;">
@@ -150,7 +192,7 @@
                                 </div>
                             </div>
                         </div>
-                        </div>
+                    </div>
                         <div class="row">
                             <div id="submiterror2" class="main errorcontainer2" style="display:none;">
                                 <span class="dialog" id="submiterrormessage2">error</span>
