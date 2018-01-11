@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Script.Serialization;
+using TravelApplication.Class.Common;
 using TravelApplication.Models;
 using TravelApplication.Services;
 
@@ -26,7 +27,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
+                LogMessage.Log("GetHeirarchichalPositions :" + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrieve cost centers from FIS  " + ex.Message);
 
             }
@@ -47,7 +48,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
+                LogMessage.Log("GetTAAprovers :" + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrieve cost centers from FIS  " + ex.Message);
 
             }
@@ -69,7 +70,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
+                LogMessage.Log("SubmitTravelRequest :" + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Travel request was not successfully submited. Please try again.");
             }
 
@@ -89,7 +90,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
+                LogMessage.Log("api/approval/submitNew :" + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Travel request was not successfully submited. Please try again.");
             }
 
@@ -108,7 +109,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
+                LogMessage.Log("GetapproverDetails :" + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrieve cost centers from FIS  " + ex.Message);
 
             }
@@ -128,7 +129,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
+                LogMessage.Log("SubmitReimburse :" + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Travel request was not successfully submited. Please try again.");
             }
 
@@ -149,7 +150,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
+                LogMessage.Log("api/approval/Approve :" + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Travel request was not successfully submited. Please try again.");
             }
 
@@ -169,7 +170,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
+                LogMessage.Log("api/approval/Reject :" + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Travel request was not successfully submited. Please try again.");
             }
 

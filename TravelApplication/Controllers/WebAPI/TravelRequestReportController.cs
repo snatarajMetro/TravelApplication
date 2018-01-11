@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using TravelApplication.Class.Common;
 using TravelApplication.Services;
 
 namespace TravelApplication.Controllers.WebAPI
@@ -32,7 +33,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
+                LogMessage.Log("api/travelrequestReport/{travelRequestId} - Travel Request :" + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrive travel request report for the given travel request Id : " + ex.Message);
 
             }
@@ -57,8 +58,8 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
-                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrive travel request report for the given travel request Id : " + ex.Message);
+                LogMessage.Log("api/travelrequestReport/{travelRequestId} - Reimbursement:" + ex.Message);
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrive reimbursement request report for the given travel request Id : " + ex.Message);
 
             }
             return response;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using TravelApplication.Class.Common;
 using TravelApplication.Models;
 using TravelApplication.Services;
 
@@ -15,7 +16,7 @@ namespace TravelApplication.Controllers.WebAPI
 
         [HttpPost]
         [Route("api/email/sendemail")]
-        public HttpResponseMessage Email(Email email)
+        public HttpResponseMessage Email(Models.Email email)
         {
             HttpResponseMessage response = null;
 
@@ -27,6 +28,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
+                LogMessage.Log("api/email/sendemail : " + ex.Message);
                 // TODO: Log the exception message
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Approve was not sucessfull. Please try again.");
             }

@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using System.Web.Script.Serialization;
+using TravelApplication.Class.Common;
 using TravelApplication.Models;
 using TravelApplication.Services;
 
@@ -53,7 +54,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
+                LogMessage.Log("api/documents/upload : " + ex.Message);
                 msg = Request.CreateResponse(HttpStatusCode.InternalServerError, "Unable to upload document ");
             }
             return msg;
@@ -68,30 +69,6 @@ namespace TravelApplication.Controllers.WebAPI
 
             try
             {
-                //List<SupportingDocument> supportingDocuments = new List<SupportingDocument>();
-
-                //if (travelRequestId > 0)
-                //{
-                //    Random number = new Random(1000);
-
-                //    int maxCount = 5;
-                //    if (DateTime.Now.Minute % 2 == 0) { maxCount = 6; }
-                //    DateTime now = DateTime.Now;
-
-                //    for (int counter = 1; counter < maxCount; counter++)
-                //    {
-                //        supportingDocuments.Add(new SupportingDocument()
-                //        {
-                //            Id = counter,
-                //            FileName = string.Format(@"Test{0}.txt", number.Next()),
-                //            UploadDateTime = now.AddMinutes(counter).ToString("MM/dd/yyyy h:mm tt"),
-                //            DownloadUrl = string.Format(@"/download/download/{0}", counter),
-                //            DeleteUrl = string.Format(@"/download/delete/{0}", counter)
-                //        }
-                //        );
-                //    }
-                //}
-
                 var supportingDocuments = documentService.GetAllDocumentsByTravelId(travelRequestId, badgeNumber);
 
                 var data = new JavaScriptSerializer().Serialize(supportingDocuments.OrderByDescending(item => item.Id));
@@ -100,7 +77,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
+                LogMessage.Log("api/documents/supportingdocuments : " + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
 
@@ -119,7 +96,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
+                LogMessage.Log("api/documents/deletedocument : " + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Document cannot be deleted.");
             }
             return response;

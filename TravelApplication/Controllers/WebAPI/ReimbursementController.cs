@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Script.Serialization;
+using TravelApplication.Class.Common;
 using TravelApplication.Models;
 using TravelApplication.Services;
 
@@ -28,7 +29,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
+                LogMessage.Log("api/reimburse/approvedTravelrequests :" + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrieve EmployeeInfo for Badge # : " + ex.Message);
 
             }
@@ -49,7 +50,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
+                LogMessage.Log("api/reimburse/TravelrequestDetails/{travelRequestId} :" + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrieve EmployeeInfo for Badge # : " + ex.Message);
 
             }
@@ -70,7 +71,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
+                LogMessage.Log("api/reimburse/save :" + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't save travel request : " + ex.Message);
 
             }
@@ -110,7 +111,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
+                LogMessage.Log("api / reimburse /{ travelRequestId} :" + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrive reiumbursement details for the given  Id : " + ex.Message);
 
             }
@@ -131,7 +132,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
+                LogMessage.Log("api/reimburse/approve :" + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Approve was not sucessfull. Please try again.");
             }
 
@@ -146,14 +147,14 @@ namespace TravelApplication.Controllers.WebAPI
 
             try
             {
-                // TODO: Implement Reject API. Return true/false
+                
                 var result = reimbursementService.Reject(approveRequest.ApproverBadgeNumber, approveRequest.TravelRequestId, approveRequest.Comments);
 
                 response = Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
+                LogMessage.Log("api/reimburse/reject :" + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Reject was not sucessfull. Please try again.");
             }
 
