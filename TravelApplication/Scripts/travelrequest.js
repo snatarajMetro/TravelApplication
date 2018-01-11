@@ -1,4 +1,4 @@
-﻿var app = angular.module('travelApp', ['ui.grid', 'ui.grid.pagination','ui.grid.resizeColumns']);
+﻿var app = angular.module('travelApp', ['ui.grid', 'ui.grid.pagination', 'ui.grid.resizeColumns']);
 //var app = angular.module('travelApp', ['ui.grid']);
 
 app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridConstants) {
@@ -94,8 +94,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             }
         }
 
-        if (totalFISAmount > 0)
-        {
+        if (totalFISAmount > 0) {
             $scope.totalFISAmount = parseFloat((totalFISAmount * 1).toFixed(2));
         }
     }
@@ -115,34 +114,33 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
     $scope.updateMileATotal = function (model) {
 
         var totalA = 0;
-        
+
         for (var index = 0; index < maxRowCount; index++) {
             if (model && model[index].TotalMiles) {
                 totalA = (totalA * 1) + (model[index].TotalMiles * 1);
             }
         }
 
-        if (totalA > 0)
-        {
+        if (totalA > 0) {
             $scope.totalMileA = (totalA * 1);
 
-           updateBusinessMile();
-           updateDailyTotal(model);
+            updateBusinessMile();
+            updateDailyTotal(model);
         }
-        
+
     }
 
     $scope.updateMileBTotal = function (model) {
 
         var totalB = 0;
-      
+
         for (var index = 0; index < maxRowCount; index++) {
             if (model && model[index].MileageToWork) {
                 totalB = (totalB * 1) + (model[index].MileageToWork * 1);
             }
         }
 
-        
+
         if (totalB > 0) {
             $scope.totalMileB = (totalB * 1);
 
@@ -152,11 +150,11 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
     }
 
     function updatetotalExpenseAmount() {
-        $scope.totalExpenseAmount   = ($scope.totalSubmittedForApprovalAmount * 1) - ($scope.totalPrePaidByMTAAmount * 1);     
+        $scope.totalExpenseAmount = ($scope.totalSubmittedForApprovalAmount * 1) - ($scope.totalPrePaidByMTAAmount * 1);
         $scope.totalAmount = parseFloat(($scope.totalExpenseAmount - ($scope.totalCashAdvanceAmount * 1) - ($scope.totalPersonalAdvanceAmount * 1)).toFixed(2));
     }
 
-    function updateBusinessMile () {
+    function updateBusinessMile() {
 
         var totalBusinessMile = 0;
         var totalBusinessMileAmount = 0;
@@ -227,7 +225,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 $scope.totalParking = parseFloat(totalParking.toFixed(2)) + 1;
                 updateDailyTotal(model);
             }
-        }  
+        }
     }
 
     $scope.updateAirfareTotal = function (model) {
@@ -357,7 +355,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
     //$scope.totalFISAmount3 = 0.00;
     //$scope.totalFISAmount4 = 0.00;
     //$scope.totalFISAmount5 = 0.00;
-    
+
 
     //$scope.updateTotalFISAmount = function () {
     //    $scope.totalFISAmount = parseFloat((
@@ -385,7 +383,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             $scope.totalFISAmount = parseFloat((totalFISAmount * 1).toFixed(2));
         }
     }
-    
+
     //set fileupload section
     $scope.loadFileUpload = function () {
 
@@ -452,7 +450,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         });
     }
 
-    
+
     //set fileupload section
     $scope.loadFileUpload2 = function (travelRequestId) {
 
@@ -466,144 +464,30 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             $('#fileuploadtemplate').html($compile($(data).html())($scope));
 
             // Change the text of submit button to "Close" when "Admin" logs in
-            if ($("#selectedRoleId").text() == "4"){
+            if ($("#selectedRoleId").text() == "4") {
                 $("#btnSubmit").val("Close");
             }
             $scope.$apply();
 
-            Dropzone.autoDiscover = false;
-
-            $("#supportingDocumentZone").dropzone({
-                url: "api/documents/upload",
-                thumbnailWidth: 10,
-                thumbnailHeight: 10,
-                maxFilesize: 5, // MB
-                addRemoveLinks: true,
-                acceptedFiles: ".jpeg,.png,.gif,.txt,.pdf,.docx,.xlxs",
-                init: function () {
-                    var self = this;
-                    // config
-                    self.options.addRemoveLinks = true;
-                    self.options.dictRemoveFile = "Delete";
-
-                    // on file added
-                    self.on("addedfile", function (progress) {
-                        var travelRequestId = $('#travelRequestId').text();
-                        var badgeNumber = $('#travelRequestBadgeNumber').text();
-
-                        var uploadUrl = "/api/documents/upload?travelRequestId=" + travelRequestId + "&badgeNumber=" + badgeNumber;
-                        self.options.url = uploadUrl;
-                    });
-
-                    // on file added
-                    self.on("success", function (file, response) {
-                        this.removeFile(file);
-                    });
-
-                    // File upload Progress
-                    self.on("totaluploadprogress", function (progress) {
-                        $('.roller').width(progress + '%');
-                    });
-
-                    self.on("queuecomplete", function (progress) {
-                        $('.meter').delay(999).slideUp(999);
-
-                        var travelRequestId = $('#travelRequestId').text();
-
-                        // reload supporting document grid
-                        $scope.loadSupportingDocuments(travelRequestId);
-                    });
-                },
-                success: function (file, response) {
-                    var imgName = response;
-                    file.previewElement.classList.add("dz-success");
-                },
-                error: function (file, response) {
-                    file.previewElement.classList.add("dz-error");
-                }
-            });
-
             // Add upload listners
             for (var index = 1; index < 6; index++) {
-                
-                $("#supportingDocumentZone" + index).dropzone({
-                    url: "api/documents/upload",
-                    thumbnailWidth: 10,
-                    thumbnailHeight: 10,
-                    maxFilesize: 5, // MB
-                    addRemoveLinks: true,
-                    acceptedFiles: ".jpeg,.png,.gif,.txt,.pdf,.docx,.xlxs",
-                    init: function () {
-                        var self = this;
-                        // config
-                        self.options.addRemoveLinks = true;
-                        self.options.dictRemoveFile = "Delete";
 
-                        //if (index == 2 || index == 4) {
-
-                        //    self.removeEventListeners();
-                        //}
-
-                        // on file added
-                        self.on("addedfile", function (progress) {
-                            var travelRequestId = $('#travelRequestId').text();
-                            var badgeNumber = $('#travelRequestBadgeNumber').text();
-                            var uploadUrl = "/api/documents/upload?travelRequestId=" + travelRequestId + "&badgeNumber=" + badgeNumber;
-                            self.options.url = uploadUrl;
-                        });
-
-                        // on file added
-                        self.on("success", function (file, response) {
-                            //this.removeFile(file);
-                        });
-
-                        // on file delete
-                        self.on("removedfile", function (file) {
-                            var travelRequestId = $('#travelRequestId').text();
-                            var documentId = 4;
-                            var deleteUrl = ""; //"/api/documents/deletedocument?travelRequestId=" + travelRequestId + "&documentId=" + documentId;
-
-                            // delete the file
-                            $.ajax({
-                                url: deleteUrl,
-                                type: "DELETE"
-                            });
-
-                            // reload supporting document grid
-                            //$scope.loadSupportingDocuments(travelRequestId);
-                        });
-
-                        // File upload Progress
-                        self.on("totaluploadprogress", function (progress) {
-                            $('.roller').width(progress + '%');
-                        });
-                        self.on("queuecomplete", function (progress) {
-                            $('.meter').delay(999).slideUp(999);
-                            var travelRequestId = $('#travelRequestId').text();
-                            //var travelRequestId = 12345;
-                            // reload supporting document grid
-                            $scope.loadSupportingDocuments(travelRequestId);
-                        });
-                    },
-                    success: function (file, response) {
-                        file.previewElement.classList.add("dz-success");
-                        $(".dz-success-mark svg").css("background", "green");
-                        $(".dz-error-mark").css("display", "none");
-                    },
-                    error: function (file, response) {
-                        file.previewElement.classList.add("dz-error");
-                    }
-                });
+                // TODO: Base this on existing document result set
+                if (index == 2) {
+                    $("#supportingDocumentZone" + index + " .dz-message")
+                       .css("background", "lightgray")
+                       .css("height", "30px");
+                    $("#uploaddocumenttext" + index).html("File has been uploaded");
+                    $("#uploaddocumenticon" + index).show();
+                }
+                else {
+                    setUpDropzone(index);
+                }
             }
-
-            //var dz = Dropzone.forElement("#supportingDocumentZone1");
-            //dz.removeEventListeners();
-            //$("#uploaddocumenttext1").html("File already attached <br/> Agenda 1623525913.txt");
-            //$("#supportingDocumentZone1").css("background-color", "lightgray");
         });
     }
 
-    //set fis section
+    // set fis section
     $scope.loadFIS = function () {
         $.get('/uitemplates/fis.html')
         .done(function (data) {
@@ -612,10 +496,69 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         });
     }
 
+    function setUpDropzone(index) {
+        Dropzone.autoDiscover = false;
+
+        var obj = $("#supportingDocumentZone" + index);
+
+        obj.dropzone({
+            url: "api/documents/upload",
+            thumbnailWidth: 10,
+            thumbnailHeight: 10,
+            maxFilesize: 5, // MB
+            addRemoveLinks: true,
+            acceptedFiles: ".jpeg,.png,.gif,.txt,.pdf,.docx,.xlxs",
+            init: function () {
+                var self = this;
+
+                // on file added
+                self.on("addedfile", function (progress) {
+                    var travelRequestId = $('#travelRequestId').text();
+                    var badgeNumber = $('#travelRequestBadgeNumber').text();
+                    var uploadUrl = "/api/documents/upload?travelRequestId=" + travelRequestId + "&badgeNumber=" + badgeNumber;
+                    self.options.url = uploadUrl;
+                });
+
+                // on file added
+                self.on("success", function (file, response) {
+                    this.removeFile(file);
+                });
+
+                // File upload Progress
+                self.on("totaluploadprogress", function (progress) {
+                    $('.roller').width(progress + '%');
+                });
+                self.on("queuecomplete", function (progress) {
+                    $('.meter').delay(999).slideUp(999);
+                    var travelRequestId = $('#travelRequestId').text();
+
+                    // reload supporting document grid
+                    $scope.loadSupportingDocuments(travelRequestId);
+                });
+            },
+            success: function (file, response) {
+                file.previewElement.classList.add("dz-success");
+                $(".dz-success-mark svg").css("background", "green");
+                $(".dz-error-mark").css("display", "none");
+
+                this.removeEventListeners();
+
+                $("#supportingDocumentZone" + index + " .dz-message")
+                    .css("background", "lightgray")
+                    .css("height", "30px");
+                $("#uploaddocumenttext" + index).html("File successfully uploaded");
+                $("#uploaddocumenticon" + index).show();
+            },
+            error: function (file, response) {
+                file.previewElement.classList.add("dz-error");
+            }
+        });
+    }
+
     $scope.loadTravelRequest = function () {
 
         $scope.FISRequestModel = [{}, {}, {}, {}, {}];
-        
+
         for (var index = 0; index < maxRowCount; index++) {
 
             $scope.$watch('FISRequestModel[' + index + '].Amount', function () {
@@ -647,7 +590,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             //$scope.totalFISAmount3 = "";
             //$scope.totalFISAmount4 = "";
             //$scope.totalFISAmount5 = "";
-            
+
             // set default values
             for (var index = 0; index < maxRowCount; index++) {
                 $scope.FISRequestModel[index].Amount = "";
@@ -798,7 +741,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 }
 
                 $scope.Projects[costCenterName] = result;
-                
+
             });
         }
         else {
@@ -834,7 +777,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             rowHeight: 34,
             //enableFiltering: true,
             paginationPageSizes: [10, 20, 30],
-            paginationPageSize: 10, 
+            paginationPageSize: 10,
             columnDefs: [
             {
                 field: 'FileName',
@@ -861,7 +804,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 $scope.grid1Api = gridApi;
             }
         };
-        
+
         $.ajax({
             type: "GET",
             url: "/api/documents/supportingdocuments?travelRequestId=" + travelRequestNumber + "&badgeNumber=" + $('#travelRequestBadgeNumber').text(),
@@ -886,7 +829,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             $scope.$apply();
 
             $scope.loadCommonApprovers($('#travelRequestBadgeNumber').text());
-           
+
             $scope.loadTravelCoordinators();
         });
 
@@ -899,16 +842,16 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         //alert(status);
 
         $scope.columns = [{
-                field: 'TravelRequestId',
-                displayName: 'Travel Request#',
-                //width: 130,
-                headerCellClass: "existingrequestcolumnheader",
-                cellClass: "existingrequestcolumnvalue",
-                filter: {
-                    placeholder: '🔎 search',
-                    cellClass: 'travelrequestidcolumn'
-                        }
-            },
+            field: 'TravelRequestId',
+            displayName: 'Travel Request#',
+            //width: 130,
+            headerCellClass: "existingrequestcolumnheader",
+            cellClass: "existingrequestcolumnvalue",
+            filter: {
+                placeholder: '🔎 search',
+                cellClass: 'travelrequestidcolumn'
+            }
+        },
             {
                 field: 'Purpose',
                 name: 'Purpose',
@@ -949,10 +892,10 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 //width: 340,
                 headerCellClass: "existingrequestcolumnheader",
                 cellClass: "existingrequestcolumnvalue",
-                cellTooltip: 
-                        function( row, col ) {
+                cellTooltip:
+                        function (row, col) {
                             return row.entity.RequiredApprovers;
-                    },
+                        },
                 filter: {
                     placeholder: '🔎 search'
                 }
@@ -985,10 +928,10 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 cellClass: "existingrequestcolumnvalue",
                 filter: {
                     placeholder: 'search',
-                    term:status,
+                    term: status,
                     type: uiGridConstants.filter.SELECT,
                     selectOptions: [
-                        { value:"", label: 'All' },
+                        { value: "", label: 'All' },
                         { value: "Cancelled", label: 'Cancelled' },
                         { value: "Completed", label: 'Completed' },
                         { value: "New", label: 'New' },
@@ -1041,14 +984,14 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                $('#existingtravelrequeststemplate').html($compile($(data).html())($scope));
                $scope.$apply();
            });
-        });
+       });
     }
 
     // Refresh the existing request grid
     $scope.refreshExistingRequest = function () {
 
-        var badgeNumber     = $("#signedInUserBadgeNumber").text();
-        var selectedRoleId  = $("#selectedRoleId").text();
+        var badgeNumber = $("#signedInUserBadgeNumber").text();
+        var selectedRoleId = $("#selectedRoleId").text();
         var url = "api/travelrequests?badgeNumber=" + badgeNumber + "&roleId=" + selectedRoleId;
 
         $.get(url)
@@ -1145,7 +1088,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 $("#ddlCEOForAPTA").val(parseInt(data.TravelRequestSubmitDetail.CEOAPTABadgeNumber));
             }
 
-            
+
             if (data.TravelRequestSubmitDetail.RejectedTravelRequest) {
 
                 // Reset
@@ -1177,7 +1120,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             $("#txtSubmittedByUserName").val(data.TravelRequestSubmitDetail.SubmitterName);
 
             $scope.$apply();
-            
+
         });
     }
 
@@ -1191,14 +1134,14 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             dataType: "json",
             success: function (data) {
 
-                $scope.DepartmentHeads      = data;
-                $scope.ExecutiveOfficers    = data;
+                $scope.DepartmentHeads = data;
+                $scope.ExecutiveOfficers = data;
                 $scope.CEOsForInternational = data;
-                $scope.CEOsForAPTA          = data;
+                $scope.CEOsForAPTA = data;
                 $scope.$apply();
 
                 if (selectedApprovers) {
-                    
+
                     $('#ddlDepartmentHead').val(selectedApprovers.DepartmentHead);
                     $('#ddlExecutiveOfficer').val(selectedApprovers.ExecutiveOfficer);
                     $('#ddlCEOForInternational').val(selectedApprovers.CEOForInternational);
@@ -1247,8 +1190,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         var div = '#' + container;
         var focuselement = '#' + focusElement;
 
-        if(source.BadgeNumber == -1)
-        {
+        if (source.BadgeNumber == -1) {
             $(div).show();
             $(focuselement).focus();
         } else {
@@ -1279,8 +1221,8 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         if (departmentHeadBadgeNumber && departmentHeadBadgeNumber != '?') {
 
             if (departmentHeadBadgeNumber == '-1') {
-                departmentHeadBadgeNumber   = $('#txtDepartmentHeadBadgeNumber').val();
-                departmentHeadName          = $('#txtDepartmentHeadName').val();
+                departmentHeadBadgeNumber = $('#txtDepartmentHeadBadgeNumber').val();
+                departmentHeadName = $('#txtDepartmentHeadName').val();
             }
             else {
                 departmentHeadName = $("#ddlDepartmentHead option:selected").text();
@@ -1318,7 +1260,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
             if (ceoForInternationalBadgeNumber == '-1') {
                 ceoForInternationalBadgeNumber = $('#txtCEOForInternationalBadgeNumber').val();
-                ceoForInternationalName         = $('#txtCEOForInternationalName').val();
+                ceoForInternationalName = $('#txtCEOForInternationalName').val();
             }
             else {
                 ceoForInternationalName = $("#ddlCEOForInternational option:selected").text();
@@ -1335,8 +1277,8 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         if (ceoForAPTABadgeNumber && ceoForAPTABadgeNumber != '?') {
 
             if (ceoForAPTABadgeNumber == '-1') {
-                ceoForAPTABadgeNumber   = $('#txtCEOForAPTABadgeNumber').val();
-                ceoForAPTAName          = $('#txtCEOForAPTAName').val();
+                ceoForAPTABadgeNumber = $('#txtCEOForAPTABadgeNumber').val();
+                ceoForAPTAName = $('#txtCEOForAPTAName').val();
             }
             else {
                 ceoForAPTAName = $("#ddlCEOForAPTA option:selected").text();
@@ -1353,8 +1295,8 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         if (travelCoordinatorBadgeNumber && travelCoordinatorBadgeNumber != '?') {
 
             if (travelCoordinatorBadgeNumber == '-1') {
-                travelCoordinatorBadgeNumber    = $('#txtTravelCoordinatorBadgeNumber').val();
-                travelCoordinatorName           = $('#txtTravelCoordinatorName').val();
+                travelCoordinatorBadgeNumber = $('#txtTravelCoordinatorBadgeNumber').val();
+                travelCoordinatorName = $('#txtTravelCoordinatorName').val();
             }
             else {
                 travelCoordinatorName = $("#ddlTravelCoordinator option:selected").text();
@@ -1369,22 +1311,19 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         }
 
         // Agree checkbox
-        var agreedToTermsAndConditions =  $('#cbAgree').prop('checked');
+        var agreedToTermsAndConditions = $('#cbAgree').prop('checked');
 
-        if (!agreedToTermsAndConditions)
-        {
+        if (!agreedToTermsAndConditions) {
             canSubmit = false;
         }
 
         // Submitted by user name
         var submittedByUserName = $('#txtSubmittedByUserName').val().trim();
-        if (!submittedByUserName)
-        {
+        if (!submittedByUserName) {
             canSubmit = false;
         }
 
-        if (canSubmit)
-        {
+        if (canSubmit) {
             $.ajax({
                 type: "POST",
                 url: "/api/approval/submit",
@@ -1402,7 +1341,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                     "TravelCoordinatorName": travelCoordinatorName,
                     "AgreedToTermsAndConditions": agreedToTermsAndConditions,
                     "SubmittedByUserName": submittedByUserName
-                }), 
+                }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
@@ -1427,8 +1366,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 }
             });
         }
-        else
-        {
+        else {
             $("#submiterror").fadeIn("slow");
             $('#submiterrormessage').text("Some of the required fields are missing. Please try again.");
 
@@ -1460,7 +1398,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
         if (departmentHeadBadgeNumber && departmentHeadBadgeNumber != '?') {
 
-            if (departmentHeadBadgeNumber == '-1') {              
+            if (departmentHeadBadgeNumber == '-1') {
                 departmentHeadOtherBadgeNumber = $('#txtDepartmentHeadBadgeNumber').val();
                 departmentHeadName = $('#txtDepartmentHeadName').val();
             }
@@ -1576,11 +1514,11 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 type: "POST",
                 url: "/api/approval/submitnew",
                 data: JSON.stringify({
-                    "HeirarchichalApprovalRequest":{
+                    "HeirarchichalApprovalRequest": {
                         "TravelRequestId": travelRequestId,
                         "SignedInBadgeNumber": signedInBadgeNumber,
                         "TravelRequestBadgeNumber": travelRequestBadgeNumber,
-                        "TravelRequestName":txtName,
+                        "TravelRequestName": txtName,
                         "AgreedToTermsAndConditions": agreedToTermsAndConditions,
                         "SubmittedByUserName": submittedByUserName,
                         "ApproverList": [
@@ -1588,18 +1526,18 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                                 "ApproverName": departmentHeadName,
                                 "ApproverBadgeNumber": departmentHeadBadgeNumber,
                                 "ApproverOtherBadgeNumber": departmentHeadOtherBadgeNumber,
-                                "ApprovalOrder":1
+                                "ApprovalOrder": 1
                             },
                             {
                                 "ApproverName": executiveOfficerName,
                                 "ApproverBadgeNumber": executiveOfficerBadgeNumber,
-                                "ApproverOtherBadgeNumber": executiveOfficerOtherBadgeNumber,                               
+                                "ApproverOtherBadgeNumber": executiveOfficerOtherBadgeNumber,
                                 "ApprovalOrder": 2
                             },
                             {
                                 "ApproverName": ceoForInternationalName,
                                 "ApproverBadgeNumber": ceoForInternationalBadgeNumber,
-                                "ApproverOtherBadgeNumber": ceoForInternationalOtherBadgeNumber,                              
+                                "ApproverOtherBadgeNumber": ceoForInternationalOtherBadgeNumber,
                                 "ApprovalOrder": 3
                             },
                             {
@@ -1611,7 +1549,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                             {
                                 "ApproverName": travelCoordinatorName,
                                 "ApproverBadgeNumber": travelCoordinatorBadgeNumber,
-                                "ApproverOtherBadgeNumber": travelCoordinatorOtherBadgeNumber,                               
+                                "ApproverOtherBadgeNumber": travelCoordinatorOtherBadgeNumber,
                                 "ApprovalOrder": 5
                             }
                         ]
@@ -1790,19 +1728,19 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                             {
                                 "ApproverName": travelCoordinatorName,
                                 "ApproverBadgeNumber": travelCoordinatorBadgeNumber,
-                                "ApproverOtherBadgeNumber": travelCoordinatorOtherBadgeNumber,  
+                                "ApproverOtherBadgeNumber": travelCoordinatorOtherBadgeNumber,
                                 "ApprovalOrder": 1
                             },
                             {
                                 "ApproverName": departmentHeadName,
                                 "ApproverBadgeNumber": departmentHeadBadgeNumber,
-                                "ApproverOtherBadgeNumber": departmentHeadOtherBadgeNumber,                               
+                                "ApproverOtherBadgeNumber": departmentHeadOtherBadgeNumber,
                                 "ApprovalOrder": 2
                             },
                             {
                                 "ApproverName": executiveOfficerName,
                                 "ApproverBadgeNumber": executiveOfficerBadgeNumber,
-                                "ApproverOtherBadgeNumber": executiveOfficerOtherBadgeNumber,                            
+                                "ApproverOtherBadgeNumber": executiveOfficerOtherBadgeNumber,
                                 "ApprovalOrder": 3
                             },
                             {
@@ -1973,9 +1911,8 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 $('#txtOrganization').val($scope.TravelRequest.Organization);
                 $('#txtMeetingLocation').val($scope.TravelRequest.MeetingLocation);
 
-                if ($scope.TravelRequest.MeetingBeginDateTime.substring(0, 10) != '0001-01-01')
-                {
-                    $('#txtMeetingBeginDate').val($scope.TravelRequest.MeetingBeginDateTime.substring(0,10));
+                if ($scope.TravelRequest.MeetingBeginDateTime.substring(0, 10) != '0001-01-01') {
+                    $('#txtMeetingBeginDate').val($scope.TravelRequest.MeetingBeginDateTime.substring(0, 10));
                 }
 
                 if ($scope.TravelRequest.MeetingEndDateTime.substring(0, 10) != '0001-01-01') {
@@ -1992,7 +1929,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
                     $('#txtReturnDate').val($scope.TravelRequest.ReturnDateTime.substring(0, 10));
                 }
-                
+
                 $("#txtBadgeNumber").prop("readonly", true);
                 $("#txtBadgeNumber").prop("style", "background-color:lightgray;");
             });
@@ -2079,7 +2016,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 $('#txtShuttle').val($scope.Data.EstimatedExpenseData.Shuttle);
                 //$('#txtCashAdvanceRequested').val($scope.Data.EstimatedExpenseData.CashAdvance);
                 $('#estimatedExpenseId').text($scope.Data.EstimatedExpenseData.EstimatedExpenseId);
-                
+
                 $scope.advanceLodgingAmount = $scope.Data.EstimatedExpenseData.AdvanceLodging;
                 $scope.advanceAirfareAmount = $scope.Data.EstimatedExpenseData.AdvanceAirFare;
                 $scope.advanceRegistrationAmount = $scope.Data.EstimatedExpenseData.AdvanceRegistration;
@@ -2229,7 +2166,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         $scope.totalFISAmount = "";
         $scope.SelectedProject = [{}, {}, {}, {}, {}];
 
-        setWatch(); 
+        setWatch();
 
         $.get('/uitemplates/travelreimbursement.html')
         .done(function (data) {
@@ -2441,16 +2378,16 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         var actionTemplate = '<div style="float:left;" ng-if="row.entity.ViewActionVisible == true"><a target="_blank" href="api/travelReimbursementReport/{{row.entity.TravelRequestId}}"><img title="View" class="actionImage" src="/Images/view.png" /></a></div><div style="float:left;" ng-if="row.entity.EditActionVisible == true"><img title="Edit" class="actionImage" src="/Images/edit.png" alt="{{row.entity.TravelRequestId}}|{{row.entity.ReimbursementId}}" onclick="editTravelReimbursement(this);" /></div> <div ng-if="row.entity.ApproveActionVisible == true"><img title="Approve" class="actionImage" src="/Images/approve1.png" alt="{{row.entity.TravelRequestId}}" onclick="showApproveSection2(this);" /><img title="Reject" class="actionImage2" src="/Images/reject1.png" alt="{{row.entity.TravelRequestId}}" onclick="showRejectSection2(this);" /></div>';
 
         $scope.columns = [{
-                field: 'ReimbursementId',
-                displayName: 'Reimbursement #',
-                width: 150,
-                headerCellClass: "existingrequestcolumnheader",
-                cellClass: "existingrequestcolumnvalue",
-                filter: {
-                    placeholder: '🔎 search',
-                    cellClass: 'travelrequestidcolumn'
-                }
-            },
+            field: 'ReimbursementId',
+            displayName: 'Reimbursement #',
+            width: 150,
+            headerCellClass: "existingrequestcolumnheader",
+            cellClass: "existingrequestcolumnvalue",
+            filter: {
+                placeholder: '🔎 search',
+                cellClass: 'travelrequestidcolumn'
+            }
+        },
             {
                 field: 'TravelRequestId',
                 displayName: 'Travel Request#',
@@ -2591,7 +2528,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
            $.get('/uitemplates/existingtravelreimbursements.html')
            .done(function (data) {
                $('#existingtravelrequeststemplate').html($compile($(data).html())($scope));
-            $scope.$apply();
+               $scope.$apply();
            });
 
        });
@@ -2844,7 +2781,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             $scope.$watch('TravelModel[' + index + '].Other', function () {
                 updateTotal($scope.TravelModel);
             });
-            
+
             $scope.$watch('FISModel[' + index + '].Amount', function () {
                 updateTotal2($scope.FISModel);
             });
@@ -2922,146 +2859,24 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
                 $scope.$apply(function () {
 
-                // Date picker options
-                var options = {
-                    format: 'mm/dd/yyyy',
-                    orientation: "top right",
-                    todayHighlight: true,
-                    autoclose: true,
-                };
+                    // Date picker options
+                    var options = {
+                        format: 'mm/dd/yyyy',
+                        orientation: "top right",
+                        todayHighlight: true,
+                        autoclose: true,
+                    };
 
-                $('input[name="txtTravelPeriodFrom"]').datepicker(options);
-                $('input[name="txtTravelPeriodTo"]').datepicker(options);
-                $('input[name="txtTravelDate1"]').datepicker(options);
-                $('input[name="txtTravelDate2"]').datepicker(options);
-                $('input[name="txtTravelDate3"]').datepicker(options);
-                $('input[name="txtTravelDate4"]').datepicker(options);
-                $('input[name="txtTravelDate5"]').datepicker(options);
+                    $('input[name="txtTravelPeriodFrom"]').datepicker(options);
+                    $('input[name="txtTravelPeriodTo"]').datepicker(options);
+                    $('input[name="txtTravelDate1"]').datepicker(options);
+                    $('input[name="txtTravelDate2"]').datepicker(options);
+                    $('input[name="txtTravelDate3"]').datepicker(options);
+                    $('input[name="txtTravelDate4"]').datepicker(options);
+                    $('input[name="txtTravelDate5"]').datepicker(options);
 
-                // set default values
-                for (var index = 0; index < maxRowCount; index++) {
-                    $scope.TravelModel[index].Id = 0;
-                    $scope.TravelModel[index].TravelDate = "";
-                    $scope.TravelModel[index].City = "";
-                    $scope.TravelModel[index].TotalMiles = 0;
-                    $scope.TravelModel[index].MileageToWork = 0;
-                    $scope.TravelModel[index].BusinessMiles = 0;
-                    $scope.TravelModel[index].BusinessMileAmount = 0;
-                    $scope.TravelModel[index].Parking = 0;
-                    $scope.TravelModel[index].Airfare = 0;
-                    $scope.TravelModel[index].Taxi = 0;
-                    $scope.TravelModel[index].Lodging = 0;
-                    $scope.TravelModel[index].Meals = 0
-                    $scope.TravelModel[index].Registration = 0;
-                    $scope.TravelModel[index].Internet = 0;
-                    $scope.TravelModel[index].Other = 0;
-                    $scope.TravelModel[index].DailyTotal = 0;
-                    $scope.FISModel[index].Amount = "";
-                }
-
-                // set user data section
-                $('#travelRequestIdForDisplay').html("Travel Request #<b>" + travelRequestId.toString() + "</b>");
-                $('#txtBadgeNumber').val($scope.Data.ReimbursementTravelRequestDetails.BadgeNumber);
-                $('#txtName').val($scope.Data.ReimbursementTravelRequestDetails.Name);
-                $('#txtTravelRequestNumber1').val($scope.Data.ReimbursementTravelRequestDetails.TravelRequestId);
-                $('#txtDivision').val($scope.Data.ReimbursementTravelRequestDetails.Division);
-                $('#txtVendorNumber').val($scope.Data.ReimbursementTravelRequestDetails.VendorNumber);
-                $('#txtCostCenterNumber').val($scope.Data.ReimbursementTravelRequestDetails.CostCenterId);
-                $('#txtTravelPeriodFrom').val($scope.Data.ReimbursementTravelRequestDetails.StrDepartureDateTime);
-                $('#txtTravelPeriodTo').val($scope.Data.ReimbursementTravelRequestDetails.StrReturnDateTime);
-                $('#txtPurpose').val($scope.Data.ReimbursementTravelRequestDetails.Purpose);
-                $('#txtDepartment').val($scope.Data.ReimbursementTravelRequestDetails.Department);
-                $('#txtExtension').val($scope.Data.ReimbursementTravelRequestDetails.Extension);
-                $('#txtReimbursementId').val($scope.Data.ReimbursementTravelRequestDetails.ReimbursementId);
-                
-                // set TA other expense amounts
-                $("#lblTAAirfare").html("$" + $scope.Data.ReimbursementTravelRequestDetails.TAEstimatedAirFare);
-                $("#lblTALodging").html("$" + $scope.Data.ReimbursementTravelRequestDetails.TAEstimatedLodge);
-                $("#lblTAMeals").html("$" + $scope.Data.ReimbursementTravelRequestDetails.TAEstimatedMeals);
-                $("#lblTAActualLodging").html("$" + $scope.Data.ReimbursementTravelRequestDetails.TAActualLodge);
-                $("#lblTAActualMeals").html("$" + $scope.Data.ReimbursementTravelRequestDetails.TAActualMeals);
-               
-                // set travel data section
-                for (var index = 0; index < $scope.Data.ReimbursementDetails.Reimbursement.length; index++) {
-                    $scope.TravelModel[index].Id                    = $scope.Data.ReimbursementDetails.Reimbursement[index].Id;
-                    $scope.TravelModel[index].TravelDate            = $scope.Data.ReimbursementDetails.Reimbursement[index].DtReimburse;
-                    $scope.TravelModel[index].City                  = $scope.Data.ReimbursementDetails.Reimbursement[index].CityStateAndBusinessPurpose;
-                    $scope.TravelModel[index].TotalMiles            = $scope.Data.ReimbursementDetails.Reimbursement[index].Miles;
-                    $scope.TravelModel[index].MileageToWork         = $scope.Data.ReimbursementDetails.Reimbursement[index].MileageToWork;
-                    $scope.TravelModel[index].BusinessMiles         = $scope.Data.ReimbursementDetails.Reimbursement[index].BusinessMiles;
-                    $scope.TravelModel[index].BusinessMileAmount    = $scope.Data.ReimbursementDetails.Reimbursement[index].BusinessMilesXRate;
-                    $scope.TravelModel[index].Parking               = $scope.Data.ReimbursementDetails.Reimbursement[index].ParkingAndGas;
-                    $scope.TravelModel[index].Airfare               = $scope.Data.ReimbursementDetails.Reimbursement[index].AirFare;
-                    $scope.TravelModel[index].Taxi                  = $scope.Data.ReimbursementDetails.Reimbursement[index].TaxiRail;
-                    $scope.TravelModel[index].Lodging               = $scope.Data.ReimbursementDetails.Reimbursement[index].Lodge;
-                    $scope.TravelModel[index].Meals                 = $scope.Data.ReimbursementDetails.Reimbursement[index].Meals;
-                    $scope.TravelModel[index].Registration          = $scope.Data.ReimbursementDetails.Reimbursement[index].Registration;
-                    $scope.TravelModel[index].Internet              = $scope.Data.ReimbursementDetails.Reimbursement[index].Internet;
-                    $scope.TravelModel[index].Other                 = $scope.Data.ReimbursementDetails.Reimbursement[index].Others;
-                    $scope.TravelModel[index].DailyTotal            = $scope.Data.ReimbursementDetails.Reimbursement[index].DailyTotal;
-
-                    $("#row" + (index + 1)).show();
-                    //$("#deleterow" + (index + 1)).hide();
-
-                    currentRowNumber = ((index + 1) + 1);
-                }
-
-                // set advance amounts
-                $scope.totalCashAdvanceAmount = $scope.Data.ReimbursementDetails.SubtractCashAdvance;
-                $scope.totalPersonalAdvanceAmount = $scope.Data.ReimbursementDetails.SubtractPersonalAdvance;
-
-                // set FIS expense section
-                if ($scope.Data.FIS) {
-                    //$scope.totalFISAmount = $scope.Data.FIS.TotalAmount;
-
-                    if ($scope.Data.FIS.FISDetails) {
-
-                        for (var index = 0; index < $scope.Data.FIS.FISDetails.length; index++) {
-
-                            var costCenterName = $scope.Data.FIS.FISDetails[index].CostCenterId;
-
-                            $("#ddlCostCenter" + (index + 1)).val(costCenterName);
-                            $("#txtAccount" + (index + 1)).val($scope.Data.FIS.FISDetails[index].LineItem);
-                            $("#txtTask" + (index + 1)).val($scope.Data.FIS.FISDetails[index].Task);
-
-                            $scope.FISModel[index].Amount = $scope.Data.FIS.FISDetails[index].Amount;
-
-                            $("#rowfis" + (index + 1)).show();
-                            //$("#deletefisrow" + (index + 1)).hide();
-
-                            currentRowNumberFIS = ((index + 1) + 1);
-                        }
-                    }
-                }
-                
-                // add travel section row
-                $("#btnAddRow").on("click", function () {
-
-                    $("#row" + currentRowNumber).show();
-
-                    // disable "add" button if max row count has been reached
-                    if (currentRowNumber == maxRowCount) {
-                        $("#btnAddRow").prop('disabled', 'disabled');
-                    }
-
-                    currentRowNumber++;
-                });
-
-                // delete travel section row
-                $("table.tablepart1").on("click", ".deleterow", function (event) {
-
-                    currentRowNumber -= 1;
-
-                    $scope.$apply(function () {
-
-                        var index = (currentRowNumber - 1);
-
-                        // reset
-                        $scope.totalMileA = ($scope.totalMileA * 1) - ($scope.TravelModel[index].TotalMiles * 1);
-                        $scope.totalMileB = ($scope.totalMileB * 1) - ($scope.TravelModel[index].MileageToWork * 1);
-                        $scope.totalBusinessMile = ($scope.totalBusinessMile * 1) - ($scope.TravelModel[index].BusinessMiles * 1);
-                        $scope.totalBusinessMileAmount = ($scope.totalBusinessMileAmount * 1) - ($scope.TravelModel[index].BusinessMileAmount * 1);
-
+                    // set default values
+                    for (var index = 0; index < maxRowCount; index++) {
                         $scope.TravelModel[index].Id = 0;
                         $scope.TravelModel[index].TravelDate = "";
                         $scope.TravelModel[index].City = "";
@@ -3073,55 +2888,177 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                         $scope.TravelModel[index].Airfare = 0;
                         $scope.TravelModel[index].Taxi = 0;
                         $scope.TravelModel[index].Lodging = 0;
-                        $scope.TravelModel[index].Meals = 0;
+                        $scope.TravelModel[index].Meals = 0
                         $scope.TravelModel[index].Registration = 0;
                         $scope.TravelModel[index].Internet = 0;
                         $scope.TravelModel[index].Other = 0;
-
-                        
-
-                        updateTotal($scope.TravelModel);
-                        updateTotal2($scope.FISModel);
-                    });
-
-                    $("#row" + currentRowNumber).hide();
-                    $("#btnAddRow").prop('disabled', '');
-                });
-
-                // add fis section row
-                $("#btnAddRowFIS").on("click", function () {
-
-                    $("#rowfis" + currentRowNumberFIS).show();
-                    
-                    // disable "add" button if max row count has been reached
-                    if (currentRowNumberFIS == maxRowCount) {
-                        $("#btnAddRowFIS").prop('disabled', 'disabled');
+                        $scope.TravelModel[index].DailyTotal = 0;
+                        $scope.FISModel[index].Amount = "";
                     }
 
-                    currentRowNumberFIS++;
-                });
+                    // set user data section
+                    $('#travelRequestIdForDisplay').html("Travel Request #<b>" + travelRequestId.toString() + "</b>");
+                    $('#txtBadgeNumber').val($scope.Data.ReimbursementTravelRequestDetails.BadgeNumber);
+                    $('#txtName').val($scope.Data.ReimbursementTravelRequestDetails.Name);
+                    $('#txtTravelRequestNumber1').val($scope.Data.ReimbursementTravelRequestDetails.TravelRequestId);
+                    $('#txtDivision').val($scope.Data.ReimbursementTravelRequestDetails.Division);
+                    $('#txtVendorNumber').val($scope.Data.ReimbursementTravelRequestDetails.VendorNumber);
+                    $('#txtCostCenterNumber').val($scope.Data.ReimbursementTravelRequestDetails.CostCenterId);
+                    $('#txtTravelPeriodFrom').val($scope.Data.ReimbursementTravelRequestDetails.StrDepartureDateTime);
+                    $('#txtTravelPeriodTo').val($scope.Data.ReimbursementTravelRequestDetails.StrReturnDateTime);
+                    $('#txtPurpose').val($scope.Data.ReimbursementTravelRequestDetails.Purpose);
+                    $('#txtDepartment').val($scope.Data.ReimbursementTravelRequestDetails.Department);
+                    $('#txtExtension').val($scope.Data.ReimbursementTravelRequestDetails.Extension);
+                    $('#txtReimbursementId').val($scope.Data.ReimbursementTravelRequestDetails.ReimbursementId);
 
-                // delete fis section row
-                $("table.tablepartfis").on("click", ".deleterowfis", function (event) {
+                    // set TA other expense amounts
+                    $("#lblTAAirfare").html("$" + $scope.Data.ReimbursementTravelRequestDetails.TAEstimatedAirFare);
+                    $("#lblTALodging").html("$" + $scope.Data.ReimbursementTravelRequestDetails.TAEstimatedLodge);
+                    $("#lblTAMeals").html("$" + $scope.Data.ReimbursementTravelRequestDetails.TAEstimatedMeals);
+                    $("#lblTAActualLodging").html("$" + $scope.Data.ReimbursementTravelRequestDetails.TAActualLodge);
+                    $("#lblTAActualMeals").html("$" + $scope.Data.ReimbursementTravelRequestDetails.TAActualMeals);
 
-                    currentRowNumberFIS -= 1;
+                    // set travel data section
+                    for (var index = 0; index < $scope.Data.ReimbursementDetails.Reimbursement.length; index++) {
+                        $scope.TravelModel[index].Id = $scope.Data.ReimbursementDetails.Reimbursement[index].Id;
+                        $scope.TravelModel[index].TravelDate = $scope.Data.ReimbursementDetails.Reimbursement[index].DtReimburse;
+                        $scope.TravelModel[index].City = $scope.Data.ReimbursementDetails.Reimbursement[index].CityStateAndBusinessPurpose;
+                        $scope.TravelModel[index].TotalMiles = $scope.Data.ReimbursementDetails.Reimbursement[index].Miles;
+                        $scope.TravelModel[index].MileageToWork = $scope.Data.ReimbursementDetails.Reimbursement[index].MileageToWork;
+                        $scope.TravelModel[index].BusinessMiles = $scope.Data.ReimbursementDetails.Reimbursement[index].BusinessMiles;
+                        $scope.TravelModel[index].BusinessMileAmount = $scope.Data.ReimbursementDetails.Reimbursement[index].BusinessMilesXRate;
+                        $scope.TravelModel[index].Parking = $scope.Data.ReimbursementDetails.Reimbursement[index].ParkingAndGas;
+                        $scope.TravelModel[index].Airfare = $scope.Data.ReimbursementDetails.Reimbursement[index].AirFare;
+                        $scope.TravelModel[index].Taxi = $scope.Data.ReimbursementDetails.Reimbursement[index].TaxiRail;
+                        $scope.TravelModel[index].Lodging = $scope.Data.ReimbursementDetails.Reimbursement[index].Lodge;
+                        $scope.TravelModel[index].Meals = $scope.Data.ReimbursementDetails.Reimbursement[index].Meals;
+                        $scope.TravelModel[index].Registration = $scope.Data.ReimbursementDetails.Reimbursement[index].Registration;
+                        $scope.TravelModel[index].Internet = $scope.Data.ReimbursementDetails.Reimbursement[index].Internet;
+                        $scope.TravelModel[index].Other = $scope.Data.ReimbursementDetails.Reimbursement[index].Others;
+                        $scope.TravelModel[index].DailyTotal = $scope.Data.ReimbursementDetails.Reimbursement[index].DailyTotal;
 
-                    $scope.$apply(function () {
+                        $("#row" + (index + 1)).show();
+                        //$("#deleterow" + (index + 1)).hide();
 
-                        var index = (currentRowNumberFIS - 1);
+                        currentRowNumber = ((index + 1) + 1);
+                    }
 
-                        // reset
-                        $("#ddlCostCenter" + currentRowNumberFIS).val("?");
-                        $("#txtAccount" + currentRowNumberFIS).val("");
-                        $("#ddlProjects" + currentRowNumberFIS).val("?");
-                        $("#txtTask" + currentRowNumberFIS).val("");
-                        
-                        $scope.FISModel[index].Amount = "";
+                    // set advance amounts
+                    $scope.totalCashAdvanceAmount = $scope.Data.ReimbursementDetails.SubtractCashAdvance;
+                    $scope.totalPersonalAdvanceAmount = $scope.Data.ReimbursementDetails.SubtractPersonalAdvance;
+
+                    // set FIS expense section
+                    if ($scope.Data.FIS) {
+                        //$scope.totalFISAmount = $scope.Data.FIS.TotalAmount;
+
+                        if ($scope.Data.FIS.FISDetails) {
+
+                            for (var index = 0; index < $scope.Data.FIS.FISDetails.length; index++) {
+
+                                var costCenterName = $scope.Data.FIS.FISDetails[index].CostCenterId;
+
+                                $("#ddlCostCenter" + (index + 1)).val(costCenterName);
+                                $("#txtAccount" + (index + 1)).val($scope.Data.FIS.FISDetails[index].LineItem);
+                                $("#txtTask" + (index + 1)).val($scope.Data.FIS.FISDetails[index].Task);
+
+                                $scope.FISModel[index].Amount = $scope.Data.FIS.FISDetails[index].Amount;
+
+                                $("#rowfis" + (index + 1)).show();
+                                //$("#deletefisrow" + (index + 1)).hide();
+
+                                currentRowNumberFIS = ((index + 1) + 1);
+                            }
+                        }
+                    }
+
+                    // add travel section row
+                    $("#btnAddRow").on("click", function () {
+
+                        $("#row" + currentRowNumber).show();
+
+                        // disable "add" button if max row count has been reached
+                        if (currentRowNumber == maxRowCount) {
+                            $("#btnAddRow").prop('disabled', 'disabled');
+                        }
+
+                        currentRowNumber++;
                     });
 
-                    $("#rowfis" + currentRowNumberFIS).hide();
-                    $("#btnAddRowFIS").prop('disabled', '');
-                });
+                    // delete travel section row
+                    $("table.tablepart1").on("click", ".deleterow", function (event) {
+
+                        currentRowNumber -= 1;
+
+                        $scope.$apply(function () {
+
+                            var index = (currentRowNumber - 1);
+
+                            // reset
+                            $scope.totalMileA = ($scope.totalMileA * 1) - ($scope.TravelModel[index].TotalMiles * 1);
+                            $scope.totalMileB = ($scope.totalMileB * 1) - ($scope.TravelModel[index].MileageToWork * 1);
+                            $scope.totalBusinessMile = ($scope.totalBusinessMile * 1) - ($scope.TravelModel[index].BusinessMiles * 1);
+                            $scope.totalBusinessMileAmount = ($scope.totalBusinessMileAmount * 1) - ($scope.TravelModel[index].BusinessMileAmount * 1);
+
+                            $scope.TravelModel[index].Id = 0;
+                            $scope.TravelModel[index].TravelDate = "";
+                            $scope.TravelModel[index].City = "";
+                            $scope.TravelModel[index].TotalMiles = 0;
+                            $scope.TravelModel[index].MileageToWork = 0;
+                            $scope.TravelModel[index].BusinessMiles = 0;
+                            $scope.TravelModel[index].BusinessMileAmount = 0;
+                            $scope.TravelModel[index].Parking = 0;
+                            $scope.TravelModel[index].Airfare = 0;
+                            $scope.TravelModel[index].Taxi = 0;
+                            $scope.TravelModel[index].Lodging = 0;
+                            $scope.TravelModel[index].Meals = 0;
+                            $scope.TravelModel[index].Registration = 0;
+                            $scope.TravelModel[index].Internet = 0;
+                            $scope.TravelModel[index].Other = 0;
+
+
+
+                            updateTotal($scope.TravelModel);
+                            updateTotal2($scope.FISModel);
+                        });
+
+                        $("#row" + currentRowNumber).hide();
+                        $("#btnAddRow").prop('disabled', '');
+                    });
+
+                    // add fis section row
+                    $("#btnAddRowFIS").on("click", function () {
+
+                        $("#rowfis" + currentRowNumberFIS).show();
+
+                        // disable "add" button if max row count has been reached
+                        if (currentRowNumberFIS == maxRowCount) {
+                            $("#btnAddRowFIS").prop('disabled', 'disabled');
+                        }
+
+                        currentRowNumberFIS++;
+                    });
+
+                    // delete fis section row
+                    $("table.tablepartfis").on("click", ".deleterowfis", function (event) {
+
+                        currentRowNumberFIS -= 1;
+
+                        $scope.$apply(function () {
+
+                            var index = (currentRowNumberFIS - 1);
+
+                            // reset
+                            $("#ddlCostCenter" + currentRowNumberFIS).val("?");
+                            $("#txtAccount" + currentRowNumberFIS).val("");
+                            $("#ddlProjects" + currentRowNumberFIS).val("?");
+                            $("#txtTask" + currentRowNumberFIS).val("");
+
+                            $scope.FISModel[index].Amount = "";
+                        });
+
+                        $("#rowfis" + currentRowNumberFIS).hide();
+                        $("#btnAddRowFIS").prop('disabled', '');
+                    });
 
 
                 });
@@ -3142,8 +3079,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
     }
 
 
-    $scope.loadDashboard = function()
-    {
+    $scope.loadDashboard = function () {
         $.get('/uitemplates/dashboard.html')
         .always(function (data) {
             $('#dashboardtemplate').html($compile($(data).html())($scope));
@@ -3166,8 +3102,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         });
     }
 
-    function loadTravelRequestBarGraph(data)
-    {
+    function loadTravelRequestBarGraph(data) {
         var axisMargin = 20,
             margin = 20,
             valueMargin = 7,
