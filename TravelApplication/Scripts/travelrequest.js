@@ -524,8 +524,9 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             });
 
             // Add upload listners
-            for (var index = 1; index < 3; index++) {
-                $("#supportingDocumentZoneUpload" + index).dropzone({
+            for (var index = 1; index < 6; index++) {
+                
+                $("#supportingDocumentZone" + index).dropzone({
                     url: "api/documents/upload",
                     thumbnailWidth: 10,
                     thumbnailHeight: 10,
@@ -537,6 +538,12 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                         // config
                         self.options.addRemoveLinks = true;
                         self.options.dictRemoveFile = "Delete";
+
+                        //if (index == 2 || index == 4) {
+
+                        //    self.removeEventListeners();
+                        //}
+
                         // on file added
                         self.on("addedfile", function (progress) {
                             var travelRequestId = $('#travelRequestId').text();
@@ -544,10 +551,28 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                             var uploadUrl = "/api/documents/upload?travelRequestId=" + travelRequestId + "&badgeNumber=" + badgeNumber;
                             self.options.url = uploadUrl;
                         });
+
                         // on file added
                         self.on("success", function (file, response) {
-                            this.removeFile(file);
+                            //this.removeFile(file);
                         });
+
+                        // on file delete
+                        self.on("removedfile", function (file) {
+                            var travelRequestId = $('#travelRequestId').text();
+                            var documentId = 4;
+                            var deleteUrl = ""; //"/api/documents/deletedocument?travelRequestId=" + travelRequestId + "&documentId=" + documentId;
+
+                            // delete the file
+                            $.ajax({
+                                url: deleteUrl,
+                                type: "DELETE"
+                            });
+
+                            // reload supporting document grid
+                            //$scope.loadSupportingDocuments(travelRequestId);
+                        });
+
                         // File upload Progress
                         self.on("totaluploadprogress", function (progress) {
                             $('.roller').width(progress + '%');
@@ -555,19 +580,26 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                         self.on("queuecomplete", function (progress) {
                             $('.meter').delay(999).slideUp(999);
                             var travelRequestId = $('#travelRequestId').text();
+                            //var travelRequestId = 12345;
                             // reload supporting document grid
                             $scope.loadSupportingDocuments(travelRequestId);
                         });
                     },
                     success: function (file, response) {
-                        var imgName = response;
                         file.previewElement.classList.add("dz-success");
+                        $(".dz-success-mark svg").css("background", "green");
+                        $(".dz-error-mark").css("display", "none");
                     },
                     error: function (file, response) {
                         file.previewElement.classList.add("dz-error");
                     }
                 });
             }
+
+            //var dz = Dropzone.forElement("#supportingDocumentZone1");
+            //dz.removeEventListeners();
+            //$("#uploaddocumenttext1").html("File already attached <br/> Agenda 1623525913.txt");
+            //$("#supportingDocumentZone1").css("background-color", "lightgray");
         });
     }
 
