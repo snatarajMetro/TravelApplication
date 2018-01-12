@@ -61,7 +61,7 @@ namespace TravelApplication.DAL.Repositories
                             FileName        = dataReader["FILENAME"].ToString(),
                             Id              = Convert.ToInt32(dataReader["ID"]),
                             UploadDateTime  = dataReader["UPLOADEDDATETIME"].ToString(),
-                            DownloadUrl     = "http://apitest.metro.net/Document/Document/GetDocument?siteUrl=http://mymetro/collaboration/InformationManagement/ATMS/apps&documentListName=TravelApp/" + badgeNumber +"-"+travelRequestId+ "/&fileName=" + dataReader["FILENAME"].ToString()
+                            DownloadUrl     = System.Configuration.ConfigurationManager.AppSettings["sharepointServiceUrl"].ToString()+ "/Document/GetDocument?siteUrl=http://mymetro/collaboration/InformationManagement/ATMS/apps&documentListName=TravelApp/" + badgeNumber +"-"+travelRequestId+ "/&fileName=" + dataReader["FILENAME"].ToString()
                         }
                         );
                     }
