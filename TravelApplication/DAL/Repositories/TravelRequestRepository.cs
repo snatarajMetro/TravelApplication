@@ -29,7 +29,7 @@ namespace TravelApplication.Services
             {
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                var endpointUrl = string.Format("http://apitest.metro.net/fis/EmployeeInfo/{0}", badgeNumber);
+                var endpointUrl = System.Configuration.ConfigurationManager.AppSettings["fisServiceUrl"].ToString()+ string.Format("/EmployeeInfo/{0}", badgeNumber);
 
                 HttpResponseMessage response = await client.GetAsync(endpointUrl).ConfigureAwait(false);
 
@@ -60,7 +60,7 @@ namespace TravelApplication.Services
             {
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                var endpointUrl = string.Format("http://apitest.metro.net/fis/VendorId/{0}", badgeNumber);
+                var endpointUrl = System.Configuration.ConfigurationManager.AppSettings["fisServiceUrl"].ToString() + string.Format("/VendorId/{0}", badgeNumber);
 
                 HttpResponseMessage response = await client.GetAsync(endpointUrl).ConfigureAwait(false);
 

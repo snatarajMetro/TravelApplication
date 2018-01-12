@@ -21,7 +21,7 @@ namespace TravelApplication.DAL.Repositories
             {
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                var endpointUrl = string.Format("http://apitest.metro.net/fis/CostCenters");
+                var endpointUrl = System.Configuration.ConfigurationManager.AppSettings["fisServiceUrl"].ToString()+ string.Format("/CostCenters");
                 HttpResponseMessage response = await client.GetAsync(endpointUrl).ConfigureAwait(false);
 
                 if (response.IsSuccessStatusCode)
@@ -52,7 +52,7 @@ namespace TravelApplication.DAL.Repositories
             {
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                var endpointUrl = string.Format("http://apitest.metro.net/fis/ProjectsByCostCenterId/{0}",costCenterName);
+                var endpointUrl = System.Configuration.ConfigurationManager.AppSettings["fisServiceUrl"].ToString() + string.Format("/ProjectsByCostCenterId/{0}",costCenterName);
                 HttpResponseMessage response = await client.GetAsync(endpointUrl).ConfigureAwait(false);
 
                 if (response.IsSuccessStatusCode)
