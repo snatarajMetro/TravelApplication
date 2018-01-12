@@ -41,6 +41,34 @@ namespace TravelApplication.DAL.Repositories
             }
         }
 
+
+        public void UploadRequiredFileInfo(int travelRequestId, string fileName, int requiredFileOrder)
+        {
+            try
+            {
+                using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+                {
+                    string query = @"Insert into Travel_Uploads (TRAVELREQUESTID, FILENAME, UPLOADEDDATETIME , REQUIRED, REQUIREDORDER ) values (:tarId, :fileName, :uploadedDateTime, :required, :requiredFileOrder)";
+                    OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+                    command.CommandText = query;
+                    command.Parameters.Add(new OracleParameter("tarId", OracleDbType.Int32, travelRequestId, ParameterDirection.Input));
+                    command.Parameters.Add(new OracleParameter("fileName", OracleDbType.Varchar2, fileName, ParameterDirection.Input));
+                    command.Parameters.Add(new OracleParameter("uploadedDateTime", OracleDbType.Date, System.DateTime.Now, ParameterDirection.Input));
+                    command.Parameters.Add(new OracleParameter("required", OracleDbType.Varchar2, "Y", ParameterDirection.Input));
+                    command.Parameters.Add(new OracleParameter("requiredorder", OracleDbType.Varchar2, requiredFileOrder, ParameterDirection.Input));
+                    command.ExecuteNonQuery();
+
+                    command.Dispose();
+                    dbConn.Close();
+                    dbConn.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Couldn't save file name to database");
+            }
+        }
         public List<SupportingDocument> GetAllDocumentsByTravelId(int travelRequestId, int badgeNumber)
         {
             List<SupportingDocument> result = new List<SupportingDocument>();

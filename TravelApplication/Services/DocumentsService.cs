@@ -32,6 +32,27 @@ namespace TravelApplication.Services
             }
         }
 
+        public void UploadRequiredFileToSharePoint(int travelRequestId, SharePointUpload sharePointUploadRequest, int requiredFileOrder )
+        {
+            try
+            {
+                var endpointUrl = System.Configuration.ConfigurationManager.AppSettings["sharepointServiceUrl"].ToString() + "/SharePoint/UploadDocument";
+
+                // call Sharepoint 
+                var client = new HttpClient();
+                var response = client.PostAsJsonAsync(endpointUrl, sharePointUploadRequest).ConfigureAwait(false);
+
+                // Save to database
+
+                documentsRepository.UploadRequiredFileInfo(travelRequestId, sharePointUploadRequest.documentName, requiredFileOrder);
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Unable to upload the document");
+            }
+        }
+
         public List<SupportingDocument> GetAllDocumentsByTravelId(int travelRequestId, int badgeNumber)
         {
             try
