@@ -36,11 +36,11 @@ namespace TravelApplication.Controllers.WebAPI
                 byte[] binaryImagedata = new byte[imageLength];
                 uploadedFile.InputStream.Read(binaryImagedata, 0, imageLength);
 
-                var endpointUrl = System.Configuration.ConfigurationManager.AppSettings["sharepointServiceUrl"].ToString() + "/SharePoint/UploadDocument";
+                var endpointUrl = "http://apitest.metro.net/Document/SharePoint/UploadDocument";
 
                 SharePointUpload uploadRequest = new SharePointUpload()
                 {
-                    documentStream = binaryImagedata, 
+                    documentStream = binaryImagedata, //System.IO.File.ReadAllBytes(@"c:\Temp\new.docx"),
                     siteUrl = "http://mtaspw01/collaboration/InformationManagement/ATMS/apps",
                     documentListName = "TravelApp",
                     documentName = uploadedFile.FileName,

@@ -15,7 +15,7 @@ namespace TravelApplication.Services
         {
             try
             {
-                var endpointUrl = System.Configuration.ConfigurationManager.AppSettings["sharepointServiceUrl"].ToString()+ "/SharePoint/UploadDocument"; 
+                var endpointUrl = "http://apitest.metro.net/Document/SharePoint/UploadDocument";
 
                 // call Sharepoint 
                 var client = new HttpClient();
