@@ -454,10 +454,34 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
     //set fileupload section
     $scope.loadFileUpload2 = function (travelRequestId) {
 
-        //var travelRequestId = $('#travelRequestId').text();
-
-        // load supporting document grid
-        $scope.loadSupportingDocuments(travelRequestId);
+        // Get Required Documents
+        var requiredDocuments = [
+                {
+                    "documentNumber": 1,
+                    "documentName": "Document1",
+                    "fileName": "Agenda123456.txt"
+                },
+                {
+                    "documentNumber": 2,
+                    "documentName": "Document2",
+                    "fileName": ""
+                },
+                {
+                    "documentNumber": 3,
+                    "documentName": "Document3",
+                    "fileName": "Itinerary678952.txt"
+                },
+                {
+                    "documentNumber": 4,
+                    "documentName": "Document4",
+                    "fileName": ""
+                },
+                {
+                    "documentNumber": 5,
+                    "documentName": "",
+                    "fileName": ""
+                }
+        ];
 
         $.get('/uitemplates/uploadandsubmit.html')
         .done(function (data) {
@@ -468,23 +492,12 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 $("#btnSubmit").val("Close");
             }
             $scope.$apply();
-
-            // Add upload listners
-            for (var index = 1; index < 6; index++) {
-
-                // TODO: Base this on existing document result set
-                if (index == 2) {
-                    $("#supportingDocumentZone" + index + " .dz-message")
-                       .css("background", "lightgray")
-                       .css("height", "30px");
-                    $("#uploaddocumenttext" + index).html("File has been uploaded");
-                    $("#uploaddocumenticon" + index).show();
-                }
-                else {
-                    setUpDropzone(index);
-                }
-            }
+            
+            setUpRequiredDocuments(requiredDocuments);
         });
+
+        // load supporting document grid
+        $scope.loadSupportingDocuments(travelRequestId);
     }
 
     // set fis section
@@ -494,6 +507,28 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             $('#datatemplate').html($compile($(data).html())($scope));
             $scope.$apply();
         });
+    }
+
+    function setUpRequiredDocuments(requiredDocuments) {
+
+        for (var index = 0; index < requiredDocuments.length; index++) {
+
+            var documentNumber = requiredDocuments[index].documentNumber;
+            var fileName = requiredDocuments[index].fileName;
+
+            if (fileName == "" && documentNumber != 5) {
+
+                // display message about file already uplaoded
+                $("#supportingDocumentZone" + documentNumber + " .dz-message")
+                .css("background", "lightgray")
+                .css("height", "30px");
+                $("#uploaddocumenttext" + documentNumber).html("File has been uploaded");
+                $("#uploaddocumenticon" + documentNumber).show();
+            } else {
+                // Add upload listners
+                setUpDropzone(documentNumber);
+            }
+        }
     }
 
     function setUpDropzone(index) {
@@ -541,13 +576,16 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 $(".dz-success-mark svg").css("background", "green");
                 $(".dz-error-mark").css("display", "none");
 
-                this.removeEventListeners();
+                // Exclude other document section as the user can upload as many documents as possible
+                if (index != 5) {
+                    this.removeEventListeners();
 
-                $("#supportingDocumentZone" + index + " .dz-message")
-                    .css("background", "lightgray")
-                    .css("height", "30px");
-                $("#uploaddocumenttext" + index).html("File successfully uploaded");
-                $("#uploaddocumenticon" + index).show();
+                    $("#supportingDocumentZone" + index + " .dz-message")
+                        .css("background", "lightgray")
+                        .css("height", "30px");
+                    $("#uploaddocumenttext" + index).html("File successfully uploaded");
+                    $("#uploaddocumenticon" + index).show();
+                }
             },
             error: function (file, response) {
                 file.previewElement.classList.add("dz-error");
