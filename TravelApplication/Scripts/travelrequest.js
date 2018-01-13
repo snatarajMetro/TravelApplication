@@ -454,34 +454,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
     //set fileupload section
     $scope.loadFileUpload2 = function (travelRequestId) {
 
-        // Get Required Documents
-        var requiredDocuments = [
-                {
-                    "documentNumber": 1,
-                    "documentName": "Document1",
-                    "fileName": "Agenda123456.txt"
-                },
-                {
-                    "documentNumber": 2,
-                    "documentName": "Document2",
-                    "fileName": ""
-                },
-                {
-                    "documentNumber": 3,
-                    "documentName": "Document3",
-                    "fileName": "Itinerary678952.txt"
-                },
-                {
-                    "documentNumber": 4,
-                    "documentName": "Document4",
-                    "fileName": ""
-                },
-                {
-                    "documentNumber": 5,
-                    "documentName": "",
-                    "fileName": ""
-                }
-        ];
+       
 
         $.get('/uitemplates/uploadandsubmit.html')
         .done(function (data) {
@@ -493,7 +466,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             }
             $scope.$apply();
             
-            setUpRequiredDocuments(requiredDocuments);
+            setUpRequiredDocuments();
         });
 
         // load supporting document grid
@@ -509,14 +482,43 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         });
     }
 
-    function setUpRequiredDocuments(requiredDocuments) {
+    function setUpRequiredDocuments() {
+
+        // Get Required Documents
+        var requiredDocuments = [
+            {
+                "documentNumber": 1,
+                "documentName": "Document1",
+                "fileName": ""
+            },
+            {
+                "documentNumber": 2,
+                "documentName": "Document2",
+                "fileName": ""
+            },
+            {
+                "documentNumber": 3,
+                "documentName": "Document3",
+                "fileName": ""
+            },
+            {
+                "documentNumber": 4,
+                "documentName": "Document4",
+                "fileName": ""
+            },
+            {
+                "documentNumber": 5,
+                "documentName": "",
+                "fileName": ""
+            }
+        ];
 
         for (var index = 0; index < requiredDocuments.length; index++) {
 
             var documentNumber = requiredDocuments[index].documentNumber;
             var fileName = requiredDocuments[index].fileName;
 
-            if (fileName == "" && documentNumber != 5) {
+            if (fileName != "" && documentNumber != 5) {
 
                 // display message about file already uplaoded
                 $("#supportingDocumentZone" + documentNumber + " .dz-message")
@@ -524,6 +526,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 .css("height", "30px");
                 $("#uploaddocumenttext" + documentNumber).html("File has been uploaded");
                 $("#uploaddocumenticon" + documentNumber).show();
+
             } else {
                 // Add upload listners
                 setUpDropzone(documentNumber);
@@ -535,9 +538,14 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         Dropzone.autoDiscover = false;
 
         var obj = $("#supportingDocumentZone" + index);
+        var rootUploadUrl = "api/documents/filesupload";
+
+        if (index != 5) {
+            rootUploadUrl = "api/documents/" + index + "/upload";
+        }
 
         obj.dropzone({
-            url: "api/documents/filesupload",
+            url: rootUploadUrl,
             thumbnailWidth: 10,
             thumbnailHeight: 10,
             maxFilesize: 5, // MB
@@ -550,7 +558,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 self.on("addedfile", function (progress) {
                     var travelRequestId = $('#travelRequestId').text();
                     var badgeNumber = $('#travelRequestBadgeNumber').text();
-                    var uploadUrl = "/api/documents/filesUpload?travelRequestId=" + travelRequestId + "&badgeNumber=" + badgeNumber;
+                    var uploadUrl = rootUploadUrl + "?travelRequestId=" + travelRequestId + "&badgeNumber=" + badgeNumber;
                     self.options.url = uploadUrl;
                 });
 
