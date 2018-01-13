@@ -54,7 +54,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                LogMessage.Log("api/documents/upload : " + ex.Message);
+                LogMessage.Log("api/documents/filesupload : " + ex.Message);
                 msg = Request.CreateResponse(HttpStatusCode.InternalServerError, "Unable to upload document ");
             }
             return msg;
@@ -99,7 +99,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                LogMessage.Log("api/documents/upload : " + ex.Message);
+                LogMessage.Log("api/documents/filesupload : " + ex.Message);
                 msg = Request.CreateResponse(HttpStatusCode.InternalServerError, "Unable to upload document ");
             }
             return msg;
@@ -144,7 +144,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                LogMessage.Log("api/documents/upload : " + ex.Message);
+                LogMessage.Log("api/documents/filesupload : " + ex.Message);
                 msg = Request.CreateResponse(HttpStatusCode.InternalServerError, "Unable to upload document ");
             }
             return msg;
@@ -189,7 +189,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                LogMessage.Log("api/documents/upload : " + ex.Message);
+                LogMessage.Log("api/documents/filesupload : " + ex.Message);
                 msg = Request.CreateResponse(HttpStatusCode.InternalServerError, "Unable to upload document ");
             }
             return msg;
@@ -235,7 +235,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                LogMessage.Log("api/documents/upload : " + ex.Message);
+                LogMessage.Log("api/documents/filesupload : " + ex.Message);
                 msg = Request.CreateResponse(HttpStatusCode.InternalServerError, "Unable to upload document ");
             }
             return msg;

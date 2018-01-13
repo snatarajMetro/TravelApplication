@@ -400,7 +400,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             Dropzone.autoDiscover = false;
 
             $("#supportingDocumentZone").dropzone({
-                url: "api/documents/upload",
+                url: "api/documents/filesUpload",
                 thumbnailWidth: 10,
                 thumbnailHeight: 10,
                 maxFilesize: 5, // MB
@@ -416,7 +416,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                     self.on("addedfile", function (progress) {
                         var travelRequestId = $('#travelRequestId').text();
                         var badgeNumber = $('#badgeNumber').text();
-                        var uploadUrl = "/api/documents/upload?travelRequestId=" + travelRequestId + "&badgeNumber=" + badgeNumber;
+                        var uploadUrl = "/api/documents/filesUpload?travelRequestId=" + travelRequestId + "&badgeNumber=" + badgeNumber;
                         self.options.url = uploadUrl;
                     });
 
@@ -537,7 +537,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         var obj = $("#supportingDocumentZone" + index);
 
         obj.dropzone({
-            url: "api/documents/upload",
+            url: "api/documents/filesupload",
             thumbnailWidth: 10,
             thumbnailHeight: 10,
             maxFilesize: 5, // MB
@@ -550,7 +550,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 self.on("addedfile", function (progress) {
                     var travelRequestId = $('#travelRequestId').text();
                     var badgeNumber = $('#travelRequestBadgeNumber').text();
-                    var uploadUrl = "/api/documents/upload?travelRequestId=" + travelRequestId + "&badgeNumber=" + badgeNumber;
+                    var uploadUrl = "/api/documents/filesUpload?travelRequestId=" + travelRequestId + "&badgeNumber=" + badgeNumber;
                     self.options.url = uploadUrl;
                 });
 
@@ -2725,7 +2725,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             Dropzone.autoDiscover = false;
 
             $("#supportingDocumentZone").dropzone({
-                url: "api/documents/upload",
+                url: "api/documents/filesupload",
                 thumbnailWidth: 10,
                 thumbnailHeight: 10,
                 maxFilesize: 5, // MB
@@ -2742,7 +2742,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                         var travelRequestId = $('#travelRequestId').text();
                         var badgeNumber = $('#travelRequestBadgeNumber').text();
 
-                        var uploadUrl = "/api/documents/upload?travelRequestId=" + travelRequestId + "&badgeNumber=" + badgeNumber;
+                        var uploadUrl = "/api/documents/filesUpload?travelRequestId=" + travelRequestId + "&badgeNumber=" + badgeNumber;
                         self.options.url = uploadUrl;
                     });
 

@@ -109,7 +109,7 @@ namespace TravelApplication.DAL.Repositories
             List<RequiredDocuments> result = new List<RequiredDocuments>();
             using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
             {
-                string query = string.Format("Select ID, TRAVELREQUESTID, FILENAME, DOCUMENTNUMBER from Travel_Uploads where TRAVELREQUESTID = {0} and Requiredorder is not null " , travelRequestId );
+                string query = string.Format("Select TRAVELREQUESTID, FILENAME, DOCUMENTNUMBER from Travel_Uploads where TRAVELREQUESTID = {0} and Requiredorder is not null " , travelRequestId );
                 OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
                 command.CommandText = query;
                 DbDataReader dataReader = command.ExecuteReader();
