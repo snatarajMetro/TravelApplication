@@ -13,6 +13,7 @@ namespace TravelApplication.DAL.Repositories
 
         void UploadRequiredFileInfo(int travelRequestId, string fileName, int requiredFileOrder);
         List<SupportingDocument> GetAllDocumentsByTravelId(int travelRequestId, int badgeNumber);
+        List<RequiredDocuments> GetAllRequiredDocumentsByTravelId(int travelRequestId, int badgeNumber);
 
         void DeleteFilesByTravelId(int travelRequestId, int id);
     }

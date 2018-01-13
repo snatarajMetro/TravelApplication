@@ -67,6 +67,20 @@ namespace TravelApplication.Services
             }
 
         }
+        public List<RequiredDocuments> GetAllRequiredDocumentsByTravelId(int travelRequestId, int badgeNumber)
+        {
+            try
+            {
+                var result = documentsRepository.GetAllRequiredDocumentsByTravelId(travelRequestId, badgeNumber);
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Unable to get all uploaded documents");
+            }
+
+        }
 
         public void DeleteFilesByTravelId(int travelRequestId, int id)
         {

@@ -104,6 +104,39 @@ namespace TravelApplication.DAL.Repositories
             }
         }
 
+        public List<RequiredDocuments> GetAllRequiredDocumentsByTravelId(int travelRequestId, int badgeNumber)
+        {
+            List<RequiredDocuments> result = new List<RequiredDocuments>();
+            using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+            {
+                string query = string.Format("Select ID, TRAVELREQUESTID, FILENAME, DOCUMENTNUMBER from Travel_Uploads where TRAVELREQUESTID = {0} and Requiredorder is not null " , travelRequestId );
+                OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+                command.CommandText = query;
+                DbDataReader dataReader = command.ExecuteReader();
+
+                if (dataReader != null)
+                {
+                    while (dataReader.Read())
+                    {
+                        result.Add(new RequiredDocuments()
+                        {
+                            TravelRequestId = dataReader["TRAVELREQUESTID"].ToString(),
+                            FileName = dataReader["FILENAME"].ToString(),
+                            DocumentNumber = Convert.ToInt32(dataReader["REQUIREDORDER"])
+                            
+                        }
+                        );
+                    }
+                }
+
+                dataReader.Close();
+                command.Dispose();
+                dbConn.Close();
+                dbConn.Dispose();
+
+                return result;
+            }
+        }
         public void DeleteFilesByTravelId(int travelRequestId, int id)
         {
 

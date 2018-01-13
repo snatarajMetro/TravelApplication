@@ -217,6 +217,7 @@
     <Compile Include="Models\ReimburseGridDetails.cs" />
     <Compile Include="Models\ReimbursementDetails.cs" />
     <Compile Include="Models\ReimbursementInput.cs" />
+    <Compile Include="Models\RequiredDocuments.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\SharePointUpload.cs" />
     <Compile Include="Models\SubmitReimburseData.cs" />

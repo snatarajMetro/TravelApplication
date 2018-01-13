@@ -274,9 +274,9 @@ namespace TravelApplication.Controllers.WebAPI
 
             try
             {
-                var supportingDocuments = documentService.GetAllDocumentsByTravelId(travelRequestId, badgeNumber);
+                var requiredDocuments = documentService.GetAllRequiredDocumentsByTravelId(travelRequestId, badgeNumber);
 
-                var data = new JavaScriptSerializer().Serialize(supportingDocuments.OrderByDescending(item => item.Id));
+                var data = new JavaScriptSerializer().Serialize(requiredDocuments.OrderByDescending(item => item.DocumentNumber));
 
                 response = Request.CreateResponse(HttpStatusCode.OK, data);
             }
