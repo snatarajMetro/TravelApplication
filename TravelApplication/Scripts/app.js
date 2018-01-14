@@ -922,6 +922,24 @@ function deletedocument(container) {
             // reload supporting documents section
             var scope = angular.element('#fileuploadtemplate').scope();
             scope.loadSupportingDocuments(travelRequestId);
+
+            if (Dropzone.forElement("#supportingDocumentZone1")) {
+                Dropzone.forElement("#supportingDocumentZone1").destroy();
+            }
+            if (Dropzone.forElement("#supportingDocumentZone2")) {
+                Dropzone.forElement("#supportingDocumentZone2").destroy();
+            }
+            if (Dropzone.forElement("#supportingDocumentZone3")) {
+                Dropzone.forElement("#supportingDocumentZone3").destroy();
+            }
+            if (Dropzone.forElement("#supportingDocumentZone4")) {
+                Dropzone.forElement("#supportingDocumentZone4").destroy();
+            }
+            if (Dropzone.forElement("#supportingDocumentZone5")) {
+                Dropzone.forElement("#supportingDocumentZone5").destroy();
+            }
+
+            scope.setUpRequiredDocuments(documentId);
         },
         error: function (xhr, options, error) {
 

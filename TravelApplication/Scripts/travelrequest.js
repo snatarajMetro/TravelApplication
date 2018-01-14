@@ -454,8 +454,6 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
     //set fileupload section
     $scope.loadFileUpload2 = function (travelRequestId) {
 
-       
-
         $.get('/uitemplates/uploadandsubmit.html')
         .done(function (data) {
             $('#fileuploadtemplate').html($compile($(data).html())($scope));
@@ -466,7 +464,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             }
             $scope.$apply();
             
-            setUpRequiredDocuments();
+            $scope.setUpRequiredDocuments();
         });
 
         // load supporting document grid
@@ -482,7 +480,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         });
     }
 
-    function setUpRequiredDocuments() {
+    $scope.setUpRequiredDocuments = function (documentId) {
 
         // Get Required Documents
         var requiredDocuments = [
@@ -494,7 +492,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             {
                 "documentNumber": 2,
                 "documentName": "Document2",
-                "fileName": ""
+                "fileName": (documentId == 2) ? "dasdsa" : ""
             },
             {
                 "documentNumber": 3,
@@ -527,7 +525,26 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 $("#uploaddocumenttext" + documentNumber).html("File has been uploaded");
                 $("#uploaddocumenticon" + documentNumber).show();
 
+                // set up empty dropzone object
+                $("#supportingDocumentZone" + documentNumber).dropzone({
+                    url: "api/documents/filesupload"
+                });
+
+                Dropzone.forElement("#supportingDocumentZone" + documentNumber).removeEventListeners();
+
             } else {
+
+                $("#supportingDocumentZone" + documentNumber + " .dz-message")
+                    .css("background", "white");
+
+                if (documentNumber != 5) {
+                    $("#uploaddocumenttext" + documentNumber).html("Click here to<br /> upload document " + documentNumber);
+                } else {
+                    $("#uploaddocumenttext" + documentNumber).html("Click here to<br /> upload other documents");
+                }
+
+                $("#uploaddocumenticon" + documentNumber).hide();
+
                 // Add upload listners
                 setUpDropzone(documentNumber);
             }
@@ -577,7 +594,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
                     // reload supporting document grid
                     $scope.loadSupportingDocuments(travelRequestId);
-                });
+                });     
             },
             success: function (file, response) {
                 file.previewElement.classList.add("dz-success");
@@ -828,7 +845,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             {
                 field: 'FileName',
                 displayName: 'File Name',
-                width: '350'
+                width: '420'
             },
             {
                 field: 'UploadDateTime',
