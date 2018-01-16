@@ -69,7 +69,7 @@ namespace TravelApplication.DAL.Repositories
                 throw new Exception("Couldn't save file name to database");
             }
         }
-        public List<SupportingDocument> GetAllDocumentsByTravelId(int travelRequestId, int badgeNumber)
+        public List<SupportingDocument> GetAllDocumentsByTravelId(string travelRequestId, int badgeNumber)
         {
             List<SupportingDocument> result = new List<SupportingDocument>();
             using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
@@ -104,28 +104,34 @@ namespace TravelApplication.DAL.Repositories
             }
         }
 
-        public List<RequiredDocuments> GetAllRequiredDocumentsByTravelId(int travelRequestId, int badgeNumber)
+        public List<RequiredDocuments> GetAllRequiredDocumentsByTravelId(string travelRequestId, int badgeNumber)
         {
             List<RequiredDocuments> result = new List<RequiredDocuments>();
             using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
             {
-                string query = string.Format("Select TRAVELREQUESTID, FILENAME, DOCUMENTNUMBER from Travel_Uploads where TRAVELREQUESTID = {0} and Requiredorder is not null " , travelRequestId );
+
+                for (int i = 0; i < 5; i++)
+                {
+                    result.Add(new RequiredDocuments()
+                    {
+                        DocumentNumber = i+1,
+                        TravelRequestId = travelRequestId,
+                        FileName = string.Empty,
+                        DocumentName = string.Empty
+
+                    });
+                }
+                string query = string.Format("Select TRAVELREQUESTID, FILENAME, REQUIREDORDER from Travel_Uploads where TRAVELREQUESTID = {0} and Requiredorder is not null ", travelRequestId );
                 OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
                 command.CommandText = query;
                 DbDataReader dataReader = command.ExecuteReader();
+
 
                 if (dataReader != null)
                 {
                     while (dataReader.Read())
                     {
-                        result.Add(new RequiredDocuments()
-                        {
-                            TravelRequestId = dataReader["TRAVELREQUESTID"].ToString(),
-                            FileName = dataReader["FILENAME"].ToString(),
-                            DocumentNumber = Convert.ToInt32(dataReader["REQUIREDORDER"])
-                            
-                        }
-                        );
+                        result.FirstOrDefault(p => p.DocumentNumber == Convert.ToInt32(dataReader["REQUIREDORDER"])).FileName = dataReader["FILENAME"].ToString();
                     }
                 }
 

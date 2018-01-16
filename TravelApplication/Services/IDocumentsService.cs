@@ -11,8 +11,8 @@ namespace TravelApplication.Services
     {
         void UploadToSharePoint(int travelRequestId, SharePointUpload sharePointUploadRequest);
         void UploadRequiredFileToSharePoint(int travelRequestId, SharePointUpload sharePointUploadRequest, int requiredFileOrder);
-        List<SupportingDocument> GetAllDocumentsByTravelId(int travelRequestId, int badgeNumber);
-        List<RequiredDocuments> GetAllRequiredDocumentsByTravelId(int travelRequestId, int badgeNumber);
+        List<SupportingDocument> GetAllDocumentsByTravelId(string travelRequestId, int badgeNumber);
+        List<RequiredDocuments> GetAllRequiredDocumentsByTravelId(string travelRequestId, int badgeNumber);
 
         void DeleteFilesByTravelId(int travelRequestId, int id);
     }
