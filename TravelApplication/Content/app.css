@@ -2439,5 +2439,6 @@ div.adminrejectactioncontainer {
 
 .uploaddocumenttitle{
     clear:both;
-    margin-left:50px;
+    margin-left:2px;
+    text-align: center;
 }
