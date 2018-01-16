@@ -244,7 +244,7 @@ namespace TravelApplication.Controllers.WebAPI
 
         [HttpGet]
         [Route("api/documents/supportingdocuments")]
-        public HttpResponseMessage SupportingDocuments(int travelRequestId, int badgeNumber)
+        public HttpResponseMessage SupportingDocuments(string travelRequestId, int badgeNumber)
         {
             HttpResponseMessage response = null;
 
@@ -268,7 +268,7 @@ namespace TravelApplication.Controllers.WebAPI
 
         [HttpGet]
         [Route("api/documents/requireddocuments")]
-        public HttpResponseMessage RequiredDocuments(int travelRequestId, int badgeNumber)
+        public HttpResponseMessage RequiredDocuments(string travelRequestId, int badgeNumber)
         {
             HttpResponseMessage response = null;
 

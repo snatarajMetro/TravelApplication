@@ -25,10 +25,10 @@ namespace TravelApplication.Services
 
                 documentsRepository.UploadFileInfo(travelRequestId, sharePointUploadRequest.documentName);
             }
-            catch (Exception)
+            catch (Exception ex )
             {
 
-                throw new Exception("Unable to upload the document");
+                throw new Exception("Unable to upload the document" + ex.Message);
             }
         }
 
@@ -46,38 +46,38 @@ namespace TravelApplication.Services
 
                 documentsRepository.UploadRequiredFileInfo(travelRequestId, sharePointUploadRequest.documentName, requiredFileOrder);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw new Exception("Unable to upload the document");
+                throw new Exception("Unable to upload the document" + ex.Message);
             }
         }
 
-        public List<SupportingDocument> GetAllDocumentsByTravelId(int travelRequestId, int badgeNumber)
+        public List<SupportingDocument> GetAllDocumentsByTravelId(string travelRequestId, int badgeNumber)
         {
             try
             {
                 var result = documentsRepository.GetAllDocumentsByTravelId(travelRequestId, badgeNumber);
                 return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw new Exception("Unable to get all uploaded documents");
+                throw new Exception("Unable to get all uploaded documents" + ex.Message);
             }
 
         }
-        public List<RequiredDocuments> GetAllRequiredDocumentsByTravelId(int travelRequestId, int badgeNumber)
+        public List<RequiredDocuments> GetAllRequiredDocumentsByTravelId(string travelRequestId, int badgeNumber)
         {
             try
             {
                 var result = documentsRepository.GetAllRequiredDocumentsByTravelId(travelRequestId, badgeNumber);
                 return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw new Exception("Unable to get all uploaded documents");
+                throw new Exception("Unable to get all uploaded documents :" + ex.Message);
             }
 
         }
