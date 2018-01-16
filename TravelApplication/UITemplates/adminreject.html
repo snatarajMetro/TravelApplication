@@ -33,7 +33,7 @@
                                 <div style="float:left;" class="approvaltitle"><span>Department Head</span>&nbsp;<sup class="required">*</sup></div>
                                 <div ng-app="travelApp" ng-controller="travelAppCtrl">
                                     <div style="float:left;">
-                                        <select class="inputdropdown submitUser" id="ddlDepartmentHead" name="ddlDepartmentHead"
+                                        <select class="inputdropdown submitUser" id="ddlDepartmentHead2" name="ddlDepartmentHead2"
                                                 ng-model="ddlDepartmentHead"
                                                 ng-change="displayOther('otherForDepartmentHead', 'txtDepartmentHeadBadgeNumber', 'txtDepartmentHeadName', ddlDepartmentHead)"
                                                 ng-options="department.Name for department in DepartmentHeads track by department.BadgeNumber"></select>
@@ -51,7 +51,7 @@
                                     <div style="float:left;" class="approvaltitle"><span>Executive Officer</span></div>
                                     <div ng-app="travelApp" ng-controller="travelAppCtrl">
                                         <div>
-                                            <select class="inputdropdown submitUser" id="ddlExecutiveOfficer" name="ddlExecutiveOfficer"
+                                            <select class="inputdropdown submitUser" id="ddlExecutiveOfficer2" name="ddlExecutiveOfficer2"
                                                     ng-model="ddlExecutiveOfficer"
                                                     ng-change="displayOther('otherForExecutiveOfficer', 'txtExecutiveOfficerBadgeNumber', 'txtExecutiveOfficerName', ddlExecutiveOfficer)"
                                                     ng-options="officer.Name for officer in ExecutiveOfficers track by officer.BadgeNumber"></select>
@@ -68,7 +68,7 @@
                                     <div style="float:left;" class="approvaltitle"><span>CEO (For International)</span></div>
                                     <div ng-app="travelApp" ng-controller="travelAppCtrl">
                                         <div>
-                                            <select class="inputdropdown submitUser" id="ddlCEOForInternational" name="ddlCEOForInternational"
+                                            <select class="inputdropdown submitUser" id="ddlCEOForInternational2" name="ddlCEOForInternational2"
                                                     ng-model="ddlCEOForInternational"
                                                     ng-change="displayOther('otherForCEOForInternational', 'txtCEOForInternationalBadgeNumber', 'txtCEOForInternationalName', ddlCEOForInternational)"
                                                     ng-options="officer.Name for officer in CEOsForInternational track by officer.BadgeNumber"></select>
@@ -85,7 +85,7 @@
                                     <div style="float:left;" class="approvaltitle"><span>CEO (For APTA/CTA conference)</span></div>
                                     <div ng-app="travelApp" ng-controller="travelAppCtrl">
                                         <div>
-                                            <select class="inputdropdown submitUser" id="ddlCEOForAPTA" name="ddlCEOForAPTA"
+                                            <select class="inputdropdown submitUser" id="ddlCEOForAPTA2" name="ddlCEOForAPTA2"
                                                     ng-model="ddlCEOForAPTA"
                                                     ng-change="displayOther('otherForCEOForAPTA', 'txtCEOForAPTABadgeNumber', 'txtCEOForAPTAName', ddlCEOForAPTA)"
                                                     ng-options="officer.Name for officer in CEOsForAPTA track by officer.BadgeNumber"></select>
@@ -103,7 +103,7 @@
                                 <div style="float:left;" class="approvaltitle"><span>Travel Program Administrator</span><sup class="required">*</sup></div>
                                 <div ng-app="travelApp" ng-controller="travelAppCtrl">
                                     <div>
-                                        <select class="inputdropdown submitUser" id="ddlTravelCoordinator" name="ddlTravelCoordinator"
+                                        <select class="inputdropdown submitUser" id="ddlTravelCoordinator2" name="ddlTravelCoordinator2"
                                                 ng-model="ddlTravelCoordinator"
                                                 ng-change="displayOther('otherForTravelCoordinator', 'txtTravelCoordinatorBadgeNumber', 'txtTravelCoordinatorName', ddlTravelCoordinator)"
                                                 ng-options="officer.Name for officer in TravelCoordinators track by officer.BadgeNumber"></select>

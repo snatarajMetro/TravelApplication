@@ -809,11 +809,11 @@ function reject() {
 
     // Get approvers when an admin rejects
     if (selectedRoleId == 4) {
-        departmentHeadBadgeNumber = $("#ddlDepartmentHead option:selected").val();
-        executiveOfficerBadgeNumber = $("#ddlExecutiveOfficer option:selected").val();
-        ceoForInternationalBadgeNumber = $("#ddlCEOForInternational option:selected").val();
-        ceoForAPTABadgeNumber = $("#ddlCEOForAPTA option:selected").val();
-        travelCoordinatorBadgeNumber = $("#ddlTravelCoordinator option:selected").val();
+        departmentHeadBadgeNumber = $("#ddlDepartmentHead2 option:selected").val();
+        executiveOfficerBadgeNumber = $("#ddlExecutiveOfficer2 option:selected").val();
+        ceoForInternationalBadgeNumber = $("#ddlCEOForInternational2 option:selected").val();
+        ceoForAPTABadgeNumber = $("#ddlCEOForAPTA2 option:selected").val();
+        travelCoordinatorBadgeNumber = $("#ddlTravelCoordinator2 option:selected").val();
     }
 
     $.ajax({
