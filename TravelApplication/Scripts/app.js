@@ -939,7 +939,7 @@ function deletedocument(container) {
                 Dropzone.forElement("#supportingDocumentZone5").destroy();
             }
 
-            scope.setUpRequiredDocuments(documentId);
+            scope.setUpRequiredDocuments(travelRequestId);
         },
         error: function (xhr, options, error) {
 

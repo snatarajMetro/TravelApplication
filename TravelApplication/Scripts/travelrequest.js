@@ -464,7 +464,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             }
             $scope.$apply();
             
-            $scope.setUpRequiredDocuments();
+            $scope.setUpRequiredDocuments(travelRequestId);
         });
 
         // load supporting document grid
@@ -480,75 +480,55 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         });
     }
 
-    $scope.setUpRequiredDocuments = function (documentId) {
+    $scope.setUpRequiredDocuments = function (travelRequestId) {
+
+        var url = "api/documents/requireddocuments?travelRequestId=" + travelRequestId + "&badgeNumber=" + $('#travelRequestBadgeNumber').text();
 
         // Get Required Documents
-        var requiredDocuments = [
-            {
-                "documentNumber": 1,
-                "documentName": "Document1",
-                "fileName": ""
-            },
-            {
-                "documentNumber": 2,
-                "documentName": "Document2",
-                "fileName": (documentId == 2) ? "dasdsa" : ""
-            },
-            {
-                "documentNumber": 3,
-                "documentName": "Document3",
-                "fileName": ""
-            },
-            {
-                "documentNumber": 4,
-                "documentName": "Document4",
-                "fileName": ""
-            },
-            {
-                "documentNumber": 5,
-                "documentName": "",
-                "fileName": ""
-            }
-        ];
+        $.get(url)
+        .done(function (data) {
 
-        for (var index = 0; index < requiredDocuments.length; index++) {
+            var requiredDocuments = JSON.parse(data);
+            
+            for (var index = 0; index < requiredDocuments.length; index++) {
 
-            var documentNumber = requiredDocuments[index].documentNumber;
-            var fileName = requiredDocuments[index].fileName;
+                var documentNumber = requiredDocuments[index].DocumentNumber;
+                var fileName = requiredDocuments[index].FileName;
 
-            if (fileName != "" && documentNumber != 5) {
+                if (fileName != "" && documentNumber != 5) {
 
-                // display message about file already uplaoded
-                $("#supportingDocumentZone" + documentNumber + " .dz-message")
-                .css("background", "lightgray")
-                .css("height", "30px");
-                $("#uploaddocumenttext" + documentNumber).html("File has been uploaded");
-                $("#uploaddocumenticon" + documentNumber).show();
+                    // display message about file already uploaded
+                    $("#supportingDocumentZone" + documentNumber + " .dz-message")
+                    .css("background", "lightgray")
+                    .css("height", "30px");
+                    $("#uploaddocumenttext" + documentNumber).html("File has been uploaded");
+                    $("#uploaddocumenticon" + documentNumber).show();
 
-                // set up empty dropzone object
-                $("#supportingDocumentZone" + documentNumber).dropzone({
-                    url: "api/documents/filesupload"
-                });
+                    // set up empty dropzone object
+                    $("#supportingDocumentZone" + documentNumber).dropzone({
+                        url: "api/documents/filesupload"
+                    });
 
-                Dropzone.forElement("#supportingDocumentZone" + documentNumber).removeEventListeners();
+                    Dropzone.forElement("#supportingDocumentZone" + documentNumber).removeEventListeners();
 
-            } else {
-
-                $("#supportingDocumentZone" + documentNumber + " .dz-message")
-                    .css("background", "white");
-
-                if (documentNumber != 5) {
-                    $("#uploaddocumenttext" + documentNumber).html("Click here to<br /> upload document " + documentNumber);
                 } else {
-                    $("#uploaddocumenttext" + documentNumber).html("Click here to<br /> upload other documents");
+
+                    $("#supportingDocumentZone" + documentNumber + " .dz-message")
+                        .css("background", "white");
+
+                    if (documentNumber != 5) {
+                        $("#uploaddocumenttext" + documentNumber).html("Click here to<br /> upload document " + documentNumber);
+                    } else {
+                        $("#uploaddocumenttext" + documentNumber).html("Click here to<br /> upload other documents");
+                    }
+
+                    $("#uploaddocumenticon" + documentNumber).hide();
+
+                    // Add upload listners
+                    setUpDropzone(documentNumber);
                 }
-
-                $("#uploaddocumenticon" + documentNumber).hide();
-
-                // Add upload listners
-                setUpDropzone(documentNumber);
             }
-        }
+        });
     }
 
     function setUpDropzone(index) {
