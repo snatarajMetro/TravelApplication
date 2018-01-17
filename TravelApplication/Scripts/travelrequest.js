@@ -457,11 +457,6 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         $.get('/uitemplates/uploadandsubmit.html')
         .done(function (data) {
             $('#fileuploadtemplate').html($compile($(data).html())($scope));
-
-            // Change the text of submit button to "Close" when "Admin" logs in
-            if ($("#selectedRoleId").text() == "4") {
-                $("#btnSubmit").val("Close");
-            }
             $scope.$apply();
             
             $scope.setUpRequiredDocuments(travelRequestId);
@@ -1094,6 +1089,11 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             else if (parseInt(data.TravelRequestSubmitDetail.DepartmentHeadBadgeNumber) > 0) {
                 $("#ddlDepartmentHead").val(parseInt(data.TravelRequestSubmitDetail.DepartmentHeadBadgeNumber));
             }
+            else {
+                if (data.TravelRequestSubmitDetail.RejectedTravelRequest) {
+                    $(" .departmenthead").hide();
+                }
+            }
 
             // Set Executive Officer
             if (parseInt(data.TravelRequestSubmitDetail.ExecutiveOfficerBadgeNumber) == -1) {
@@ -1105,6 +1105,11 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             }
             else if (parseInt(data.TravelRequestSubmitDetail.ExecutiveOfficerBadgeNumber) > 0) {
                 $("#ddlExecutiveOfficer").val(parseInt(data.TravelRequestSubmitDetail.ExecutiveOfficerBadgeNumber));
+            }
+            else {
+                if (data.TravelRequestSubmitDetail.RejectedTravelRequest) {
+                    $(" .executiveofficer").hide();
+                }
             }
 
             // Set CEO International
@@ -1118,6 +1123,11 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             else if (parseInt(data.TravelRequestSubmitDetail.CEOInternationalBadgeNumber) > 0) {
                 $("#ddlCEOForInternational").val(parseInt(data.TravelRequestSubmitDetail.CEOInternationalBadgeNumber));
             }
+            else {
+                if (data.TravelRequestSubmitDetail.RejectedTravelRequest) {
+                    $(" .ceoforinternational").hide();
+                }
+            }
 
             // Set CEO APTA/CTA
             if (parseInt(data.TravelRequestSubmitDetail.CEOAPTABadgeNumber) == -1) {
@@ -1130,18 +1140,10 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             else if (parseInt(data.TravelRequestSubmitDetail.CEOAPTABadgeNumber) > 0) {
                 $("#ddlCEOForAPTA").val(parseInt(data.TravelRequestSubmitDetail.CEOAPTABadgeNumber));
             }
-
-
-            if (data.TravelRequestSubmitDetail.RejectedTravelRequest) {
-
-                // Reset
-                $("#ddlExecutiveOfficer").val("?");
-                $("#ddlCEOForInternational").val("?");
-                $("#ddlCEOForAPTA").val("?");
-
-                // Hide following approvers when editing a rejected travel request
-                // Executive Officer, CEO International, CEO APTA/CTA
-                $("#additionalApprovers").hide();
+            else {
+                if (data.TravelRequestSubmitDetail.RejectedTravelRequest) {
+                    $(" .ceoforaptacta").hide();
+                }
             }
 
             // Set Travel Coordinator
@@ -1154,6 +1156,11 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             }
             else if (parseInt(data.TravelRequestSubmitDetail.TravelCoordinatorBadgeNumber) > 0) {
                 $("#ddlTravelCoordinator").val(parseInt(data.TravelRequestSubmitDetail.TravelCoordinatorBadgeNumber));
+            }
+            else {
+                if (data.TravelRequestSubmitDetail.RejectedTravelRequest) {
+                    $(" .travelcoordinator").hide();
+                }
             }
 
             // Set Agree
@@ -1888,14 +1895,6 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         // Get selected approvers if admin role
         if (selectedRoleId == 4) {
             url = "/uitemplates/adminreject.html";
-
-            //selectedApprovers = {
-            //    "DepartmentHead": 1002,
-            //    "ExecutiveOfficer": 0,
-            //    "CEOForInternational": 1003,
-            //    "CEOForAPTA": 1001,
-            //    "TravelCoordinator": 1234,
-            //};
         }
 
         $.get(url)
