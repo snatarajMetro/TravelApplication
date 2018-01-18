@@ -17,9 +17,9 @@ namespace TravelApplication.Services
             return result;
         }
 
-        public bool Reject(int badgeNumber, string travelRequestId, string comments, string reason)
+        public bool Reject(ApproveRequest approveRequest)
         {
-            var result = travelRequestRepo.Reject(badgeNumber, travelRequestId, comments, reason);
+            var result = travelRequestRepo.Reject(approveRequest);
             return result;
         }
 

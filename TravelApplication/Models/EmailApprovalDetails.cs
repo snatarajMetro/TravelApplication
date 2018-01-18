@@ -5,7 +5,7 @@ using System.Web;
 
 namespace TravelApplication.Models
 {
-    public class EmailApprovalDetails
+    public class EmailApprovalDetails : ApproveRequest
     {
         public string Comments { get; set; }
 

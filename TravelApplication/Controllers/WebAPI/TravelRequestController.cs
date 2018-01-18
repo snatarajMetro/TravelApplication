@@ -145,7 +145,7 @@ namespace TravelApplication.Controllers.WebAPI
             try
             {
                 // TODO: Implement Reject API. Return true/false
-                var result = travelRequestService.Reject(approveRequest.ApproverBadgeNumber, approveRequest.TravelRequestId, approveRequest.Comments, approveRequest.RejectReason);
+                var result = travelRequestService.Reject(approveRequest);
 
                 response = Request.CreateResponse(HttpStatusCode.OK, result);
             }

@@ -18,5 +18,11 @@ namespace TravelApplication.Models
         public string CEOForInternationalBadgeNumber { get; set; }
         public string CEOForAPTABadgeNumber { get; set; }
         public string TravelCoordinatorBadgeNumber { get; set; }
-    }
+        public string DepartmentHeadName { get; set; }
+        public string ExecutiveOfficerName { get; set; }
+        public string CEOForInternationalName { get; set; }
+        public string CEOForAPTAName { get; set; }
+        public string TravelCoordinatorName { get; set; }
+
+}
 }
