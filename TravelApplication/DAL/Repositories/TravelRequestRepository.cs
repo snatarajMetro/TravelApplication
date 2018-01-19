@@ -628,24 +628,34 @@ namespace TravelApplication.Services
                     cmd1.Dispose();
 
 
-                    //OracleCommand cmd2 = new OracleCommand();
-                    //cmd2.Connection = (OracleConnection)dbConn;
-                    //cmd2.CommandText = @"INSERT INTO TRAVELREQUEST_APPROVAL (                                                  
-                    //                                        TRAVELREQUESTID,
-                    //                                        BADGENUMBER,
-                    //                                        APPROVERNAME,
-                    //                                        APPROVALSTATUS,
-                    //                                        APPROVALORDER
-                    //                                    )
-                    //                                    VALUES
-                    //                                        (:p1,:p2,:p3,:p4,:p5)";
-                    //cmd2.Parameters.Add(new OracleParameter("p1", submitTravelRequestData.TravelRequestId));
-                    //cmd2.Parameters.Add(new OracleParameter("p2", item.BadgeId));
-                    //cmd2.Parameters.Add(new OracleParameter("p3", item.Name));
-                    //cmd2.Parameters.Add(new OracleParameter("p4", Common.ApprovalStatus.Pending.ToString()));
-                    //cmd2.Parameters.Add(new OracleParameter("p5", count));
-                    //var rowsUpdated2 = cmd2.ExecuteNonQuery();
-                    //cmd2.Dispose();
+                    OracleCommand cmd3 = new OracleCommand();
+                    cmd3.Connection = (OracleConnection)dbConn;
+                    cmd3.CommandText = string.Format(@"Delete from TRAVELREQUEST_APPROVAL where TravelRequestId = {0}", approveRequest.TravelRequestId);
+                    cmd3.ExecuteNonQuery();
+
+                    if ((!string.IsNullOrEmpty(approveRequest.DepartmentHeadBadgeNumber)) && approveRequest.DepartmentHeadBadgeNumber != "?")
+                    {               
+                        InsertApprovalList(approveRequest.TravelRequestId, approveRequest.DepartmentHeadBadgeNumber, approveRequest.DepartmentHeadName, 1);
+                    }
+
+                    if ((!string.IsNullOrEmpty(approveRequest.ExecutiveOfficerBadgeNumber)) && approveRequest.ExecutiveOfficerBadgeNumber != "?")
+                    {
+                        InsertApprovalList(approveRequest.TravelRequestId, approveRequest.ExecutiveOfficerBadgeNumber, approveRequest.ExecutiveOfficerName, 2);
+                    }
+
+                    if ((!string.IsNullOrEmpty(approveRequest.CEOForInternationalBadgeNumber)) && approveRequest.CEOForInternationalBadgeNumber != "?")
+                    {
+                        InsertApprovalList(approveRequest.TravelRequestId, approveRequest.CEOForInternationalBadgeNumber, approveRequest.CEOForInternationalName, 3);
+                    }
+
+                    if ((!string.IsNullOrEmpty(approveRequest.CEOForAPTABadgeNumber)) && approveRequest.CEOForAPTABadgeNumber != "?")
+                    {
+                        InsertApprovalList(approveRequest.TravelRequestId, approveRequest.CEOForAPTABadgeNumber, approveRequest.CEOForAPTAName, 4);
+                    }
+                    if ((!string.IsNullOrEmpty(approveRequest.TravelCoordinatorBadgeNumber)) && approveRequest.TravelCoordinatorBadgeNumber != "?")
+                    {
+                        InsertApprovalList(approveRequest.TravelRequestId, approveRequest.TravelCoordinatorBadgeNumber, approveRequest.TravelCoordinatorName, 5);
+                    }
 
                     dbConn.Close();
                     dbConn.Dispose();
@@ -664,6 +674,28 @@ namespace TravelApplication.Services
                 LogMessage.Log("Reject : " + ex.Message);
                 throw;
             }
+        }
+
+        private void InsertApprovalList(string travelRequestId, string badgeNumber, string name, int count)
+        {
+            OracleCommand cmd2 = new OracleCommand();
+            cmd2.Connection = (OracleConnection)dbConn;
+            cmd2.CommandText = @"INSERT INTO TRAVELREQUEST_APPROVAL (                                                  
+                                                            TRAVELREQUESTID,
+                                                            BADGENUMBER,
+                                                            APPROVERNAME,
+                                                            APPROVALSTATUS,
+                                                            APPROVALORDER
+                                                        )
+                                                        VALUES
+                                                            (:p1,:p2,:p3,:p4,:p5)";
+            cmd2.Parameters.Add(new OracleParameter("p1", travelRequestId));
+            cmd2.Parameters.Add(new OracleParameter("p2", badgeNumber));
+            cmd2.Parameters.Add(new OracleParameter("p3", name));
+            cmd2.Parameters.Add(new OracleParameter("p4", Common.ApprovalStatus.Pending.ToString()));
+            cmd2.Parameters.Add(new OracleParameter("p5", count));
+            var rowsUpdated2 = cmd2.ExecuteNonQuery();
+            cmd2.Dispose();
         }
 
         public TravelRequestInputResponse SaveTravelRequestInput(TravelRequestInput travelRequest)
@@ -1150,22 +1182,22 @@ namespace TravelApplication.Services
                                 case 1:
                                    
                                     travelRequestSubmitDetail.DepartmentHeadBadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]);
-                                    travelRequestSubmitDetail.DepartmentHeadOtherBadgeNumber = Convert.ToInt32(dataReader["APPROVEROTHERBADGENUMBER"]);
+                                    travelRequestSubmitDetail.DepartmentHeadOtherBadgeNumber = string.IsNullOrEmpty(dataReader["APPROVEROTHERBADGENUMBER"].ToString()) ? 0 : Convert.ToInt32(dataReader["APPROVEROTHERBADGENUMBER"]);
                                     travelRequestSubmitDetail.DepartmentHeadOtherName = dataReader["APPROVERNAME"].ToString();
                                     break;
                                 case 2:
                                     travelRequestSubmitDetail.ExecutiveOfficerBadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]);
-                                    travelRequestSubmitDetail.ExecutiveOfficerOtherBadgeNumber = Convert.ToInt32(dataReader["APPROVEROTHERBADGENUMBER"]);
+                                    travelRequestSubmitDetail.ExecutiveOfficerOtherBadgeNumber = string.IsNullOrEmpty(dataReader["APPROVEROTHERBADGENUMBER"].ToString()) ? 0 : Convert.ToInt32(dataReader["APPROVEROTHERBADGENUMBER"]);
                                     travelRequestSubmitDetail.ExecutiveOfficerOtherName = dataReader["APPROVERNAME"].ToString();
                                     break;
                                 case 3:
                                     travelRequestSubmitDetail.CEOInternationalBadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]);
-                                    travelRequestSubmitDetail.CEOInternationalOtherBadgeNumber = Convert.ToInt32(dataReader["APPROVEROTHERBADGENUMBER"]);
+                                    travelRequestSubmitDetail.CEOInternationalOtherBadgeNumber = string.IsNullOrEmpty(dataReader["APPROVEROTHERBADGENUMBER"].ToString()) ? 0 : Convert.ToInt32(dataReader["APPROVEROTHERBADGENUMBER"]);
                                     travelRequestSubmitDetail.CEOAPTAOtherName = dataReader["APPROVERNAME"].ToString();
                                     break;
                                 case 4:
                                     travelRequestSubmitDetail.CEOAPTABadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]);
-                                    travelRequestSubmitDetail.CEOAPTAOtherBadgeNumber = Convert.ToInt32(dataReader["APPROVEROTHERBADGENUMBER"]);
+                                    travelRequestSubmitDetail.CEOAPTAOtherBadgeNumber = string.IsNullOrEmpty(dataReader["APPROVEROTHERBADGENUMBER"].ToString()) ? 0 : Convert.ToInt32(dataReader["APPROVEROTHERBADGENUMBER"]);
                                     travelRequestSubmitDetail.CEOAPTAOtherName = dataReader["APPROVERNAME"].ToString();
                                     break;
                                 case 5:

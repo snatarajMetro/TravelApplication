@@ -217,7 +217,7 @@ namespace TravelApplication.DAL.Repositories
                     cmd2.Connection = (OracleConnection)dbConn;
                     cmd2.CommandText = string.Format(@"Delete from TRAVELREQUEST_APPROVAL where TravelRequestId = {0}", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
                     cmd2.ExecuteNonQuery();
-                    if (submitTravelRequest.HeirarchichalApprovalRequest.SignedInBadgeNumber != submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestBadgeNumber)
+                    if ((submitTravelRequest.HeirarchichalApprovalRequest.SignedInBadgeNumber != 85163) && (submitTravelRequest.HeirarchichalApprovalRequest.SignedInBadgeNumber != submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestBadgeNumber))
                     {
                         // submit to approval 
                         isSubmitterRequesting = true;
