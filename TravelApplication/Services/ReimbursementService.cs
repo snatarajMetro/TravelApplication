@@ -59,5 +59,11 @@ namespace TravelApplication.Services
             var result = reimbursementRepository.Reject(badgeNumber, travelRequestId, comments);
             return result;
         }
+
+        public TravelRequestSubmitDetailResponse GetSubmitDetails(int travelRequestId)
+        {
+            TravelRequestSubmitDetailResponse result = reimbursementRepository.GetSubmitDetails(travelRequestId);
+            return result;
+        }
     }
 }

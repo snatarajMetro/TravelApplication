@@ -15,5 +15,7 @@ namespace TravelApplication.Services
         ReimbursementInput GetReimbursementDetails(string travelRequestId);
         bool Approve(int badgeNumber, string travelRequestId, string comments);
         bool Reject(int badgeNumber, string travelRequestId, string comments);
+
+        TravelRequestSubmitDetailResponse GetSubmitDetails(int travelRequestId);
     }
 }

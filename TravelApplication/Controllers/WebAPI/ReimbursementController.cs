@@ -100,6 +100,26 @@ namespace TravelApplication.Controllers.WebAPI
         }
 
         [HttpGet]
+        [Route("api/reimburse/submitdetails/{travelRequestId}")]
+        public HttpResponseMessage GetSubmitDetails(int travelRequestId)
+        {
+            HttpResponseMessage response = null;
+            TravelRequestSubmitDetailResponse result = null;
+            try
+            {
+                result = reimbursementService.GetSubmitDetails(travelRequestId);
+
+                response = Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                LogMessage.Log("GetSubmitDetails:" + ex.Message);
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+            return response;
+        }
+
+        [HttpGet]
         [Route("api/reimburse/{travelRequestId}")]
         public HttpResponseMessage GetReimbursementDetails(string travelRequestId)
         {
