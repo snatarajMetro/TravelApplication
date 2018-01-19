@@ -800,6 +800,7 @@ function reject() {
     var ceoForInternationalBadgeNumber = "";
     var ceoForAPTABadgeNumber = "";
     var travelCoordinatorBadgeNumber = "";
+    var canSubmit = false;
 
     if (action) {
         if (action == "travelreimbursement") {
@@ -814,62 +815,96 @@ function reject() {
         ceoForInternationalBadgeNumber = $("#ddlCEOForInternational2 option:selected").val();
         ceoForAPTABadgeNumber = $("#ddlCEOForAPTA2 option:selected").val();
         travelCoordinatorBadgeNumber = $("#ddlTravelCoordinator2 option:selected").val();
-    }
 
-    $.ajax({
-        type: "POST",
-        url: url,
-        data: JSON.stringify({
-            "TravelRequestId": travelRequestId,
-            "ApproverBadgeNumber": badgeNumber,
-            "Comments": comments,
-            "RejectReason": rejectReason,
-            "DepartmentHeadBadgeNumber": departmentHeadBadgeNumber,
-            "DepartmentHeadName": $("#ddlDepartmentHead2 option:selected").text(),
-            "ExecutiveOfficerBadgeNumber": executiveOfficerBadgeNumber,
-            "ExecutiveOfficerName": $("#ddlExecutiveOfficer2 option:selected").text(),
-            "CEOForInternationalBadgeNumber": ceoForInternationalBadgeNumber,
-            "CEOForInternationalName": $("#ddlCEOForInternational2 option:selected").text(),
-            "CEOForAPTABadgeNumber": ceoForAPTABadgeNumber,
-            "CEOForAPTAName": $("#ddlCEOForAPTA2 option:selected").text(),
-            "TravelCoordinatorBadgeNumber": travelCoordinatorBadgeNumber,
-            "TravelCoordinatorName": $("#ddlTravelCoordinator2 option:selected").text(),
-        }),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (data) {
+        // Reject Reason
+        if (rejectReason) {
+            canSubmit = true;
+        }
 
-            $('#travalAction').text('travelrequest');
-            $("#rejectsuccess").fadeIn("fast");
-            $('#rejectsuccessmessage').text('Travel request has been successfully rejected.');
+        // Department Head
+        //var departmentHeadBadgeNumber = $("#ddlDepartmentHead2 option:selected").val();
 
-            // fade out in 5 seconds
-            $("#rejectsuccess").fadeOut("slow");
+        //if (departmentHeadBadgeNumber && departmentHeadBadgeNumber != '?' && canSubmit) {
+        //    canSubmit = true;
+        //}
 
-            $("#rejecttemplate").fadeOut("slow");
+        // Travel Co-ordinator
+        var travelCoordinatorBadgeNumber = $("#ddlTravelCoordinator2 option:selected").val();
 
-            // refresh the existing request grid
-            var scope = angular.element('#existingtravelrequeststemplate').scope();
-            if (action == "travelreimbursement") {
-                scope.refreshExistingReimbursements();
-            } else {
-                scope.refreshExistingRequest();
-            }
+        if (travelCoordinatorBadgeNumber && travelCoordinatorBadgeNumber != '?') {
 
-        },
-        error: function (xhr, options, error) {
-
-            if (xhr.status == 500) {
-                var errorMessage = xhr.responseText;
-
-                $("#rejecterror").fadeIn("slow");
-                $('#rejecterrormessage').text(errorMessage);
-
-                // fade out in 5 seconds
-                $("#rejecterror").fadeOut(fadeOutTimeInMilliseconds);
+            if (travelCoordinatorBadgeNumber && canSubmit) {
+                canSubmit = true;
             }
         }
-    });
+        else {
+            canSubmit = false;
+        }
+    }
+
+    if (canSubmit) {
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: JSON.stringify({
+                "TravelRequestId": travelRequestId,
+                "ApproverBadgeNumber": badgeNumber,
+                "Comments": comments,
+                "RejectReason": rejectReason,
+                "DepartmentHeadBadgeNumber": departmentHeadBadgeNumber,
+                "DepartmentHeadName": $("#ddlDepartmentHead2 option:selected").text(),
+                "ExecutiveOfficerBadgeNumber": executiveOfficerBadgeNumber,
+                "ExecutiveOfficerName": $("#ddlExecutiveOfficer2 option:selected").text(),
+                "CEOForInternationalBadgeNumber": ceoForInternationalBadgeNumber,
+                "CEOForInternationalName": $("#ddlCEOForInternational2 option:selected").text(),
+                "CEOForAPTABadgeNumber": ceoForAPTABadgeNumber,
+                "CEOForAPTAName": $("#ddlCEOForAPTA2 option:selected").text(),
+                "TravelCoordinatorBadgeNumber": travelCoordinatorBadgeNumber,
+                "TravelCoordinatorName": $("#ddlTravelCoordinator2 option:selected").text(),
+            }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+
+                $('#travalAction').text('travelrequest');
+                $("#rejectsuccess").fadeIn("fast");
+                $('#rejectsuccessmessage').text('Travel request has been successfully rejected.');
+
+                // fade out in 5 seconds
+                $("#rejectsuccess").fadeOut("slow");
+
+                $("#rejecttemplate").fadeOut("slow");
+
+                // refresh the existing request grid
+                var scope = angular.element('#existingtravelrequeststemplate').scope();
+                if (action == "travelreimbursement") {
+                    scope.refreshExistingReimbursements();
+                } else {
+                    scope.refreshExistingRequest();
+                }
+
+            },
+            error: function (xhr, options, error) {
+
+                if (xhr.status == 500) {
+                    var errorMessage = xhr.responseText;
+
+                    $("#rejecterror").fadeIn("slow");
+                    $('#rejecterrormessage').text(errorMessage);
+
+                    // fade out in 5 seconds
+                    $("#rejecterror").fadeOut(fadeOutTimeInMilliseconds);
+                }
+            }
+        });
+    }
+    else {
+        $("#rejecterror").fadeIn("slow");
+        $('#rejecterrormessage').text("Some of the required fields are missing. Please try again.");
+
+        // fade out in 5 seconds
+        $("#rejecterror").fadeOut(fadeOutTimeInMilliseconds);
+    }
 }
 
 function closeapproveerror() {
