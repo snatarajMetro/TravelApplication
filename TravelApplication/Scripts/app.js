@@ -801,6 +801,7 @@ function reject() {
     var ceoForAPTABadgeNumber = "";
     var travelCoordinatorBadgeNumber = "";
     var canSubmit = false;
+    var travelRequestBadgeNumber = $('#travelRequestBadgeNumber').text();
 
     if (action) {
         if (action == "travelreimbursement") {
@@ -851,6 +852,7 @@ function reject() {
             data: JSON.stringify({
                 "TravelRequestId": travelRequestId,
                 "ApproverBadgeNumber": badgeNumber,
+                "TravelRequestBadgeNumber": travelRequestBadgeNumber,
                 "Comments": comments,
                 "RejectReason": rejectReason,
                 "DepartmentHeadBadgeNumber": departmentHeadBadgeNumber,
@@ -876,6 +878,8 @@ function reject() {
                 $("#rejectsuccess").fadeOut("slow");
 
                 $("#rejecttemplate").fadeOut("slow");
+
+                $('#travelRequestBadgeNumber').text(0);
 
                 // refresh the existing request grid
                 var scope = angular.element('#existingtravelrequeststemplate').scope();
@@ -927,12 +931,16 @@ function closerejectsuccess() {
 
 function showRejectSection(container) {
 
-    var travelRequestId = $(container).prop('alt');
+    //var travelRequestId = $(container).prop('alt');
+    var altObj = $(container).prop('alt');
+    var travelRequestId = altObj.split('|')[0];
+    var travelRequestBadgeNumber = altObj.split('|')[1];
+
     //var travelRequestId = 123456;
     var selectedRoleId = $("#selectedRoleId").text();
 
     var scope = angular.element('#rejecttemplate').scope();
-    scope.loadRejectAction(travelRequestId, selectedRoleId);
+    scope.loadRejectAction(travelRequestId, selectedRoleId, travelRequestBadgeNumber);
 
     $('#rejecttemplate').show();
 }
