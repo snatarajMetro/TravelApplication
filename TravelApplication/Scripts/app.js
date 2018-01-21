@@ -840,6 +840,8 @@ function reject() {
         else {
             canSubmit = false;
         }
+    } else {
+        canSubmit = true;
     }
 
     if (canSubmit) {
@@ -1368,6 +1370,7 @@ function savereimbursementdataentry() {
                 scope.loadFileUploadForReimbursement(travelRequestId);
                 scope.loadCommonApprovers($('#travelRequestBadgeNumber').text());
                 scope.loadTravelCoordinators();
+                scope.loadSubmitDetailsForReimbursement(travelRequestId);
 
                 $("#travelreimbursementtemplate").hide();
                 $("#fileuploadtemplate").show();
