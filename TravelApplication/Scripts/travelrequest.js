@@ -1078,6 +1078,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         $.get(url)
         .done(function (data) {
 
+
             // Set Department Head
             if (parseInt(data.TravelRequestSubmitDetail.DepartmentHeadBadgeNumber) == -1) {
 
@@ -1087,7 +1088,11 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 $("#txtDepartmentHeadName").val(data.TravelRequestSubmitDetail.DepartmentHeadOtherName);
             }
             else if (parseInt(data.TravelRequestSubmitDetail.DepartmentHeadBadgeNumber) > 0) {
+               
                 $("#ddlDepartmentHead").val(parseInt(data.TravelRequestSubmitDetail.DepartmentHeadBadgeNumber));
+                if (data.TravelRequestSubmitDetail.RejectedTravelRequest) {
+                    $('#ddlDepartmentHead').prop("disabled", true);
+                }
             }
             else {
                 if (data.TravelRequestSubmitDetail.RejectedTravelRequest) {
@@ -1105,6 +1110,9 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             }
             else if (parseInt(data.TravelRequestSubmitDetail.ExecutiveOfficerBadgeNumber) > 0) {
                 $("#ddlExecutiveOfficer").val(parseInt(data.TravelRequestSubmitDetail.ExecutiveOfficerBadgeNumber));
+                if (data.TravelRequestSubmitDetail.RejectedTravelRequest) {
+                    $('#ddlExecutiveOfficer').prop("disabled", true);
+                }
             }
             else {
                 if (data.TravelRequestSubmitDetail.RejectedTravelRequest) {
@@ -1122,6 +1130,9 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             }
             else if (parseInt(data.TravelRequestSubmitDetail.CEOInternationalBadgeNumber) > 0) {
                 $("#ddlCEOForInternational").val(parseInt(data.TravelRequestSubmitDetail.CEOInternationalBadgeNumber));
+                if (data.TravelRequestSubmitDetail.RejectedTravelRequest) {
+                    $('#ddlCEOForInternational').prop("disabled", true);
+                }
             }
             else {
                 if (data.TravelRequestSubmitDetail.RejectedTravelRequest) {
@@ -1139,6 +1150,9 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             }
             else if (parseInt(data.TravelRequestSubmitDetail.CEOAPTABadgeNumber) > 0) {
                 $("#ddlCEOForAPTA").val(parseInt(data.TravelRequestSubmitDetail.CEOAPTABadgeNumber));
+                if (data.TravelRequestSubmitDetail.RejectedTravelRequest) {
+                    $('#ddlCEOForAPTA').prop("disabled", true);
+                }
             }
             else {
                 if (data.TravelRequestSubmitDetail.RejectedTravelRequest) {
@@ -1156,6 +1170,9 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             }
             else if (parseInt(data.TravelRequestSubmitDetail.TravelCoordinatorBadgeNumber) > 0) {
                 $("#ddlTravelCoordinator").val(parseInt(data.TravelRequestSubmitDetail.TravelCoordinatorBadgeNumber));
+                if (data.TravelRequestSubmitDetail.RejectedTravelRequest) {
+                    $('#ddlTravelCoordinator').prop("disabled", true);
+                }
             }
             else {
                 if (data.TravelRequestSubmitDetail.RejectedTravelRequest) {
