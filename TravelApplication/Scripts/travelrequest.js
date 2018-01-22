@@ -2029,13 +2029,13 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
     }
 
     // load reject action
-    $scope.loadRejectAction = function (travelRequestId, selectedRoleId, travelRequestBadgeNumber) {
+    $scope.loadRejectAction = function (travelRequestId, selectedRoleId, travelRequestBadgeNumber, isTravelRequest) {
 
         var url = "/uitemplates/reject.html";
         var selectedApprovers = {};
 
         // Get selected approvers if admin role
-        if (selectedRoleId == 4) {
+        if ((selectedRoleId == 4) && (isTravelRequest == true)) {
             url = "/uitemplates/adminreject.html";
         }
 

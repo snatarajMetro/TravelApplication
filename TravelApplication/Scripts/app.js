@@ -810,7 +810,7 @@ function reject() {
     }
 
     // Get approvers when an admin rejects
-    if (selectedRoleId == 4) {
+    if ((selectedRoleId == 4) && (action == "travelrequest")) {
         departmentHeadBadgeNumber = $("#ddlDepartmentHead2 option:selected").val();
         executiveOfficerBadgeNumber = $("#ddlExecutiveOfficer2 option:selected").val();
         ceoForInternationalBadgeNumber = $("#ddlCEOForInternational2 option:selected").val();
@@ -940,19 +940,19 @@ function showRejectSection(container) {
     var selectedRoleId = $("#selectedRoleId").text();
 
     var scope = angular.element('#rejecttemplate').scope();
-    scope.loadRejectAction(travelRequestId, selectedRoleId, travelRequestBadgeNumber);
+    scope.loadRejectAction(travelRequestId, selectedRoleId, travelRequestBadgeNumber, true);
 
     $('#rejecttemplate').show();
 }
 
 function showRejectSection2(container) {
-
+    
     var travelRequestId = $(container).prop('alt');
     var selectedRoleId = $("#selectedRoleId").text();
 
     $('#travalAction').text('travelreimbursement');
     var scope = angular.element('#rejecttemplate').scope();
-    scope.loadRejectAction(travelRequestId, selectedRoleId);
+    scope.loadRejectAction(travelRequestId, selectedRoleId, 0 , false);
 
     $('#rejecttemplate').show();
 }
