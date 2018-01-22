@@ -982,11 +982,10 @@ function deletedocument(container) {
             if (Dropzone.forElement("#supportingDocumentZone3")) {
                 Dropzone.forElement("#supportingDocumentZone3").destroy();
             }
-            if (Dropzone.forElement("#supportingDocumentZone4")) {
-                Dropzone.forElement("#supportingDocumentZone4").destroy();
-            }
-            if (Dropzone.forElement("#supportingDocumentZone5")) {
-                Dropzone.forElement("#supportingDocumentZone5").destroy();
+
+            // Others
+            if (Dropzone.forElement("#supportingDocumentZone6")) {
+                Dropzone.forElement("#supportingDocumentZone6").destroy();
             }
 
             scope.setUpRequiredDocuments(travelRequestId);

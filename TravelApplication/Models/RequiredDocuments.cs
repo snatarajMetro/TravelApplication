@@ -14,6 +14,7 @@ namespace TravelApplication.Models
         public int DocumentNumber { get; set; }
         public string DocumentName { get; set; }
         public string FileName { get; set; }
+        public bool Visible { get; set; }
     }
 
 }

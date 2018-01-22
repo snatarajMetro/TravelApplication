@@ -489,40 +489,45 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
                 var documentNumber = requiredDocuments[index].DocumentNumber;
                 var fileName = requiredDocuments[index].FileName;
+                var visible = requiredDocuments[index].Visible;
 
-                if (fileName != "" && documentNumber != 5) {
+                
+                    if (fileName != null && fileName != "") {
 
-                    // display message about file already uploaded
-                    $("#supportingDocumentZone" + documentNumber + " .dz-message")
-                    .css("background", "lightgray")
-                    .css("height", "30px");
-                    $("#uploaddocumenttext" + documentNumber).html("File has been uploaded");
-                    $("#uploaddocumenticon" + documentNumber).show();
+                        // display message about file already uploaded
+                        $("#supportingDocumentZone" + documentNumber + " .dz-message")
+                            .css("background", "lightgray")
+                            .css("height", "30px");
+                        $("#uploaddocumenttext" + documentNumber).html("File has been uploaded");
+                        $("#uploaddocumenticon" + documentNumber).show();
 
-                    // set up empty dropzone object
-                    $("#supportingDocumentZone" + documentNumber).dropzone({
-                        url: "api/documents/filesupload"
-                    });
+                        // set up empty dropzone object
+                        $("#supportingDocumentZone" + documentNumber).dropzone({
+                            url: "api/documents/filesupload"
+                        });
 
-                    Dropzone.forElement("#supportingDocumentZone" + documentNumber).removeEventListeners();
+                        Dropzone.forElement("#supportingDocumentZone" + documentNumber).removeEventListeners();
 
-                } else {
-
-                    $("#supportingDocumentZone" + documentNumber + " .dz-message")
-                        .css("background", "white");
-
-                    if (documentNumber != 5) {
-                        $("#uploaddocumenttext" + documentNumber).html("Click here to<br /> upload document " + documentNumber);
                     } else {
-                        $("#uploaddocumenttext" + documentNumber).html("Click here to<br /> upload other documents");
+
+                        $("#supportingDocumentZone" + documentNumber + " .dz-message")
+                            .css("background", "white");
+
+                        $("#uploaddocumenttext" + documentNumber).html("Click here to<br /> upload document " + documentNumber);
+
+                        $("#uploaddocumenticon" + documentNumber).hide();
+
+                        // Add upload listners
+                        setUpDropzone(documentNumber);
+
+                        if (visible == false) {
+                            $("#documentsection" + documentNumber).hide();
+                        }
                     }
-
-                    $("#uploaddocumenticon" + documentNumber).hide();
-
-                    // Add upload listners
-                    setUpDropzone(documentNumber);
-                }
             }
+
+            // Add upload listners for Other documents
+            setUpDropzone(6);
         });
     }
 
