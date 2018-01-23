@@ -457,6 +457,12 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         $.get('/uitemplates/uploadandsubmit.html')
         .done(function (data) {
             $('#fileuploadtemplate').html($compile($(data).html())($scope));
+
+            // Change the text of submit button to "Save & Close" when "Admin" logs in
+            if ($("#selectedRoleId").text() == "4") {
+                $("#btnSubmit").val("Save & Close");
+            }
+
             $scope.$apply();
             
             $scope.setUpRequiredDocuments(travelRequestId);
@@ -1082,7 +1088,6 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
         $.get(url)
         .done(function (data) {
-
 
             // Set Department Head
             if (parseInt(data.TravelRequestSubmitDetail.DepartmentHeadBadgeNumber) == -1) {
