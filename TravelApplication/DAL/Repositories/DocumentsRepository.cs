@@ -110,33 +110,52 @@ namespace TravelApplication.DAL.Repositories
             using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
             {
 
-                for (int i = 0; i < 5; i++)
+
+          
+
+                for (int i = 1; i < 6; i++)
                 {
                     result.Add(new RequiredDocuments()
                     {
-                        DocumentNumber = i+1,
+                        DocumentNumber = i,
                         TravelRequestId = travelRequestId,
                         FileName = string.Empty,
-                        DocumentName = string.Empty
+                        DocumentName = string.Empty,
+                        Visible = (i == 1 || i == 2 ) ? true : false
 
                     });
                 }
-                string query = string.Format("Select TRAVELREQUESTID, FILENAME, REQUIREDORDER from Travel_Uploads where TRAVELREQUESTID = {0} and Requiredorder is not null ", travelRequestId );
+
+                string query = string.Format("Select CASHADVANCE from TRAVELREQUEST_ESTIMATEDEXPENSE where TRAVELREQUESTID = {0} AND  CASHADVANCE > 0 ", travelRequestId);
                 OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
                 command.CommandText = query;
                 DbDataReader dataReader = command.ExecuteReader();
-
-
                 if (dataReader != null)
                 {
                     while (dataReader.Read())
                     {
-                        result.FirstOrDefault(p => p.DocumentNumber == Convert.ToInt32(dataReader["REQUIREDORDER"])).FileName = dataReader["FILENAME"].ToString();
+                        result.FirstOrDefault(p => p.DocumentNumber == 3).Visible = true;
+                    }
+                }
+                dataReader.Close();
+                command.Dispose();
+
+                string query1 = string.Format("Select TRAVELREQUESTID, FILENAME, REQUIREDORDER from Travel_Uploads where TRAVELREQUESTID = {0} and Requiredorder is not null ", travelRequestId );
+                OracleCommand command1 = new OracleCommand(query1, (OracleConnection)dbConn);
+                command1.CommandText = query1;
+                DbDataReader dataReader1 = command1.ExecuteReader();
+
+
+                if (dataReader1 != null)
+                {
+                    while (dataReader1.Read())
+                    {
+                        result.FirstOrDefault(p1 => p1.DocumentNumber == Convert.ToInt32(dataReader1["REQUIREDORDER"])).FileName = dataReader1["FILENAME"].ToString();
                     }
                 }
 
-                dataReader.Close();
-                command.Dispose();
+                dataReader1.Close();
+                command1.Dispose();
                 dbConn.Close();
                 dbConn.Dispose();
 

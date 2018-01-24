@@ -1239,7 +1239,7 @@ namespace TravelApplication.DAL.Repositories
             command.Dispose();
             dataReader.Close();
 
-            if (response == ApprovalStatus.New.ToString())
+            if (response == ApprovalStatus.New.ToString() || response == ApprovalStatus.Rejected.ToString())
             {
                 return true;
             }
@@ -1598,30 +1598,30 @@ namespace TravelApplication.DAL.Repositories
                             switch (Convert.ToInt32(dataReader["APPROVALORDER"]))
                             {
                                 case 1:
+                                    travelRequestSubmitDetail.TravelCoordinatorBadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]);
+                                    break;
+                                case 2:
 
                                     travelRequestSubmitDetail.DepartmentHeadBadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]);
                                     travelRequestSubmitDetail.DepartmentHeadOtherBadgeNumber = string.IsNullOrEmpty(dataReader["APPROVEROTHERBADGENUMBER"].ToString()) ? 0 : Convert.ToInt32(dataReader["APPROVEROTHERBADGENUMBER"]);
                                     travelRequestSubmitDetail.DepartmentHeadOtherName = dataReader["APPROVERNAME"].ToString();
                                     break;
-                                case 2:
+                                case 3:
                                     travelRequestSubmitDetail.ExecutiveOfficerBadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]);
                                     travelRequestSubmitDetail.ExecutiveOfficerOtherBadgeNumber = string.IsNullOrEmpty(dataReader["APPROVEROTHERBADGENUMBER"].ToString()) ? 0 : Convert.ToInt32(dataReader["APPROVEROTHERBADGENUMBER"]);
                                     travelRequestSubmitDetail.ExecutiveOfficerOtherName = dataReader["APPROVERNAME"].ToString();
                                     break;
-                                case 3:
+                                case 4:
                                     travelRequestSubmitDetail.CEOInternationalBadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]);
                                     travelRequestSubmitDetail.CEOInternationalOtherBadgeNumber = string.IsNullOrEmpty(dataReader["APPROVEROTHERBADGENUMBER"].ToString()) ? 0 : Convert.ToInt32(dataReader["APPROVEROTHERBADGENUMBER"]);
                                     travelRequestSubmitDetail.CEOAPTAOtherName = dataReader["APPROVERNAME"].ToString();
                                     break;
-                                case 4:
+                                case 5:
                                     travelRequestSubmitDetail.CEOAPTABadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]);
                                     travelRequestSubmitDetail.CEOAPTAOtherBadgeNumber = string.IsNullOrEmpty(dataReader["APPROVEROTHERBADGENUMBER"].ToString()) ? 0 : Convert.ToInt32(dataReader["APPROVEROTHERBADGENUMBER"]);
                                     travelRequestSubmitDetail.CEOAPTAOtherName = dataReader["APPROVERNAME"].ToString();
                                     break;
-                                case 5:
-                                    travelRequestSubmitDetail.TravelCoordinatorBadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]);
-
-                                    break;
+                                
                             }
                             travelRequestSubmitDetail.TravelRequestId = dataReader["TRAVELREQUESTID"].ToString();
                             travelRequestSubmitDetail.RejectedTravelRequest = GetRejectedReimburseRequestStatus(dbConn, dataReader["TRAVELREQUESTID"].ToString());
@@ -1700,7 +1700,7 @@ namespace TravelApplication.DAL.Repositories
                     while (dataReader.Read())
                     {
 
-                        result = (dataReader["REJECTTRAVELREQUEST"].ToString()) == "true" ? true : false;
+                        result = (dataReader["REJECTREIMBURSEREQUEST"].ToString()) == "true" ? true : false;
 
                     }
                 }

@@ -392,7 +392,8 @@ namespace TravelApplication.Services
                                     ApproveActionVisible = false,
                                     Status = dataReader["STATUS"].ToString(),
                                     Purpose = dataReader["PURPOSE"].ToString(),
-                                    CancelActionVisible = CancelActionEligible(dbConn, dataReader["TravelRequestId"].ToString()) ? true : false
+                                    CancelActionVisible = CancelActionEligible(dbConn, dataReader["TravelRequestId"].ToString()) ? true : false,
+                                    BadgeNumber = dataReader["BADGENUMBER"].ToString()
 
                                 });
                             }
@@ -437,8 +438,9 @@ namespace TravelApplication.Services
                                     Status = dataReader["STATUS"].ToString(),
                                     Purpose = dataReader["Purpose"].ToString(),
                                     CancelActionVisible = false,
-                                    ShowApproverAlert = (Convert.ToDateTime(dataReader["DEPARTUREDATETIME"])- DateTime.Today).TotalDays <= 30  ? true : false
-                                     
+                                    ShowApproverAlert = (Convert.ToDateTime(dataReader["DEPARTUREDATETIME"])- DateTime.Today).TotalDays <= 30  ? true : false,
+                                    BadgeNumber = dataReader["BADGENUMBER"].ToString()
+
                                 });
                             }
                         }
@@ -471,7 +473,8 @@ namespace TravelApplication.Services
                                     Status = dataReader["STATUS"].ToString(),
                                     Purpose = dataReader["PURPOSE"].ToString(),
                                     CancelActionVisible = false,
-                                    ShowApproverAlert = (Convert.ToDateTime(dataReader["DEPARTUREDATETIME"]) - DateTime.Today).TotalDays <= 30 ? true : false
+                                    ShowApproverAlert = (Convert.ToDateTime(dataReader["DEPARTUREDATETIME"]) - DateTime.Today).TotalDays <= 30 ? true : false,
+                                    BadgeNumber = dataReader["BADGENUMBER"].ToString()
                                 });
                             }
                         }
@@ -662,8 +665,9 @@ namespace TravelApplication.Services
  
                     //Send Email submitter and traveller 
                     string subject = string.Format(@"Travel Rejection  for Id - {0} ", approveRequest.TravelRequestId);
-                    //string body = string.Format(@"Please visit Travel application website " + link + " to Approve/Reject for travel request Id : {0}", travelRequestId);
-                   // sendEmail(result.ToString(),  subject);
+                    sendRejectionEmail(approveRequest.TravelRequestBadgeNumber,  subject,approveRequest.TravelRequestId);
+
+                    
                 }
 
                 return true;
