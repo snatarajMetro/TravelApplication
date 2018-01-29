@@ -75,7 +75,8 @@ function logout() {
     $("#existingtravelreimbursementtemplate").hide();
     $("#approvedtravelrequesttemplate").hide();
     $('#dashboardtemplate').hide();
-
+    $('#rejecttemplate').hide();
+    $('#approvetemplate').hide();
     $("#txtEmail").focus();
 }
 
