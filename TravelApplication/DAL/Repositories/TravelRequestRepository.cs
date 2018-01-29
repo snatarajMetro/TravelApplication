@@ -1891,8 +1891,184 @@ namespace TravelApplication.Services
            // dbConn.Close();
            // dbConn.Dispose();
             return result;
-        }                
-               
+        }
+
+
+
+
+
+        #endregion
+
+        #region Dashboard
+
+        public List<TravelRequestDashboard> GetTravelRequestDashboardData()
+        {
+            try
+            {
+                var result = new List<TravelRequestDashboard>();
+                 
+                using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+                {
+                    string query1 = string.Format("Select Count(*) as count from TRAVELREQUEST where STATUS= '{0}'", ApprovalStatus.New);
+                    OracleCommand command = new OracleCommand(query1, (OracleConnection)dbConn);
+                    command.CommandText = query1;
+                    DbDataReader dataReader = command.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            result.Add(new TravelRequestDashboard() { Color = "orange", Label = "New", Value = Convert.ToInt32(dataReader["Count"])});                            
+                        }
+                    }
+                 
+                    string query2 = string.Format("Select Count(*) as count from TRAVELREQUEST where STATUS= '{0}'", ApprovalStatus.Pending);
+                    command = new OracleCommand(query2, (OracleConnection)dbConn);
+                    command.CommandText = query2;
+                    dataReader = command.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            result.Add(new TravelRequestDashboard() { Color = "dodgeblue", Label = "Pending", Value = Convert.ToInt32(dataReader["Count"]) });
+                        }
+                    }
+                    
+
+                    string query3 = string.Format("Select Count(*) as count from TRAVELREQUEST where STATUS= '{0}'", ApprovalStatus.Rejected);
+                    command = new OracleCommand(query3, (OracleConnection)dbConn);
+                    command.CommandText = query3;
+                    dataReader = command.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            result.Add(new TravelRequestDashboard() { Color = "red", Label = "Rejected", Value = Convert.ToInt32(dataReader["Count"]) });
+                        }
+                    }
+                    
+                    string query4 = string.Format("Select Count(*) as count from TRAVELREQUEST where STATUS= '{0}'", ApprovalStatus.Complete);
+                    command = new OracleCommand(query4, (OracleConnection)dbConn);
+                    command.CommandText = query4;
+                    dataReader = command.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            result.Add(new TravelRequestDashboard() { Color = "green", Label = "Completed", Value = Convert.ToInt32(dataReader["Count"]) });
+                        }
+                    }
+                    
+                    string query5 = string.Format("Select Count(*) as count from TRAVELREQUEST where STATUS= '{0}'", ApprovalStatus.Cancelled);
+                    command = new OracleCommand(query5, (OracleConnection)dbConn);
+                    command.CommandText = query5;
+                    dataReader = command.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            result.Add(new TravelRequestDashboard() { Color = "purple", Label = "Cancelled", Value = Convert.ToInt32(dataReader["Count"]) });
+                        }
+                    }
+                   
+                    command.Dispose();
+                    dataReader.Close();
+                    dbConn.Close();
+                    dbConn.Dispose();
+                }
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                LogMessage.Log("GetTravelRequestDetail : " + ex.Message);
+                throw;
+            }
+        }
+
+      
+        public List<TravelRequestDashboard> GetTravelReimbursementDashboardData()
+        {
+            try
+            {
+                var result = new List<TravelRequestDashboard>();
+
+                using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+                {
+                    string query1 = string.Format("Select Count(*) as count from REIMBURSE_TRAVELREQUEST where STATUS= '{0}'", ApprovalStatus.New);
+                    OracleCommand command = new OracleCommand(query1, (OracleConnection)dbConn);
+                    command.CommandText = query1;
+                    DbDataReader dataReader = command.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            result.Add(new TravelRequestDashboard() { Color = "orange", Label = "New", Value = Convert.ToInt32(dataReader["Count"]) });
+                        }
+                    }
+
+                    string query2 = string.Format("Select Count(*) as count from REIMBURSE_TRAVELREQUEST where STATUS= '{0}'", ApprovalStatus.Pending);
+                    command = new OracleCommand(query2, (OracleConnection)dbConn);
+                    command.CommandText = query2;
+                    dataReader = command.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            result.Add(new TravelRequestDashboard() { Color = "dodgeblue", Label = "Pending", Value = Convert.ToInt32(dataReader["Count"]) });
+                        }
+                    }
+
+
+                    string query3 = string.Format("Select Count(*) as count from REIMBURSE_TRAVELREQUEST where STATUS= '{0}'", ApprovalStatus.Rejected);
+                    command = new OracleCommand(query3, (OracleConnection)dbConn);
+                    command.CommandText = query3;
+                    dataReader = command.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            result.Add(new TravelRequestDashboard() { Color = "red", Label = "Rejected", Value = Convert.ToInt32(dataReader["Count"]) });
+                        }
+                    }
+
+                    string query4 = string.Format("Select Count(*) as count from REIMBURSE_TRAVELREQUEST where STATUS= '{0}'", ApprovalStatus.Complete);
+                    command = new OracleCommand(query4, (OracleConnection)dbConn);
+                    command.CommandText = query4;
+                    dataReader = command.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            result.Add(new TravelRequestDashboard() { Color = "green", Label = "Completed", Value = Convert.ToInt32(dataReader["Count"]) });
+                        }
+                    }
+
+                    string query5 = string.Format("Select Count(*) as count from REIMBURSE_TRAVELREQUEST where STATUS= '{0}'", ApprovalStatus.Cancelled);
+                    command = new OracleCommand(query5, (OracleConnection)dbConn);
+                    command.CommandText = query5;
+                    dataReader = command.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            result.Add(new TravelRequestDashboard() { Color = "purple", Label = "Cancelled", Value = Convert.ToInt32(dataReader["Count"]) });
+                        }
+                    }
+
+                    command.Dispose();
+                    dataReader.Close();
+                    dbConn.Close();
+                    dbConn.Dispose();
+                }
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                LogMessage.Log("GetTravelRequestDetail : " + ex.Message);
+                throw;
+            }
+        }
 
 
         #endregion

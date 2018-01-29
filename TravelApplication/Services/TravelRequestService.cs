@@ -86,5 +86,17 @@ namespace TravelApplication.Services
             var result = travelRequestRepo.Cancel(travelRequestId, travelRequestBadgeNumber, comments);
             return result;
         }
+
+        public List<TravelRequestDashboard> GetTravelRequestDashboardData()
+        {
+            var result = travelRequestRepo.GetTravelRequestDashboardData();
+            return result;
+        }
+
+        public List<TravelRequestDashboard> GetTravelReimbursementDashboardData()
+        {
+            var result = travelRequestRepo.GetTravelReimbursementDashboardData();
+            return result;
+        }
     }
 }

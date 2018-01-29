@@ -225,7 +225,9 @@
     <Compile Include="Models\SubmitTravelRequestData.cs" />
     <Compile Include="Models\SupportingDocument.cs" />
     <Compile Include="Models\ReimbursementTravelRequestDetails.cs" />
+    <Compile Include="Models\TravelReimbursementDashboard.cs" />
     <Compile Include="Models\TravelRequest.cs" />
+    <Compile Include="Models\TravelRequestDashboard.cs" />
     <Compile Include="Models\TravelRequestDetails.cs" />
     <Compile Include="Models\TravelRequestInput.cs" />
     <Compile Include="Models\TravelRequestInputResponse.cs" />

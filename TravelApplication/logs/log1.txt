@@ -4,3 +4,4 @@
 1/29/2018 10:56:08 AM: Validate travel request info Invalid Departure Date
 1/29/2018 10:56:08 AM: SaveTravelRequestInput : Invalid Departure Date
 1/29/2018 10:56:08 AM: api/travelrequest/saveNew :Couldn't save record into Travel Request - 
+1/29/2018 3:05:54 PM: api/login : Object reference not set to an instance of an object.
