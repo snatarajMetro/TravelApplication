@@ -1193,11 +1193,18 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             // Set Agree
             $("#cbAgree").attr("checked", (data.TravelRequestSubmitDetail.Agree == true));
 
-            // Set Submitter Name
-            $("#txtSubmittedByUserName").val(data.TravelRequestSubmitDetail.SubmitterName);
+            var selectedRoleId = $("#selectedRoleId").text();
+
+            // Display Submitter's name only if logged-in role is 3(Submitter) 
+            if ((selectedRoleId == 3)) {
+                // Set Submitter Name
+                $("#txtSubmittedByUserName").val(data.TravelRequestSubmitDetail.SubmitterName);
+            }
+            else {
+                $("#submittername").hide();
+            }
 
             $scope.$apply();
-
         });
     }
 

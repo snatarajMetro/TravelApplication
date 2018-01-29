@@ -23,7 +23,14 @@ namespace TravelApplication.Controllers.WebAPI
             HttpResponseMessage response = null;
             try
             {
-                var result = fisService.GetCostCenters().Result;
+                // fisService.GetCostCenters().Result;
+                var result = new List<CostCenter>();
+
+                for (int i = 0; i < 10; i++)
+                {
+                    result.Add(new CostCenter() { Name = string.Format(@"CC-0000",i), CostCenterValue = string.Format(@"0000", i) });
+                };
+
                 var data = new JavaScriptSerializer().Serialize(result);
 
                 response = Request.CreateResponse(HttpStatusCode.OK, data);
