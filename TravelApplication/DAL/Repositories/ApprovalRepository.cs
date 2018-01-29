@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
+using TravelApplication.Common;
 using TravelApplication.DAL.DBProvider;
 using TravelApplication.Models;
 using TravelApplication.Services;
@@ -452,10 +453,14 @@ namespace TravelApplication.DAL.Repositories
                                 cmd.CommandText = string.Format(@"Update REIMBURSE_APPROVAL SET                                                   
                                                             BADGENUMBER = :p1,
                                                             APPROVERNAME = :p2,                                                                                                                     
-                                                            APPROVEROTHERBADGENUMBER = :p3 WHERE TRAVELREQUESTID = {0} AND APPROVALORDER = {1} ", submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId, item.ApprovalOrder);
+                                                            APPROVEROTHERBADGENUMBER = :p3,
+                                                            APPROVALSTATUS = :p4,
+                                                            APPROVALDATETIME = :p5 WHERE TRAVELREQUESTID = {0} AND APPROVALORDER = {1} ", submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId, item.ApprovalOrder);
                                 cmd.Parameters.Add(new OracleParameter("p1", item.ApproverBadgeNumber));
                                 cmd.Parameters.Add(new OracleParameter("p2", item.ApproverName));
-                                cmd.Parameters.Add(new OracleParameter("p6", item.ApproverOtherBadgeNumber));
+                                cmd.Parameters.Add(new OracleParameter("p3", item.ApproverOtherBadgeNumber));
+                                cmd.Parameters.Add(new OracleParameter("p4", ApprovalStatus.Pending.ToString()));
+                                cmd.Parameters.Add(new OracleParameter("p5", null));
                                 var rowsUpdated = cmd.ExecuteNonQuery();
                                 cmd.Dispose();
                             }
@@ -519,14 +524,15 @@ namespace TravelApplication.DAL.Repositories
                                 cmd.Parameters.Add(new OracleParameter("p1", submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId));
                                 cmd.Parameters.Add(new OracleParameter("p2", item.ApproverBadgeNumber));
                                 cmd.Parameters.Add(new OracleParameter("p3", item.ApproverName));
-                                cmd.Parameters.Add(new OracleParameter("p4", Common.ApprovalStatus.Pending.ToString()));
+                                cmd.Parameters.Add(new OracleParameter("p4", ApprovalStatus.Pending.ToString()));
                                 cmd.Parameters.Add(new OracleParameter("p5", item.ApprovalOrder));
                                 cmd.Parameters.Add(new OracleParameter("p6", item.ApproverOtherBadgeNumber));
                                 var rowsUpdated = cmd.ExecuteNonQuery();
                                 cmd.Dispose();
                             }
                         }
-                        OracleCommand cmd1 = new OracleCommand();
+                    }
+                    OracleCommand cmd1 = new OracleCommand();
                         cmd1.Connection = (OracleConnection)dbConn;
                         cmd1.CommandText = string.Format(@"UPDATE REIMBURSE_TRAVELREQUEST SET                                                 
                                                        SUBMITTEDBYUSERNAME = :p1 ,
@@ -541,7 +547,7 @@ namespace TravelApplication.DAL.Repositories
                         cmd1.Parameters.Add(new OracleParameter("p4", (submitReimburseData.HeirarchichalApprovalRequest.AgreedToTermsAndConditions) ? "Y" : "N"));
                         var rowsUpdated1 = cmd1.ExecuteNonQuery();
                         cmd1.Dispose();
-                    }
+                    
                     var result = getNextApproverBadgeNumber(dbConn, submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId, "REIMBURSE_APPROVAL");
 
 
@@ -596,12 +602,13 @@ namespace TravelApplication.DAL.Repositories
 			                                                    {0}
 		                                                    WHERE
 			                                                    TRAVELREQUESTID = {1}
+                                                            AND APPROVALSTATUS = '{2}'
 		                                                    AND APPROVALDATETIME IS NULL
 		                                                    ORDER BY
 			                                                    APPROVALORDER 
 	                                                    )
                                                     WHERE
-	                                                    ROWNUM = 1", tableName, travelRequestId);
+	                                                    ROWNUM = 1", tableName, travelRequestId, ApprovalStatus.Pending);
             OracleCommand cmd1 = new OracleCommand(query, (OracleConnection)dbConn);
             cmd1.CommandText = query;
             DbDataReader dataReader = cmd1.ExecuteReader();

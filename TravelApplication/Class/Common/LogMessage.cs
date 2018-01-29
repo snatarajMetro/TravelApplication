@@ -10,10 +10,9 @@ namespace TravelApplication.Class.Common
     {
         public static void Log(string logMessage)
         {
-            string strLogFilePath = System.Configuration.ConfigurationManager.AppSettings["logFilePath"].ToString();
-
+            string strLogFilePath = System.Web.Hosting.HostingEnvironment.MapPath(System.Configuration.ConfigurationManager.AppSettings["logFilePath"].ToString());
             string strLogMessage = string.Empty;            
-            string strLogFile = strLogFilePath + "log.txt";
+            string strLogFile = strLogFilePath + "log1.txt";
             StreamWriter swLog;
             strLogMessage = string.Format("{0}: {1}", DateTime.Now, logMessage);
 

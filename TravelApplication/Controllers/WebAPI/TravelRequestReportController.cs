@@ -22,6 +22,7 @@ namespace TravelApplication.Controllers.WebAPI
             HttpResponseMessage response = null;
             try
             {
+                LogMessage.Log("Starting Crystal Report");
 
                 var byteContent = travelRequestReportService.RunReport("Travel_Request.rpt", "test", travelRequestId);
 
