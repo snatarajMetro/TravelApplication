@@ -243,14 +243,14 @@ namespace TravelApplication.Services
                 {
                     throw new Exception("Invalid Meeting End Date");
                 }
-                if (request.DepartureDateTime == DateTime.MinValue)
-                {
-                    throw new Exception("Invalid Departure Date");
-                }
-                if (request.ReturnDateTime == DateTime.MinValue)
-                {
-                    throw new Exception("Invalid Return Date");
-                }
+                //if (request.DepartureDateTime == DateTime.MinValue)
+                //{
+                //    throw new Exception("Invalid Departure Date");
+                //}
+                //if (request.ReturnDateTime == DateTime.MinValue)
+                //{
+                //    throw new Exception("Invalid Return Date");
+                //}
             }
             catch (Exception ex)
             {

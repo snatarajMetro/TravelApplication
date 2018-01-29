@@ -404,13 +404,13 @@ function savedataentry()
         canSubmit = false;
     }
 
-    if (!departureDate || departureDate.length <= 0) {
-        canSubmit = false;
-    }
+    //if (!departureDate || departureDate.length <= 0) {
+    //    canSubmit = false;
+    //}
 
-    if (!returnDate || returnDate.length <= 0) {
-        canSubmit = false;
-    }
+    //if (!returnDate || returnDate.length <= 0) {
+    //    canSubmit = false;
+    //}
 
     // Validation
     if (canSubmit) {
