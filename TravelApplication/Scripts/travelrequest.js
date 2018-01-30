@@ -461,6 +461,8 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             // Change the text of submit button to "Save & Close" when "Admin" logs in
             if ($("#selectedRoleId").text() == "4") {
                 $("#btnSubmit").val("Save & Close");
+            } else {
+                $("#btnSubmit").val("Submit");
             }
 
             $scope.$apply();
@@ -1747,6 +1749,13 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
+
+                    // if "Admin" edits a request, close the page and display existing travel requests
+                    if (action == "Save & Close") {
+                        $("#fileuploadtemplate").hide();
+                        viewexistingtravelrequests();
+                        return;
+                    }
 
                     $("#submitsuccess2").fadeIn("slow");
                     $('#submitsuccessmessage2').html("Travel request has been successfully submitted. Travel Request# is <b>" + travelRequestId + "</b>.");
