@@ -1696,8 +1696,12 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
         // Submitted by user name
         var submittedByUserName = $('#txtSubmittedByUserName').val().trim();
-        if (!submittedByUserName) {
-            canSubmit = false;
+
+        var selectedRoleId = $("#selectedRoleId").text()
+        if (selectedRoleId == 3) {
+            if (!submittedByUserName) {
+                canSubmit = false;
+            }
         }
 
         if (canSubmit) {
