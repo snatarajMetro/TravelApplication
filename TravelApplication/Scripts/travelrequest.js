@@ -3385,7 +3385,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
         svg.append("text")
             .attr("x", height + 70)
-            .attr("y", barHeight + 215)
+            .attr("y", barHeight + 225)
             .attr("text-anchor", "middle")
             .attr("class", "titlelabel")
             .text("# of travel requests");
@@ -3393,7 +3393,19 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         svg.insert("g", ":first-child")
                 .attr("class", "axisHorizontal")
                 .attr("transform", "translate(" + (margin + labelWidth) + "," + (height - axisMargin - margin) + ")")
-                .call(xAxis);
+            .call(xAxis);
+
+        svg.append("text")
+            .attr("x", height + 60)
+            .attr("y", barHeight + 260)
+            .attr("text-anchor", "middle")
+            .attr("class", "linkpiechart")
+            .on("click", function (d, i) {
+                $('#dashboardtemplate').hide();
+                $('#fromDashboard').text("true");
+                viewexistingtravelrequests("");
+            })
+            .text("View all travel requests");
     }
 
     function loadTravelReimbursementBarGraph(data) {
@@ -3484,7 +3496,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
         svg.append("text")
             .attr("x", height + 70)
-            .attr("y", barHeight + 215)
+            .attr("y", barHeight + 225)
             .attr("text-anchor", "middle")
             .attr("class", "titlelabel")
             .text("# of travel reimbursements");
@@ -3493,6 +3505,18 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             .attr("class", "axisHorizontal")
             .attr("transform", "translate(" + (margin + labelWidth) + "," + (height - axisMargin - margin) + ")")
             .call(xAxis);
+
+        svg.append("text")
+            .attr("x", height + 60)
+            .attr("y", barHeight + 260)
+            .attr("text-anchor", "middle")
+            .attr("class", "linkpiechart")
+            .on("click", function (d, i) {
+                $('#dashboardtemplate').hide();
+                $('#fromDashboard').text("true");
+                viewexistingreimbursements("");
+            })
+            .text("View all travel reimbursements");
     }
 
     function loadTravelRequestPieChartGraph(data) {
