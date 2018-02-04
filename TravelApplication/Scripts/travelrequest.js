@@ -1771,6 +1771,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         var canSubmit = false;
         var travelRequestId = $('#travelRequestId').text();
         var badgeNumber = $('#signedInUserBadgeNumber').text();
+        var action = $("#btnSubmit").val();
 
         // Department Head
         var departmentHeadBadgeNumber = $("#ddlDepartmentHead option:selected").val();
