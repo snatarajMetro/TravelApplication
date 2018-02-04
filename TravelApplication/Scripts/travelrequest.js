@@ -1195,16 +1195,8 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             // Set Agree
             $("#cbAgree").attr("checked", (data.TravelRequestSubmitDetail.Agree == true));
 
-            var selectedRoleId = $("#selectedRoleId").text();
-
-            // Display Submitter's name only if logged-in role is 3(Submitter) 
-            if ((selectedRoleId == 3)) {
-                // Set Submitter Name
-                $("#txtSubmittedByUserName").val(data.TravelRequestSubmitDetail.SubmitterName);
-            }
-            else {
-                $("#submittername").hide();
-            }
+            // Hide submitter name
+            $("#submittername").hide();
 
             $scope.$apply();
         });
@@ -1308,14 +1300,8 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 // Set Agree
                 $("#cbAgree").attr("checked", (data.TravelRequestSubmitDetail.Agree == true));
 
-                // Display Submitter's name only if logged-in role is 3(Submitter) 
-                if ((selectedRoleId == 3)) {
-                    // Set Submitter Name
-                    $("#txtSubmittedByUserName").val(data.TravelRequestSubmitDetail.SubmitterName);
-                }
-                else {
-                    $("#submittername").hide();
-                }
+                // Hide submitter name
+                $("#submittername").hide();
 
                 $scope.$apply();
 
@@ -1515,12 +1501,6 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             canSubmit = false;
         }
 
-        // Submitted by user name
-        var submittedByUserName = $('#txtSubmittedByUserName').val().trim();
-        if (!submittedByUserName) {
-            canSubmit = false;
-        }
-
         if (canSubmit) {
             $.ajax({
                 type: "POST",
@@ -1538,7 +1518,6 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                     "TravelCoordinatorBadgeNumber": travelCoordinatorBadgeNumber,
                     "TravelCoordinatorName": travelCoordinatorName,
                     "AgreedToTermsAndConditions": agreedToTermsAndConditions,
-                    "SubmittedByUserName": submittedByUserName
                 }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -1701,16 +1680,6 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             canSubmit = false;
         }
 
-        // Submitted by user name
-        var submittedByUserName = $('#txtSubmittedByUserName').val().trim();
-
-        var selectedRoleId = $("#selectedRoleId").text()
-        if (selectedRoleId == 3) {
-            if (!submittedByUserName) {
-                canSubmit = false;
-            }
-        }
-
         if (canSubmit) {
             $.ajax({
                 type: "POST",
@@ -1722,7 +1691,6 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                         "TravelRequestBadgeNumber": travelRequestBadgeNumber,
                         "TravelRequestName": txtName,
                         "AgreedToTermsAndConditions": agreedToTermsAndConditions,
-                        "SubmittedByUserName": submittedByUserName,
                         "ApproverList": [
                             {
                                 "ApproverName": departmentHeadName,
@@ -1917,12 +1885,6 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             canSubmit = false;
         }
 
-        // Submitted by user name
-        var submittedByUserName = $('#txtSubmittedByUserName').val().trim();
-        if (!submittedByUserName) {
-            canSubmit = false;
-        }
-
         if (canSubmit) {
             $.ajax({
                 type: "POST",
@@ -1932,7 +1894,6 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                         "TravelRequestId": travelRequestId,
                         "BadgeNumber": badgeNumber,
                         "AgreedToTermsAndConditions": agreedToTermsAndConditions,
-                        "SubmittedByUserName": submittedByUserName,
                         "ApproverList": [
                             {
                                 "ApproverName": travelCoordinatorName,
@@ -1970,6 +1931,13 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
+
+                    // if "Admin" edits a request, close the page and display existing travel requests
+                    if (action == "Save & Close") {
+                        $("#fileuploadtemplate").hide();
+                        viewexistingreimbursements();
+                        return;
+                    }
 
                     $("#submitsuccess2").fadeIn("slow");
                     $('#submitsuccessmessage2').html("Reimbursement request has been successfully submitted. Reimbursement Request# is <b>" + travelRequestId + "</b>.");
@@ -2884,6 +2852,14 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         $.get('/uitemplates/uploadandsubmitreimbursement.html')
         .done(function (data) {
             $('#fileuploadtemplate').html($compile($(data).html())($scope));
+
+            // Change the text of submit button to "Save & Close" when "Admin" logs in
+            if ($("#selectedRoleId").text() == "4") {
+                $("#btnSubmit").val("Save & Close");
+            } else {
+                $("#btnSubmit").val("Submit");
+            }
+
             $scope.$apply();
 
             Dropzone.autoDiscover = false;
