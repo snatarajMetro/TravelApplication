@@ -2188,29 +2188,29 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 //$('#txtCashAdvanceRequested').val($scope.Data.EstimatedExpenseData.CashAdvance);
                 $('#estimatedExpenseId').text($scope.Data.EstimatedExpenseData.EstimatedExpenseId);
 
-                $scope.advanceLodgingAmount = $scope.Data.EstimatedExpenseData.AdvanceLodging;
-                $scope.advanceAirfareAmount = $scope.Data.EstimatedExpenseData.AdvanceAirFare;
-                $scope.advanceRegistrationAmount = $scope.Data.EstimatedExpenseData.AdvanceRegistration;
-                $scope.advanceMealsAmount = $scope.Data.EstimatedExpenseData.AdvanceMeals;
-                $scope.advanceCarRentalAmount = $scope.Data.EstimatedExpenseData.AdvanceCarRental;
-                $scope.advanceMiscellaneousAmount = $scope.Data.EstimatedExpenseData.AdvanceMiscellaneous;
+                $scope.advanceLodgingAmount         = ($scope.Data.EstimatedExpenseData.AdvanceLodging > 0) ? $scope.Data.EstimatedExpenseData.AdvanceLodging : $scope.advanceLodgingAmount;
+                $scope.advanceAirfareAmount         = ($scope.Data.EstimatedExpenseData.AdvanceAirFare > 0) ? $scope.Data.EstimatedExpenseData.AdvanceAirFare : $scope.advanceAirfareAmount;
+                $scope.advanceRegistrationAmount    = ($scope.Data.EstimatedExpenseData.AdvanceRegistration > 0) ? $scope.Data.EstimatedExpenseData.AdvanceRegistration : $scope.advanceRegistrationAmount;
+                $scope.advanceMealsAmount           = ($scope.Data.EstimatedExpenseData.AdvanceMeals > 0) ? $scope.Data.EstimatedExpenseData.AdvanceMeals : $scope.advanceMealsAmount;
+                $scope.advanceCarRentalAmount       = ($scope.Data.EstimatedExpenseData.AdvanceCarRental > 0) ? $scope.Data.EstimatedExpenseData.AdvanceCarRental : $scope.advanceCarRentalAmount;
+                $scope.advanceMiscellaneousAmount   = ($scope.Data.EstimatedExpenseData.AdvanceMiscellaneous > 0) ? $scope.Data.EstimatedExpenseData.AdvanceMiscellaneous : $scope.advanceMiscellaneousAmount;
 
-                $scope.estimatedLodgingAmount = $scope.Data.EstimatedExpenseData.TotalEstimatedLodge;
-                $scope.estimatedAirfareAmount = $scope.Data.EstimatedExpenseData.TotalEstimatedAirFare;
-                $scope.estimatedRegistrationAmount = $scope.Data.EstimatedExpenseData.TotalEstimatedRegistration;
-                $scope.estimatedMealsAmount = $scope.Data.EstimatedExpenseData.TotalEstimatedMeals;
-                $scope.estimatedCarRentalAmount = $scope.Data.EstimatedExpenseData.TotalEstimatedCarRental;
-                $scope.estimatedMiscellaneousAmount = $scope.Data.EstimatedExpenseData.TotalEstimatedMiscellaneous;
+                $scope.estimatedLodgingAmount       = ($scope.Data.EstimatedExpenseData.TotalEstimatedLodge > 0) ? $scope.Data.EstimatedExpenseData.TotalEstimatedLodge : $scope.estimatedLodgingAmount;
+                $scope.estimatedAirfareAmount       = ($scope.Data.EstimatedExpenseData.TotalEstimatedAirFare > 0) ? $scope.Data.EstimatedExpenseData.TotalEstimatedAirFare : $scope.estimatedAirfareAmount;
+                $scope.estimatedRegistrationAmount  = ($scope.Data.EstimatedExpenseData.TotalEstimatedRegistration > 0) ? $scope.Data.EstimatedExpenseData.TotalEstimatedRegistration : $scope.estimatedRegistrationAmount;
+                $scope.estimatedMealsAmount         = ($scope.Data.EstimatedExpenseData.TotalEstimatedMeals > 0) ? $scope.Data.EstimatedExpenseData.TotalEstimatedMeals : $scope.estimatedMealsAmount;
+                $scope.estimatedCarRentalAmount     = ($scope.Data.EstimatedExpenseData.TotalEstimatedCarRental > 0) ? $scope.Data.EstimatedExpenseData.TotalEstimatedCarRental : $scope.estimatedCarRentalAmount;
+                $scope.estimatedMiscellaneousAmount = ($scope.Data.EstimatedExpenseData.TotalEstimatedMiscellaneous > 0) ? $scope.Data.EstimatedExpenseData.TotalEstimatedMiscellaneous : $scope.estimatedMiscellaneousAmount;
 
-                $scope.estimatedOtherLodgingAmount = $scope.Data.EstimatedExpenseData.TotalOtherEstimatedLodge;
-                $scope.estimatedOtherAirfareAmount = $scope.Data.EstimatedExpenseData.TotalOtherEstimatedAirFare;
-                $scope.estimatedOtherMealsAmount = $scope.Data.EstimatedExpenseData.TotalOtherEstimatedMeals;
-                $scope.totalOtherEstimatedAmount = $scope.Data.EstimatedExpenseData.TotalOtherEstimatedTotal;
+                $scope.estimatedOtherLodgingAmount  = ($scope.Data.EstimatedExpenseData.TotalOtherEstimatedLodge > 0) ? $scope.Data.EstimatedExpenseData.TotalOtherEstimatedLodge : $scope.estimatedOtherLodgingAmount;
+                $scope.estimatedOtherAirfareAmount  = ($scope.Data.EstimatedExpenseData.TotalOtherEstimatedAirFare > 0) ? $scope.Data.EstimatedExpenseData.TotalOtherEstimatedAirFare : $scope.estimatedOtherAirfareAmount;
+                $scope.estimatedOtherMealsAmount    = ($scope.Data.EstimatedExpenseData.TotalOtherEstimatedMeals > 0) ? $scope.Data.EstimatedExpenseData.TotalOtherEstimatedMeals : $scope.estimatedOtherMealsAmount;
+                $scope.totalOtherEstimatedAmount    = ($scope.Data.EstimatedExpenseData.TotalOtherEstimatedTotal > 0) ? $scope.Data.EstimatedExpenseData.TotalOtherEstimatedTotal : $scope.totalOtherEstimatedAmount;
 
-                $scope.estimatedActualLodgingAmount = $scope.Data.EstimatedExpenseData.TotalActualEstimatedLodge;
-                $scope.estimatedActualAirfareAmount = $scope.Data.EstimatedExpenseData.TotalActualEstimatedAirFare;
-                $scope.estimatedActualMealsAmount = $scope.Data.EstimatedExpenseData.TotalActualEstimatedMeals;
-                $scope.totalActualEstimatedAmount = $scope.Data.EstimatedExpenseData.TotalActualEstimatedTotal;
+                $scope.estimatedActualLodgingAmount = ($scope.Data.EstimatedExpenseData.TotalActualEstimatedLodge > 0) ? $scope.Data.EstimatedExpenseData.TotalActualEstimatedLodge : $scope.estimatedActualLodgingAmount;
+                $scope.estimatedActualAirfareAmount = ($scope.Data.EstimatedExpenseData.TotalActualEstimatedAirFare > 0) ? $scope.Data.EstimatedExpenseData.TotalActualEstimatedAirFare : $scope.estimatedActualAirfareAmount;
+                $scope.estimatedActualMealsAmount   = ($scope.Data.EstimatedExpenseData.TotalActualEstimatedMeals > 0) ? $scope.Data.EstimatedExpenseData.TotalActualEstimatedMeals : $scope.estimatedActualMealsAmount;
+                $scope.totalActualEstimatedAmount   = ($scope.Data.EstimatedExpenseData.TotalActualEstimatedTotal > 0) ? $scope.Data.EstimatedExpenseData.TotalActualEstimatedTotal : $scope.totalActualEstimatedAmount;
 
                 if ($scope.Data.EstimatedExpenseData.PersonalTravelExpense > 0) {
                     $scope.personalTravelExpense = $scope.Data.EstimatedExpenseData.PersonalTravelExpense;
