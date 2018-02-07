@@ -124,7 +124,7 @@ namespace TravelApplication.Controllers.WebAPI
 
             try
             {
-                var result = true; // approvalService.SubmitReimburse(submitReimburseData);
+                var result = approvalService.SubmitReimburse(submitReimburseData);
                 response = Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)
