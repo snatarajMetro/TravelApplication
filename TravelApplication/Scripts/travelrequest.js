@@ -953,7 +953,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             },
             {
                 field: 'LastApproveredByUser',
-                displayName: 'Last Approvered By',
+                displayName: 'Last Approved By',
                 width: 150,
                 headerCellClass: "existingrequestcolumnheader",
                 cellClass: "existingrequestcolumnvalue",
@@ -2620,7 +2620,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             },
             {
                 field: 'LastApprovedByUser',
-                displayName: 'Last Approvered By',
+                displayName: 'Last Approved By',
                 width: 150,
                 headerCellClass: "existingrequestcolumnheader",
                 cellClass: "existingrequestcolumnvalue",
@@ -2769,7 +2769,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             },
             {
                 field: 'LastApproveredByUser',
-                displayName: 'Last Approvered By',
+                displayName: 'Last Approved By',
                 width: 150,
                 headerCellClass: "existingrequestcolumnheader",
                 cellClass: "existingrequestcolumnvalue",
