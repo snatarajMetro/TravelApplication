@@ -1585,7 +1585,7 @@ namespace TravelApplication.DAL.Repositories
             {
                 using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
                 {
-                    string query = string.Format("select TRAVELREQUESTID,BADGENUMBER,APPROVALORDER,APPROVEROTHERBADGENUMBER, APPROVERNAME from REIMBURSE_APPROVAL where TRAVELREQUESTID='{0}'", travelRequestId);
+                    string query = string.Format("select TRAVELREQUESTID,BADGENUMBER,APPROVALORDER,APPROVEROTHERBADGENUMBER, APPROVERNAME from REIMBURSE_APPROVAL where TRAVELREQUESTID='{0}' and APPROVALSTATUS = {1}", travelRequestId, ApprovalStatus.Pending);
 
                     OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
                     command.CommandText = query;
