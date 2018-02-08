@@ -2194,6 +2194,10 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 //$('#txtCashAdvanceRequested').val($scope.Data.EstimatedExpenseData.CashAdvance);
                 $('#estimatedExpenseId').text($scope.Data.EstimatedExpenseData.EstimatedExpenseId);
 
+                // Set Personal Travel Included, Special Instruction
+                $("#cbPersonalTravelRequest").attr("checked", ($scope.Data.EstimatedExpenseData.PersonalTravelIncluded == true));
+                $('#txtSpecialInstruction').val($scope.Data.EstimatedExpenseData.SpecialInstruction);
+
                 $scope.advanceLodgingAmount         = ($scope.Data.EstimatedExpenseData.AdvanceLodging > 0) ? $scope.Data.EstimatedExpenseData.AdvanceLodging : $scope.advanceLodgingAmount;
                 $scope.advanceAirfareAmount         = ($scope.Data.EstimatedExpenseData.AdvanceAirFare > 0) ? $scope.Data.EstimatedExpenseData.AdvanceAirFare : $scope.advanceAirfareAmount;
                 $scope.advanceRegistrationAmount    = ($scope.Data.EstimatedExpenseData.AdvanceRegistration > 0) ? $scope.Data.EstimatedExpenseData.AdvanceRegistration : $scope.advanceRegistrationAmount;
