@@ -326,7 +326,9 @@ function savedataentry()
     var travelRequestId = $('#travelRequestId').text();
     var selectedRoleId = $("#selectedRoleId").text();
     var purpose = $('#txtPurpose').val();
-    
+    var personalTravelIncluded = $('#cbPersonalTravelRequest').prop('checked');
+    var specialInstruction = jQuery.trim($('#txtSpecialInstruction').val());
+
     // Get estimated expenses
     var advLodge = $('#txtAdvLodge').val();
     var totalEstimatedLodge = $('#txtTotalEstimatedLodge').val();
@@ -534,7 +536,9 @@ function savedataentry()
                     'TotalActualEstimatedAirFare': totalActualEstimatedAirFare,
                     'TotalActualEstimatedMeals': totalActualEstimatedMeals,
                     'TotalActualEstimatedTotal': totalActualEstimatedTotal,
-                    'PersonalTravelExpense': personalTravelExpense
+                    'PersonalTravelExpense': personalTravelExpense,
+                    'PersonalTravelIncluded': personalTravelIncluded,
+                    'SpecialInstruction': specialInstruction
                 },
                 "FISData":
                 {

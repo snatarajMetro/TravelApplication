@@ -42,5 +42,9 @@ namespace TravelApplication.Models
         public decimal TotalActualEstimatedAirFare { get; set; }
         public decimal TotalActualEstimatedMeals { get; set; }
         public decimal TotalActualEstimatedTotal { get; set; }
+
+        public bool PersonalTravelIncluded { get; set; }
+
+        public string SpecialInstruction { get; set; }
     }
 }
