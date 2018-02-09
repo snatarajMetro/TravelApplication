@@ -109,10 +109,6 @@ namespace TravelApplication.DAL.Repositories
             List<RequiredDocuments> result = new List<RequiredDocuments>();
             using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
             {
-
-
-          
-
                 for (int i = 1; i < 6; i++)
                 {
                     result.Add(new RequiredDocuments()
@@ -139,6 +135,21 @@ namespace TravelApplication.DAL.Repositories
                 }
                 dataReader.Close();
                 command.Dispose();
+
+
+                string query2 = string.Format("Select TOTALESTIMATEDREGISTRATION from TRAVELREQUEST_ESTIMATEDEXPENSE where TRAVELREQUESTID = {0} AND  TOTALESTIMATEDREGISTRATION > 0 ", travelRequestId);
+                OracleCommand command2 = new OracleCommand(query2, (OracleConnection)dbConn);
+                command2.CommandText = query2;
+                DbDataReader dataReader2 = command2.ExecuteReader();
+                if (dataReader2 != null)
+                {
+                    while (dataReader2.Read())
+                    {
+                        result.FirstOrDefault(p => p.DocumentNumber == 4).Visible = true;
+                    }
+                }
+                dataReader2.Close();
+                command2.Dispose();
 
                 string query1 = string.Format("Select TRAVELREQUESTID, FILENAME, REQUIREDORDER from Travel_Uploads where TRAVELREQUESTID = {0} and Requiredorder is not null ", travelRequestId );
                 OracleCommand command1 = new OracleCommand(query1, (OracleConnection)dbConn);

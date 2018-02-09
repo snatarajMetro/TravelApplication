@@ -1585,7 +1585,7 @@ namespace TravelApplication.DAL.Repositories
             {
                 using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
                 {
-                    string query = string.Format("select TRAVELREQUESTID,BADGENUMBER,APPROVALORDER,APPROVEROTHERBADGENUMBER, APPROVERNAME from REIMBURSE_APPROVAL where TRAVELREQUESTID='{0}' and APPROVALSTATUS = {1}", travelRequestId, ApprovalStatus.Pending);
+                    string query = string.Format("select TRAVELREQUESTID,BADGENUMBER,APPROVALORDER,APPROVEROTHERBADGENUMBER, APPROVERNAME from REIMBURSE_APPROVAL where TRAVELREQUESTID='{0}' and APPROVALSTATUS = '{1}'", travelRequestId, ApprovalStatus.Pending);
 
                     OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
                     command.CommandText = query;
@@ -1646,7 +1646,39 @@ namespace TravelApplication.DAL.Repositories
             }
             response = new TravelRequestSubmitDetailResponse();
             response.TravelRequestSubmitDetail = travelRequestSubmitDetail;
+            response.RequiredExecutiveOfficeApproval = getRequiredExecutiveOfficeApproval(dbConn, travelRequestId);
             return response;
+        }
+
+        private bool getRequiredExecutiveOfficeApproval(DbConnection dbConn, int travelRequestId)
+        {
+            try
+            {
+                var result = false;
+                string query = string.Format("Select Total from REIMBURSE  where TRAVELREQUESTID= {0} and Total > 3000", travelRequestId);
+                OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+                command.CommandText = query;
+                DbDataReader dataReader = command.ExecuteReader();
+                if (dataReader.HasRows)
+                {
+
+                    result = true;
+                     
+                }
+                else
+                {
+                    throw new Exception("Couldn't retrieve whether Executive office is required or not");
+                }
+                command.Dispose();
+                dataReader.Close();
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                LogMessage.Log("getRequiredExecutiveOfficeApproval : " + ex.Message);
+                throw;
+            }
         }
 
         private void GetSubmitterName(DbConnection dbConn, int travelRequestId, out string agree, out string submitter)

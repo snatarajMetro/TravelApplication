@@ -44,10 +44,12 @@ namespace TravelApplication.Models
         public string SubmitterName { get; set; }
 
         public bool RejectedTravelRequest { get; set; }
+        
     }
 
     public class TravelRequestSubmitDetailResponse
     {
         public TravelRequestSubmitDetail TravelRequestSubmitDetail { get; set; }
+        public bool RequiredExecutiveOfficeApproval { get; set; }
     }
 }
