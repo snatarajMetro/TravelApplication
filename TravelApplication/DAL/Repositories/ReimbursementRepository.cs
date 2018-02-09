@@ -1637,6 +1637,9 @@ namespace TravelApplication.DAL.Repositories
                     }
                     command.Dispose();
                     dataReader.Close();
+                    response = new TravelRequestSubmitDetailResponse();
+                    response.TravelRequestSubmitDetail = travelRequestSubmitDetail;
+                    response.RequiredExecutiveOfficerApproval = getRequiredExecutiveOfficeApproval(travelRequestId);
                 }
             }
             catch (Exception ex)
@@ -1644,13 +1647,11 @@ namespace TravelApplication.DAL.Repositories
 
                 throw;
             }
-            response = new TravelRequestSubmitDetailResponse();
-            response.TravelRequestSubmitDetail = travelRequestSubmitDetail;
-            response.RequiredExecutiveOfficeApproval = getRequiredExecutiveOfficeApproval(dbConn, travelRequestId);
+           
             return response;
         }
 
-        private bool getRequiredExecutiveOfficeApproval(DbConnection dbConn, int travelRequestId)
+        private bool getRequiredExecutiveOfficeApproval(int travelRequestId)
         {
             try
             {
@@ -1667,7 +1668,7 @@ namespace TravelApplication.DAL.Repositories
                 }
                 else
                 {
-                    throw new Exception("Couldn't retrieve whether Executive office is required or not");
+                    throw new Exception("Couldn't retrieve information whether Executive officer approval is required or not");
                 }
                 command.Dispose();
                 dataReader.Close();

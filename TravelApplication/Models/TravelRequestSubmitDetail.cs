@@ -50,6 +50,6 @@ namespace TravelApplication.Models
     public class TravelRequestSubmitDetailResponse
     {
         public TravelRequestSubmitDetail TravelRequestSubmitDetail { get; set; }
-        public bool RequiredExecutiveOfficeApproval { get; set; }
+        public bool RequiredExecutiveOfficerApproval { get; set; }
     }
 }
