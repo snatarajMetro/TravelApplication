@@ -957,6 +957,10 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 width: 150,
                 headerCellClass: "existingrequestcolumnheader",
                 cellClass: "existingrequestcolumnvalue",
+                cellTooltip:
+                function (row, col) {
+                    return row.entity.LastApproveredByUser;
+                },
                 filter: {
                     placeholder: '🔎 search'
                 }
@@ -2634,6 +2638,10 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 width: 150,
                 headerCellClass: "existingrequestcolumnheader",
                 cellClass: "existingrequestcolumnvalue",
+                cellTooltip:
+                function (row, col) {
+                    return row.entity.LastApprovedByUser;
+                },
                 filter: {
                     placeholder: '🔎 search'
                 }
@@ -2783,6 +2791,10 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 width: 150,
                 headerCellClass: "existingrequestcolumnheader",
                 cellClass: "existingrequestcolumnvalue",
+                cellTooltip:
+                function (row, col) {
+                    return row.entity.LastApproveredByUser;
+                },
                 filter: {
                     placeholder: '🔎 search'
                 }
