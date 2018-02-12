@@ -1221,6 +1221,8 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
                 var selectedRoleId = $("#selectedRoleId").text();
 
+                $("#executiveOfficerRequired").val(data.RequiredExecutiveOfficerApproval);
+
                 // Set Department Head
                 if (parseInt(data.TravelRequestSubmitDetail.DepartmentHeadBadgeNumber) == -1) {
 
@@ -1782,6 +1784,8 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         var travelRequestId = $('#travelRequestId').text();
         var badgeNumber = $('#signedInUserBadgeNumber').text();
         var action = $("#btnSubmit").val();
+        var executiveOfficerRequired = $("#executiveOfficerRequired").val();
+        var validationMessage = "Some of the required fields are missing. Please try again.";
 
         // Department Head
         var departmentHeadBadgeNumber = $("#ddlDepartmentHead option:selected").val();
@@ -1897,6 +1901,18 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         }
 
         if (canSubmit) {
+            if (executiveOfficerRequired) {
+                if (executiveOfficerBadgeNumber == "" || executiveOfficerBadgeNumber == '0') {
+                    canSubmit = false;
+                    validationMessage = "Executive officer is required as one of the approvers";
+                } else if ((executiveOfficerBadgeNumber == '-1') && (!executiveOfficerOtherBadgeNumber)) {
+                    canSubmit = false
+                        validationMessage = "Executive officer is required as one of the approvers";
+                    }
+            }
+        }
+
+        if (canSubmit) {
             $.ajax({
                 type: "POST",
                 url: "/api/approval/submitReimburse",
@@ -1972,7 +1988,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         }
         else {
             $("#submiterror2").fadeIn("slow");
-            $('#submiterrormessage2').text("Some of the required fields are missing. Please try again.");
+            $('#submiterrormessage2').text(validationMessage);
 
             // fade out in 5 seconds
             $("#submiterror2").fadeOut(fadeOutTimeInMilliseconds);
