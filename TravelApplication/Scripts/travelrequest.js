@@ -1904,7 +1904,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             if (executiveOfficerRequired) {
                 if (executiveOfficerBadgeNumber == "" || executiveOfficerBadgeNumber == '0') {
                     canSubmit = false;
-                    validationMessage = "Executive officer is required as one of the approvers";
+                    validationMessage = "Since amount is greater than $3000, executive officer's approval is required";
                 } else if ((executiveOfficerBadgeNumber == '-1') && (!executiveOfficerOtherBadgeNumber)) {
                     canSubmit = false
                         validationMessage = "Executive officer is required as one of the approvers";
