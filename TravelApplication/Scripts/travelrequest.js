@@ -545,7 +545,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         var obj = $("#supportingDocumentZone" + index);
         var rootUploadUrl = "api/documents/filesupload";
 
-        if (index != 5) {
+        if (index != 6) {
             rootUploadUrl = "api/documents/" + index + "/upload";
         }
 
