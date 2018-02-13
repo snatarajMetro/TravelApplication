@@ -30,7 +30,7 @@ namespace TravelApplication.Controllers.WebAPI
             {
                 LogMessage.Log("api/email/sendemail : " + ex.Message);
                 // TODO: Log the exception message
-                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Approve was not sucessfull. Please try again.");
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Could not send an email.");
             }
 
             return response;

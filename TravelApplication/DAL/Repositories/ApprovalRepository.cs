@@ -17,8 +17,9 @@ namespace TravelApplication.DAL.Repositories
     public class ApprovalRepository : IApprovalRepository
     {
         private DbConnection dbConn;
+        IEmailService emailService = new EmailService();
 
-       // TravelRequestRepository travelRequestRepo = new TravelRequestRepository();
+        // TravelRequestRepository travelRequestRepo = new TravelRequestRepository();
         public async Task<List<HeirarchichalPosition>> GetHeirarchichalPositions(int badgeNumber)
         {
             List<HeirarchichalPosition>  heirarchichalPosition = new List<HeirarchichalPosition>();
@@ -142,9 +143,10 @@ namespace TravelApplication.DAL.Repositories
                     Body = GetApprovalRequestEmailBody(emailAndFirstName[1],travelRequestId, departmentHeadBadgeNumber),
                     Subject = subject
                 };
-                var endpointUrl = "http://localhost:2462/api/email/sendemail";
-                var client = new HttpClient();
-                var response = client.PostAsJsonAsync(endpointUrl, email).ConfigureAwait(false);
+                //var endpointUrl = "http://localhost:2462/api/email/sendemail";
+                //var client = new HttpClient();
+                //var response = client.PostAsJsonAsync(endpointUrl, email).ConfigureAwait(false);
+                emailService.SendEmail(email.FromAddress, email.ToAddress, email.Subject, email.Body);
             }
             catch (Exception ex )
             {
@@ -168,9 +170,10 @@ namespace TravelApplication.DAL.Repositories
                     " you are travel request -{0}  has been rejected.  ", travelRequestId),
                     Subject = subject
                 };
-                var endpointUrl = "http://localhost:2462/api/email/sendemail";
-                var client = new HttpClient();
-                var response = client.PostAsJsonAsync(endpointUrl, email).ConfigureAwait(false);
+                //var endpointUrl = "http://localhost:2462/api/email/sendemail";
+                //var client = new HttpClient();
+                //var response = client.PostAsJsonAsync(endpointUrl, email).ConfigureAwait(false);
+                emailService.SendEmail(email.FromAddress, email.ToAddress, email.Subject, email.Body);
             }
             catch (Exception ex)
             {

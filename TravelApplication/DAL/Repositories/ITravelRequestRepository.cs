@@ -19,5 +19,6 @@ namespace TravelApplication.Services
         bool Cancel(string travelRequestId, int travelRequestBadgeNumber, string comments);
         List<TravelRequestDashboard> GetTravelRequestDashboardData();
         List<TravelRequestDashboard> GetTravelReimbursementDashboardData();
+
     }
 }

@@ -16,5 +16,7 @@ namespace TravelApplication.Services
         SubmitTravelRequest GetapproverDetails(string travelRequestId);
         bool SubmitReimburse(SubmitReimburseData submitReimburseData);
         bool UpdateApproveStatus(EmailApprovalDetails emailApproveDetails);
+
+        bool UpdateRejectStatus(EmailApprovalDetails emailApproveDetails);
     }
 }

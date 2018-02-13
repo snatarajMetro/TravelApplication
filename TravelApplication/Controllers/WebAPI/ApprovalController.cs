@@ -28,7 +28,7 @@ namespace TravelApplication.Controllers.WebAPI
             catch (Exception ex)
             {
                 LogMessage.Log("GetHeirarchichalPositions :" + ex.Message);
-                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrieve cost centers from FIS  " + ex.Message);
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrieve heirarchichal information from FIS  " + ex.Message);
 
             }
             return response;
@@ -49,7 +49,7 @@ namespace TravelApplication.Controllers.WebAPI
             catch (Exception ex)
             {
                 LogMessage.Log("GetTAAprovers :" + ex.Message);
-                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrieve cost centers from FIS  " + ex.Message);
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrieve Travel admin approvers  " + ex.Message);
 
             }
             return response;
@@ -110,7 +110,7 @@ namespace TravelApplication.Controllers.WebAPI
             catch (Exception ex)
             {
                 LogMessage.Log("GetapproverDetails :" + ex.Message);
-                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrieve cost centers from FIS  " + ex.Message);
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrieve approver information " + ex.Message);
 
             }
             return response;
@@ -151,7 +151,7 @@ namespace TravelApplication.Controllers.WebAPI
             catch (Exception ex)
             {
                 LogMessage.Log("api/approval/Approve :" + ex.Message);
-                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Travel request was not successfully submited. Please try again.");
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Travel request was not successfully approved.");
             }
 
             return response;
@@ -165,13 +165,13 @@ namespace TravelApplication.Controllers.WebAPI
 
             try
             {
-                var result = approvalService.UpdateApproveStatus(emailApproveDetails);
+                var result = approvalService.UpdateRejectStatus(emailApproveDetails);
                 response = Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)
             {
                 LogMessage.Log("api/approval/Reject :" + ex.Message);
-                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Travel request was not successfully submited. Please try again.");
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Travel request was not successfully rejected.");
             }
 
             return response;

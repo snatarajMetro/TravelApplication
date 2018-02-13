@@ -57,10 +57,14 @@ namespace TravelApplication.Services
 
         public bool UpdateApproveStatus(EmailApprovalDetails emailApproveDetails)
         {
-            var result = travelRequestRepository.Reject(emailApproveDetails);
+            var result = travelRequestRepository.Approve(emailApproveDetails.BadgeNumber, emailApproveDetails.TravelRequestId, emailApproveDetails.Comments);
             return result;
         }
 
-     
+        public bool UpdateRejectStatus(EmailApprovalDetails emailApproveDetails)
+        {
+            var result = travelRequestRepository.Reject(emailApproveDetails);
+            return result;
+        }
     }
 }

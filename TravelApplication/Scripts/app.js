@@ -1522,7 +1522,8 @@ function emailapprove() {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
-            alert('success');
+            alert('Successfully approved the request');
+            window.close();
         },
         error: function (xhr, options, error) {
             alert('error');
