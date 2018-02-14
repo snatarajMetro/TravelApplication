@@ -255,7 +255,7 @@ namespace TravelApplication.DAL.Repositories
                         TotalActualEstimatedAirFare = Convert.ToInt32(dataReader["ACTUALAIRFARE"]),
                         TotalActualEstimatedMeals = Convert.ToInt32(dataReader["ACTUALMEALS"]),
                         PersonalTravelExpense = (string.IsNullOrEmpty(dataReader["PERSONALTRAVELEXPENSE"].ToString())) ? 0 : Convert.ToDecimal(dataReader["PERSONALTRAVELEXPENSE"]),
-                        PersonalTravelIncluded = Convert.ToBoolean(dataReader["PERSONALTRAVELINCLUDED"]),
+                        PersonalTravelIncluded =(string.IsNullOrEmpty(dataReader["PERSONALTRAVELINCLUDED"].ToString())) ? false: Convert.ToBoolean(dataReader["PERSONALTRAVELINCLUDED"]),
                         SpecialInstruction = dataReader["SPECIALINSTRUCTIONS"].ToString()
 
                     };                        

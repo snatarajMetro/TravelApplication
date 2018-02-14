@@ -12,7 +12,7 @@ namespace TravelApplication.DAL.Repositories
         Task<List<HeirarchichalPosition>> GetHeirarchichalPositions(int badgeNumber);
         bool SubmitTravelRequest(SubmitTravelRequestData submitTravelRequestData);
         void sendEmail(int departmentHeadBadgeNumber, string subject,string travelRequestid );
-        void sendRejectionEmail(int departmentHeadBadgeNumber, string subject, string travelRequestId);
+        void sendRejectionEmail(int departmentHeadBadgeNumber, string subject, string travelRequestId, string comments, string rejectReason);
         bool SubmitTravelRequestNew(SubmitTravelRequest submitTravelRequest);
         SubmitTravelRequest GetApproverDetails(string travelRequestId);
         bool SubmitReimburse(SubmitReimburseData submitReimburseData);

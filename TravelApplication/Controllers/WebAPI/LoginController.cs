@@ -29,17 +29,17 @@ namespace TravelApplication.Controllers.WebAPI
                     throw new Exception("Invalid username and/or password. Please try again.");
                 }
 
-                if(userService.IsValidADUser(userModel.UserName, userModel.Password))
-                {
-                    var result = userService.ValidateAndGetRoles(userModel);
-                    var data = new JavaScriptSerializer().Serialize(result);
+                //if(userService.IsValidADUser(userModel.UserName, userModel.Password))
+                //{
+                var result = userService.ValidateAndGetRoles(userModel);
+                var data = new JavaScriptSerializer().Serialize(result);
 
-                    response = Request.CreateResponse(HttpStatusCode.OK, data);
-                }
-                else
-                {
-                    throw new Exception ("AD User authentication failed ");
-                }
+                response = Request.CreateResponse(HttpStatusCode.OK, data);
+                //}
+                //else
+                //{
+                //    throw new Exception ("  AD User ";
+                //}
 
             }
             catch (Exception ex)

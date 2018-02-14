@@ -672,7 +672,7 @@ namespace TravelApplication.Services
  
                     //Send Email submitter and traveller 
                     string subject = string.Format(@"Travel Rejection  for Id - {0} ", approveRequest.TravelRequestId);
-                    sendRejectionEmail(approveRequest.TravelRequestBadgeNumber,  subject,approveRequest.TravelRequestId);
+                    sendRejectionEmail(approveRequest.TravelRequestBadgeNumber,  subject,approveRequest.TravelRequestId, approveRequest.Comments, approveRequest.RejectReason);
 
                     
                 }

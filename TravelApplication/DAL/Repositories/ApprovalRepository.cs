@@ -157,18 +157,22 @@ namespace TravelApplication.DAL.Repositories
             
         }
 
-        public void sendRejectionEmail(int badgeNumber, string subject, string travelRequestId)
+        public void sendRejectionEmail(int badgeNumber, string subject, string travelRequestId, string comments, string rejectReason)
         {
             try
             {
                 string link = string.Format("<a href=\"http://localhost:2462/\">here</a>");
                 var emailAndFirstName = getEmailAddressByBadgeNumber(badgeNumber);
+                 
+
+                //bodyMessage += "Please visit Travel application website " + link + " you are travel request - " + travelRequestId + "  has been rejected." + "\n\n";
+                //bodyMessage += "Reject reason - " + rejectReason + "\n\n";
+                //bodyMessage += "Comments - " + comments ;
                 var email = new Models.Email()
                 {
                     FromAddress = "natarajs@metro.net",
                     ToAddress = emailAndFirstName[0],
-                    Body = string.Format(@"Please visit Travel application website " + link +
-                    " you are travel request -{0}  has been rejected.  ", travelRequestId),
+                    Body = GetRejectionRequestEmailBody(emailAndFirstName[1], travelRequestId,comments,rejectReason),
                     Subject = subject
                 };
                 //var endpointUrl = "http://localhost:2462/api/email/sendemail";
@@ -201,6 +205,31 @@ namespace TravelApplication.DAL.Repositories
                                     .Replace("{USERNAME}", userName)
                                     .Replace("{TRAVELREQUESTID}", travelRequestId.ToString())
                                     .Replace("{BADGENUMBER}", badgeNumber.ToString());
+                }
+            }
+
+            return emailBody;
+        }
+
+
+        public string GetRejectionRequestEmailBody(string userName, string travelRequestId, string comments, string rejectReason)
+        {
+            string emailBody = string.Empty;
+            string baseUrl = "http://traveltest.metro.net/";
+
+            var x = System.Web.Hosting.HostingEnvironment.MapPath("~/UITemplates");
+            using (StreamReader reader = new StreamReader(x + "/RejectRequest.html"))
+            {
+                emailBody = reader.ReadToEnd();
+
+                if (!string.IsNullOrEmpty(emailBody))
+                {
+                    emailBody = emailBody
+                                    .Replace("{BASEURL}", baseUrl)
+                                    .Replace("{USERNAME}", userName)
+                                    .Replace("{TRAVELREQUESTID}", travelRequestId.ToString())
+                                    .Replace("{COMMENTS}", comments)
+                                    .Replace("{REJECTREASON}", rejectReason);
                 }
             }
 
@@ -359,14 +388,15 @@ namespace TravelApplication.DAL.Repositories
                     if (submitTravelRequest.HeirarchichalApprovalRequest.SignedInBadgeNumber != result)
                     {
                         string subject = string.Format(@"Travel Request Approval for Id - {0} ", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
+                        sendNewRequestEmail(submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestBadgeNumber, "Travel Request Submitted Successfully", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
 
                         if (isSubmitterRequesting)
                         {
-                            sendEmail(submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestBadgeNumber, subject, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
+                              sendEmail(submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestBadgeNumber, subject, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
                         }
                         else
                         {
-                            sendEmail(result, subject, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
+                             sendEmail(result, subject, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
                         }
                     }
 
@@ -379,6 +409,52 @@ namespace TravelApplication.DAL.Repositories
 
                 throw new Exception(ex.Message);
             }
+        }
+
+        public void sendNewRequestEmail(int travelRequestBadgeNumber, string subject, string travelRequestId)
+        {
+                try
+                {
+                    var emailAndFirstName = getEmailAddressByBadgeNumber(travelRequestBadgeNumber);
+                    var email = new Models.Email()
+                    {
+                        FromAddress = "natarajs@metro.net",
+                        ToAddress = emailAndFirstName[0],
+                        Body = GetNewRequestEmailBody(emailAndFirstName[1], travelRequestId),
+                        Subject = subject
+                    };
+ 
+                    emailService.SendEmail(email.FromAddress, email.ToAddress, email.Subject, email.Body);
+                }
+                catch (Exception ex)
+                {
+                    LogMessage.Log("Email send failed : " + ex.Message);
+                    throw new Exception("Email failed : " + ex.Message);
+                }
+
+         }
+
+        public string GetNewRequestEmailBody(string userName, string travelRequestId)
+        {
+            
+            string emailBody = string.Empty;
+            string baseUrl = "http://traveltest.metro.net/";
+
+            var x = System.Web.Hosting.HostingEnvironment.MapPath("~/UITemplates");
+            using (StreamReader reader = new StreamReader(x + "/NewRequestConfirmation.html"))
+            {
+                emailBody = reader.ReadToEnd();
+
+                if (!string.IsNullOrEmpty(emailBody))
+                {
+                    emailBody = emailBody
+                                     .Replace("{USERNAME}", userName)
+                                    .Replace("{TRAVELREQUESTID}", travelRequestId.ToString());                                    
+                }
+            }
+
+            return emailBody;
+            
         }
 
         public SubmitTravelRequest GetApproverDetails(string travelRequestId)
