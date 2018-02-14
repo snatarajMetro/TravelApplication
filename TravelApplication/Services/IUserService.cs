@@ -11,5 +11,8 @@ namespace TravelApplication.Services
     public interface IUserService
     {
         UserRole ValidateAndGetRoles(UserModel userModel);
+        bool IsValidADUser(string username, string password);
+
+
     }
 }

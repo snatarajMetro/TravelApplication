@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
+using TravelApplication.Class.Common;
 using TravelApplication.Common;
 using TravelApplication.DAL.DBProvider;
 using TravelApplication.Models;
@@ -136,7 +137,7 @@ namespace TravelApplication.DAL.Repositories
             try
             {
                 var emailAndFirstName = getEmailAddressByBadgeNumber(departmentHeadBadgeNumber);
-                var email = new Email()
+                var email = new Models.Email()
                 {
                     FromAddress = "natarajs@metro.net",
                     ToAddress = emailAndFirstName[0],
@@ -150,8 +151,8 @@ namespace TravelApplication.DAL.Repositories
             }
             catch (Exception ex )
             {
-
-                throw new Exception(ex.Message);
+                LogMessage.Log("Email send failed : " + ex.Message);
+                throw new Exception("Email failed : " + ex.Message);
             }
             
         }
@@ -162,7 +163,7 @@ namespace TravelApplication.DAL.Repositories
             {
                 string link = string.Format("<a href=\"http://localhost:2462/\">here</a>");
                 var emailAndFirstName = getEmailAddressByBadgeNumber(badgeNumber);
-                var email = new Email()
+                var email = new Models.Email()
                 {
                     FromAddress = "natarajs@metro.net",
                     ToAddress = emailAndFirstName[0],
@@ -177,7 +178,7 @@ namespace TravelApplication.DAL.Repositories
             }
             catch (Exception ex)
             {
-
+                LogMessage.Log("Rejections email failed : " + ex.Message);
                 throw new Exception(ex.Message);
             }
 
@@ -186,7 +187,7 @@ namespace TravelApplication.DAL.Repositories
         public string GetApprovalRequestEmailBody(string userName, string travelRequestId, int badgeNumber)
         {
             string emailBody = string.Empty;
-            string baseUrl = "http://localhost:2462/";
+            string baseUrl = "http://traveltest.metro.net/";
 
             var x = System.Web.Hosting.HostingEnvironment.MapPath("~/UITemplates");
             using (StreamReader reader = new StreamReader( x+"/ApproveRequest.html"))

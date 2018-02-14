@@ -40,7 +40,7 @@ namespace TravelApplication.DAL.Repositories
             UserResponse response = null;
             using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
             {
-                string query = string.Format("Select * from Users where LoginId = '{0}' and Password = '{1}' ", request.UserName, request.Password);
+                string query = string.Format("Select * from Users where LoginId = '{0}' ", request.UserName);
                 OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
                 command.CommandText = query;
                 DbDataReader dataReader = command.ExecuteReader();
