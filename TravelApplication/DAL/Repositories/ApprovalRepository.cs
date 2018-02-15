@@ -457,6 +457,29 @@ namespace TravelApplication.DAL.Repositories
             
         }
 
+        public string GetNewReimbursementRequestEmailBody(string userName, string travelRequestId)
+        {
+
+            string emailBody = string.Empty;
+            string baseUrl = "http://traveltest.metro.net/";
+
+            var x = System.Web.Hosting.HostingEnvironment.MapPath("~/UITemplates");
+            using (StreamReader reader = new StreamReader(x + "/NewReimbursementRequestConfirmation.html"))
+            {
+                emailBody = reader.ReadToEnd();
+
+                if (!string.IsNullOrEmpty(emailBody))
+                {
+                    emailBody = emailBody
+                                     .Replace("{USERNAME}", userName)
+                                    .Replace("{TRAVELREQUESTID}", travelRequestId.ToString());
+                }
+            }
+
+            return emailBody;
+
+        }
+
         public SubmitTravelRequest GetApproverDetails(string travelRequestId)
         {
             SubmitTravelRequest response = new Models.SubmitTravelRequest();
@@ -560,29 +583,29 @@ namespace TravelApplication.DAL.Repositories
                         cmd3.CommandText = string.Format(@"Delete from REIMBURSE_APPROVAL where TravelRequestId = {0}", submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId);
                         cmd3.ExecuteNonQuery();
                         //  OracleCommand cmd2 = new OracleCommand();
-                        if (submitReimburseData.HeirarchichalApprovalRequest.SignedInBadgeNumber != submitReimburseData.HeirarchichalApprovalRequest.TravelRequestBadgeNumber)
-                        {
-                            isSubmitterRequesting = true;
-                            cmd3.Connection = (OracleConnection)dbConn;
-                            cmd3.CommandText = @"INSERT INTO REIMBURSE_APPROVAL (                                                  
-                                                            TRAVELREQUESTID,
-                                                            BADGENUMBER,
-                                                            APPROVERNAME,
-                                                            APPROVALSTATUS,
-                                                            APPROVALORDER                                                            
-                                                        )
-                                                        VALUES
-                                                            (:p1,:p2,:p3,:p4,:p5 )";
-                            cmd3.Parameters.Add(new OracleParameter("p1", submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId));
-                            cmd3.Parameters.Add(new OracleParameter("p2", submitReimburseData.HeirarchichalApprovalRequest.TravelRequestBadgeNumber));
-                            cmd3.Parameters.Add(new OracleParameter("p3", submitReimburseData.HeirarchichalApprovalRequest.TravelRequestName));
-                            cmd3.Parameters.Add(new OracleParameter("p4", Common.ApprovalStatus.Pending.ToString()));
-                            cmd3.Parameters.Add(new OracleParameter("p5", "0"));
+                        //if (submitReimburseData.HeirarchichalApprovalRequest.SignedInBadgeNumber != submitReimburseData.HeirarchichalApprovalRequest.TravelRequestBadgeNumber)
+                        //{
+                        //    isSubmitterRequesting = true;
+                        //    cmd3.Connection = (OracleConnection)dbConn;
+                        //    cmd3.CommandText = @"INSERT INTO REIMBURSE_APPROVAL (                                                  
+                        //                                    TRAVELREQUESTID,
+                        //                                    BADGENUMBER,
+                        //                                    APPROVERNAME,
+                        //                                    APPROVALSTATUS,
+                        //                                    APPROVALORDER                                                            
+                        //                                )
+                        //                                VALUES
+                        //                                    (:p1,:p2,:p3,:p4,:p5 )";
+                        //    cmd3.Parameters.Add(new OracleParameter("p1", submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId));
+                        //    cmd3.Parameters.Add(new OracleParameter("p2", submitReimburseData.HeirarchichalApprovalRequest.TravelRequestBadgeNumber));
+                        //    cmd3.Parameters.Add(new OracleParameter("p3", submitReimburseData.HeirarchichalApprovalRequest.TravelRequestName));
+                        //    cmd3.Parameters.Add(new OracleParameter("p4", Common.ApprovalStatus.Pending.ToString()));
+                        //    cmd3.Parameters.Add(new OracleParameter("p5", "0"));
 
-                            var rowsUpdated = cmd3.ExecuteNonQuery();
-                            cmd3.Dispose();
+                        //    var rowsUpdated = cmd3.ExecuteNonQuery();
+                        //    cmd3.Dispose();
 
-                        }
+                        //}
                         foreach (var item in submitReimburseData.HeirarchichalApprovalRequest.ApproverList)
                         {
                             if (item.ApproverBadgeNumber != 0)
@@ -631,20 +654,21 @@ namespace TravelApplication.DAL.Repositories
                     var result = getNextApproverBadgeNumber(dbConn, submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId, "REIMBURSE_APPROVAL");
 
 
-                    if (submitReimburseData.HeirarchichalApprovalRequest.SignedInBadgeNumber != result)
-                    {
+                //    if (submitReimburseData.HeirarchichalApprovalRequest.SignedInBadgeNumber != result)
+                 //   {
 
                         string subject = string.Format(@"Reimbursement Request Approval for Travel Request Id - {0} ", submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId);
+                        sendNewReimbursementRequestEmail(submitReimburseData.HeirarchichalApprovalRequest.TravelRequestBadgeNumber, "Travel Request Reimbursement Form Submitted Successfully", submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId);
 
-                        if (isSubmitterRequesting)
-                        {
-                            sendEmail(submitReimburseData.HeirarchichalApprovalRequest.TravelRequestBadgeNumber, subject, submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId);
-                        }
-                        else
-                        {
+                        //if (isSubmitterRequesting)
+                        //{
+                        //    sendEmail(submitReimburseData.HeirarchichalApprovalRequest.TravelRequestBadgeNumber, subject, submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId);
+                        //}
+                        //else
+                        //{
                             sendEmail(result, subject, submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId);
-                        }
-                    }
+                        //}
+               //     }
                     dbConn.Close();
                     dbConn.Dispose();
                 }
@@ -656,6 +680,28 @@ namespace TravelApplication.DAL.Repositories
             {
 
                 throw new Exception(ex.Message);
+            }
+        }
+
+        public void sendNewReimbursementRequestEmail(int travelRequestBadgeNumber, string subject, string travelRequestId)
+        {
+            try
+            {
+                var emailAndFirstName = getEmailAddressByBadgeNumber(travelRequestBadgeNumber);
+                var email = new Models.Email()
+                {
+                    FromAddress = "natarajs@metro.net",
+                    ToAddress = emailAndFirstName[0],
+                    Body = GetNewReimbursementRequestEmailBody(emailAndFirstName[1], travelRequestId),
+                    Subject = subject
+                };
+
+                emailService.SendEmail(email.FromAddress, email.ToAddress, email.Subject, email.Body);
+            }
+            catch (Exception ex)
+            {
+                LogMessage.Log("Email send failed : " + ex.Message);
+                throw new Exception("Email failed : " + ex.Message);
             }
         }
 

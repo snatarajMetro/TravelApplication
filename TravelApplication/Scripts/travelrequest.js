@@ -1919,7 +1919,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 data: JSON.stringify({
                     "HeirarchichalApprovalRequest": {
                         "TravelRequestId": travelRequestId,
-                        "BadgeNumber": badgeNumber,
+                        "TravelRequestBadgeNumber": badgeNumber,
                         "AgreedToTermsAndConditions": agreedToTermsAndConditions,
                         "ApproverList": [
                             {

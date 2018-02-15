@@ -1517,7 +1517,7 @@ namespace TravelApplication.DAL.Repositories
             }
         }
 
-        public bool Reject(int ApproverBadgeNumber, string travelRequestId, string comments)
+        public bool Reject(int  approveBadgeNumber, int travelRequestBadgeNumber, string travelRequestId, string comments , string rejectReason)
         {
             try
             {
@@ -1531,7 +1531,7 @@ namespace TravelApplication.DAL.Repositories
                                                         APPROVERCOMMENTS = :p1,
                                                         APPROVALSTATUS = :p2 ,
                                                         APPROVALDATETIME = :p3
-                                                        WHERE TRAVELREQUESTID = {0} AND BADGENUMBER = {1} ", travelRequestId, ApproverBadgeNumber);
+                                                        WHERE TRAVELREQUESTID = {0} AND BADGENUMBER = {1} ", travelRequestId, approveBadgeNumber);
                     cmd.Parameters.Add(new OracleParameter("p1", comments));
                     cmd.Parameters.Add(new OracleParameter("p2", ApprovalStatus.Rejected.ToString()));
                     cmd.Parameters.Add(new OracleParameter("p3", DateTime.Now));
@@ -1539,7 +1539,7 @@ namespace TravelApplication.DAL.Repositories
                     cmd.Dispose();
 
                     var rejectReiumburseRequest = string.Empty;
-                    if (ApproverBadgeNumber == 85163)
+                    if (approveBadgeNumber == 85163)
                     {
                         rejectReiumburseRequest = "true";
                     }
@@ -1565,6 +1565,8 @@ namespace TravelApplication.DAL.Repositories
                     //string subject = string.Format(@"Travel Request Approval for Id - {0} ", travelRequestId);
                     //string body = string.Format(@"Please visit Travel application website " + link + " to Approve/Reject for travel request Id : {0}", travelRequestId);
                     //sendEmail(result.ToString(), body, subject);
+                    string subject = string.Format(@"Reimbursement Rejection  for Id - {0} ", travelRequestId);
+                    sendRejectionEmail(travelRequestBadgeNumber, subject, travelRequestId, comments, rejectReason);
                 }
 
                 return true;
@@ -1639,7 +1641,7 @@ namespace TravelApplication.DAL.Repositories
                     dataReader.Close();
                     response = new TravelRequestSubmitDetailResponse();
                     response.TravelRequestSubmitDetail = travelRequestSubmitDetail;
-                    response.RequiredExecutiveOfficerApproval = getRequiredExecutiveOfficeApproval(travelRequestId);
+                    response.RequiredExecutiveOfficerApproval = getRequiredExecutiveOfficeApproval(travelRequestId, dbConn);
                 }
             }
             catch (Exception ex)
@@ -1651,7 +1653,7 @@ namespace TravelApplication.DAL.Repositories
             return response;
         }
 
-        private bool getRequiredExecutiveOfficeApproval(int travelRequestId)
+        private bool getRequiredExecutiveOfficeApproval(int travelRequestId, DbConnection dbConn)
         {
             try
             {
@@ -1665,10 +1667,6 @@ namespace TravelApplication.DAL.Repositories
 
                     result = true;
                      
-                }
-                else
-                {
-                    throw new Exception("Couldn't retrieve information whether Executive officer approval is required or not");
                 }
                 command.Dispose();
                 dataReader.Close();

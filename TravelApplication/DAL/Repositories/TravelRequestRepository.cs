@@ -562,9 +562,7 @@ namespace TravelApplication.Services
                             var rowsUpdated1 = cmd2.ExecuteNonQuery();
 
                             //Send Email for next approver
-                            string link = string.Format("<a href=\"http://localhost:2462/\">here</a>");
-                            string subject = string.Format(@"Travel Request Approval for Id - {0} ", travelRequestId);
-                            string body = string.Format(@"Please visit Travel application website " + link + " to Approve/Reject for travel request Id : {0}", travelRequestId);
+                            string subject = string.Format(@"Travel Request Approval for Id - {0} ", travelRequestId);                            
                             sendEmail(result, subject,travelRequestId);
                         }                    
                     else

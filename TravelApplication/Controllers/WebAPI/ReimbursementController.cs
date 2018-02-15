@@ -168,7 +168,7 @@ namespace TravelApplication.Controllers.WebAPI
             try
             {
                 
-                var result = reimbursementService.Reject(approveRequest.ApproverBadgeNumber, approveRequest.TravelRequestId, approveRequest.Comments);
+                var result = reimbursementService.Reject(approveRequest.ApproverBadgeNumber, approveRequest.TravelRequestBadgeNumber ,approveRequest.TravelRequestId, approveRequest.Comments,approveRequest.RejectReason);
 
                 response = Request.CreateResponse(HttpStatusCode.OK, result);
             }

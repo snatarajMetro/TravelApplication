@@ -14,7 +14,7 @@ namespace TravelApplication.Services
         List<ReimburseGridDetails> GetReimbursementRequests(int badgeNumber, int roleId);
         ReimbursementInput GetReimbursementDetails(string travelRequestId);
         bool Approve(int badgeNumber, string travelRequestId, string comments);
-        bool Reject(int badgeNumber, string travelRequestId, string comments);
+        bool Reject(int approverBadgeNumber, int travelRequestBadgeNumber, string travelRequestId, string comments , string rejectReason);
 
         TravelRequestSubmitDetailResponse GetSubmitDetails(int travelRequestId);
     }
