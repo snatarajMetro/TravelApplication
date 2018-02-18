@@ -1900,8 +1900,10 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             canSubmit = false;
         }
 
+        canSubmit = true;
         if (canSubmit) {
-            if (executiveOfficerRequired) {
+
+            if (executiveOfficerRequired == 'true') {
                 if (executiveOfficerBadgeNumber == "" || executiveOfficerBadgeNumber == '0') {
                     canSubmit = false;
                     validationMessage = "Since amount is greater than $3000, executive officer's approval is required";
@@ -3073,8 +3075,12 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             .always(function (data) {
                 $('#travelreimbursementtemplate').html($compile($(data).html())($scope));
                 $scope.$apply();
+                
 
                 $scope.$apply(function () {
+
+                    $('#txtTravelRequestNumber1').val(travelRequestId);
+                    
 
                     // Date picker options
                     var options = {
