@@ -9,7 +9,7 @@ namespace TravelApplication.Models
     {
         public string Comments { get; set; }
 
-        public string TravelRequestId { get; set; }
+       // public string TravelRequestId { get; set; }
 
         public int BadgeNumber { get; set; }
 

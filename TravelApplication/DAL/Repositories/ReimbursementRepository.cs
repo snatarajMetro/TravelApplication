@@ -1073,7 +1073,7 @@ namespace TravelApplication.DAL.Repositories
                                 response.Add(new ReimburseGridDetails()
                                 {
                                     TravelRequestId = dataReader["TravelRequestId"].ToString(),
-
+                                    BadgeNumber = Convert.ToInt32(dataReader["BadgeNumber"].ToString()),
                                     SubmittedByUser = dataReader["SUBMITTEDBYUSERNAME"].ToString(),
                                     SubmittedDateTime = Convert.ToDateTime(dataReader["SUBMITTEDDATETIME"]),
                                     RequiredApprovers = GetReimburseApproversListByTravelRequestId(dbConn, dataReader["TravelRequestId"].ToString()),
