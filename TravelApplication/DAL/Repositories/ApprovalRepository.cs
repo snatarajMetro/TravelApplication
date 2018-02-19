@@ -144,9 +144,7 @@ namespace TravelApplication.DAL.Repositories
                     Body = GetApprovalRequestEmailBody(emailAndFirstName[1],travelRequestId, departmentHeadBadgeNumber),
                     Subject = subject
                 };
-                //var endpointUrl = "http://localhost:2462/api/email/sendemail";
-                //var client = new HttpClient();
-                //var response = client.PostAsJsonAsync(endpointUrl, email).ConfigureAwait(false);
+
                 emailService.SendEmail(email.FromAddress, email.ToAddress, email.Subject, email.Body);
             }
             catch (Exception ex )
@@ -163,11 +161,7 @@ namespace TravelApplication.DAL.Repositories
             {
                 string link = string.Format("<a href=\"http://localhost:2462/\">here</a>");
                 var emailAndFirstName = getEmailAddressByBadgeNumber(badgeNumber);
-                 
 
-                //bodyMessage += "Please visit Travel application website " + link + " you are travel request - " + travelRequestId + "  has been rejected." + "\n\n";
-                //bodyMessage += "Reject reason - " + rejectReason + "\n\n";
-                //bodyMessage += "Comments - " + comments ;
                 var email = new Models.Email()
                 {
                     FromAddress = "natarajs@metro.net",
@@ -175,9 +169,7 @@ namespace TravelApplication.DAL.Repositories
                     Body = GetRejectionRequestEmailBody(emailAndFirstName[1], travelRequestId,comments,rejectReason),
                     Subject = subject
                 };
-                //var endpointUrl = "http://localhost:2462/api/email/sendemail";
-                //var client = new HttpClient();
-                //var response = client.PostAsJsonAsync(endpointUrl, email).ConfigureAwait(false);
+
                 emailService.SendEmail(email.FromAddress, email.ToAddress, email.Subject, email.Body);
             }
             catch (Exception ex)
@@ -215,8 +207,7 @@ namespace TravelApplication.DAL.Repositories
         public string GetRejectionRequestEmailBody(string userName, string travelRequestId, string comments, string rejectReason)
         {
             string emailBody = string.Empty;
-            string baseUrl = "http://traveltest.metro.net/";
-
+           
             var x = System.Web.Hosting.HostingEnvironment.MapPath("~/UITemplates");
             using (StreamReader reader = new StreamReader(x + "/RejectRequest.html"))
             {
@@ -225,7 +216,6 @@ namespace TravelApplication.DAL.Repositories
                 if (!string.IsNullOrEmpty(emailBody))
                 {
                     emailBody = emailBody
-                                    .Replace("{BASEURL}", baseUrl)
                                     .Replace("{USERNAME}", userName)
                                     .Replace("{TRAVELREQUESTID}", travelRequestId.ToString())
                                     .Replace("{COMMENTS}", comments)

@@ -457,7 +457,7 @@ function savedataentry()
 
                     var isValid = ((costCenter.length > 0)
                                     && (lineItem.length > 0)
-                                    && (project.length > 0)
+                                    //&& (project.length > 0)
                                     && (task.length > 0)
                                     && (amount.length > 0));
 
@@ -952,12 +952,14 @@ function showRejectSection(container) {
 
 function showRejectSection2(container) {
     
-    var travelRequestId = $(container).prop('alt');
+    var altObj = $(container).prop('alt');
+    var travelRequestId = altObj.split('|')[0];
+    var travelRequestBadgeNumber = altObj.split('|')[1];
     var selectedRoleId = $("#selectedRoleId").text();
 
     $('#travalAction').text('travelreimbursement');
     var scope = angular.element('#rejecttemplate').scope();
-    scope.loadRejectAction(travelRequestId, selectedRoleId, 0 , false);
+    scope.loadRejectAction(travelRequestId, selectedRoleId, travelRequestBadgeNumber, false);
 
     $('#rejecttemplate').show();
 }
