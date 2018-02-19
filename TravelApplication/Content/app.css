@@ -1206,10 +1206,10 @@ div.dataentry3{
 }
 
 .errorcontainer2 {
-    position:absolute;
-    /*display:block;*/
-    top:0px;
-    left:890px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .successcontainerok {
