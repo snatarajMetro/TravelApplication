@@ -1963,7 +1963,6 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             canSubmit = false;
         }
 
-        canSubmit = true;
         if (canSubmit) {
 
             if (executiveOfficerRequired == 'true') {
