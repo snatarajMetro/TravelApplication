@@ -1418,10 +1418,10 @@ div.dataentryuploadandsubmitsection{
 }
 
 .errorcontainernewrequest {
-    position:absolute;
-    /*display:block;*/
-    top:0px;
-    left:950px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .dialognewrequest {
