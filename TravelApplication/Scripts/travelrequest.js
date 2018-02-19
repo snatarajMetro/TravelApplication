@@ -1573,6 +1573,67 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         var travelRequestBadgeNumber = $('#travelRequestBadgeNumber').text();
         var txtName = $('#txtName').val();
         var action = $("#btnSubmit").val();
+        var errorMessage = "Some of the required fields are missing. Please try again.";
+        var requiredAtatchmentsMissing = "Some of the required attachments are missing.";
+
+        // Justification Memo document validation
+        var justificationMemoVisble = $('#supportingDocumentZone1').is(':visible');
+        if (justificationMemoVisble == true) {
+            var documentUploaded = ($(uploaddocumenticon1).css('display') == 'none');
+
+            if (documentUploaded == true) {
+                canSubmit = false;
+                errorMessage = requiredAtatchmentsMissing
+            } else {
+                canSubmit = true;
+            }
+        }
+
+        // Agenda document validation
+        if (canSubmit == true) {
+            var agendaVisble = $('#supportingDocumentZone2').is(':visible');
+            if (agendaVisble == true) {
+                var documentUploaded = ($(uploaddocumenticon2).css('display') == 'none');
+
+                if (documentUploaded == true) {
+                    canSubmit = false;
+                    errorMessage = requiredAtatchmentsMissing
+                }
+                else {
+                    canSubmit = true;
+                }
+            }
+        }
+
+        // Cash Advance memo document validation
+        if (canSubmit == true) {
+            var cashAdvanceMemo = $('#supportingDocumentZone3').is(':visible');
+            if (cashAdvanceMemo == true) {
+                var documentUploaded = ($(uploaddocumenticon3).css('display') == 'none');
+
+                if (documentUploaded == true) {
+                    canSubmit = false;
+                    errorMessage = requiredAtatchmentsMissing
+                } else {
+                    canSubmit = true;
+                }
+            }
+        }
+
+        // Registration document validation
+        if (canSubmit == true) {
+            var registration = $('#supportingDocumentZone4').is(':visible');
+            if (registration == true) {
+                var documentUploaded = ($(uploaddocumenticon4).css('display') == 'none');
+
+                if (documentUploaded == true) {
+                    canSubmit = false;
+                    errorMessage = requiredAtatchmentsMissing
+                } else {
+                    canSubmit = true;
+                }
+            }
+        }
 
         if (action == "Close") {
             $("#fileuploadtemplate").hide();
@@ -1667,28 +1728,30 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         var travelCoordinatorName = "";
         var travelCoordinatorOtherBadgeNumber = -1;
 
-        if (travelCoordinatorBadgeNumber && travelCoordinatorBadgeNumber != '?') {
+        if (canSubmit) {
+            if (travelCoordinatorBadgeNumber && travelCoordinatorBadgeNumber != '?') {
 
-            if (travelCoordinatorBadgeNumber == '-1') {
-                travelCoordinatorBadgeNumber = $('#txtTravelCoordinatorBadgeNumber').val();
-                travelCoordinatorName = $('#txtTravelCoordinatorName').val();
+                if (travelCoordinatorBadgeNumber == '-1') {
+                    travelCoordinatorBadgeNumber = $('#txtTravelCoordinatorBadgeNumber').val();
+                    travelCoordinatorName = $('#txtTravelCoordinatorName').val();
+                }
+                else {
+                    travelCoordinatorName = $("#ddlTravelCoordinator option:selected").text();
+                }
+
+                if (travelCoordinatorBadgeNumber && canSubmit) {
+                    canSubmit = true;
+                }
             }
             else {
-                travelCoordinatorName = $("#ddlTravelCoordinator option:selected").text();
+                canSubmit = false;
             }
-
-            if (travelCoordinatorBadgeNumber && canSubmit) {
-                canSubmit = true;
-            }
-        }
-        else {
-            canSubmit = false;
         }
 
         // Agree checkbox
         var agreedToTermsAndConditions = $('#cbAgree').prop('checked');
 
-        if (!agreedToTermsAndConditions) {
+        if (canSubmit && !agreedToTermsAndConditions) {
             canSubmit = false;
         }
 
@@ -1770,7 +1833,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         }
         else {
             $("#submiterror2").fadeIn("slow");
-            $('#submiterrormessage2').text("Some of the required fields are missing. Please try again.");
+            $('#submiterrormessage2').text(errorMessage);
 
             // fade out in 5 seconds
             $("#submiterror2").fadeOut(fadeOutTimeInMilliseconds);
