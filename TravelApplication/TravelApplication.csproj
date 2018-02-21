@@ -319,6 +319,8 @@
     <Content Include="Images\delete2.png" />
     <Content Include="Images\download.png" />
     <Content Include="Images\edit.png" />
+    <Content Include="Images\EmailApprove.JPG" />
+    <Content Include="Images\EmailReject.JPG" />
     <Content Include="Images\Fly.jpg" />
     <Content Include="Images\logo.jpg" />
     <Content Include="Images\logo.png" />
