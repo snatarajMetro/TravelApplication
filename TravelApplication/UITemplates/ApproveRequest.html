@@ -87,12 +87,26 @@
 <body>
     <span>Dear {USERNAME},</span>
     <div id="body">
-        <br />
+        <br />        
+
         You have been assigend as an approver for Traval Request # <b>{TRAVELREQUESTID}</b>. <br />
-        Click <a href="{BASEURL}/travelrequest/approve?travelRequestId={TRAVELREQUESTID}&badgeNumber={BADGENUMBER}">here</a> to approve the request.<br />
+        </br>
+        Travel Details : 
+        <br />
+        <br/>
+        Purpose  - <b>{PURPOSE}</b>
+        <br />
+        Meeting Begins  - <b>{MEETINGBEGINDATETIME}</b>  
+        <br/>
+        Meeting Ends    - <b>{MEETINGENDDATETIME} </b>
+
+        <br/>
+        <br/>
+
+        <!--Click <a href="{BASEURL}/travelrequest/approve?travelRequestId={TRAVELREQUESTID}&badgeNumber={BADGENUMBER}">here</a> to approve the request.<br />
         <br />
         Click <a href="{BASEURL}/travelrequest/reject?travelRequestId={TRAVELREQUESTID}&badgeNumber={BADGENUMBER}">here</a> to reject the request.<br />
-        <br />
+        <br />-->
         <div style="overflow:hidden">
             <a href="{BASEURL}/travelrequest/approve?travelRequestId={TRAVELREQUESTID}&badgeNumber={BADGENUMBER}" title="Approve"><img src="../Images/emailapprove.jpg" width="100" height="50" /></a>
             <a href="{BASEURL}/travelrequest/reject?travelRequestId={TRAVELREQUESTID}&badgeNumber={BADGENUMBER}" title="Reject"><img src="../Images/emailreject.jpg" width="100" height="50" /></a>

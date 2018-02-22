@@ -182,7 +182,27 @@ namespace TravelApplication.DAL.Repositories
 
         public string GetApprovalRequestEmailBody(string userName, string travelRequestId, int badgeNumber)
         {
+            string purpose = string.Empty;
+            string meetingBeginsDate = string.Empty;
+            string meetingEndDate = string.Empty;
+            var dbConn = ConnectionFactory.GetOpenDefaultConnection();
+            string query = string.Format("select PURPOSE, MEETINGBEGINDATETIME, MEETINGENDDATETIME from TRAVELREQUEST where TRAVELREQUESTID='{0}'", travelRequestId);
+            OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+            command.CommandText = query;
+            DbDataReader dataReader = command.ExecuteReader();
+
+            if (dataReader.HasRows)
+            {
+                while (dataReader.Read())
+                {
+                    purpose = dataReader["PURPOSE"].ToString();
+                    meetingBeginsDate = Convert.ToDateTime(dataReader["MEETINGBEGINDATETIME"]).ToShortDateString();
+                    meetingEndDate =Convert.ToDateTime(dataReader["MEETINGENDDATETIME"]).ToShortDateString();
+                }
+            }
+
             string emailBody = string.Empty;
+
             string baseUrl = "http://traveltest.metro.net/";
 
             var x = System.Web.Hosting.HostingEnvironment.MapPath("~/UITemplates");
@@ -193,6 +213,9 @@ namespace TravelApplication.DAL.Repositories
                 if (!string.IsNullOrEmpty(emailBody))
                 {
                     emailBody = emailBody
+                                    .Replace("{PURPOSE}", purpose)
+                                    .Replace("{MEETINGBEGINDATETIME}", meetingBeginsDate.ToString())
+                                    .Replace("{MEETINGENDDATETIME}", meetingEndDate.ToString())
                                     .Replace("{BASEURL}", baseUrl)
                                     .Replace("{USERNAME}", userName)
                                     .Replace("{TRAVELREQUESTID}", travelRequestId.ToString())
@@ -353,7 +376,8 @@ namespace TravelApplication.DAL.Repositories
                                 cmd.Dispose();
                             }
                         }
-                        OracleCommand cmd1 = new OracleCommand();
+                    }
+                    OracleCommand cmd1 = new OracleCommand();
                         cmd1.Connection = (OracleConnection)dbConn;
                         cmd1.CommandText = string.Format(@"UPDATE TRAVELREQUEST SET                                                 
                                                        SUBMITTEDBYUSERNAME = :p1 ,
@@ -368,7 +392,7 @@ namespace TravelApplication.DAL.Repositories
                         cmd1.Parameters.Add(new OracleParameter("p4", (submitTravelRequest.HeirarchichalApprovalRequest.AgreedToTermsAndConditions) ? "Y" : "N"));
                         var rowsUpdated1 = cmd1.ExecuteNonQuery();
                         cmd1.Dispose();
-                    }
+                    
 
                     var result = getNextApproverBadgeNumber(dbConn, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId, "TRAVELREQUEST_APPROVAL");
 

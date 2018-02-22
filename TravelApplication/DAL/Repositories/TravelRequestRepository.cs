@@ -538,7 +538,7 @@ namespace TravelApplication.Services
                                                         APPROVERCOMMENTS = :p1,
                                                         APPROVALSTATUS = :p2 ,
                                                         APPROVALDATETIME = :p3
-                                                        WHERE TRAVELREQUESTID = {0} AND BADGENUMBER = {1} OR APPROVEROTHERBADGENUMBER ={1}", travelRequestId, approverBadgeNumber);
+                                                        WHERE TRAVELREQUESTID = {0} AND APPROVALDATETIME IS Null AND BADGENUMBER = {1} OR APPROVEROTHERBADGENUMBER ={1}  ", travelRequestId, approverBadgeNumber);
                     cmd.Parameters.Add(new OracleParameter("p1", comments));
                     cmd.Parameters.Add(new OracleParameter("p2", ApprovalStatus.Approved.ToString()));
                     cmd.Parameters.Add(new OracleParameter("p3", DateTime.Now));             
@@ -599,7 +599,7 @@ namespace TravelApplication.Services
                                                         APPROVALSTATUS = :p2 ,
                                                         REJECTEDDATETIME = :p3,
                                                         REJECTREASON = :p4
-                                                        WHERE TRAVELREQUESTID = {0} AND BADGENUMBER = {1} ", approveRequest.TravelRequestId, approveRequest.ApproverBadgeNumber);
+                                                        WHERE TRAVELREQUESTID = {0} AND APPROVALDATETIME IS Null AND BADGENUMBER = {1}   ", approveRequest.TravelRequestId, approveRequest.ApproverBadgeNumber);
                     cmd.Parameters.Add(new OracleParameter("p1", approveRequest.Comments));
                     cmd.Parameters.Add(new OracleParameter("p2", ApprovalStatus.Rejected.ToString()));
                     cmd.Parameters.Add(new OracleParameter("p3", DateTime.Now));
@@ -1792,7 +1792,7 @@ namespace TravelApplication.Services
             command.Dispose();
             dataReader.Close();
 
-            if (response == approverBadgeNumber)
+            if (response == approverBadgeNumber && (!EditActionEligible(dbConn,travelRequestId)))
             {
                 result = true;
             }
