@@ -203,7 +203,7 @@ namespace TravelApplication.DAL.Repositories
 
             string emailBody = string.Empty;
 
-            string baseUrl = "http://traveltest.metro.net/";
+            string baseUrl = System.Configuration.ConfigurationManager.AppSettings["TravelRequestEmailServicePath"].ToString(); 
 
             var x = System.Web.Hosting.HostingEnvironment.MapPath("~/UITemplates");
             using (StreamReader reader = new StreamReader( x+"/ApproveRequest.html"))
@@ -296,19 +296,47 @@ namespace TravelApplication.DAL.Repositories
                         {
                             if (item.ApproverBadgeNumber != 0)
                             {
+                                cmd2.CommandText = string.Format(@"Select * from TRAVELREQUEST_APPROVAL where TravelRequestId = {0} AND BADGENUMBER = {1}", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId, item.ApproverBadgeNumber);
+                                dataReader = cmd2.ExecuteReader();
+                                if (dataReader.HasRows)
+                                {
 
-                                //  Check if the approval already exists 
-                                OracleCommand cmd = new OracleCommand();
-                                cmd.Connection = (OracleConnection)dbConn;
-                                cmd.CommandText = string.Format(@"Update TRAVELREQUEST_APPROVAL SET                                                   
+                                    //  Check if the approval already exists 
+                                    OracleCommand cmd = new OracleCommand();
+                                    cmd.Connection = (OracleConnection)dbConn;
+                                    cmd.CommandText = string.Format(@"Update TRAVELREQUEST_APPROVAL SET                                                   
                                                             BADGENUMBER = :p1,
                                                             APPROVERNAME = :p2,                                                                                                                     
                                                             APPROVEROTHERBADGENUMBER = :p3 WHERE TRAVELREQUESTID = {0} AND APPROVALORDER = {1} ", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId, item.ApprovalOrder);
-                                cmd.Parameters.Add(new OracleParameter("p1", item.ApproverBadgeNumber));
-                                cmd.Parameters.Add(new OracleParameter("p2", item.ApproverName));
-                                cmd.Parameters.Add(new OracleParameter("p6", item.ApproverOtherBadgeNumber));
-                                var rowsUpdated = cmd.ExecuteNonQuery();
-                                cmd.Dispose();
+                                    cmd.Parameters.Add(new OracleParameter("p1", item.ApproverBadgeNumber));
+                                    cmd.Parameters.Add(new OracleParameter("p2", item.ApproverName));
+                                    cmd.Parameters.Add(new OracleParameter("p6", item.ApproverOtherBadgeNumber));
+                                    var rowsUpdated = cmd.ExecuteNonQuery();
+                                    cmd.Dispose();
+                                }
+                                else
+                                {
+                                    OracleCommand cmd = new OracleCommand();
+                                    cmd.Connection = (OracleConnection)dbConn;
+                                    cmd.CommandText = @"INSERT INTO TRAVELREQUEST_APPROVAL (                                                  
+                                                            TRAVELREQUESTID,
+                                                            BADGENUMBER,
+                                                            APPROVERNAME,
+                                                            APPROVALSTATUS,
+                                                            APPROVALORDER,
+                                                            APPROVEROTHERBADGENUMBER
+                                                        )
+                                                        VALUES
+                                                            (:p1,:p2,:p3,:p4,:p5,:p6)";
+                                    cmd.Parameters.Add(new OracleParameter("p1", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId));
+                                    cmd.Parameters.Add(new OracleParameter("p2", item.ApproverBadgeNumber));
+                                    cmd.Parameters.Add(new OracleParameter("p3", item.ApproverName));
+                                    cmd.Parameters.Add(new OracleParameter("p4", Common.ApprovalStatus.Pending.ToString()));
+                                    cmd.Parameters.Add(new OracleParameter("p5", item.ApprovalOrder));
+                                    cmd.Parameters.Add(new OracleParameter("p6", item.ApproverOtherBadgeNumber));
+                                    var rowsUpdated = cmd.ExecuteNonQuery();
+                                    cmd.Dispose();
+                                }
                             }
                             else
                             {
