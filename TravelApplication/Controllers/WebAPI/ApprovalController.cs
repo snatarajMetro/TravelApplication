@@ -171,7 +171,7 @@ namespace TravelApplication.Controllers.WebAPI
             catch (Exception ex)
             {
                 LogMessage.Log("api/approval/Reject :" + ex.Message);
-                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Travel request was not successfully rejected.");
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Rejection failed");
             }
 
             return response;

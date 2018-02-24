@@ -563,7 +563,7 @@ namespace TravelApplication.Services
 
                             //Send Email for next approver
                             string subject = string.Format(@"Travel Request Approval for Id - {0} ", travelRequestId);                            
-                            sendEmail(result, subject,travelRequestId);
+                            sendEmail(result, subject,travelRequestId,"Form1");
                         }                    
                     else
                     {

@@ -7,8 +7,8 @@ namespace TravelApplication.Models
 {
     public class ApproveModel
     {
-        public int TravelRequestId { get; set; }
+        public string TravelRequestId { get; set; }
 
-        public string BadgeNumber { get; set; }
+        public int BadgeNumber { get; set; }
     }
 }

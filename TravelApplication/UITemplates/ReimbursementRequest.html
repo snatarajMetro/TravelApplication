@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Provider Registration</title>
+    <meta charset="utf-8" />
+    <style type="text/css">
+        body {
+            font-family: Arial;
+            font-size: 15px;
+            padding: 5px;
+        }
+
+        .approve {
+            float: left;
+            margin-right: 20px;
+            background-color: darkgreen;
+            color: white;
+            width: 60px;
+            height: 15px;
+            padding-left: 10px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-right: 4px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            border: solid 1px gray;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+            .approve:hover {
+                float: left;
+                margin-right: 20px;
+                background-color: forestgreen;
+                color: white;
+                width: 60px;
+                height: 15px;
+                padding-left: 10px;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                padding-right: 4px;
+                cursor: pointer;
+                -moz-border-radius: 3px;
+                border-radius: 3px;
+                border: solid 1px gray;
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            }
+
+        .reject {
+            float: left;
+            margin-right: 20px;
+            background-color: #c30c0c;
+            color: white;
+            width: 60px;
+            height: 15px;
+            padding-left: 14px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-right: 1px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            border: solid 1px gray;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+            .reject:hover {
+                float: left;
+                margin-right: 20px;
+                background-color: red;
+                color: white;
+                width: 60px;
+                height: 15px;
+                padding-left: 14px;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                padding-right: 1px;
+                -moz-border-radius: 3px;
+                border-radius: 3px;
+                border: solid 1px gray;
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            }
+
+        .action {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <span>Dear {USERNAME},</span>
+    <div id="body">
+        <br />
+
+        You have been assigend as an approver for Reimbursement Traval Request # <b>{TRAVELREQUESTID}</b>. <br />
+        </br>
+        Travel Details :
+        <br />
+        <br />
+        Purpose  - <b>{PURPOSE}</b>
+        <br />
+        Meeting Begins  - <b>{MEETINGBEGINDATETIME}</b>
+        <br />
+        Meeting Ends    - <b>{MEETINGENDDATETIME} </b>
+
+        <br />
+        <br />
+
+        <!--Click <a href="{BASEURL}/travelrequest/approve?travelRequestId={TRAVELREQUESTID}&badgeNumber={BADGENUMBER}">here</a> to approve the request.<br />
+        <br />
+        Click <a href="{BASEURL}/travelrequest/reject?travelRequestId={TRAVELREQUESTID}&badgeNumber={BADGENUMBER}">here</a> to reject the request.<br />
+        <br />-->
+        <div style="overflow:hidden">
+            <a href="{BASEURL}/Reimbursement/Approve?travelRequestId={TRAVELREQUESTID}&badgeNumber={BADGENUMBER}" title="Approve"><img src="{BASEURL}/Images/emailapprove.jpg" width="100" height="35" /></a>
+            <a href="{BASEURL}/Reimbursement/ReimburseReject?travelRequestId={TRAVELREQUESTID}&badgeNumber={BADGENUMBER}&travelRequestBadgeNumber={TRAVELREQUESTBADGENUMBER}" title="Reject"><img src="{BASEURL}/Images/emailreject.jpg" width="100" height="35" /></a>
+            <!--<div class="approve">
+                <a href="{BASEURL}/travelrequest/approve?travelRequestId={TRAVELREQUESTID}&badgeNumber={BADGENUMBER}" class="action">Approve</a>
+            </div>
+            <div class="reject">
+                <a href="{BASEURL}/travelrequest/reject?travelRequestId={TRAVELREQUESTID}&badgeNumber={BADGENUMBER}" class="action">Reject</a>
+            </div>-->
+        </div>
+        <br />
+        Regards,
+        <br />
+        LA MTA
+    </div>
+</body>
+</html>

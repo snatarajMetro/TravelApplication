@@ -120,7 +120,10 @@ namespace TravelApplication.DAL.Repositories
                 string btnApprove = string.Format("<button type=\"button\">Click Me!</button>");
                 string subject = string.Format(@"Travel Request Approval for Id - {0} ", submitTravelRequestData.TravelRequestId);
                 string body = string.Format(@"Please visit Travel application website " + link + " to Approve/Reject for travel request Id : {0}  btnApprove ", submitTravelRequestData.TravelRequestId);
-                sendEmail(Convert.ToInt32(submitTravelRequestData.DepartmentHeadBadgeNumber), subject, submitTravelRequestData.TravelRequestId.ToString());
+                /* Requesttype  -
+                 *  Form1 (TravelRequest) 
+                 *  Form2 (Reimbursement) */
+                sendEmail(Convert.ToInt32(submitTravelRequestData.DepartmentHeadBadgeNumber), subject, submitTravelRequestData.TravelRequestId.ToString(), "Form1");
                 return true;
 
             }
@@ -132,7 +135,7 @@ namespace TravelApplication.DAL.Repositories
 
         }
 
-        public void sendEmail(int departmentHeadBadgeNumber, string subject, string travelRequestId)
+        public void sendEmail(int departmentHeadBadgeNumber, string subject, string travelRequestId, string requestType)
         {
             try
             {
@@ -141,7 +144,7 @@ namespace TravelApplication.DAL.Repositories
                 {
                     FromAddress = "natarajs@metro.net",
                     ToAddress = emailAndFirstName[0],
-                    Body = GetApprovalRequestEmailBody(emailAndFirstName[1],travelRequestId, departmentHeadBadgeNumber),
+                    Body = GetApprovalRequestEmailBody(emailAndFirstName[1],travelRequestId, departmentHeadBadgeNumber, requestType),
                     Subject = subject
                 };
 
@@ -154,6 +157,8 @@ namespace TravelApplication.DAL.Repositories
             }
             
         }
+
+
 
         public void sendRejectionEmail(int badgeNumber, string subject, string travelRequestId, string comments, string rejectReason)
         {
@@ -180,13 +185,14 @@ namespace TravelApplication.DAL.Repositories
 
         }
 
-        public string GetApprovalRequestEmailBody(string userName, string travelRequestId, int badgeNumber)
+        public string GetApprovalRequestEmailBody(string userName, string travelRequestId, int badgeNumber, string requestType)
         {
             string purpose = string.Empty;
             string meetingBeginsDate = string.Empty;
             string meetingEndDate = string.Empty;
+            int travelrequestBadgeNumber = 0;
             var dbConn = ConnectionFactory.GetOpenDefaultConnection();
-            string query = string.Format("select PURPOSE, MEETINGBEGINDATETIME, MEETINGENDDATETIME from TRAVELREQUEST where TRAVELREQUESTID='{0}'", travelRequestId);
+            string query = string.Format("select BADGENUMBER, PURPOSE, MEETINGBEGINDATETIME, MEETINGENDDATETIME from TRAVELREQUEST where TRAVELREQUESTID='{0}'", travelRequestId);
             OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
             command.CommandText = query;
             DbDataReader dataReader = command.ExecuteReader();
@@ -198,21 +204,23 @@ namespace TravelApplication.DAL.Repositories
                     purpose = dataReader["PURPOSE"].ToString();
                     meetingBeginsDate = Convert.ToDateTime(dataReader["MEETINGBEGINDATETIME"]).ToShortDateString();
                     meetingEndDate =Convert.ToDateTime(dataReader["MEETINGENDDATETIME"]).ToShortDateString();
+                    travelrequestBadgeNumber = Convert.ToInt32(dataReader["BADGENUMBER"]);
                 }
             }
 
             string emailBody = string.Empty;
 
-            string baseUrl = System.Configuration.ConfigurationManager.AppSettings["TravelRequestEmailServicePath"].ToString(); 
+            string baseUrl = System.Configuration.ConfigurationManager.AppSettings["TravelRequestEmailServicePath"].ToString();
 
-            var x = System.Web.Hosting.HostingEnvironment.MapPath("~/UITemplates");
-            using (StreamReader reader = new StreamReader( x+"/ApproveRequest.html"))
+            string emailRequestType = (requestType == "Form1") ? "/ApproveRequest.html" : "/ReimbursementRequest.html";           
+            using (StreamReader reader = new StreamReader(System.Web.Hosting.HostingEnvironment.MapPath("~/UITemplates") + emailRequestType))
             {
                 emailBody = reader.ReadToEnd();
 
                 if (!string.IsNullOrEmpty(emailBody))
                 {
                     emailBody = emailBody
+                                    .Replace("{TRAVELREQUESTBADGENUMBER}", travelrequestBadgeNumber.ToString())
                                     .Replace("{PURPOSE}", purpose)
                                     .Replace("{MEETINGBEGINDATETIME}", meetingBeginsDate.ToString())
                                     .Replace("{MEETINGENDDATETIME}", meetingEndDate.ToString())
@@ -434,11 +442,11 @@ namespace TravelApplication.DAL.Repositories
 
                         if (isSubmitterRequesting)
                         {
-                              sendEmail(submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestBadgeNumber, subject, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
+                              sendEmail(submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestBadgeNumber, subject, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId,"Form1");
                         }
                         else
                         {
-                             sendEmail(result, subject, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
+                             sendEmail(result, subject, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId, "Form1");
                         }
                     }
 
@@ -708,7 +716,7 @@ namespace TravelApplication.DAL.Repositories
                         //}
                         //else
                         //{
-                            sendEmail(result, subject, submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId);
+                            sendEmail(result, subject, submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId,"Form2");
                         //}
                //     }
                     dbConn.Close();

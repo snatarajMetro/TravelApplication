@@ -1494,7 +1494,7 @@ namespace TravelApplication.DAL.Repositories
                             string link = string.Format("<a href=\"http://localhost:2462/\">here</a>");
                             string subject = string.Format(@"Travel Request Reimbursement Approval for Id - {0} ", travelRequestId);
                             string body = string.Format(@"Please visit Travel application website " + link + " to Approve/Reject for travel request Id : {0}", travelRequestId);
-                            sendEmail(result, subject,travelRequestId);
+                            sendEmail(result, subject,travelRequestId, "Form2");
                         }
                     }
                     else

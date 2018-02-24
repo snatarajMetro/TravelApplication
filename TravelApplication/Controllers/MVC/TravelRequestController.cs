@@ -4,13 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TravelApplication.Models;
+using TravelApplication.Services;
 
 namespace TravelApplication.Controllers.MVC
 {
     public class TravelRequestController : Controller
     {
         [HttpGet]
-        public ActionResult Approve(int travelRequestId, string badgeNumber)
+        public ActionResult Approve(string travelRequestId, int badgeNumber)
         {
             var approveModel = new ApproveModel()
             {
@@ -20,5 +21,7 @@ namespace TravelApplication.Controllers.MVC
 
             return View("Approve", approveModel);
         }
+
+        
     }
 }
