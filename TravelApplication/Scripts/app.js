@@ -1055,16 +1055,19 @@ function editTravelReimbursement(container) {
     
 }
 
-function createnewreimbursementrequest() {
 
-    //load travel request section
-    var scope = angular.element('#travelreimbursementtemplate').scope();
+//function createnewreimbursementrequest() {
 
-    scope.loadTravelReimbursementRequest();
-    scope.loadCostCenters();
-}
+//    //load travel request section
+//    var scope = angular.element('#travelreimbursementtemplate').scope();
+
+//    scope.loadTravelReimbursementRequest();
+//    scope.loadCostCenters();
+//}
 
 function createTravelRequestReimbursement(container) {
+
+    window.location.reload(true);
 
     $('#approvedtravelrequesttemplate').hide();
     $('#travelRequestId').text(0);
