@@ -2023,6 +2023,9 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 dataType: "json",
                 success: function (data) {
 
+                    // reset
+                    $('#txtReimbursementId').val(0);
+
                     // if "Admin" edits a request, close the page and display existing travel requests
                     if (action == "Save & Close") {
                         $("#fileuploadtemplate").hide();

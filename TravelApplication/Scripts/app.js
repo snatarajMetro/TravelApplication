@@ -60,6 +60,7 @@ function logout() {
     $('#travelReimbursementId').text(0);
     $('#fromDashboard').text("false");
     $('#estimatedExpenseId').text(0);
+    $('#txtReimbursementId').val(0);
     userName = "";
 
     $("#action").hide();
@@ -1378,7 +1379,8 @@ function savereimbursementdataentry() {
                 }
             }),
             success: function (data) {
-                //var result = JSON.parse(data);
+                reimbursementId = JSON.parse(data);
+                $('#txtReimbursementId').val(reimbursementId);
 
                 $('#travelRequestBadgeNumber').text(badgeNumber);
                 $('#travelRequestId').text(travelRequestId);
