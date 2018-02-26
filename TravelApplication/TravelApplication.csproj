@@ -175,7 +175,6 @@
     <Compile Include="Common\enum.cs" />
     <Compile Include="Controllers\MVC\HomeController.cs" />
     <Compile Include="Controllers\MVC\LoginController.cs" />
-    <Compile Include="Controllers\MVC\ReimbursementController.cs" />
     <Compile Include="Controllers\MVC\TravelRequestController.cs" />
     <Compile Include="Controllers\WebAPI\ApprovalController.cs" />
     <Compile Include="Controllers\WebAPI\DocumentsController.cs" />
