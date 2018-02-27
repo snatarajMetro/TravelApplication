@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web;
 using CrystalDecisions.Shared;
 using System.IO;
+using System.Data.Common;
+using System.Configuration;
 
 namespace TravelApplication.Services
 {
@@ -29,25 +31,29 @@ namespace TravelApplication.Services
             {
                 dReport.SetParameterValue("p_request_id", travelRequestId);
             }
-            String mOleString = System.Configuration.ConfigurationManager.AppSettings["rptConnectionString"];
-            String[] aTags = mOleString.Split(';');
+            //String mOleString = System.Configuration.ConfigurationManager.AppSettings["rptConnectionString"];
+            //String[] aTags = mOleString.Split(';');
 
-            Hashtable hTags = new Hashtable();
-            int tagCount = aTags.Length;
-            for (int cnt = 0; cnt < tagCount - 1; cnt++)
-            {
-                String[] atagParts = aTags[cnt].Split('=');
-                hTags.Add(atagParts[0].Replace("'", ""), atagParts[1].ToUpper().Replace("'", ""));
-            }
+            //Hashtable hTags = new Hashtable();
+            //int tagCount = aTags.Length;
+            //for (int cnt = 0; cnt < tagCount - 1; cnt++)
+            //{
+            //    String[] atagParts = aTags[cnt].Split('=');
+            //    hTags.Add(atagParts[0].Replace("'", ""), atagParts[1].ToUpper().Replace("'", ""));
+            //}
 
-            String sPassword = Convert.ToString(hTags["Password"]);
-            String sUserId = Convert.ToString(hTags["User ID"]);
-            String sDataSource = Convert.ToString(hTags["Data Source"]);
+            //String sPassword = Convert.ToString(hTags["Password"]);
+            //String sUserId = Convert.ToString(hTags["User ID"]);
+            //String sDataSource = Convert.ToString(hTags["Data Source"]);
+
+            string defaultConnectionString = ConfigurationManager.ConnectionStrings["CrystalReport"].ConnectionString;
+            var builder = new DbConnectionStringBuilder();
+            builder.ConnectionString = defaultConnectionString;
 
             crConnectionInFo.DatabaseName = "";
-            crConnectionInFo.ServerName = "mtaora50dev";
-            crConnectionInFo.UserID = "taer";
-            crConnectionInFo.Password = "taer_dev";
+            crConnectionInFo.ServerName = builder["SERVICE_NAME"].ToString(); // mtaora50dev";
+            crConnectionInFo.UserID = builder["User ID"].ToString(); //"taer";
+            crConnectionInFo.Password = builder["Password"].ToString(); // "taer_dev";
 
 
 

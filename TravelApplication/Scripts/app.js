@@ -1067,7 +1067,7 @@ function editTravelReimbursement(container) {
 
 function createTravelRequestReimbursement(container) {
 
-    window.location.reload(true);
+    //window.location.reload(true);
 
     $('#approvedtravelrequesttemplate').hide();
     $('#travelRequestId').text(0);

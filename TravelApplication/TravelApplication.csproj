@@ -513,6 +513,7 @@
     <Content Include="Content\bootstrap-datepicker.css.map" />
     <None Include="Properties\PublishProfiles\Travelapp - local Publish.pubxml" />
     <None Include="Properties\PublishProfiles\TravelApp-Test.pubxml" />
+    <None Include="Properties\PublishProfiles\TravelApplication - Local.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\dropzone.js" />
     <Content Include="Scripts\fileupload.js" />
