@@ -1432,83 +1432,100 @@ namespace TravelApplication.DAL.Repositories
         {
             try
             {
+                bool response = false;
                 string approvalOrderResult = string.Empty;
                 using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
                 {
-                    //Update travel request _approval
-                    OracleCommand cmd = new OracleCommand();
-                    cmd.Connection = (OracleConnection)dbConn;
-                    cmd.CommandText = string.Format(@"UPDATE  REIMBURSE_APPROVAL SET                                                  
-                                                        APPROVERCOMMENTS = :p1,
-                                                        APPROVALSTATUS = :p2 ,
-                                                        APPROVALDATETIME = :p3
-                                                        WHERE TRAVELREQUESTID = {0} AND BADGENUMBER = {1} OR APPROVEROTHERBADGENUMBER = {1} ", travelRequestId, approverBadgeNumber);
-                    cmd.Parameters.Add(new OracleParameter("p1", comments));
-                    cmd.Parameters.Add(new OracleParameter("p2", ApprovalStatus.Approved.ToString()));
-                    cmd.Parameters.Add(new OracleParameter("p3", DateTime.Now));
-                    var rowsUpdated = cmd.ExecuteNonQuery();
-                    cmd.Dispose();
-                    // Get the approval badgeNumber 
-                    var result = 0;
-                    string query = string.Format(@"SELECT
-	                                                    BADGENUMBER, APPROVEROTHERBADGENUMBER
-                                                    FROM
-	                                                    (
-		                                                    SELECT
-			                                                    BADGENUMBER,APPROVEROTHERBADGENUMBER
-		                                                    FROM
-			                                                    REIMBURSE_APPROVAL
-		                                                    WHERE
-			                                                    TRAVELREQUESTID = {0}
-		                                                    AND APPROVALDATETIME IS NULL
-		                                                    ORDER BY
-			                                                    APPROVALORDER 
-	                                                    )
-                                                    WHERE
-	                                                    ROWNUM = 1", travelRequestId);
-                    OracleCommand cmd1 = new OracleCommand(query, (OracleConnection)dbConn);
-                    cmd1.CommandText = query;
-                    DbDataReader dataReader = cmd1.ExecuteReader();
+                    // check if its already approved by website or Email 
+                    string query2 = string.Format("Select * from  REIMBURSE_APPROVAL WHERE TRAVELREQUESTID = {0} AND APPROVALDATETIME IS Null AND BADGENUMBER = {1} OR APPROVEROTHERBADGENUMBER ={1} ", travelRequestId, approverBadgeNumber);
+                    OracleCommand command2 = new OracleCommand(query2, (OracleConnection)dbConn);
+                    command2.CommandText = query2;
+                    DbDataReader dataReader2 = command2.ExecuteReader();
 
-                    // update travel request for the latest status 
-                    cmd1.CommandText = string.Format(@"UPDATE  REIMBURSE_TRAVELREQUEST SET                                                  
-                                                         STATUS = :p1 
-                                                        WHERE TRAVELREQUESTID = {0}", travelRequestId);
-                    if (dataReader.HasRows)
+                    if (dataReader2.HasRows)
                     {
-                        while (dataReader.Read())
+                        //Update travel request _approval
+                        OracleCommand cmd = new OracleCommand();
+                        cmd.Connection = (OracleConnection)dbConn;
+                        cmd.CommandText = string.Format(@"UPDATE  REIMBURSE_APPROVAL SET                                                  
+                                                            APPROVERCOMMENTS = :p1,
+                                                            APPROVALSTATUS = :p2 ,
+                                                            APPROVALDATETIME = :p3
+                                                            WHERE TRAVELREQUESTID = {0} AND BADGENUMBER = {1} OR APPROVEROTHERBADGENUMBER = {1} ", travelRequestId, approverBadgeNumber);
+                        cmd.Parameters.Add(new OracleParameter("p1", comments));
+                        cmd.Parameters.Add(new OracleParameter("p2", ApprovalStatus.Approved.ToString()));
+                        cmd.Parameters.Add(new OracleParameter("p3", DateTime.Now));
+                        var rowsUpdated = cmd.ExecuteNonQuery();
+                        cmd.Dispose();
+                        // Get the approval badgeNumber 
+                        var result = 0;
+                        string query = string.Format(@"SELECT
+	                                                        BADGENUMBER, APPROVEROTHERBADGENUMBER
+                                                        FROM
+	                                                        (
+		                                                        SELECT
+			                                                        BADGENUMBER,APPROVEROTHERBADGENUMBER
+		                                                        FROM
+			                                                        REIMBURSE_APPROVAL
+		                                                        WHERE
+			                                                        TRAVELREQUESTID = {0}
+		                                                        AND APPROVALDATETIME IS NULL
+		                                                        ORDER BY
+			                                                        APPROVALORDER 
+	                                                        )
+                                                        WHERE
+	                                                        ROWNUM = 1", travelRequestId);
+                        OracleCommand cmd1 = new OracleCommand(query, (OracleConnection)dbConn);
+                        cmd1.CommandText = query;
+                        DbDataReader dataReader = cmd1.ExecuteReader();
+
+                        // update travel request for the latest status 
+                        cmd1.CommandText = string.Format(@"UPDATE  REIMBURSE_TRAVELREQUEST SET                                                  
+                                                             STATUS = :p1 
+                                                            WHERE TRAVELREQUESTID = {0}", travelRequestId);
+                        if (dataReader.HasRows)
                         {
-                            result = Convert.ToInt32(dataReader["BADGENUMBER"].ToString());
-                            if (result == -1)
+                            while (dataReader.Read())
                             {
-                                result = Convert.ToInt32(dataReader["APPROVEROTHERBADGENUMBER"].ToString());
+                                result = Convert.ToInt32(dataReader["BADGENUMBER"].ToString());
+                                if (result == -1)
+                                {
+                                    result = Convert.ToInt32(dataReader["APPROVEROTHERBADGENUMBER"].ToString());
+                                }
+                            }
+                            if (result != null || result != 0)
+                            {
+
+                                cmd1.Parameters.Add(new OracleParameter("p1", ApprovalStatus.Pending.ToString()));
+                                var rowsUpdated1 = cmd1.ExecuteNonQuery();
+
+                                //Send Email for next approver
+                                string link = string.Format("<a href=\"http://localhost:2462/\">here</a>");
+                                string subject = string.Format(@"Travel Request Reimbursement Approval for Id - {0} ", travelRequestId);
+                                string body = string.Format(@"Please visit Travel application website " + link + " to Approve/Reject for travel request Id : {0}", travelRequestId);
+                                sendEmail(result, subject,travelRequestId, "Form2");
                             }
                         }
-                        if (result != null || result != 0)
+                        else
                         {
-
-                            cmd1.Parameters.Add(new OracleParameter("p1", ApprovalStatus.Pending.ToString()));
+                            cmd1.Parameters.Add(new OracleParameter("p1", ApprovalStatus.Complete.ToString()));
                             var rowsUpdated1 = cmd1.ExecuteNonQuery();
-
-                            //Send Email for next approver
-                            string link = string.Format("<a href=\"http://localhost:2462/\">here</a>");
-                            string subject = string.Format(@"Travel Request Reimbursement Approval for Id - {0} ", travelRequestId);
-                            string body = string.Format(@"Please visit Travel application website " + link + " to Approve/Reject for travel request Id : {0}", travelRequestId);
-                            sendEmail(result, subject,travelRequestId, "Form2");
                         }
+
+                        cmd1.Dispose();
+                        dataReader.Close();
+                        dbConn.Close();
+                        dbConn.Dispose();
+                        response = true;
                     }
                     else
                     {
-                        cmd1.Parameters.Add(new OracleParameter("p1", ApprovalStatus.Complete.ToString()));
-                        var rowsUpdated1 = cmd1.ExecuteNonQuery();
+                        response = false;
                     }
 
-                    cmd1.Dispose();
-                    dataReader.Close();
-                    dbConn.Close();
-                    dbConn.Dispose();
+                    command2.Dispose();
                 }
-                return true;
+                return response;
             }
             catch (Exception ex)
             {
@@ -1521,55 +1538,71 @@ namespace TravelApplication.DAL.Repositories
         {
             try
             {
+                bool response = false;
                 int approvalOrder = 0;
                 using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
                 {
-                    //Update travel request _approval
-                    OracleCommand cmd = new OracleCommand();
-                    cmd.Connection = (OracleConnection)dbConn;
-                    cmd.CommandText = string.Format(@"UPDATE  REIMBURSE_APPROVAL SET                                                  
-                                                        APPROVERCOMMENTS = :p1,
-                                                        APPROVALSTATUS = :p2 ,
-                                                        APPROVALDATETIME = :p3
-                                                        WHERE TRAVELREQUESTID = {0} AND BADGENUMBER = {1} ", travelRequestId, approveBadgeNumber);
-                    cmd.Parameters.Add(new OracleParameter("p1", comments));
-                    cmd.Parameters.Add(new OracleParameter("p2", ApprovalStatus.Rejected.ToString()));
-                    cmd.Parameters.Add(new OracleParameter("p3", DateTime.Now));
-                    var rowsUpdated = cmd.ExecuteNonQuery();
-                    cmd.Dispose();
+                    // check if its already approved by website or Email 
+                    string query2 = string.Format("Select * from  REIMBURSE_APPROVAL WHERE TRAVELREQUESTID = {0} AND APPROVALDATETIME IS Null AND BADGENUMBER = {1}  ", travelRequestId, approveBadgeNumber);
+                    OracleCommand command2 = new OracleCommand(query2, (OracleConnection)dbConn);
+                    command2.CommandText = query2;
+                    DbDataReader dataReader2 = command2.ExecuteReader();
 
-                    var rejectReiumburseRequest = string.Empty;
-                    if (approveBadgeNumber == 85163)
+                    if (dataReader2.HasRows)
                     {
-                        rejectReiumburseRequest = "true";
+                        //Update travel request _approval
+                        OracleCommand cmd = new OracleCommand();
+                        cmd.Connection = (OracleConnection)dbConn;
+                        cmd.CommandText = string.Format(@"UPDATE  REIMBURSE_APPROVAL SET                                                  
+                                                            APPROVERCOMMENTS = :p1,
+                                                            APPROVALSTATUS = :p2 ,
+                                                            APPROVALDATETIME = :p3
+                                                            WHERE TRAVELREQUESTID = {0} AND BADGENUMBER = {1} ", travelRequestId, approveBadgeNumber);
+                        cmd.Parameters.Add(new OracleParameter("p1", comments));
+                        cmd.Parameters.Add(new OracleParameter("p2", ApprovalStatus.Rejected.ToString()));
+                        cmd.Parameters.Add(new OracleParameter("p3", DateTime.Now));
+                        var rowsUpdated = cmd.ExecuteNonQuery();
+                        cmd.Dispose();
+
+                        var rejectReiumburseRequest = string.Empty;
+                        if (approveBadgeNumber == 85163)
+                        {
+                            rejectReiumburseRequest = "true";
+                        }
+                        //Update travel request _approval
+                        OracleCommand cmd1 = new OracleCommand();
+                        cmd1.Connection = (OracleConnection)dbConn;
+                        // update travel request for the latest status 
+                        cmd1.CommandText = string.Format(@"UPDATE  REIMBURSE_TRAVELREQUEST SET                                                  
+                                                             STATUS = :p1,
+                                                             REJECTREIMBURSEREQUEST = :p2 
+                                                            WHERE TRAVELREQUESTID = {0}", travelRequestId);
+
+                        cmd1.Parameters.Add(new OracleParameter("p1", ApprovalStatus.Rejected.ToString()));
+                        cmd1.Parameters.Add(new OracleParameter("p2", rejectReiumburseRequest));
+                        var rowsUpdated1 = cmd1.ExecuteNonQuery();
+
+                        cmd1.Dispose();
+                        dbConn.Close();
+                        dbConn.Dispose();
+
+                        //Send Email submitter and traveller 
+                        //string link = string.Format("<a href=\"http://localhost:2462/\">here</a>");
+                        //string subject = string.Format(@"Travel Request Approval for Id - {0} ", travelRequestId);
+                        //string body = string.Format(@"Please visit Travel application website " + link + " to Approve/Reject for travel request Id : {0}", travelRequestId);
+                        //sendEmail(result.ToString(), body, subject);
+                        string subject = string.Format(@"Reimbursement Rejection  for Id - {0} ", travelRequestId);
+                        sendRejectionEmail(travelRequestBadgeNumber, subject, travelRequestId, comments, rejectReason);
+                        response = true;
                     }
-                    //Update travel request _approval
-                    OracleCommand cmd1 = new OracleCommand();
-                    cmd1.Connection = (OracleConnection)dbConn;
-                    // update travel request for the latest status 
-                    cmd1.CommandText = string.Format(@"UPDATE  REIMBURSE_TRAVELREQUEST SET                                                  
-                                                         STATUS = :p1,
-                                                         REJECTREIMBURSEREQUEST = :p2 
-                                                        WHERE TRAVELREQUESTID = {0}", travelRequestId);
+                    else
+                    {
+                        response = false;
+                    }
 
-                    cmd1.Parameters.Add(new OracleParameter("p1", ApprovalStatus.Rejected.ToString()));
-                    cmd1.Parameters.Add(new OracleParameter("p2", rejectReiumburseRequest));
-                    var rowsUpdated1 = cmd1.ExecuteNonQuery();
-
-                    cmd1.Dispose();
-                    dbConn.Close();
-                    dbConn.Dispose();
-
-                    //Send Email submitter and traveller 
-                    //string link = string.Format("<a href=\"http://localhost:2462/\">here</a>");
-                    //string subject = string.Format(@"Travel Request Approval for Id - {0} ", travelRequestId);
-                    //string body = string.Format(@"Please visit Travel application website " + link + " to Approve/Reject for travel request Id : {0}", travelRequestId);
-                    //sendEmail(result.ToString(), body, subject);
-                    string subject = string.Format(@"Reimbursement Rejection  for Id - {0} ", travelRequestId);
-                    sendRejectionEmail(travelRequestBadgeNumber, subject, travelRequestId, comments, rejectReason);
+                    command2.Dispose();
                 }
-
-                return true;
+                return response;
 
             }
             catch (Exception ex)

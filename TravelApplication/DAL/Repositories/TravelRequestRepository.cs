@@ -528,54 +528,78 @@ namespace TravelApplication.Services
         {
             try
             {
+                bool response = false;
                 string approvalOrderResult = string.Empty;
                 using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
                 {
-                    //Update travel request _approval
-                    OracleCommand cmd = new OracleCommand();
-                    cmd.Connection = (OracleConnection)dbConn;
-                    cmd.CommandText = string.Format(@"UPDATE  TRAVELREQUEST_APPROVAL SET                                                  
-                                                        APPROVERCOMMENTS = :p1,
-                                                        APPROVALSTATUS = :p2 ,
-                                                        APPROVALDATETIME = :p3
-                                                        WHERE TRAVELREQUESTID = {0} AND APPROVALDATETIME IS Null AND BADGENUMBER = {1} OR APPROVEROTHERBADGENUMBER ={1}  ", travelRequestId, approverBadgeNumber);
-                    cmd.Parameters.Add(new OracleParameter("p1", comments));
-                    cmd.Parameters.Add(new OracleParameter("p2", ApprovalStatus.Approved.ToString()));
-                    cmd.Parameters.Add(new OracleParameter("p3", DateTime.Now));             
-                    var rowsUpdated = cmd.ExecuteNonQuery();
-                    cmd.Dispose();
+                    // check if its already approved by website or Email 
+                    string query2 = string.Format("Select * from  TRAVELREQUEST_APPROVAL WHERE TRAVELREQUESTID = {0} AND APPROVALDATETIME IS Null AND BADGENUMBER = {1} OR APPROVEROTHERBADGENUMBER ={1} ", travelRequestId, approverBadgeNumber);
+                    OracleCommand command2 = new OracleCommand(query2, (OracleConnection)dbConn);
+                    command2.CommandText = query2;
+                    DbDataReader dataReader2 = command2.ExecuteReader();
 
-                    // Get the approval badgeNumber 
-                    var result = getNextApproverBadgeNumber(dbConn, travelRequestId);
+                    if (dataReader2.HasRows)
+                    {                                            
+
+                        //Update travel request _approval
+                        OracleCommand cmd = new OracleCommand();
+                        cmd.Connection = (OracleConnection)dbConn;
+                        cmd.CommandText = string.Format(@"UPDATE  TRAVELREQUEST_APPROVAL SET                                                  
+                                                            APPROVERCOMMENTS = :p1,
+                                                            APPROVALSTATUS = :p2 ,
+                                                            APPROVALDATETIME = :p3
+                                                            WHERE TRAVELREQUESTID = {0} AND APPROVALDATETIME IS Null AND BADGENUMBER = {1} OR APPROVEROTHERBADGENUMBER ={1}  ", travelRequestId, approverBadgeNumber);
+                        cmd.Parameters.Add(new OracleParameter("p1", comments));
+                        cmd.Parameters.Add(new OracleParameter("p2", ApprovalStatus.Approved.ToString()));
+                        cmd.Parameters.Add(new OracleParameter("p3", DateTime.Now));             
+                        var rowsUpdated = cmd.ExecuteNonQuery();
+                        cmd.Dispose();
+
+                        // Get the approval badgeNumber 
+                        var result = getNextApproverBadgeNumber(dbConn, travelRequestId);
                     
-                    // Update the Status in Travel request
-                    OracleCommand cmd2 = new OracleCommand();
-                    cmd2.Connection = (OracleConnection)dbConn;
-                    string query = string.Format(@"UPDATE  TRAVELREQUEST SET                                                  
-                                                         STATUS = :p1 
-                                                        WHERE TRAVELREQUESTID = {0}", travelRequestId);                    
-                    cmd2.CommandText = query;
-                    if (result != 0)
-                        {
+                        // Update the Status in Travel request
+                        OracleCommand cmd2 = new OracleCommand();
+                        cmd2.Connection = (OracleConnection)dbConn;
+                        string query = string.Format(@"UPDATE  TRAVELREQUEST SET                                                  
+                                                             STATUS = :p1,
+                                                             LASTUPDATEDDATETIME = :p2,
+                                                             LASTUPDATEDBYLOGINID = :p3 
+                                                            WHERE TRAVELREQUESTID = {0}", travelRequestId);                    
+                        cmd2.CommandText = query;
+                        if (result != 0)
+                            {
                              
-                            cmd2.Parameters.Add(new OracleParameter("p1", ApprovalStatus.Pending.ToString()));
+                                cmd2.Parameters.Add(new OracleParameter("p1", ApprovalStatus.Pending.ToString()));
+                                cmd2.Parameters.Add(new OracleParameter("p2", DateTime.Now));
+                                cmd2.Parameters.Add(new OracleParameter("p3", approverBadgeNumber));
                             var rowsUpdated1 = cmd2.ExecuteNonQuery();
 
-                            //Send Email for next approver
-                            string subject = string.Format(@"Travel Request Approval for Id - {0} ", travelRequestId);                            
-                            sendEmail(result, subject,travelRequestId,"Form1");
-                        }                    
+                                //Send Email for next approver
+                                string subject = string.Format(@"Travel Request Approval for Id - {0} ", travelRequestId);                            
+                                sendEmail(result, subject,travelRequestId,"Form1");
+                            }                    
+                        else
+                        {
+                            cmd2.Parameters.Add(new OracleParameter("p1", ApprovalStatus.Complete.ToString()));
+                            cmd2.Parameters.Add(new OracleParameter("p2", DateTime.Now));
+                            cmd2.Parameters.Add(new OracleParameter("p3", approverBadgeNumber));
+                            var rowsUpdated1 = cmd2.ExecuteNonQuery();
+                        }
+              
+                        cmd2.Dispose();
+                        dbConn.Close();
+                        dbConn.Dispose();
+                        response = true;
+                    }
                     else
                     {
-                        cmd2.Parameters.Add(new OracleParameter("p1", ApprovalStatus.Complete.ToString()));
-                        var rowsUpdated1 = cmd2.ExecuteNonQuery();
+                        response = false;
                     }
-              
-                    cmd2.Dispose();
-                    dbConn.Close();
-                    dbConn.Dispose();
+                    
+                    command2.Dispose();
                 }                
-                return true;
+                return response;
             }
             catch (Exception ex)
             {
@@ -588,94 +612,109 @@ namespace TravelApplication.Services
         {
             try
             {
+                bool response = false;
                 int approvalOrder = 0;
                 using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
                 {
-                    //Update travel request _approval
-                    OracleCommand cmd = new OracleCommand();
-                    cmd.Connection = (OracleConnection)dbConn;
-                    cmd.CommandText = string.Format(@"UPDATE  TRAVELREQUEST_APPROVAL SET                                                  
-                                                        APPROVERCOMMENTS = :p1,
-                                                        APPROVALSTATUS = :p2 ,
-                                                        REJECTEDDATETIME = :p3,
-                                                        REJECTREASON = :p4
-                                                        WHERE TRAVELREQUESTID = {0} AND APPROVALDATETIME IS Null AND BADGENUMBER = {1}   ", approveRequest.TravelRequestId, approveRequest.ApproverBadgeNumber);
-                    cmd.Parameters.Add(new OracleParameter("p1", approveRequest.Comments));
-                    cmd.Parameters.Add(new OracleParameter("p2", ApprovalStatus.Rejected.ToString()));
-                    cmd.Parameters.Add(new OracleParameter("p3", DateTime.Now));
-                    cmd.Parameters.Add(new OracleParameter("p4", approveRequest.RejectReason));
-                    var rowsUpdated = cmd.ExecuteNonQuery();
-                    cmd.Dispose();
-                    
-                    var rejectTravelRequest = string.Empty;
-                    if (approveRequest.ApproverBadgeNumber == 85163)
+                    // check if its already approved by website or Email 
+                    string query2 = string.Format("Select * from  TRAVELREQUEST_APPROVAL WHERE TRAVELREQUESTID = {0} AND APPROVALDATETIME IS Null AND BADGENUMBER = {1}  ", approveRequest.TravelRequestId, approveRequest.ApproverBadgeNumber);
+                    OracleCommand command2 = new OracleCommand(query2, (OracleConnection)dbConn);
+                    command2.CommandText = query2;
+                    DbDataReader dataReader2 = command2.ExecuteReader();
+
+                    if (dataReader2.HasRows)
                     {
-                        rejectTravelRequest = "true";
 
-                        //OracleCommand cmd3 = new OracleCommand();
-                        //cmd3.Connection = (OracleConnection)dbConn;
-                        //cmd3.CommandText = string.Format(@"Delete from TRAVELREQUEST_APPROVAL where TravelRequestId = {0}", approveRequest.TravelRequestId);
-                        //cmd3.ExecuteNonQuery();
+                        //Update travel request _approval
+                        OracleCommand cmd = new OracleCommand();
+                        cmd.Connection = (OracleConnection)dbConn;
+                        cmd.CommandText = string.Format(@"UPDATE  TRAVELREQUEST_APPROVAL SET                                                  
+                                                            APPROVERCOMMENTS = :p1,
+                                                            APPROVALSTATUS = :p2 ,
+                                                            REJECTEDDATETIME = :p3,
+                                                            REJECTREASON = :p4
+                                                            WHERE TRAVELREQUESTID = {0} AND APPROVALDATETIME IS Null AND BADGENUMBER = {1}   ", approveRequest.TravelRequestId, approveRequest.ApproverBadgeNumber);
+                        cmd.Parameters.Add(new OracleParameter("p1", approveRequest.Comments));
+                        cmd.Parameters.Add(new OracleParameter("p2", ApprovalStatus.Rejected.ToString()));
+                        cmd.Parameters.Add(new OracleParameter("p3", DateTime.Now));
+                        cmd.Parameters.Add(new OracleParameter("p4", approveRequest.RejectReason));
+                        var rowsUpdated = cmd.ExecuteNonQuery();
+                        cmd.Dispose();
+                    
+                        var rejectTravelRequest = string.Empty;
+                        if (approveRequest.ApproverBadgeNumber == 85163)
+                        {
+                            rejectTravelRequest = "true";
 
-                        if ((!string.IsNullOrEmpty(approveRequest.DepartmentHeadBadgeNumber)) && approveRequest.DepartmentHeadBadgeNumber != "?")
-                        {
-                            InsertApprovalList(approveRequest.TravelRequestId, approveRequest.DepartmentHeadBadgeNumber, approveRequest.DepartmentHeadName, 1);
-                        }
+                            //OracleCommand cmd3 = new OracleCommand();
+                            //cmd3.Connection = (OracleConnection)dbConn;
+                            //cmd3.CommandText = string.Format(@"Delete from TRAVELREQUEST_APPROVAL where TravelRequestId = {0}", approveRequest.TravelRequestId);
+                            //cmd3.ExecuteNonQuery();
 
-                        if ((!string.IsNullOrEmpty(approveRequest.ExecutiveOfficerBadgeNumber)) && approveRequest.ExecutiveOfficerBadgeNumber != "?")
-                        {
-                            InsertApprovalList(approveRequest.TravelRequestId, approveRequest.ExecutiveOfficerBadgeNumber, approveRequest.ExecutiveOfficerName, 2);
-                        }
+                            if ((!string.IsNullOrEmpty(approveRequest.DepartmentHeadBadgeNumber)) && approveRequest.DepartmentHeadBadgeNumber != "?")
+                            {
+                                InsertApprovalList(approveRequest.TravelRequestId, approveRequest.DepartmentHeadBadgeNumber, approveRequest.DepartmentHeadName, 1);
+                            }
 
-                        if ((!string.IsNullOrEmpty(approveRequest.CEOForInternationalBadgeNumber)) && approveRequest.CEOForInternationalBadgeNumber != "?")
-                        {
-                            InsertApprovalList(approveRequest.TravelRequestId, approveRequest.CEOForInternationalBadgeNumber, approveRequest.CEOForInternationalName, 3);
-                        }
+                            if ((!string.IsNullOrEmpty(approveRequest.ExecutiveOfficerBadgeNumber)) && approveRequest.ExecutiveOfficerBadgeNumber != "?")
+                            {
+                                InsertApprovalList(approveRequest.TravelRequestId, approveRequest.ExecutiveOfficerBadgeNumber, approveRequest.ExecutiveOfficerName, 2);
+                            }
 
-                        if ((!string.IsNullOrEmpty(approveRequest.CEOForAPTABadgeNumber)) && approveRequest.CEOForAPTABadgeNumber != "?")
-                        {
-                            InsertApprovalList(approveRequest.TravelRequestId, approveRequest.CEOForAPTABadgeNumber, approveRequest.CEOForAPTAName, 4);
+                            if ((!string.IsNullOrEmpty(approveRequest.CEOForInternationalBadgeNumber)) && approveRequest.CEOForInternationalBadgeNumber != "?")
+                            {
+                                InsertApprovalList(approveRequest.TravelRequestId, approveRequest.CEOForInternationalBadgeNumber, approveRequest.CEOForInternationalName, 3);
+                            }
+
+                            if ((!string.IsNullOrEmpty(approveRequest.CEOForAPTABadgeNumber)) && approveRequest.CEOForAPTABadgeNumber != "?")
+                            {
+                                InsertApprovalList(approveRequest.TravelRequestId, approveRequest.CEOForAPTABadgeNumber, approveRequest.CEOForAPTAName, 4);
+                            }
+                            if ((!string.IsNullOrEmpty(approveRequest.TravelCoordinatorBadgeNumber)) && approveRequest.TravelCoordinatorBadgeNumber != "?")
+                            {
+                                InsertApprovalList(approveRequest.TravelRequestId, approveRequest.TravelCoordinatorBadgeNumber, approveRequest.TravelCoordinatorName, 5);
+                            }
                         }
-                        if ((!string.IsNullOrEmpty(approveRequest.TravelCoordinatorBadgeNumber)) && approveRequest.TravelCoordinatorBadgeNumber != "?")
+                        else
                         {
-                            InsertApprovalList(approveRequest.TravelRequestId, approveRequest.TravelCoordinatorBadgeNumber, approveRequest.TravelCoordinatorName, 5);
+                            OracleCommand cmd3 = new OracleCommand();
+                            cmd3.Connection = (OracleConnection)dbConn;
+                            cmd3.CommandText = string.Format(@"Delete from TRAVELREQUEST_APPROVAL where TravelRequestId = {0}", approveRequest.TravelRequestId);
+                            cmd3.ExecuteNonQuery();
                         }
+                        //Update travel request _approval
+                        OracleCommand cmd1 = new OracleCommand();
+                        cmd1.Connection = (OracleConnection)dbConn;
+                        // update travel request for the latest status 
+                        cmd1.CommandText = string.Format(@"UPDATE  TRAVELREQUEST SET                                                  
+                                                             STATUS = :p1,
+                                                             REJECTTRAVELREQUEST = :p2 
+                                                            WHERE TRAVELREQUESTID = {0}", approveRequest.TravelRequestId);
+ 
+                        cmd1.Parameters.Add(new OracleParameter("p1", ApprovalStatus.Rejected.ToString()));
+                        cmd1.Parameters.Add(new OracleParameter("p2", rejectTravelRequest));
+
+                        var rowsUpdated1 = cmd1.ExecuteNonQuery();
+
+                        cmd1.Dispose();
+
+
+                        dbConn.Close();
+                        dbConn.Dispose();
+ 
+                        //Send Email submitter and traveller 
+                        string subject = string.Format(@"Travel Rejection  for Id - {0} ", approveRequest.TravelRequestId);
+                        sendRejectionEmail(approveRequest.TravelRequestBadgeNumber,  subject,approveRequest.TravelRequestId, approveRequest.Comments, approveRequest.RejectReason);
+                        response = true;
                     }
                     else
                     {
-                        OracleCommand cmd3 = new OracleCommand();
-                        cmd3.Connection = (OracleConnection)dbConn;
-                        cmd3.CommandText = string.Format(@"Delete from TRAVELREQUEST_APPROVAL where TravelRequestId = {0}", approveRequest.TravelRequestId);
-                        cmd3.ExecuteNonQuery();
+                        response = false;
                     }
-                    //Update travel request _approval
-                    OracleCommand cmd1 = new OracleCommand();
-                    cmd1.Connection = (OracleConnection)dbConn;
-                    // update travel request for the latest status 
-                    cmd1.CommandText = string.Format(@"UPDATE  TRAVELREQUEST SET                                                  
-                                                         STATUS = :p1,
-                                                         REJECTTRAVELREQUEST = :p2 
-                                                        WHERE TRAVELREQUESTID = {0}", approveRequest.TravelRequestId);
- 
-                    cmd1.Parameters.Add(new OracleParameter("p1", ApprovalStatus.Rejected.ToString()));
-                    cmd1.Parameters.Add(new OracleParameter("p2", rejectTravelRequest));
 
-                    var rowsUpdated1 = cmd1.ExecuteNonQuery();
-
-                    cmd1.Dispose();
-
-
-                    dbConn.Close();
-                    dbConn.Dispose();
- 
-                    //Send Email submitter and traveller 
-                    string subject = string.Format(@"Travel Rejection  for Id - {0} ", approveRequest.TravelRequestId);
-                    sendRejectionEmail(approveRequest.TravelRequestBadgeNumber,  subject,approveRequest.TravelRequestId, approveRequest.Comments, approveRequest.RejectReason);
-
-                    
+                    command2.Dispose();
                 }
-
-                return true;
+                return response;
 
             }
             catch (Exception ex)
@@ -895,8 +934,9 @@ namespace TravelApplication.Services
                         ACTUALMEALS,
                         PERSONALTRAVELEXPENSE,
                         PERSONALTRAVELINCLUDED,
-                        SPECIALINSTRUCTIONS
-						 ) VALUES (:p1 ,:p2,:p3,:p4,:p5,:p6,:p7,:p8,:p9,:p10,:p11,:p12,:p13,:p14,:p15,:p16,:p17,:p18,:p19,:p20,:p21,:p22,:p23,:p24,:p25,:p26, :p27, :p28, :p29,:p30,:p31,:p32 ) returning ESTIMATEDEXPENSEID into : estimatedExpenseId ";
+                        SPECIALINSTRUCTIONS,
+                        LASTUPDATEDDATETIME
+						 ) VALUES (:p1 ,:p2,:p3,:p4,:p5,:p6,:p7,:p8,:p9,:p10,:p11,:p12,:p13,:p14,:p15,:p16,:p17,:p18,:p19,:p20,:p21,:p22,:p23,:p24,:p25,:p26, :p27, :p28, :p29,:p30,:p31,:p32, :p33 ) returning ESTIMATEDEXPENSEID into : estimatedExpenseId ";
                         cmd.Parameters.Add(new OracleParameter("p1", travelRequestId));
                         cmd.Parameters.Add(new OracleParameter("p2", request.AdvanceLodging));
                         cmd.Parameters.Add(new OracleParameter("p3", request.AdvanceAirFare));
@@ -929,6 +969,7 @@ namespace TravelApplication.Services
                         cmd.Parameters.Add(new OracleParameter("p30", request.PersonalTravelExpense));
                         cmd.Parameters.Add(new OracleParameter("p31", request.PersonalTravelIncluded.ToString()));
                         cmd.Parameters.Add(new OracleParameter("p32", request.SpecialInstruction));
+                        cmd.Parameters.Add(new OracleParameter("p33", DateTime.Now));
                         cmd.Parameters.Add("estimatedExpenseId", OracleDbType.Int32, ParameterDirection.ReturnValue);
                         var rowsUpdated = cmd.ExecuteNonQuery();
                         estimatedExpenseId = Decimal.ToInt32(((Oracle.ManagedDataAccess.Types.OracleDecimal)(cmd.Parameters["estimatedExpenseId"].Value)).Value);
@@ -976,7 +1017,8 @@ namespace TravelApplication.Services
                         ACTUALMEALS = :p29,
                         PERSONALTRAVELEXPENSE = :p30,
                         PERSONALTRAVELINCLUDED = :p31,
-                        SPECIALINSTRUCTIONS =:p32
+                        SPECIALINSTRUCTIONS =:p32,
+                        LASTUPDATEDDATETIME = :p33
                         WHERE TRAVELREQUESTID = {0}", request.TravelRequestId);
                         cmd.Parameters.Add(new OracleParameter("p1", request.TravelRequestId));
                         cmd.Parameters.Add(new OracleParameter("p2", request.AdvanceLodging));
@@ -1010,6 +1052,7 @@ namespace TravelApplication.Services
                         cmd.Parameters.Add(new OracleParameter("p30", request.PersonalTravelExpense));
                         cmd.Parameters.Add(new OracleParameter("p31", request.PersonalTravelIncluded.ToString()));
                         cmd.Parameters.Add(new OracleParameter("p32", request.SpecialInstruction));
+                        cmd.Parameters.Add(new OracleParameter("p33", DateTime.Now));
                         var rowsUpdated = cmd.ExecuteNonQuery();
                         estimatedExpenseId = request.EstimatedExpenseId;
                         cmd.Dispose();

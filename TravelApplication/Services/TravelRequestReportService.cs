@@ -29,31 +29,18 @@ namespace TravelApplication.Services
             dReport.SetParameterValue("p_travelrequestID", travelRequestId);
             if (reportName == "Travel_Business_Expense.rpt")
             {
-                dReport.SetParameterValue("p_request_id", travelRequestId);
+                dReport.SetParameterValue("p_travelrequestID", travelRequestId);
             }
-            //String mOleString = System.Configuration.ConfigurationManager.AppSettings["rptConnectionString"];
-            //String[] aTags = mOleString.Split(';');
 
-            //Hashtable hTags = new Hashtable();
-            //int tagCount = aTags.Length;
-            //for (int cnt = 0; cnt < tagCount - 1; cnt++)
-            //{
-            //    String[] atagParts = aTags[cnt].Split('=');
-            //    hTags.Add(atagParts[0].Replace("'", ""), atagParts[1].ToUpper().Replace("'", ""));
-            //}
-
-            //String sPassword = Convert.ToString(hTags["Password"]);
-            //String sUserId = Convert.ToString(hTags["User ID"]);
-            //String sDataSource = Convert.ToString(hTags["Data Source"]);
 
             string defaultConnectionString = ConfigurationManager.ConnectionStrings["CrystalReport"].ConnectionString;
             var builder = new DbConnectionStringBuilder();
             builder.ConnectionString = defaultConnectionString;
 
             crConnectionInFo.DatabaseName = "";
-            crConnectionInFo.ServerName = builder["SERVICE_NAME"].ToString(); // mtaora50dev";
-            crConnectionInFo.UserID = builder["User ID"].ToString(); //"taer";
-            crConnectionInFo.Password = builder["Password"].ToString(); // "taer_dev";
+            crConnectionInFo.ServerName = builder["SERVICE_NAME"].ToString(); 
+            crConnectionInFo.UserID = builder["User ID"].ToString();  
+            crConnectionInFo.Password = builder["Password"].ToString();  
 
 
 
