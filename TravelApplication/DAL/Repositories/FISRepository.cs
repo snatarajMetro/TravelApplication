@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
+using TravelApplication.Class.Common;
 using TravelApplication.Models;
 
 namespace TravelApplication.DAL.Repositories
@@ -32,8 +33,8 @@ namespace TravelApplication.DAL.Repositories
             }
             catch (Exception ex)
             {
-                // TODO : Log the exception
-                throw new Exception("Unable to get the badge information from FIS service");
+                LogMessage.Log("FIS repository : GetCostCenters : " + ex.Message);
+                throw new Exception("Unable to get the cost center information from FIS ");
             }
             finally
             {
@@ -68,8 +69,8 @@ namespace TravelApplication.DAL.Repositories
             }
             catch (Exception ex)
             {
-                // TODO : Log the exception
-                throw new Exception("Unable to get the badge information from FIS service");
+                LogMessage.Log("FIS repository : GetProjectsByCostCenterName : " + ex.Message);
+                throw new Exception("Unable to get the project  information from FIS service");
             }
             finally
             {
@@ -112,7 +113,8 @@ namespace TravelApplication.DAL.Repositories
             catch (Exception ex )
             {
 
-                throw;
+                LogMessage.Log("FIS repository : GetFISdetails : " + ex.Message);
+                throw new Exception("Unable to get the FIS details" + ex.Message);
             }
         }
 
@@ -150,7 +152,8 @@ namespace TravelApplication.DAL.Repositories
             catch (Exception ex)
             {
 
-                throw;
+                LogMessage.Log("FIS repository : GetFISdetailsForReimburse : " + ex.Message);
+                throw new Exception("Unable to get the FIS details" + ex.Message);
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿﻿using Oracle.ManagedDataAccess.Client;
+﻿using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,6 +8,7 @@ using System.Web;
 using TravelApplication.DAL.DBProvider;
 using TravelApplication.Models;
 using TravelApplication.Controllers.WebAPI;
+using TravelApplication.Class.Common;
 
 namespace TravelApplication.DAL.Repositories
 {
@@ -36,6 +37,7 @@ namespace TravelApplication.DAL.Repositories
             }
             catch (Exception ex)
             {
+                LogMessage.Log("DocumentRepository : UploadFileInfo" + ex.Message);
 
                 throw new Exception("Couldn't save file name to database");
             }
@@ -65,48 +67,60 @@ namespace TravelApplication.DAL.Repositories
             }
             catch (Exception ex)
             {
-
+                LogMessage.Log("DocumentRepository : UploadRequiredFileInfo" + ex.Message);
                 throw new Exception("Couldn't save file name to database");
             }
         }
         public List<SupportingDocument> GetAllDocumentsByTravelId(string travelRequestId, int badgeNumber)
         {
             List<SupportingDocument> result = new List<SupportingDocument>();
-            using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
-            {
-                string query = "Select ID, TRAVELREQUESTID, FILENAME, UPLOADEDDATETIME from Travel_Uploads where TRAVELREQUESTID = " + travelRequestId;
-                OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
-                command.CommandText = query;
-                DbDataReader dataReader = command.ExecuteReader();
-
-                if (dataReader != null)
+            try
+            {           
+                using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
                 {
-                    while (dataReader.Read())
+                    string query = "Select ID, TRAVELREQUESTID, FILENAME, UPLOADEDDATETIME from Travel_Uploads where TRAVELREQUESTID = " + travelRequestId;
+                    OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+                    command.CommandText = query;
+                    DbDataReader dataReader = command.ExecuteReader();
+
+                    if (dataReader != null)
                     {
-                        result.Add(new SupportingDocument()
+                        while (dataReader.Read())
                         {
-                            TravelRequestId = Convert.ToInt32(dataReader["TRAVELREQUESTID"]),
-                            FileName        = dataReader["FILENAME"].ToString(),
-                            Id              = Convert.ToInt32(dataReader["ID"]),
-                            UploadDateTime  = dataReader["UPLOADEDDATETIME"].ToString(),
-                            DownloadUrl     = System.Configuration.ConfigurationManager.AppSettings["sharepointServiceUrl"].ToString()+ "/Document/GetDocument?siteUrl=http://mymetro/collaboration/InformationManagement/ATMS/apps&documentListName=TravelApp/" + badgeNumber +"-"+travelRequestId+ "/&fileName=" + dataReader["FILENAME"].ToString()
+                            result.Add(new SupportingDocument()
+                            {
+                                TravelRequestId = Convert.ToInt32(dataReader["TRAVELREQUESTID"]),
+                                FileName        = dataReader["FILENAME"].ToString(),
+                                Id              = Convert.ToInt32(dataReader["ID"]),
+                                UploadDateTime  = dataReader["UPLOADEDDATETIME"].ToString(),
+                                DownloadUrl     = System.Configuration.ConfigurationManager.AppSettings["sharepointServiceUrl"].ToString()+ "/Document/GetDocument?siteUrl=http://mymetro/collaboration/InformationManagement/ATMS/apps&documentListName=TravelApp/" + badgeNumber +"-"+travelRequestId+ "/&fileName=" + dataReader["FILENAME"].ToString()
+                            }
+                            );
                         }
-                        );
                     }
+
+                    dataReader.Close();
+                    command.Dispose();
+                    dbConn.Close();
+                    dbConn.Dispose();
+
+                    return result;
                 }
+            }
+            catch (Exception ex)
+            {
 
-                dataReader.Close();
-                command.Dispose();
-                dbConn.Close();
-                dbConn.Dispose();
-
-                return result;
+                LogMessage.Log("DocumentRepository : GetAllDocumentsByTravelId - returns suporting documents" + ex.Message);
+                throw new Exception("Couldn't retrieve all the documents by travel id");
             }
         }
 
         public List<RequiredDocuments> GetAllRequiredDocumentsByTravelId(string travelRequestId, int badgeNumber)
         {
             List<RequiredDocuments> result = new List<RequiredDocuments>();
+            try
+            {
+
             using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
             {
                 for (int i = 1; i < 6; i++)
@@ -172,6 +186,13 @@ namespace TravelApplication.DAL.Repositories
 
                 return result;
             }
+            }
+            catch (Exception ex)
+            {
+
+                LogMessage.Log("DocumentRepository : GetAllDocumentsByTravelId - returns required documents" + ex.Message);
+                throw new Exception("Couldn't retrieve all the documents by travel id");
+            }
         }
         public void DeleteFilesByTravelId(int travelRequestId, int id)
         {
@@ -192,6 +213,7 @@ namespace TravelApplication.DAL.Repositories
             }
             catch (Exception ex)
             {
+                LogMessage.Log("DocumentRepository : DeleteFilesByTravelId" + ex.Message);
                 throw new Exception("Could not delete the requested file");
             }
 

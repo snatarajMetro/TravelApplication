@@ -28,7 +28,7 @@ namespace TravelApplication.Controllers.WebAPI
                 {
                     throw new Exception("Invalid username and/or password. Please try again.");
                 }
-
+                // AD authentication
                 //if(userService.IsValidADUser(userModel.UserName, userModel.Password))
                 //{
                 var result = userService.ValidateAndGetRoles(userModel);

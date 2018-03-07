@@ -129,7 +129,7 @@ namespace TravelApplication.DAL.Repositories
             }
             catch (Exception ex)
             {
-
+                LogMessage.Log("Repository : SubmitTravelRequest : " + ex.Message);
                 throw new Exception(ex.Message);
             }
 
@@ -187,6 +187,10 @@ namespace TravelApplication.DAL.Repositories
 
         public string GetApprovalRequestEmailBody(string userName, string travelRequestId, int badgeNumber, string requestType)
         {
+            try
+            {
+
+           
             string purpose = string.Empty;
             string meetingBeginsDate = string.Empty;
             string meetingEndDate = string.Empty;
@@ -232,6 +236,12 @@ namespace TravelApplication.DAL.Repositories
             }
 
             return emailBody;
+            }
+            catch (Exception ex)
+            {
+                LogMessage.Log("Repository : GetApprovalRequestEmailBody" + ex.Message);
+                throw new Exception(ex.Message);
+            }
         }
 
 
@@ -259,6 +269,9 @@ namespace TravelApplication.DAL.Repositories
 
         private List<string> getEmailAddressByBadgeNumber(int departmentHeadBadgeNumber)
         {
+            try
+            {
+
             List<string> result = new List<string>();
             using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
             {
@@ -283,6 +296,14 @@ namespace TravelApplication.DAL.Repositories
             }
 
             return result;
+
+            }
+            catch (Exception ex)
+            {
+                LogMessage.Log("Repository : getEmailAddressByBadgeNumber : "+ex.Message);
+                
+                throw new Exception(ex.Message);
+            }
         }
 
         public bool SubmitTravelRequestNew(SubmitTravelRequest submitTravelRequest)
@@ -456,7 +477,7 @@ namespace TravelApplication.DAL.Repositories
             }
             catch (Exception ex)
             {
-
+                LogMessage.Log("Repository : SubmitTravelRequestNew " + ex.Message);
                 throw new Exception(ex.Message);
             }
         }
@@ -478,7 +499,7 @@ namespace TravelApplication.DAL.Repositories
                 }
                 catch (Exception ex)
                 {
-                    LogMessage.Log("Email send failed : " + ex.Message);
+                    LogMessage.Log("Repository : sendNewRequestEmail : " + ex.Message);
                     throw new Exception("Email failed : " + ex.Message);
                 }
 
@@ -535,6 +556,10 @@ namespace TravelApplication.DAL.Repositories
             SubmitTravelRequest response = new Models.SubmitTravelRequest();
             HeirarchichalApprovalRequest heirarchichalApprovalRequest = new HeirarchichalApprovalRequest();
             List<HeirarchichalOrder> approverList = new List<HeirarchichalOrder>();
+            try
+            {
+
+           
             using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
             {
 
@@ -579,6 +604,12 @@ namespace TravelApplication.DAL.Repositories
             }
             response.HeirarchichalApprovalRequest = heirarchichalApprovalRequest;
             return response;
+            }
+            catch (Exception ex)
+            {
+                LogMessage.Log("Repository : GetApproverDetails" + ex.Message);
+                throw new Exception(ex.Message);
+            }
         }
 
         public bool SubmitReimburse(SubmitReimburseData submitReimburseData)
@@ -632,30 +663,7 @@ namespace TravelApplication.DAL.Repositories
                         cmd3.Connection = (OracleConnection)dbConn;
                         cmd3.CommandText = string.Format(@"Delete from REIMBURSE_APPROVAL where TravelRequestId = {0}", submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId);
                         cmd3.ExecuteNonQuery();
-                        //  OracleCommand cmd2 = new OracleCommand();
-                        //if (submitReimburseData.HeirarchichalApprovalRequest.SignedInBadgeNumber != submitReimburseData.HeirarchichalApprovalRequest.TravelRequestBadgeNumber)
-                        //{
-                        //    isSubmitterRequesting = true;
-                        //    cmd3.Connection = (OracleConnection)dbConn;
-                        //    cmd3.CommandText = @"INSERT INTO REIMBURSE_APPROVAL (                                                  
-                        //                                    TRAVELREQUESTID,
-                        //                                    BADGENUMBER,
-                        //                                    APPROVERNAME,
-                        //                                    APPROVALSTATUS,
-                        //                                    APPROVALORDER                                                            
-                        //                                )
-                        //                                VALUES
-                        //                                    (:p1,:p2,:p3,:p4,:p5 )";
-                        //    cmd3.Parameters.Add(new OracleParameter("p1", submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId));
-                        //    cmd3.Parameters.Add(new OracleParameter("p2", submitReimburseData.HeirarchichalApprovalRequest.TravelRequestBadgeNumber));
-                        //    cmd3.Parameters.Add(new OracleParameter("p3", submitReimburseData.HeirarchichalApprovalRequest.TravelRequestName));
-                        //    cmd3.Parameters.Add(new OracleParameter("p4", Common.ApprovalStatus.Pending.ToString()));
-                        //    cmd3.Parameters.Add(new OracleParameter("p5", "0"));
 
-                        //    var rowsUpdated = cmd3.ExecuteNonQuery();
-                        //    cmd3.Dispose();
-
-                        //}
                         foreach (var item in submitReimburseData.HeirarchichalApprovalRequest.ApproverList)
                         {
                             if (item.ApproverBadgeNumber != 0)
@@ -701,24 +709,14 @@ namespace TravelApplication.DAL.Repositories
                         var rowsUpdated1 = cmd1.ExecuteNonQuery();
                         cmd1.Dispose();
                     
-                    var result = getNextApproverBadgeNumber(dbConn, submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId, "REIMBURSE_APPROVAL");
+                        var result = getNextApproverBadgeNumber(dbConn, submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId, "REIMBURSE_APPROVAL");
 
-
-                //    if (submitReimburseData.HeirarchichalApprovalRequest.SignedInBadgeNumber != result)
-                 //   {
 
                         string subject = string.Format(@"Reimbursement Request Approval for Travel Request Id - {0} ", submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId);
+
                         sendNewReimbursementRequestEmail(submitReimburseData.HeirarchichalApprovalRequest.TravelRequestBadgeNumber, "Travel Request Reimbursement Form Submitted Successfully", submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId);
 
-                        //if (isSubmitterRequesting)
-                        //{
-                        //    sendEmail(submitReimburseData.HeirarchichalApprovalRequest.TravelRequestBadgeNumber, subject, submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId);
-                        //}
-                        //else
-                        //{
-                            sendEmail(result, subject, submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId,"Form2");
-                        //}
-               //     }
+                        sendEmail(result, subject, submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId,"Form2");
                     dbConn.Close();
                     dbConn.Dispose();
                 }
@@ -807,8 +805,6 @@ namespace TravelApplication.DAL.Repositories
             }
             cmd1.Dispose();
             dataReader.Close();
-            // dbConn.Close();
-            // dbConn.Dispose();
             return result;
         }
 

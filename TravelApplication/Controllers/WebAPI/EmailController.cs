@@ -29,7 +29,6 @@ namespace TravelApplication.Controllers.WebAPI
             catch (Exception ex)
             {
                 LogMessage.Log("api/email/sendemail : " + ex.Message);
-                // TODO: Log the exception message
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Could not send an email.");
             }
 

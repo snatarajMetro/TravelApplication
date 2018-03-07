@@ -140,7 +140,7 @@ namespace TravelApplication.DAL.Repositories
             catch (Exception ex)
             {
                 LogMessage.Log("GetTravelRequestList : " + ex.Message);
-                throw;
+                throw new Exception(ex.Message);
             }
         }
 
@@ -173,7 +173,7 @@ namespace TravelApplication.DAL.Repositories
             catch (Exception ex)
             {
                 LogMessage.Log("Error while getting travel request details - " + ex.Message);
-                throw;
+                throw new Exception(ex.Message);
             }
 
             return travelRequestReimbursementDetails;
@@ -257,7 +257,7 @@ namespace TravelApplication.DAL.Repositories
             catch (Exception ex)
             {
                 LogMessage.Log("GetTravelRequestDetail : " + ex.Message);
-                throw;
+                throw new Exception(ex.Message);
             }
         }
 
@@ -339,7 +339,7 @@ namespace TravelApplication.DAL.Repositories
             catch (Exception ex)
             {
                 LogMessage.Log("GetTravelRequestDetail2 : " + ex.Message);
-                throw;
+                throw new Exception(ex.Message);
             }
         }
 
@@ -679,6 +679,9 @@ namespace TravelApplication.DAL.Repositories
 
         private string GetApproversListByTravelRequestId(DbConnection dbConn, int travelRequestId)
         {
+            try
+            {
+
             string response = string.Empty;
             string query = string.Format("select APPROVERNAME from TRAVELREQUEST_APPROVAL where TRAVELREQUESTID = {0} order by ApprovalOrder", travelRequestId);
             OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
@@ -696,10 +699,20 @@ namespace TravelApplication.DAL.Repositories
             command.Dispose();
             dataReader.Close();
             return response;
+
+            }
+            catch (Exception ex)
+            {
+                LogMessage.Log("ReimbursementRepository : GetApproversListByTravelRequestId : " + ex.Message);
+                throw new Exception(ex.Message);
+            }
         }
 
         private string getLastApproverName(DbConnection dbConn, int travelRequestId)
         {
+            try
+            {
+
             string response = "";
             string query = string.Format(@"select APPROVERNAME from (
                                                                     SELECT
@@ -726,10 +739,21 @@ namespace TravelApplication.DAL.Repositories
             command.Dispose();
             dataReader.Close();
             return response;
+
+            }
+            catch (Exception ex)
+            {
+                LogMessage.Log("ReimbursementRepository : getLastApproverName : " + ex.Message);
+                throw new Exception(ex.Message);
+            }
         }
 
         private string getLastApproverDateTime(DbConnection dbConn, int travelRequestId)
         {
+            try
+            {
+
+            
             string response = "";
             string query = string.Format(@"Select ApprovalDateTime from (
                                             SELECT
@@ -756,10 +780,20 @@ namespace TravelApplication.DAL.Repositories
             command.Dispose();
             dataReader.Close();
             return response;
+            }
+            catch (Exception ex)
+            {
+                LogMessage.Log("ReimbursementRepository : getLastApproverDateTime : " + ex.Message);
+                throw new Exception(ex.Message);
+            }
         }
 
         public bool getApprovalSatus(DbConnection dbConn, int travelRequestId, int approverBadgeNumber)
         {
+            try
+            {
+
+           
             bool result = false;
             int response = 0;
             string query = string.Format(@"SELECT
@@ -798,9 +832,19 @@ namespace TravelApplication.DAL.Repositories
             }
 
             return result;
+            }
+            catch (Exception ex)
+            {
+                LogMessage.Log("ReimbursementRepository : getApprovalSatus : " + ex.Message);
+                throw new Exception(ex.Message);
+            }
         }
         public bool getReimburseApprovalSatus(DbConnection dbConn, int travelRequestId, int approverBadgeNumber)
         {
+            try
+            {
+
+          
             bool result = false;
             int response = 0;
             string query = string.Format(@"SELECT
@@ -843,9 +887,19 @@ namespace TravelApplication.DAL.Repositories
             }
 
             return result;
+            }
+            catch (Exception ex)
+            {
+                LogMessage.Log("ReimbursementRepository : getReimburseApprovalSatus : " + ex.Message);
+                throw new Exception(ex.Message);
+            }
         }
         public bool EditActionEligible(DbConnection dbConn, int travelRequestId)
         {
+            try
+            {
+
+          
             string response = "";
             string query = string.Format(@"SELECT
 	                                        STATUS
@@ -872,6 +926,12 @@ namespace TravelApplication.DAL.Repositories
                 return true;
             }
             return false;
+            }
+            catch (Exception ex)
+            {
+                LogMessage.Log("ReimbursementRepository : EditActionEligible : " + ex.Message);
+                throw new Exception(ex.Message);
+            }
 
         }
 
@@ -1337,8 +1397,8 @@ namespace TravelApplication.DAL.Repositories
             }
             catch (Exception ex)
             {
-                LogMessage.Log(ex.Message);
-                throw;
+                LogMessage.Log("Reimbursement repository : GetAllReimbursementDetails "+ ex.Message);
+                throw new Exception(ex.Message);
             }
            
 
@@ -1423,7 +1483,7 @@ namespace TravelApplication.DAL.Repositories
             }
             catch (Exception ex)
             {
-                LogMessage.Log("GetTravelRequestDetail : " + ex.Message);
+                LogMessage.Log("Reimbursement repository : GetTravelRequestDetail : " + ex.Message);
                 throw;
             }
         }
@@ -1500,9 +1560,9 @@ namespace TravelApplication.DAL.Repositories
                                 var rowsUpdated1 = cmd1.ExecuteNonQuery();
 
                                 //Send Email for next approver
-                                string link = string.Format("<a href=\"http://localhost:2462/\">here</a>");
+                                //string link = string.Format("<a href=\"http://localhost:2462/\">here</a>");
                                 string subject = string.Format(@"Travel Request Reimbursement Approval for Id - {0} ", travelRequestId);
-                                string body = string.Format(@"Please visit Travel application website " + link + " to Approve/Reject for travel request Id : {0}", travelRequestId);
+                               // string body = string.Format(@"Please visit Travel application website " + link + " to Approve/Reject for travel request Id : {0}", travelRequestId);
                                 sendEmail(result, subject,travelRequestId, "Form2");
                             }
                         }
@@ -1529,8 +1589,8 @@ namespace TravelApplication.DAL.Repositories
             }
             catch (Exception ex)
             {
-                LogMessage.Log("Approve :" + ex.Message);
-                throw;
+                LogMessage.Log("Reimbursement : Approve :" + ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -1607,8 +1667,8 @@ namespace TravelApplication.DAL.Repositories
             }
             catch (Exception ex)
             {
-                LogMessage.Log("Reject : " + ex.Message);
-                throw;
+                LogMessage.Log("Reimbursement : Reject : " + ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -1679,8 +1739,8 @@ namespace TravelApplication.DAL.Repositories
             }
             catch (Exception ex)
             {
-
-                throw;
+                LogMessage.Log("Reimbursement : GetSubmitDetails" + ex.Message);
+                throw new Exception(ex.Message);
             }
            
             return response;

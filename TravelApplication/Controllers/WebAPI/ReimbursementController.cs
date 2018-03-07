@@ -92,7 +92,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
+                LogMessage.Log("api/reimburse/reimbursementRequests" + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Couldn't retrieve EmployeeInfo for Badge # : " + ex.Message);
 
             }

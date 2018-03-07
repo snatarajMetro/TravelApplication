@@ -29,7 +29,6 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                // TODO: Log the exception message
                 LogMessage.Log("GetEmployeeDetails :" + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError, string.Format(@"The badge# {0} you have entered is invalid. Please try again.", badgeNumber));
 
@@ -144,7 +143,6 @@ namespace TravelApplication.Controllers.WebAPI
 
             try
             {
-                // TODO: Implement Reject API. Return true/false
                 var result = travelRequestService.Reject(approveRequest);
 
                 response = Request.CreateResponse(HttpStatusCode.OK, result);
@@ -226,9 +224,7 @@ namespace TravelApplication.Controllers.WebAPI
 
             try
             {
-                //TODO: Implement Cancel API
                 var result = travelRequestService.Cancel(approveRequest.TravelRequestId, approveRequest.TravelRequestBadgeNumber, approveRequest.Comments);
-                //var result = true;
                 response = Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)

@@ -282,7 +282,7 @@ namespace TravelApplication.Controllers.WebAPI
             }
             catch (Exception ex)
             {
-                LogMessage.Log("api/documents/supportingdocuments : " + ex.Message);
+                LogMessage.Log("api/documents/requireddocuments : " + ex.Message);
                 response = Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
 

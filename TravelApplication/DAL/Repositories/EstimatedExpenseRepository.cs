@@ -18,6 +18,9 @@ namespace TravelApplication.DAL.Repositories
 
         public EstimatedExpense GetTravelRequestDetail(int travelRequestId)
         {
+            try
+            {
+
             EstimatedExpense response = null;
             using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
             {
@@ -67,6 +70,13 @@ namespace TravelApplication.DAL.Repositories
                 dbConn.Dispose();
             }
             return response;
+
+            }
+            catch (Exception ex )
+            {
+                LogMessage.Log("Estimated expense repository : GetTravelRequestDetail : " + ex.Message);
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<int> SaveEstimatedExpenseRequest(EstimatedExpense request)
@@ -201,7 +211,7 @@ namespace TravelApplication.DAL.Repositories
             }
             catch (Exception ex)
             {
-
+                LogMessage.Log("Estimated expense repository : SaveEstimatedExpenseRequest : " + ex.Message);
                 throw new Exception("Could not save estimated expense successfully");
             }
 
@@ -270,7 +280,7 @@ namespace TravelApplication.DAL.Repositories
             }
             catch (Exception ex)
             {
-                LogMessage.Log("GetTravelRequestDetailNew" + ex.Message);
+                LogMessage.Log("Estimated expense repository: GetTravelRequestDetailNew" + ex.Message);
                 throw;
             }
             command.Dispose();
