@@ -1617,3 +1617,11 @@ function cancel() {
         }
     });
 }
+
+function closesubmiterror() {
+    $("#submiterror2").hide();
+}
+
+function closetravelrequesterror() {
+    $("#submiterror").hide();
+}
