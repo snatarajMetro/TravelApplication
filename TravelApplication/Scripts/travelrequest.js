@@ -1096,6 +1096,8 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         $.get(url)
         .done(function (data) {
 
+            $("#travelRequestCEORequired").val(data.CEOApprovalRequired);
+
             // Set Department Head
             if (parseInt(data.TravelRequestSubmitDetail.DepartmentHeadBadgeNumber) == -1) {
 
@@ -1575,6 +1577,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         var action = $("#btnSubmit").val();
         var errorMessage = "Some of the required fields are missing. Please try again.";
         var requiredAtatchmentsMissing = "Some of the required attachments are missing.";
+        var travelRequestCEORequired = $("#travelRequestCEORequired").val();
 
         // Justification Memo document validation
         var justificationMemoVisble = $('#supportingDocumentZone1').is(':visible');
@@ -1755,6 +1758,19 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
             if (canSubmit && !agreedToTermsAndConditions) {
                 canSubmit = false;
+            }
+        }
+
+        if (canSubmit) {
+
+            if (travelRequestCEORequired == 'true') {
+                if (executiveOfficerBadgeNumber == "" || executiveOfficerBadgeNumber == '0') {
+                    canSubmit = false;
+                    validationMessage = "Since cash advance is requested, CEO's approval is required";
+                } else if ((executiveOfficerBadgeNumber == '-1') && (!executiveOfficerOtherBadgeNumber)) {
+                    canSubmit = false
+                    validationMessage = "CEO is required as one of the approvers";
+                }
             }
         }
 

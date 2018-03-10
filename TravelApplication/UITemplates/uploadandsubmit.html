@@ -127,6 +127,7 @@
                                                         ng-model="ddlExecutiveOfficer"
                                                         ng-change="displayOther('otherForExecutiveOfficer', 'txtExecutiveOfficerBadgeNumber', 'txtExecutiveOfficerName', ddlExecutiveOfficer)"
                                                         ng-options="officer.Name for officer in ExecutiveOfficers track by officer.BadgeNumber"></select>
+                                                <input type="hidden" id="travelRequestCEORequired" name="travelRequestCEORequired" value="false" />
                                             </div>
                                             <div id="otherForExecutiveOfficer" class="otherBadgeNumberContainer" style="display:none;">
                                                 <span class="label2 approvaltitle">Badge #</span>
