@@ -1641,118 +1641,121 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             return;
         }
 
-        // Department Head
-        var departmentHeadBadgeNumber = $("#ddlDepartmentHead option:selected").val();
-        var departmentHeadName = "";
-        var departmentHeadOtherBadgeNumber = -1;
+        if (canSubmit == true) {
 
-        if (departmentHeadBadgeNumber && departmentHeadBadgeNumber != '?') {
+            // Department Head
+            var departmentHeadBadgeNumber = $("#ddlDepartmentHead option:selected").val();
+            var departmentHeadName = "";
+            var departmentHeadOtherBadgeNumber = -1;
 
-            if (departmentHeadBadgeNumber == '-1') {
-                departmentHeadOtherBadgeNumber = $('#txtDepartmentHeadBadgeNumber').val();
-                departmentHeadName = $('#txtDepartmentHeadName').val();
-            }
-            else {
-                departmentHeadOtherBadgeNumber = -1;
-                departmentHeadName = $("#ddlDepartmentHead option:selected").text();
-            }
+            if (departmentHeadBadgeNumber && departmentHeadBadgeNumber != '?') {
 
-            if (departmentHeadBadgeNumber) {
-
-                canSubmit = true;
-            }
-        }
-
-        // Executive Officer
-        var executiveOfficerBadgeNumber = $("#ddlExecutiveOfficer option:selected").val();
-        var executiveOfficerName = "";
-        var executiveOfficerOtherBadgeNumber = -1;
-
-        if (executiveOfficerBadgeNumber && executiveOfficerBadgeNumber != '?') {
-
-            if (executiveOfficerBadgeNumber == '-1') {
-                executiveOfficerOtherBadgeNumber = $('#txtExecutiveOfficerBadgeNumber').val();
-                executiveOfficerName = $('#txtExecutiveOfficerName').val();
-            }
-            else {
-                executiveOfficerOtherBadgeNumber = -1;
-                executiveOfficerName = $("#ddlExecutiveOfficer option:selected").text();
-            }
-        }
-        else {
-            executiveOfficerBadgeNumber = "";
-        }
-
-        // CEO (For International)
-        var ceoForInternationalBadgeNumber = $("#ddlCEOForInternational option:selected").val();
-        var ceoForInternationalName = "";
-        var ceoForInternationalOtherBadgeNumber = -1;
-
-        if (ceoForInternationalBadgeNumber && ceoForInternationalBadgeNumber != '?') {
-
-            if (ceoForInternationalBadgeNumber == '-1') {
-                ceoForInternationalOtherBadgeNumber = $('#txtCEOForInternationalBadgeNumber').val();
-                ceoForInternationalName = $('#txtCEOForInternationalName').val();
-            }
-            else {
-                ceoForInternationalOtherBadgeNumber = -1;
-                ceoForInternationalName = $("#ddlCEOForInternational option:selected").text();
-            }
-        }
-        else {
-            ceoForInternationalBadgeNumber = "";
-        }
-
-        // CEO (For APTA/CTA conference)
-        var ceoForAPTABadgeNumber = $("#ddlCEOForAPTA option:selected").val();
-        var ceoForAPTAName = "";
-        var ceoForAPTAOtherBadgeNumber = -1;
-
-        if (ceoForAPTABadgeNumber && ceoForAPTABadgeNumber != '?') {
-
-            if (ceoForAPTABadgeNumber == '-1') {
-                ceoForAPTAOtherBadgeNumber = $('#txtCEOForAPTABadgeNumber').val();
-                ceoForAPTAName = $('#txtCEOForAPTAName').val();
-            }
-            else {
-                ceoForAPTAOtherBadgeNumber = -1;
-                ceoForAPTAName = $("#ddlCEOForAPTA option:selected").text();
-            }
-        }
-        else {
-            ceoForAPTABadgeNumber = "";
-        }
-
-        // Travel Co-ordinator
-        var travelCoordinatorBadgeNumber = $("#ddlTravelCoordinator option:selected").val();
-        var travelCoordinatorName = "";
-        var travelCoordinatorOtherBadgeNumber = -1;
-
-        if (canSubmit) {
-            if (travelCoordinatorBadgeNumber && travelCoordinatorBadgeNumber != '?') {
-
-                if (travelCoordinatorBadgeNumber == '-1') {
-                    travelCoordinatorBadgeNumber = $('#txtTravelCoordinatorBadgeNumber').val();
-                    travelCoordinatorName = $('#txtTravelCoordinatorName').val();
+                if (departmentHeadBadgeNumber == '-1') {
+                    departmentHeadOtherBadgeNumber = $('#txtDepartmentHeadBadgeNumber').val();
+                    departmentHeadName = $('#txtDepartmentHeadName').val();
                 }
                 else {
-                    travelCoordinatorName = $("#ddlTravelCoordinator option:selected").text();
+                    departmentHeadOtherBadgeNumber = -1;
+                    departmentHeadName = $("#ddlDepartmentHead option:selected").text();
                 }
 
-                if (travelCoordinatorBadgeNumber && canSubmit) {
+                if (departmentHeadBadgeNumber) {
+
                     canSubmit = true;
                 }
             }
+
+            // Executive Officer
+            var executiveOfficerBadgeNumber = $("#ddlExecutiveOfficer option:selected").val();
+            var executiveOfficerName = "";
+            var executiveOfficerOtherBadgeNumber = -1;
+
+            if (executiveOfficerBadgeNumber && executiveOfficerBadgeNumber != '?') {
+
+                if (executiveOfficerBadgeNumber == '-1') {
+                    executiveOfficerOtherBadgeNumber = $('#txtExecutiveOfficerBadgeNumber').val();
+                    executiveOfficerName = $('#txtExecutiveOfficerName').val();
+                }
+                else {
+                    executiveOfficerOtherBadgeNumber = -1;
+                    executiveOfficerName = $("#ddlExecutiveOfficer option:selected").text();
+                }
+            }
             else {
+                executiveOfficerBadgeNumber = "";
+            }
+
+            // CEO (For International)
+            var ceoForInternationalBadgeNumber = $("#ddlCEOForInternational option:selected").val();
+            var ceoForInternationalName = "";
+            var ceoForInternationalOtherBadgeNumber = -1;
+
+            if (ceoForInternationalBadgeNumber && ceoForInternationalBadgeNumber != '?') {
+
+                if (ceoForInternationalBadgeNumber == '-1') {
+                    ceoForInternationalOtherBadgeNumber = $('#txtCEOForInternationalBadgeNumber').val();
+                    ceoForInternationalName = $('#txtCEOForInternationalName').val();
+                }
+                else {
+                    ceoForInternationalOtherBadgeNumber = -1;
+                    ceoForInternationalName = $("#ddlCEOForInternational option:selected").text();
+                }
+            }
+            else {
+                ceoForInternationalBadgeNumber = "";
+            }
+
+            // CEO (For APTA/CTA conference)
+            var ceoForAPTABadgeNumber = $("#ddlCEOForAPTA option:selected").val();
+            var ceoForAPTAName = "";
+            var ceoForAPTAOtherBadgeNumber = -1;
+
+            if (ceoForAPTABadgeNumber && ceoForAPTABadgeNumber != '?') {
+
+                if (ceoForAPTABadgeNumber == '-1') {
+                    ceoForAPTAOtherBadgeNumber = $('#txtCEOForAPTABadgeNumber').val();
+                    ceoForAPTAName = $('#txtCEOForAPTAName').val();
+                }
+                else {
+                    ceoForAPTAOtherBadgeNumber = -1;
+                    ceoForAPTAName = $("#ddlCEOForAPTA option:selected").text();
+                }
+            }
+            else {
+                ceoForAPTABadgeNumber = "";
+            }
+
+            // Travel Co-ordinator
+            var travelCoordinatorBadgeNumber = $("#ddlTravelCoordinator option:selected").val();
+            var travelCoordinatorName = "";
+            var travelCoordinatorOtherBadgeNumber = -1;
+
+            if (canSubmit) {
+                if (travelCoordinatorBadgeNumber && travelCoordinatorBadgeNumber != '?') {
+
+                    if (travelCoordinatorBadgeNumber == '-1') {
+                        travelCoordinatorBadgeNumber = $('#txtTravelCoordinatorBadgeNumber').val();
+                        travelCoordinatorName = $('#txtTravelCoordinatorName').val();
+                    }
+                    else {
+                        travelCoordinatorName = $("#ddlTravelCoordinator option:selected").text();
+                    }
+
+                    if (travelCoordinatorBadgeNumber && canSubmit) {
+                        canSubmit = true;
+                    }
+                }
+                else {
+                    canSubmit = false;
+                }
+            }
+
+            // Agree checkbox
+            var agreedToTermsAndConditions = $('#cbAgree').prop('checked');
+
+            if (canSubmit && !agreedToTermsAndConditions) {
                 canSubmit = false;
             }
-        }
-
-        // Agree checkbox
-        var agreedToTermsAndConditions = $('#cbAgree').prop('checked');
-
-        if (canSubmit && !agreedToTermsAndConditions) {
-            canSubmit = false;
         }
 
         if (canSubmit) {
