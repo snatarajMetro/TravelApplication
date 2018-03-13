@@ -751,6 +751,9 @@ function approve() {
         }
     }
 
+    // Disable the approve button, once the user clicks on it.
+    $('#btnApprove').prop("disabled", true);
+
     $.ajax({
         type: "POST",
         url: url,
@@ -778,6 +781,9 @@ function approve() {
             }
         },
         error: function (xhr, options, error) {
+
+            // Enable the approve button
+            $('#btnApprove').prop("disabled", false);
 
             if (xhr.status == 500) {
                 var errorMessage = xhr.responseText;
@@ -852,6 +858,10 @@ function reject() {
     }
 
     if (canSubmit) {
+
+        // Disable the reject button, once the user clicks on it.
+        $('#btnReject').prop("disabled", true);
+
         $.ajax({
             type: "POST",
             url: url,
@@ -897,6 +907,9 @@ function reject() {
 
             },
             error: function (xhr, options, error) {
+
+                // Disable the reject button, once the user clicks on it.
+                $('#btnReject').prop("disabled", false);
 
                 if (xhr.status == 500) {
                     var errorMessage = xhr.responseText;

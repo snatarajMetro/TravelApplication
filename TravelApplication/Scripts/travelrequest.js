@@ -1775,6 +1775,8 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         }
 
         if (canSubmit) {
+            $('#btnSubmit').prop("disabled", true);
+
             $.ajax({
                 type: "POST",
                 url: "/api/approval/submitnew",
@@ -1851,6 +1853,8 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             });
         }
         else {
+            $('#btnSubmit').prop("disabled", false);
+
             $("#submiterror2").fadeIn("slow");
             $('#submiterrormessage2').text(errorMessage);
 
@@ -1996,6 +2000,9 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         }
 
         if (canSubmit) {
+
+            $('#btnSubmit').prop("disabled", true);
+
             $.ajax({
                 type: "POST",
                 url: "/api/approval/submitReimburse",
@@ -2059,6 +2066,9 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                     $('#btnBack').prop("disabled", true);
                 },
                 error: function (xhr, options, error) {
+
+                    $('#btnSubmit').prop("disabled", false);
+
                     if (xhr.status == 500) {
 
                         var errorMessage = xhr.responseText;
