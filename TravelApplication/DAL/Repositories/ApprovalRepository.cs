@@ -19,6 +19,7 @@ namespace TravelApplication.DAL.Repositories
     {
         private DbConnection dbConn;
         IEmailService emailService = new EmailService();
+        TravelRequestReportService travelRequestReportService = new TravelRequestReportService();
 
         // TravelRequestRepository travelRequestRepo = new TravelRequestRepository();
         public async Task<List<HeirarchichalPosition>> GetHeirarchichalPositions(int badgeNumber)
@@ -123,7 +124,15 @@ namespace TravelApplication.DAL.Repositories
                 /* Requesttype  -
                  *  Form1 (TravelRequest) 
                  *  Form2 (Reimbursement) */
-                sendEmail(Convert.ToInt32(submitTravelRequestData.DepartmentHeadBadgeNumber), subject, submitTravelRequestData.TravelRequestId.ToString(), "Form1");
+
+                var dateTime = System.DateTime.Now.Ticks;
+                //Generate Crystal report
+                travelRequestReportService.RunReport("Travel_Request.rpt", "TravelRequest_" + submitTravelRequestData.TravelRequestId+"_"+ dateTime, submitTravelRequestData.TravelRequestId.ToString());
+
+                // email with attachment 
+                sendEmail(Convert.ToInt32(submitTravelRequestData.DepartmentHeadBadgeNumber), subject, submitTravelRequestData.TravelRequestId.ToString(), "Form1", "TravelRequest_" + submitTravelRequestData.TravelRequestId+"_"+ dateTime);
+
+                 
                 return true;
 
             }
@@ -135,7 +144,7 @@ namespace TravelApplication.DAL.Repositories
 
         }
 
-        public void sendEmail(int departmentHeadBadgeNumber, string subject, string travelRequestId, string requestType)
+        public void sendEmail(int departmentHeadBadgeNumber, string subject, string travelRequestId, string requestType, string fileAttachment)
         {
             try
             {
@@ -147,8 +156,14 @@ namespace TravelApplication.DAL.Repositories
                     Body = GetApprovalRequestEmailBody(emailAndFirstName[1],travelRequestId, departmentHeadBadgeNumber, requestType),
                     Subject = subject
                 };
+                //Generate Crystal report
+                string fileName = System.Web.Hosting.HostingEnvironment.MapPath(@"~/Reports/Exported/"+fileAttachment+".pdf");
 
-                emailService.SendEmail(email.FromAddress, email.ToAddress, email.Subject, email.Body);
+                // email with attachment 
+                emailService.SendEmail(email.FromAddress, email.ToAddress, email.Subject, email.Body, fileName,"","","");
+     
+                //Once emailed delete the attached file
+                //System.IO.File.Delete(fileName);
             }
             catch (Exception ex )
             {
@@ -461,13 +476,18 @@ namespace TravelApplication.DAL.Repositories
                         string subject = string.Format(@"Travel Request Approval for Id - {0} ", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
                         sendNewRequestEmail(submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestBadgeNumber, "Travel Request Submitted Successfully", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
 
+                        var dateTime = System.DateTime.Now.Ticks;
+                        //Generate Crystal report
+                        travelRequestReportService.RunReport("Travel_Request.rpt", "TravelRequest_" + submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId+"_"+dateTime, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId.ToString());
+
                         if (isSubmitterRequesting)
                         {
-                              sendEmail(submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestBadgeNumber, subject, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId,"Form1");
+                          
+                            sendEmail(submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestBadgeNumber, subject, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId,"Form1", "TravelRequest_" + submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId+"_"+dateTime);
                         }
                         else
                         {
-                             sendEmail(result, subject, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId, "Form1");
+                             sendEmail(result, subject, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId, "Form1", "TravelRequest_" + submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId + "_" + dateTime);
                         }
                     }
 
@@ -716,7 +736,11 @@ namespace TravelApplication.DAL.Repositories
 
                         sendNewReimbursementRequestEmail(submitReimburseData.HeirarchichalApprovalRequest.TravelRequestBadgeNumber, "Travel Request Reimbursement Form Submitted Successfully", submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId);
 
-                        sendEmail(result, subject, submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId,"Form2");
+                    var dateTime = System.DateTime.Now.Ticks;
+                    //Generate Crystal report
+                    travelRequestReportService.RunReport("Travel_Business_Expense.rpt", "ReimbursementRequest_" + submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId+"_"+dateTime, submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId.ToString());
+
+                    sendEmail(result, subject, submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId,"Form2", "ReimbursementRequest_" + submitReimburseData.HeirarchichalApprovalRequest.TravelRequestId+"_"+dateTime);
                     dbConn.Close();
                     dbConn.Dispose();
                 }

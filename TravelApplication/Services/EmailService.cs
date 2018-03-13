@@ -76,13 +76,13 @@ namespace TravelApplication.Services
                         emailMessage.Bcc.Add(new MailAddress(emailBcc.Trim()));
                     }
                 }
-
+                */
                 // To attach file
                 if (!string.IsNullOrEmpty(attachmentFile) && FileExists(attachmentFile))
                 {
                     Attachment emailAttachment = new Attachment(attachmentFile);
                     emailMessage.Attachments.Add(emailAttachment);
-                }*/
+                }
 
                 // To create SmtpClient object
                 SmtpClient smtpClient = default(SmtpClient);

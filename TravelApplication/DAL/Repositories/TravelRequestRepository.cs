@@ -19,13 +19,14 @@ namespace TravelApplication.Services
         private DbConnection dbConn;
         IEstimatedExpenseRepository estimatedExpenseRepository = new EstimatedExpenseRepository();
         IFISRepository fisRepository = new FISRepository();
-
+        TravelRequestReportService travelRequestReportService = new TravelRequestReportService();
 
         public async Task<EmployeeDetails> GetEmployeeDetails(int badgeNumber)
         {
             EmployeeDetails employeeDetails = null;
             var client = new HttpClient();
             try
+
             {
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -467,7 +468,7 @@ namespace TravelApplication.Services
                                     RequiredApprovers = GetApproversListByTravelRequestId(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])),
                                     LastApproveredByUser = getLastApproverName(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])),
                                     LastApprovedDateTime = getLastApproverDateTime(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])),
-                                    EditActionVisible = true, //EditActionEligible(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])) ? true : false,
+                                    EditActionVisible = EditActionEligibleForTravelAdimin(dbConn, Convert.ToInt32(dataReader["TravelRequestId"])) ? true : false,
                                     ViewActionVisible = true,
                                     ApproveActionVisible = getApprovalSatus(dbConn, Convert.ToInt32(dataReader["TravelRequestId"]), submittedBadgeNumber) ? true : false,
                                     Status = dataReader["STATUS"].ToString(),
@@ -575,9 +576,13 @@ namespace TravelApplication.Services
                                 cmd2.Parameters.Add(new OracleParameter("p3", approverBadgeNumber));
                             var rowsUpdated1 = cmd2.ExecuteNonQuery();
 
-                                //Send Email for next approver
-                                string subject = string.Format(@"Travel Request Approval for Id - {0} ", travelRequestId);                            
-                                sendEmail(result, subject,travelRequestId,"Form1");
+                            var dateTime = System.DateTime.Now.Ticks;
+
+                            travelRequestReportService.RunReport("Travel_Request.rpt", "TravelRequest_" + travelRequestId+"_"+dateTime, travelRequestId);
+                            //Send Email for next approver
+                            string subject = string.Format(@"Travel Request Approval for Id - {0} ", travelRequestId);                            
+                            sendEmail(result, subject,travelRequestId,"Form1", "TravelRequest_"+travelRequestId+"_"+dateTime);
+                           
                             }                    
                         else
                         {
@@ -1377,9 +1382,11 @@ namespace TravelApplication.Services
                 OracleCommand cmd = new OracleCommand();
                 cmd.Connection = (OracleConnection)dbConn;
                 cmd.CommandText = string.Format(@"UPDATE  TRAVELREQUEST SET                                                  
-                                                         STATUS = :p1 
+                                                         STATUS = :p1,
+                                                         COMMENTS = :p2 
                                                         WHERE TRAVELREQUESTID = {0}", travelRequestId);
                 cmd.Parameters.Add(new OracleParameter("p1", ApprovalStatus.Cancelled.ToString()));
+                cmd.Parameters.Add(new OracleParameter("p2", comments));
                 cmd.ExecuteNonQuery();
             }
 
@@ -1871,6 +1878,37 @@ namespace TravelApplication.Services
                 return true;
             }
             return false;
+
+        }
+
+        public bool EditActionEligibleForTravelAdimin(DbConnection dbConn, int travelRequestId)
+        {
+            string response = "";
+            string query = string.Format(@"SELECT
+	                                        STATUS
+                                        FROM
+	                                        TRAVELREQUEST 
+                                        WHERE
+	                                        TRAVELREQUESTID = {0}  ", travelRequestId);
+
+            OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+            command.CommandText = query;
+            DbDataReader dataReader = command.ExecuteReader();
+            if (dataReader.HasRows)
+            {
+                while (dataReader.Read())
+                {
+                    response = dataReader["STATUS"].ToString();
+                }
+            }
+            command.Dispose();
+            dataReader.Close();
+
+            if (response == ApprovalStatus.Cancelled.ToString())
+            {
+                return false;
+            }
+            return true;
 
         }
 

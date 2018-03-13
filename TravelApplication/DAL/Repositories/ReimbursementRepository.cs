@@ -20,6 +20,7 @@ namespace TravelApplication.DAL.Repositories
         IEstimatedExpenseRepository estimatedExpenseRepository = new EstimatedExpenseRepository();
         IFISRepository fisRepository = new FISRepository();
         ITravelRequestRepository travelRequestRepository = new TravelRequestRepository();
+        TravelRequestReportService travelRequestReportService = new TravelRequestReportService();
         public List<TravelRequestDetails> GetApprovedTravelRequestList(int submittedBadgeNumber, int selectedRoleId)
         {
              
@@ -1560,10 +1561,13 @@ namespace TravelApplication.DAL.Repositories
                                 var rowsUpdated1 = cmd1.ExecuteNonQuery();
 
                                 //Send Email for next approver
-                                //string link = string.Format("<a href=\"http://localhost:2462/\">here</a>");
                                 string subject = string.Format(@"Travel Request Reimbursement Approval for Id - {0} ", travelRequestId);
-                               // string body = string.Format(@"Please visit Travel application website " + link + " to Approve/Reject for travel request Id : {0}", travelRequestId);
-                                sendEmail(result, subject,travelRequestId, "Form2");
+
+                                var dateTime = System.DateTime.Now.Ticks;
+                                //Generate Crystal report
+                                travelRequestReportService.RunReport("Travel_Business_Expense.rpt", "ReimbursementRequest_" + travelRequestId+"_"+dateTime, travelRequestId.ToString());
+
+                                sendEmail(result, subject,travelRequestId, "Form2", "ReimbursementRequest_" + travelRequestId+"_"+dateTime);
                             }
                         }
                         else

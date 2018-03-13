@@ -7,6 +7,7 @@ using CrystalDecisions.Shared;
 using System.IO;
 using System.Data.Common;
 using System.Configuration;
+using TravelApplication.Class.Common;
 
 namespace TravelApplication.Services
 {
@@ -67,10 +68,27 @@ namespace TravelApplication.Services
                 var data = dReport.ExportToStream(ExportFormatType.PortableDocFormat);
                 data.CopyTo(memoryStream);
                 response = memoryStream.ToArray();
+
+
+                if (File.Exists(rptPath + "Exported/" + fileName + ".pdf"))
+                { 
+                
+                    File.Delete(rptPath + "Exported/" + fileName + ".pdf");
+                }
+                    FileStream file = new FileStream(rptPath + "Exported/" + fileName + ".pdf", FileMode.Create, FileAccess.ReadWrite);
+                    memoryStream.WriteTo(file);
+                    file.Close();
+                    file.Dispose();
+                    memoryStream.Close();
+                    memoryStream.Dispose();
+                
+                //File.WriteAllBytes(rptPath+"Exported/"+fileName+".pdf", response);
+  
             }
             catch (Exception ex)
             {
 
+                LogMessage.Log("Error generating crystal report : " + ex.Message);
                 throw new Exception(ex.Message);
 
             }
