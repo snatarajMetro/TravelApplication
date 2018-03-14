@@ -2493,17 +2493,22 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
                 // Set user detail section
                 $("#txtTravelRequestNumber1").val(data.TravelReimbursementDetails.TravelRequestId);
-                $("#txtBadgeNumber").val(data.TravelReimbursementDetails.BadgeNumber);
+                //$("#txtBadgeNumber").val(data.TravelReimbursementDetails.BadgeNumber);
+                document.getElementById("txtBadgeNumber2").value = data.TravelReimbursementDetails.BadgeNumber.toString();
                 $("#txtTravelPeriodFrom").val(data.TravelReimbursementDetails.StrDepartureDateTime);
                 $("#txtTravelPeriodTo").val(data.TravelReimbursementDetails.StrReturnDateTime);
-                $("#txtVendorNumber").val(data.TravelReimbursementDetails.VendorNumber);
+                //$("#txtVendorNumber").val(data.TravelReimbursementDetails.VendorNumber);
+                document.getElementById("txtVendorNumber2").value = data.TravelReimbursementDetails.VendorNumber.toString();
                 $("#txtCostCenterNumber").val(data.TravelReimbursementDetails.CostCenterId);
-                $("#txtName").val(data.TravelReimbursementDetails.Name);
+                //$("#txtName").val(data.TravelReimbursementDetails.Name);
+                document.getElementById("txtName2").value = data.TravelReimbursementDetails.Name.toString();
+
                 $("#txtExtension").val(data.TravelReimbursementDetails.Extension);
                 $("#txtDivision").val(data.TravelReimbursementDetails.Division);
                 $("#txtDepartment").val(data.TravelReimbursementDetails.Department);
                 $("#txtCashAdvance").val(data.CashAdvance);
-                $("#txtPurpose").val(data.TravelReimbursementDetails.Purpose);
+                //$("#txtPurpose").val(data.TravelReimbursementDetails.Purpose);
+                document.getElementById("txtPurpose2").value = data.TravelReimbursementDetails.Purpose.toString();
 
                 // set advance amounts
                 $scope.totalCashAdvanceAmount = data.CashAdvance;

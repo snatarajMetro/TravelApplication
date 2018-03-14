@@ -1192,16 +1192,16 @@ function savereimbursementdataentry() {
 
     // Get user inputs
     var travelRequestId = $('#txtTravelRequestNumber1').val();
-    var badgeNumber = jQuery.trim($('#txtBadgeNumber').val());
+    var badgeNumber = jQuery.trim($('#txtBadgeNumber2').val());
     var travelPeriodFrom = $('#txtTravelPeriodFrom').val();
     var travelPeriodTo = $('#txtTravelPeriodTo').val();
-    var vendorNumber = $('#txtVendorNumber').val();
+    var vendorNumber = $('#txtVendorNumber2').val();
     var costCenterNumber = $('#txtCostCenterNumber').val();
-    var name = jQuery.trim($('#txtName').val());
+    var name = jQuery.trim($('#txtName2').val());
     var extension = $('#txtExtension').val();
     var division = jQuery.trim($('#txtDivision').val());
     var department = jQuery.trim($('#txtDepartment').val());
-    var purpose = jQuery.trim($('#txtPurpose').val());
+    var purpose = jQuery.trim($('#txtPurpose2').val());
     var reimbursementId = $('#txtReimbursementId').val();
 
     // Get travel inputs
