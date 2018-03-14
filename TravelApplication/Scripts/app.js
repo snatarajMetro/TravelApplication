@@ -1199,7 +1199,7 @@ function savereimbursementdataentry() {
     var costCenterNumber = $('#txtCostCenterNumber').val();
     var name = jQuery.trim($('#txtName2').val());
     var extension = $('#txtExtension').val();
-    var division = jQuery.trim($('#txtDivision').val());
+    var division = jQuery.trim($('#txtDivision2').val());
     var department = jQuery.trim($('#txtDepartment').val());
     var purpose = jQuery.trim($('#txtPurpose2').val());
     var reimbursementId = $('#txtReimbursementId').val();

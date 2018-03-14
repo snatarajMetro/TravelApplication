@@ -2504,7 +2504,8 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 document.getElementById("txtName2").value = data.TravelReimbursementDetails.Name.toString();
 
                 $("#txtExtension").val(data.TravelReimbursementDetails.Extension);
-                $("#txtDivision").val(data.TravelReimbursementDetails.Division);
+                //$("#txtDivision").val(data.TravelReimbursementDetails.Division);
+                document.getElementById("txtDivision2").value = data.TravelReimbursementDetails.Division.toString();
                 $("#txtDepartment").val(data.TravelReimbursementDetails.Department);
                 $("#txtCashAdvance").val(data.CashAdvance);
                 //$("#txtPurpose").val(data.TravelReimbursementDetails.Purpose);
