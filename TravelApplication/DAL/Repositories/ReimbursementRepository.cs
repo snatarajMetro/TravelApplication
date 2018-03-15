@@ -1620,11 +1620,13 @@ namespace TravelApplication.DAL.Repositories
                         cmd.CommandText = string.Format(@"UPDATE  REIMBURSE_APPROVAL SET                                                  
                                                             APPROVERCOMMENTS = :p1,
                                                             APPROVALSTATUS = :p2 ,
-                                                            APPROVALDATETIME = :p3
+                                                            APPROVALDATETIME = :p3,
+                                                            REJECTREASON = :p4
                                                             WHERE TRAVELREQUESTID = {0} AND BADGENUMBER = {1} ", travelRequestId, approveBadgeNumber);
                         cmd.Parameters.Add(new OracleParameter("p1", comments));
                         cmd.Parameters.Add(new OracleParameter("p2", ApprovalStatus.Rejected.ToString()));
                         cmd.Parameters.Add(new OracleParameter("p3", DateTime.Now));
+                        cmd.Parameters.Add(new OracleParameter("p4", rejectReason));
                         var rowsUpdated = cmd.ExecuteNonQuery();
                         cmd.Dispose();
 
