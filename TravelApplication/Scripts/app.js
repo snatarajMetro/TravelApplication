@@ -1231,7 +1231,7 @@ function savereimbursementdataentry() {
                 {
                     "FISDetails": [
                         {
-                            "CostCenterId": $("#ddlCostCenter1 option:selected").val(),
+                            "CostCenterId": $("#ddlCostCenter11 option:selected").val(),
                             "LineItem": $('#txtAccount1').val(),
                             "ProjectId": $("#ddlProjects1 option:selected").val(),
                             "Task": $('#txtTask1').val(),

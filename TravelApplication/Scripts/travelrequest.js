@@ -735,13 +735,14 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             .done(function (data) {
                 var result = JSON.parse(data);
 
-                if (source == 'ddlCostCenter1') {
+                if (source == 'ddlCostCenter1' || source == 'ddlCostCenter11') {
                     $scope.projects1 = result;
                     $scope.$apply();
                     $('#project1').val("?");
 
                     if ($scope.SelectedProject) {
                         $("#ddlProjects1").val($scope.SelectedProject[0].Id);
+                        $("#ddlProjects11").val($scope.SelectedProject[0].Id);
                         $("#project1").val($scope.SelectedProject[0].Id);
                         $scope.SelectedProject[0].Id = "";
                     }
@@ -796,7 +797,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             });
         }
         else {
-            if (source == 'ddlCostCenter1') {
+            if (source == 'ddlCostCenter1' || source == 'ddlCostCenter11') {
                 $scope.projects1 = $scope.Projects[costCenterName];
             }
             else if (source == 'ddlCostCenter2') {
