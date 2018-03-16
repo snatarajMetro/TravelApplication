@@ -23,7 +23,7 @@ namespace TravelApplication.Controllers.WebAPI
             try
             {
 
-                var result = emailService.SendEmail(email.FromAddress , email.ToAddress, email.Subject,email.Body);
+                var result = emailService.SendEmail(email.FromAddress , email.ToAddress, email.Subject,email.Body).ConfigureAwait(false);
                 response = Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)

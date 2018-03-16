@@ -8,8 +8,8 @@ namespace TravelApplication.Services
 {
     public interface IEmailService
     {
-        bool SendEmail(string sendFrom, string sendTo, string subject, string body);
-        bool SendEmail(string sendFrom, string sendTo, string subject, string body,
+        Task<bool> SendEmail(string sendFrom, string sendTo, string subject, string body);
+        Task<bool> SendEmail(string sendFrom, string sendTo, string subject, string body,
                                             string attachmentFile, string cc, string bcc, string smtpServer);
     }
 }

@@ -340,8 +340,8 @@ namespace TravelApplication.Services
                             Purpose = dataReader["PURPOSE"].ToString(),
                             StrMeetingBeginDateTime = Convert.ToDateTime(dataReader["MEETINGBEGINDATETIME"]).ToShortDateString(),
                             StrMeetingEndDateTime = Convert.ToDateTime(dataReader["MEETINGENDDATETIME"]).ToShortDateString(),
-                            StrDepartureDateTime = Convert.ToDateTime(dataReader["DEPARTUREDATETIME"]).ToShortDateString(),
-                            StrReturnDateTime = Convert.ToDateTime(dataReader["RETURNDATETIME"]).ToShortDateString(),
+                            StrDepartureDateTime = (Convert.ToDateTime(dataReader["DEPARTUREDATETIME"]).ToShortDateString()== "1/1/0001") ? string.Empty : Convert.ToDateTime(dataReader["DEPARTUREDATETIME"]).ToShortDateString(),
+                            StrReturnDateTime = (Convert.ToDateTime(dataReader["RETURNDATETIME"]).ToShortDateString() == "1/1/0001") ? string.Empty : Convert.ToDateTime(dataReader["RETURNDATETIME"]).ToShortDateString(),
                         };
                     }
                 }
@@ -1234,7 +1234,7 @@ namespace TravelApplication.Services
             {
                 using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
                 {
-                    string query = string.Format("select TRAVELREQUESTID,BADGENUMBER,APPROVALORDER,APPROVEROTHERBADGENUMBER, APPROVERNAME from TRAVELREQUEST_APPROVAL where TRAVELREQUESTID='{0}' ", travelRequestId, ApprovalStatus.Pending);
+                    string query = string.Format("select TRAVELREQUESTID,BADGENUMBER,APPROVALORDER,APPROVEROTHERBADGENUMBER, APPROVERNAME from TRAVELREQUEST_APPROVAL where TRAVELREQUESTID='{0}' and APPROVALSTATUS ='{1}' ", travelRequestId, ApprovalStatus.Pending);
 
                         OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
                         command.CommandText = query;
@@ -1295,6 +1295,7 @@ namespace TravelApplication.Services
             }
             response = new TravelRequestSubmitDetailResponse();
             response.TravelRequestSubmitDetail = travelRequestSubmitDetail;
+            response.CEOApprovalRequired = true;
             return response;
         }
 

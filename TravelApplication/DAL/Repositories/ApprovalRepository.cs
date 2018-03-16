@@ -160,7 +160,7 @@ namespace TravelApplication.DAL.Repositories
                 string fileName = System.Web.Hosting.HostingEnvironment.MapPath(@"~/Reports/Exported/"+fileAttachment+".pdf");
 
                 // email with attachment 
-                emailService.SendEmail(email.FromAddress, email.ToAddress, email.Subject, email.Body, fileName,"","","");
+                emailService.SendEmail(email.FromAddress, email.ToAddress, email.Subject, email.Body, fileName,"","","").ConfigureAwait(false);
      
                 //Once emailed delete the attached file
                 //System.IO.File.Delete(fileName);
@@ -190,7 +190,7 @@ namespace TravelApplication.DAL.Repositories
                     Subject = subject
                 };
 
-                emailService.SendEmail(email.FromAddress, email.ToAddress, email.Subject, email.Body);
+                emailService.SendEmail(email.FromAddress, email.ToAddress, email.Subject, email.Body).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -515,7 +515,7 @@ namespace TravelApplication.DAL.Repositories
                         Subject = subject
                     };
  
-                    emailService.SendEmail(email.FromAddress, email.ToAddress, email.Subject, email.Body);
+                    emailService.SendEmail(email.FromAddress, email.ToAddress, email.Subject, email.Body).ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
@@ -768,7 +768,7 @@ namespace TravelApplication.DAL.Repositories
                     Subject = subject
                 };
 
-                emailService.SendEmail(email.FromAddress, email.ToAddress, email.Subject, email.Body);
+                emailService.SendEmail(email.FromAddress, email.ToAddress, email.Subject, email.Body).ConfigureAwait(false) ;
             }
             catch (Exception ex)
             {

@@ -4,6 +4,7 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace TravelApplication.Services
@@ -18,9 +19,9 @@ namespace TravelApplication.Services
         /// <param name="subject">subject</param>
         /// <param name="body">email message</param>
         /// <returns></returns>
-        public bool SendEmail(string sendFrom, string sendTo, string subject, string body)
+        public async Task<bool> SendEmail(string sendFrom, string sendTo, string subject, string body)
         {
-            return SendEmail(sendFrom, sendTo, subject, body, "", "", "", "");
+            return await SendEmail(sendFrom, sendTo, subject, body, "", "", "", "");
         }
 
         /// <summary>
@@ -35,7 +36,7 @@ namespace TravelApplication.Services
         /// <param name="bcc">Bcc email address. This can contains mutliple email addresses with comma or semicolon delimiter.</param>
         /// <param name="smtpServer">SMTP server</param>
         /// <returns></returns>
-        public bool SendEmail(string sendFrom, string sendTo, string subject, string body,
+        public async Task<bool> SendEmail(string sendFrom, string sendTo, string subject, string body,
                                             string attachmentFile, string cc, string bcc, string smtpServer)
         {
             MailMessage emailMessage = default(MailMessage);
