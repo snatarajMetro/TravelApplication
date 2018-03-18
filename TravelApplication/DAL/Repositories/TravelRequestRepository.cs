@@ -1286,6 +1286,9 @@ namespace TravelApplication.Services
                         }
                         command.Dispose();
                         dataReader.Close();
+                    response = new TravelRequestSubmitDetailResponse();
+                    response.TravelRequestSubmitDetail = travelRequestSubmitDetail;
+                    response.CEOApprovalRequired = GetCEOApprovalStatus(dbConn, travelRequestId);
                 }
             }
             catch (Exception ex)
@@ -1293,9 +1296,10 @@ namespace TravelApplication.Services
 
                 throw;
             }
-            response = new TravelRequestSubmitDetailResponse();
-            response.TravelRequestSubmitDetail = travelRequestSubmitDetail;
-            response.CEOApprovalRequired = GetCEOApprovalStatus(dbConn, travelRequestId);
+            //response = new TravelRequestSubmitDetailResponse();
+            //response.TravelRequestSubmitDetail = travelRequestSubmitDetail;
+            //response.CEOApprovalRequired = GetCEOApprovalStatus(dbConn, travelRequestId);
+
             return response;
         }
 
@@ -1304,18 +1308,13 @@ namespace TravelApplication.Services
             var result = false;
             try
             {
-                string query = string.Format(@"select CASHADVANCE FROM TRAVELREQUEST_ESTIMATEDEXPENSE where TRAVELREQUESTID= '{0}'", travelRequestId);
+                string query = string.Format(@"select CASHADVANCE FROM TRAVELREQUEST_ESTIMATEDEXPENSE where TRAVELREQUESTID= '{0}' and CASHADVANCE > 0 ", travelRequestId);
                 OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
                 command.CommandText = query;
                 DbDataReader dataReader = command.ExecuteReader();
                 if (dataReader.HasRows)
                 {
-                    while (dataReader.Read())
-                    {
-
-                        result =( Convert.ToInt32(dataReader["CASHADVANCE"]) > 0 ) ? true : false;
-
-                    }
+                    result =true ;
                 }
                 else
                 {
@@ -1355,8 +1354,8 @@ namespace TravelApplication.Services
                 {
                     throw new Exception("Couldn't retrieve rejected travel request status");
                 }
-                command.Dispose();
-                dataReader.Close();
+              //  command.Dispose();
+               // dataReader.Close();
             }
             catch (Exception ex)
             {
