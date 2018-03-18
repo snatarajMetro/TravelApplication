@@ -1,5 +1,5 @@
 ﻿var userName = '';
-var fadeOutTimeInMilliseconds = 5000; // 5 seconds
+var fadeOutTimeInMilliseconds = 15000; // 15 seconds
 var selectedRoleId = 0;
 var maxRowCount = 5;
 var currentRowNumber = 3;
@@ -647,6 +647,7 @@ function setUserName() {
 
                 $('#txtName').val(result.EmployeeFirstName + ' ' + result.EmployeeLastName);
                 $('#txtOrganization').val(result.Department);
+                $('#txtDivision').val(result.CostCenter);
             },
             error: function (xhr, options, error) {
             }
