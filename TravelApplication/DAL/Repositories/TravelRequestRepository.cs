@@ -1295,8 +1295,42 @@ namespace TravelApplication.Services
             }
             response = new TravelRequestSubmitDetailResponse();
             response.TravelRequestSubmitDetail = travelRequestSubmitDetail;
-            response.CEOApprovalRequired = true;
+            response.CEOApprovalRequired = GetCEOApprovalStatus(dbConn, travelRequestId);
             return response;
+        }
+
+        private bool GetCEOApprovalStatus(DbConnection dbconn, int travelRequestId)
+        {
+            var result = false;
+            try
+            {
+                string query = string.Format(@"select CASHADVANCE FROM TRAVELREQUEST_ESTIMATEDEXPENSE where TRAVELREQUESTID= '{0}'", travelRequestId);
+                OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+                command.CommandText = query;
+                DbDataReader dataReader = command.ExecuteReader();
+                if (dataReader.HasRows)
+                {
+                    while (dataReader.Read())
+                    {
+
+                        result =( Convert.ToInt32(dataReader["CASHADVANCE"]) > 0 ) ? true : false;
+
+                    }
+                }
+                else
+                {
+                    throw new Exception("Couldn't retrieve CEO approval status");
+                }
+                command.Dispose();
+                dataReader.Close();
+            }
+            catch (Exception ex)
+            {
+                LogMessage.Log("GetRejectedTravelRequestStatus : " + ex.Message);
+                throw;
+            }
+            return result;
+
         }
 
         private bool GetRejectedTravelRequestStatus(DbConnection dbconn, string travelRequestId)
