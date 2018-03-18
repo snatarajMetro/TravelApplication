@@ -590,7 +590,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 $(".dz-error-mark").css("display", "none");
 
                 // Exclude other document section as the user can upload as many documents as possible
-                if (index != 5) {
+                if (index != 6) {
                     this.removeEventListeners();
 
                     $("#supportingDocumentZone" + index + " .dz-message")
