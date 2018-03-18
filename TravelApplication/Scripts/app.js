@@ -1639,3 +1639,16 @@ function closesubmiterror() {
 function closetravelrequesterror() {
     $("#submiterror").hide();
 }
+
+function setmaxlength(id, event) {
+    var element = $("#" + id);
+    var len = element.val().length + 1;
+    var max = element.attr("maxlength");
+
+    var cond = (45 < event.which && event.which < 58) || (45 < event.keyCode && event.keyCode < 58);
+
+    if (!(cond && len <= max)) {
+        event.preventDefault();
+        return false;
+    }
+}
