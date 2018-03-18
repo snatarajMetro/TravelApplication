@@ -1765,12 +1765,12 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         if (canSubmit) {
 
             if (travelRequestCEORequired == 'true') {
-                if (executiveOfficerBadgeNumber == "" || executiveOfficerBadgeNumber == '0') {
+                if (ceoForAPTABadgeNumber == "" || ceoForAPTABadgeNumber == '0') {
                     canSubmit = false;
-                    validationMessage = "Since cash advance is requested, CEO's approval is required";
-                } else if ((executiveOfficerBadgeNumber == '-1') && (!executiveOfficerOtherBadgeNumber)) {
+                    errorMessage = "Since cash advance is requested, CEO's approval is required";
+                } else if ((ceoForAPTABadgeNumber == '-1') && (!ceoForAPTABadgeNumber)) {
                     canSubmit = false
-                    validationMessage = "CEO is required as one of the approvers";
+                    errorMessage = "CEO is required as one of the approvers";
                 }
             }
         }
