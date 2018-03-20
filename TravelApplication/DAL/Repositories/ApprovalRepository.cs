@@ -1,6 +1,7 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Common;
 using System.IO;
 using System.Linq;
@@ -151,7 +152,7 @@ namespace TravelApplication.DAL.Repositories
                 var emailAndFirstName = getEmailAddressByBadgeNumber(departmentHeadBadgeNumber);
                 var email = new Models.Email()
                 {
-                    FromAddress = "natarajs@metro.net",
+                    FromAddress = ConfigurationManager.AppSettings["TravelApplicationEmailId"],
                     ToAddress = emailAndFirstName[0],
                     Body = GetApprovalRequestEmailBody(emailAndFirstName[1],travelRequestId, departmentHeadBadgeNumber, requestType),
                     Subject = subject
@@ -184,7 +185,7 @@ namespace TravelApplication.DAL.Repositories
 
                 var email = new Models.Email()
                 {
-                    FromAddress = "natarajs@metro.net",
+                    FromAddress = ConfigurationManager.AppSettings["TravelApplicationEmailId"],
                     ToAddress = emailAndFirstName[0],
                     Body = GetRejectionRequestEmailBody(emailAndFirstName[1], travelRequestId,comments,rejectReason),
                     Subject = subject
@@ -471,11 +472,18 @@ namespace TravelApplication.DAL.Repositories
                     dbConn.Close();
                     dbConn.Dispose();
 
+                    string subject = string.Format(@"Travel Request Approval for Id - {0} ", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
+
+
+                    // Send sucessful submission email only if its new
+                    if (string.IsNullOrEmpty(submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId))
+                    {                        
+                        sendNewRequestEmail(submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestBadgeNumber, "Travel Request Submitted Successfully", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
+                    }
+
                     if (submitTravelRequest.HeirarchichalApprovalRequest.SignedInBadgeNumber != result)
                     {
-                        string subject = string.Format(@"Travel Request Approval for Id - {0} ", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
-                        sendNewRequestEmail(submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestBadgeNumber, "Travel Request Submitted Successfully", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
-
+                        
                         var dateTime = System.DateTime.Now.Ticks;
                         //Generate Crystal report
                         travelRequestReportService.RunReport("Travel_Request.rpt", "TravelRequest_" + submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId+"_"+dateTime, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId.ToString());
@@ -509,7 +517,7 @@ namespace TravelApplication.DAL.Repositories
                     var emailAndFirstName = getEmailAddressByBadgeNumber(travelRequestBadgeNumber);
                     var email = new Models.Email()
                     {
-                        FromAddress = "natarajs@metro.net",
+                        FromAddress = ConfigurationManager.AppSettings["TravelApplicationEmailId"],
                         ToAddress = emailAndFirstName[0],
                         Body = GetNewRequestEmailBody(emailAndFirstName[1], travelRequestId),
                         Subject = subject
@@ -762,7 +770,7 @@ namespace TravelApplication.DAL.Repositories
                 var emailAndFirstName = getEmailAddressByBadgeNumber(travelRequestBadgeNumber);
                 var email = new Models.Email()
                 {
-                    FromAddress = "natarajs@metro.net",
+                    FromAddress = ConfigurationManager.AppSettings["TravelApplicationEmailId"],
                     ToAddress = emailAndFirstName[0],
                     Body = GetNewReimbursementRequestEmailBody(emailAndFirstName[1], travelRequestId),
                     Subject = subject
