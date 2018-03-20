@@ -2494,22 +2494,17 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
                 // Set user detail section
                 $("#txtTravelRequestNumber1").val(data.TravelReimbursementDetails.TravelRequestId);
-                //$("#txtBadgeNumber").val(data.TravelReimbursementDetails.BadgeNumber);
                 document.getElementById("txtBadgeNumber2").value = data.TravelReimbursementDetails.BadgeNumber.toString();
                 $("#txtTravelPeriodFrom").val(data.TravelReimbursementDetails.StrDepartureDateTime);
                 $("#txtTravelPeriodTo").val(data.TravelReimbursementDetails.StrReturnDateTime);
-                //$("#txtVendorNumber").val(data.TravelReimbursementDetails.VendorNumber);
                 document.getElementById("txtVendorNumber2").value = data.TravelReimbursementDetails.VendorNumber.toString();
                 $("#txtCostCenterNumber").val(data.TravelReimbursementDetails.CostCenterId);
-                //$("#txtName").val(data.TravelReimbursementDetails.Name);
                 document.getElementById("txtName2").value = data.TravelReimbursementDetails.Name.toString();
 
                 $("#txtExtension").val(data.TravelReimbursementDetails.Extension);
-                //$("#txtDivision").val(data.TravelReimbursementDetails.Division);
                 document.getElementById("txtDivision2").value = data.TravelReimbursementDetails.Division.toString();
                 $("#txtDepartment").val(data.TravelReimbursementDetails.Department);
                 $("#txtCashAdvance").val(data.CashAdvance);
-                //$("#txtPurpose").val(data.TravelReimbursementDetails.Purpose);
                 document.getElementById("txtPurpose2").value = data.TravelReimbursementDetails.Purpose.toString();
 
                 // set advance amounts
@@ -3222,15 +3217,15 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
                     // set user data section
                     $('#travelRequestIdForDisplay').html("Travel Request #<b>" + travelRequestId.toString() + "</b>");
-                    $('#txtBadgeNumber').val($scope.Data.ReimbursementTravelRequestDetails.BadgeNumber);
-                    $('#txtName').val($scope.Data.ReimbursementTravelRequestDetails.Name);
+                    document.getElementById("txtBadgeNumber2").value = $scope.Data.ReimbursementTravelRequestDetails.BadgeNumber;
+                    document.getElementById("txtName2").value = $scope.Data.ReimbursementTravelRequestDetails.Name;
                     $('#txtTravelRequestNumber1').val($scope.Data.ReimbursementTravelRequestDetails.TravelRequestId);
-                    $('#txtDivision').val($scope.Data.ReimbursementTravelRequestDetails.Division);
-                    $('#txtVendorNumber').val($scope.Data.ReimbursementTravelRequestDetails.VendorNumber);
+                    document.getElementById("txtDivision2").value = $scope.Data.ReimbursementTravelRequestDetails.Division;
+                    document.getElementById("txtVendorNumber2").value = $scope.Data.ReimbursementTravelRequestDetails.VendorNumber;
                     $('#txtCostCenterNumber').val($scope.Data.ReimbursementTravelRequestDetails.CostCenterId);
                     $('#txtTravelPeriodFrom').val($scope.Data.ReimbursementTravelRequestDetails.StrDepartureDateTime);
                     $('#txtTravelPeriodTo').val($scope.Data.ReimbursementTravelRequestDetails.StrReturnDateTime);
-                    $('#txtPurpose').val($scope.Data.ReimbursementTravelRequestDetails.Purpose);
+                    document.getElementById("txtPurpose2").value = $scope.Data.ReimbursementTravelRequestDetails.Purpose;
                     $('#txtDepartment').val($scope.Data.ReimbursementTravelRequestDetails.Department);
                     $('#txtExtension').val($scope.Data.ReimbursementTravelRequestDetails.Extension);
                     $('#txtReimbursementId').val($scope.Data.ReimbursementTravelRequestDetails.ReimbursementId);
@@ -3281,7 +3276,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
                                 var costCenterName = $scope.Data.FIS.FISDetails[index].CostCenterId;
 
-                                $("#ddlCostCenter" + (index + 1)).val(costCenterName);
+                                document.getElementById("ddlCostCenter" + (index + 1)).value = costCenterName;
                                 $("#txtAccount" + (index + 1)).val($scope.Data.FIS.FISDetails[index].LineItem);
                                 $("#txtTask" + (index + 1)).val($scope.Data.FIS.FISDetails[index].Task);
 
