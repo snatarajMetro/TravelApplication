@@ -1316,10 +1316,6 @@ namespace TravelApplication.Services
                 {
                     result =true ;
                 }
-                else
-                {
-                    throw new Exception("Couldn't retrieve CEO approval status");
-                }
                 command.Dispose();
                 dataReader.Close();
             }
@@ -1907,7 +1903,7 @@ namespace TravelApplication.Services
             command.Dispose();
             dataReader.Close();
 
-            if (response == ApprovalStatus.New.ToString() || response == ApprovalStatus.Rejected.ToString())
+            if (response == ApprovalStatus.New.ToString() || response == ApprovalStatus.Rejected.ToString() || response == ApprovalStatus.Cancelled.ToString())
             {
                 return true;
             }

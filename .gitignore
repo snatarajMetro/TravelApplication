@@ -305,3 +305,4 @@ TravelApplication/logs/log.txt
 TravelApplication/Models/TravelRequestDetails.cs
 *.cs
 TravelApplication/logs/log.txt
+TravelApplication/logs/log1.txt
