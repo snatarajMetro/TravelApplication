@@ -59,7 +59,6 @@ function logout() {
     $('#travalAction').text('travelrequest');
     $('#travelReimbursementId').text(0);
     $('#fromDashboard').text("false");
-    $('#estimatedExpenseId').text(0);
     $('#txtReimbursementId').val(0);
     userName = "";
 
@@ -226,6 +225,7 @@ function viewexistingtravelrequests(status) {
     if (!status) {
         status = "";
     }
+    $('#estimatedExpenseId').text(0);
 
     //reset estimated expense section
     var scope = angular.element('#existingtravelrequeststemplate').scope();
@@ -593,7 +593,7 @@ function savedataentry()
 
                 $('#travelRequestBadgeNumber').text(result.BadgeNumber);
                 $('#travelRequestId').text(result.TravelRequestId);
-                $('#estimatedExpenseId').text(0);
+                //$('#estimatedExpenseId').text(0);
 
                 var scope = angular.element('#fileuploadtemplate').scope();
                 scope.loadFileUpload2(result.TravelRequestId);
