@@ -747,46 +747,50 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                         $scope.SelectedProject[0].Id = "";
                     }
                 }
-                else if (source == 'ddlCostCenter2') {
+                else if (source == 'ddlCostCenter2' || source == 'ddlCostCenter12') {
                     $scope.projects2 = result;
                     $scope.$apply();
                     $('#project2').val("?");
 
                     if ($scope.SelectedProject) {
                         $("#ddlProjects2").val($scope.SelectedProject[1].Id);
+                        $("#ddlProjects12").val($scope.SelectedProject[1].Id);
                         $("#project2").val($scope.SelectedProject[1].Id);
                         $scope.SelectedProject[1].Id = "";
                     }
                 }
-                else if (source == 'ddlCostCenter3') {
+                else if (source == 'ddlCostCenter3' || source == 'ddlCostCenter13') {
                     $scope.projects3 = result;
                     $scope.$apply();
                     $('#project3').val("?");
 
                     if ($scope.SelectedProject) {
                         $("#ddlProjects3").val($scope.SelectedProject[2].Id);
+                        $("#ddlProjects13").val($scope.SelectedProject[2].Id);
                         $("#project3").val($scope.SelectedProject[2].Id);
                         $scope.SelectedProject[2].Id = "";
                     }
                 }
-                else if (source == 'ddlCostCenter4') {
+                else if (source == 'ddlCostCenter4' || source == 'ddlCostCenter14') {
                     $scope.projects4 = result;
                     $scope.$apply();
                     $('#project4').val("?");
 
                     if ($scope.SelectedProject) {
                         $("#ddlProjects4").val($scope.SelectedProject[3].Id);
+                        $("#ddlProjects14").val($scope.SelectedProject[3].Id);
                         $("#project4").val($scope.SelectedProject[3].Id);
                         $scope.SelectedProject[3].Id = "";
                     }
                 }
-                else if (source == 'ddlCostCenter5') {
+                else if (source == 'ddlCostCenter5' || source == 'ddlCostCenter15') {
                     $scope.projects5 = result;
                     $scope.$apply();
                     $('#project5').val("?");
 
                     if ($scope.SelectedProject) {
                         $("#ddlProjects5").val($scope.SelectedProject[4].Id);
+                        $("#ddlProjects15").val($scope.SelectedProject[4].Id);
                         $("#project5").val($scope.SelectedProject[4].Id);
                         $scope.SelectedProject[4].Id = "";
                     }
@@ -800,22 +804,26 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             if (source == 'ddlCostCenter1' || source == 'ddlCostCenter11') {
                 $scope.projects1 = $scope.Projects[costCenterName];
             }
-            else if (source == 'ddlCostCenter2') {
+            else if (source == 'ddlCostCenter2' || source == 'ddlCostCenter12') {
                 $scope.projects2 = $scope.Projects[costCenterName];
             }
-            else if (source == 'ddlCostCenter3') {
+            else if (source == 'ddlCostCenter3' || source == 'ddlCostCenter13') {
                 $scope.projects3 = $scope.Projects[costCenterName];
             }
-            else if (source == 'ddlCostCenter4') {
+            else if (source == 'ddlCostCenter4' || source == 'ddlCostCenter14') {
                 $scope.projects4 = $scope.Projects[costCenterName];
             }
-            else if (source == 'ddlCostCenter5') {
+            else if (source == 'ddlCostCenter5' || source == 'ddlCostCenter15') {
                 $scope.projects5 = $scope.Projects[costCenterName];
             }
         }
     };
 
     $scope.getProjects = function (source, costCenter) {
+        $scope.getProjectsByCostCenterName(source, costCenter.Name);
+    };
+
+    $scope.getProjectsForReimbursement = function (source, costCenter) {
         $scope.getProjectsByCostCenterName(source, costCenter.Name);
     };
 
@@ -2537,14 +2545,6 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
                     $scope.SelectedProject[index].Id = value.ProjectId;
                     $timeout(angular.element("#ddlCostCenter" + (index + 1)).triggerHandler('change'), 0, true);
-
-                    //angular.element("#ddlCostCenter" + counter).triggerHandler('change');
-
-                    //$.get('/api/fis/delay')
-                    //.done(function () {
-                    //    $("#ddlProjects" + counter).val(value.ProjectId);
-                    //    $scope.$apply();
-                    //});
                 })
             });
 
@@ -3276,7 +3276,8 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
                                 var costCenterName = $scope.Data.FIS.FISDetails[index].CostCenterId;
 
-                                document.getElementById("ddlCostCenter" + (index + 1)).value = costCenterName;
+                                var counter = 10 + (index + 1);
+                                document.getElementById("ddlCostCenter" + counter).value = costCenterName;
                                 $("#txtAccount" + (index + 1)).val($scope.Data.FIS.FISDetails[index].LineItem);
                                 $("#txtTask" + (index + 1)).val($scope.Data.FIS.FISDetails[index].Task);
 
@@ -3387,9 +3388,11 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                     if ($scope.Data.FIS.FISDetails) {
                         for (var index2 = 0; index2 < $scope.Data.FIS.FISDetails.length; index2++) {
 
+                            var counter = 10 + (index2 + 1);
                             var projectName = $scope.Data.FIS.FISDetails[index2].ProjectId;
+
                             $scope.SelectedProject[index2].Id = projectName;
-                            $timeout(angular.element("#ddlCostCenter" + (index2 + 1)).triggerHandler('change'), 0, true);
+                            $timeout(angular.element("#ddlCostCenter" + counter).triggerHandler('change'), 0, true);
                         }
                     }
                 }

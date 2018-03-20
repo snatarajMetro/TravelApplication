@@ -1234,39 +1234,39 @@ function savereimbursementdataentry() {
                         {
                             "CostCenterId": $("#ddlCostCenter11 option:selected").val(),
                             "LineItem": $('#txtAccount1').val(),
-                            "ProjectId": $("#ddlProjects1 option:selected").val(),
+                            "ProjectId": $("#ddlProjects11 option:selected").val(),
                             "Task": $('#txtTask1').val(),
                             "Amount": $('#txtAmount1').val(),
                             "TravelRequestId": travelRequestId
                         },
                         {
-                            "CostCenterId": $("#ddlCostCenter2 option:selected").val(),
+                            "CostCenterId": $("#ddlCostCenter12 option:selected").val(),
                             "LineItem": $('#txtAccount2').val(),
-                            "ProjectId": $("#ddlProjects2 option:selected").val(),
+                            "ProjectId": $("#ddlProjects12 option:selected").val(),
                             "Task": $('#txtTask2').val(),
                             "Amount": $('#txtAmount2').val(),
                             "TravelRequestId": travelRequestId
                         },
                         {
-                            "CostCenterId": $("#ddlCostCenter3 option:selected").val(),
+                            "CostCenterId": $("#ddlCostCenter13 option:selected").val(),
                             "LineItem": $('#txtAccount3').val(),
-                            "ProjectId": $("#ddlProjects3 option:selected").val(),
+                            "ProjectId": $("#ddlProjects13 option:selected").val(),
                             "Task": $('#txtTask3').val(),
                             "Amount": $('#txtAmount3').val(),
                             "TravelRequestId": travelRequestId
                         },
                         {
-                            "CostCenterId": $("#ddlCostCenter4 option:selected").val(),
+                            "CostCenterId": $("#ddlCostCenter14 option:selected").val(),
                             "LineItem": $('#txtAccount4').val(),
-                            "ProjectId": $("#ddlProjects4 option:selected").val(),
+                            "ProjectId": $("#ddlProjects14 option:selected").val(),
                             "Task": $('#txtTask4').val(),
                             "Amount": $('#txtAmount4').val(),
                             "TravelRequestId": travelRequestId
                         },
                         {
-                            "CostCenterId": $("#ddlCostCenter5 option:selected").val(),
+                            "CostCenterId": $("#ddlCostCenter15 option:selected").val(),
                             "LineItem": $('#txtAccount5').val(),
-                            "ProjectId": $("#ddlProjects5 option:selected").val(),
+                            "ProjectId": $("#ddlProjects15 option:selected").val(),
                             "Task": $('#txtTask5').val(),
                             "Amount": $('#txtAmount5').val(),
                             "TravelRequestId": travelRequestId
