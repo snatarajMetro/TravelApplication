@@ -1785,6 +1785,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
         if (canSubmit) {
             $('#btnSubmit').prop("disabled", true);
+            $('#btnBack').prop("disabled", true);
 
             $.ajax({
                 type: "POST",
@@ -1850,6 +1851,9 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 error: function (xhr, options, error) {
                     if (xhr.status == 500) {
 
+                        $('#btnSubmit').prop("disabled", false);
+                        $('#btnBack').prop("disabled", false);
+
                         var errorMessage = xhr.responseText;
 
                         $("#submiterror2").fadeIn("slow");
@@ -1863,6 +1867,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         }
         else {
             $('#btnSubmit').prop("disabled", false);
+            $('#btnBack').prop("disabled", false);
 
             $("#submiterror2").fadeIn("slow");
             $('#submiterrormessage2').text(errorMessage);
@@ -2011,6 +2016,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         if (canSubmit) {
 
             $('#btnSubmit').prop("disabled", true);
+            $('#btnBack').prop("disabled", true);
 
             $.ajax({
                 type: "POST",
@@ -2077,6 +2083,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 error: function (xhr, options, error) {
 
                     $('#btnSubmit').prop("disabled", false);
+                    $('#btnBack').prop("disabled", false);
 
                     if (xhr.status == 500) {
 
@@ -2092,6 +2099,10 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             });
         }
         else {
+
+            $('#btnSubmit').prop("disabled", false);
+            $('#btnBack').prop("disabled", false);
+
             $("#submiterror2").fadeIn("slow");
             $('#submiterrormessage2').text(validationMessage);
 
