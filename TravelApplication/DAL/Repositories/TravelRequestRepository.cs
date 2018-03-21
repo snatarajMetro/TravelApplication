@@ -1235,12 +1235,16 @@ namespace TravelApplication.Services
                 using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
                 {
                     string query = string.Format("select TRAVELREQUESTID,BADGENUMBER,APPROVALORDER,APPROVEROTHERBADGENUMBER, APPROVERNAME from TRAVELREQUEST_APPROVAL where TRAVELREQUESTID='{0}' ", travelRequestId, ApprovalStatus.Pending);
-
-                        OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+                    travelRequestSubmitDetail = new TravelRequestSubmitDetail();
+                    if (GetRejectedTravelRequestStatus(dbConn, travelRequestId.ToString()))
+                    {
+                        query = string.Format("select TRAVELREQUESTID,BADGENUMBER,APPROVALORDER,APPROVEROTHERBADGENUMBER, APPROVERNAME from TRAVELREQUEST_APPROVAL where TRAVELREQUESTID='{0}' and APPROVALSTATUS='{1}' ", travelRequestId, ApprovalStatus.Pending.ToString());
+                    }
+                    OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
                         command.CommandText = query;
                         DbDataReader dataReader = command.ExecuteReader();
-                        travelRequestSubmitDetail = new TravelRequestSubmitDetail();
-                        if (dataReader.HasRows)
+                       
+                    if (dataReader.HasRows)
                         {
                             while (dataReader.Read())
                             {
@@ -1277,7 +1281,7 @@ namespace TravelApplication.Services
 
                             string agree = string.Empty;
                             string submitter = string.Empty;
-                            //  travelRequestSubmitDetail.Agree = GetAgeedAcknowledgement(dbConn, travelRequestId);
+                            //travelRequestSubmitDetail.Agree = GetAgeedAcknowledgement(dbConn, travelRequestId);
                             GetSubmitterName(dbConn, travelRequestId,out agree,out submitter);
                             travelRequestSubmitDetail.SubmitterName = submitter;
                             travelRequestSubmitDetail.Agree = (agree == "Y")? true : false;
