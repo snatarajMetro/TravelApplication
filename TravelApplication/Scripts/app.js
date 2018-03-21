@@ -769,9 +769,10 @@ function approve() {
         }
     }
 
-    // Disable the approve button, once the user clicks on it.
+    // Disable the approve and cancel button, once the user clicks on it.
     $('#btnApprove').prop("disabled", true);
-
+    $('#btnCancel').prop("disabled", true);
+    
     $.ajax({
         type: "POST",
         url: url,
@@ -800,8 +801,9 @@ function approve() {
         },
         error: function (xhr, options, error) {
 
-            // Enable the approve button
+            // Enable the approve and cancel button
             $('#btnApprove').prop("disabled", false);
+            $('#btnCancel').prop("disabled", false);
 
             if (xhr.status == 500) {
                 var errorMessage = xhr.responseText;
