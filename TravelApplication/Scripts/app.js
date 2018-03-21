@@ -13,11 +13,11 @@ $(document).ready(function () {
     //var scope = angular.element('#fileuploadtemplate').scope();
     //scope.loadFileUpload2(123456);
     //$("#fileuploadtemplate").show();
-
+    //$("#selectedRoleId").text(4);
     //viewdashboard();
     //createnewrequest();
     //$('#travelRequestBadgeNumber').text("1234");
-    //$("#selectedRoleId").text(4);
+    
     //editTravelRequest();
     //$("#signin").hide();
     //createnewreimbursementrequest();
@@ -480,6 +480,23 @@ function savedataentry()
                 canSubmit = false;
             }
         }
+    }
+
+    // if user is not admin, reset to zero
+    if (selectedRoleId != 4) {
+
+        // Other Estimated costs
+        totalOtherEstimatedLodge = 0;
+        totalOtherEstimatedAirFare = 0;
+        totalOtherEstimatedMeals = 0;
+        totalOtherEstimatedTotal = 0;
+
+        // Actual Estimated costs
+        totalActualEstimatedLodge = 0;
+        totalActualEstimatedAirFare = 0;
+        totalActualEstimatedMeals = 0;
+        totalActualEstimatedTotal = 0;
+        personalTravelExpense = 0;
     }
 
     if (canSubmit) {
