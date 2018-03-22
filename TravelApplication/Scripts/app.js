@@ -1256,7 +1256,7 @@ function savereimbursementdataentry() {
                             "CostCenterId": $("#ddlCostCenter11 option:selected").val(),
                             "LineItem": $('#txtAccount1').val(),
                             "ProjectId": $("#ddlProjects11 option:selected").val(),
-                            "Task": $('#txtTask1').val(),
+                            "Task": $('#txtTaskForReimbursement1').val(),
                             "Amount": $('#txtAmount1').val(),
                             "TravelRequestId": travelRequestId
                         },
@@ -1264,7 +1264,7 @@ function savereimbursementdataentry() {
                             "CostCenterId": $("#ddlCostCenter12 option:selected").val(),
                             "LineItem": $('#txtAccount2').val(),
                             "ProjectId": $("#ddlProjects12 option:selected").val(),
-                            "Task": $('#txtTask2').val(),
+                            "Task": $('#txtTaskForReimbursement2').val(),
                             "Amount": $('#txtAmount2').val(),
                             "TravelRequestId": travelRequestId
                         },
@@ -1272,7 +1272,7 @@ function savereimbursementdataentry() {
                             "CostCenterId": $("#ddlCostCenter13 option:selected").val(),
                             "LineItem": $('#txtAccount3').val(),
                             "ProjectId": $("#ddlProjects13 option:selected").val(),
-                            "Task": $('#txtTask3').val(),
+                            "Task": $('#txtTaskForReimbursement3').val(),
                             "Amount": $('#txtAmount3').val(),
                             "TravelRequestId": travelRequestId
                         },
@@ -1280,7 +1280,7 @@ function savereimbursementdataentry() {
                             "CostCenterId": $("#ddlCostCenter14 option:selected").val(),
                             "LineItem": $('#txtAccount4').val(),
                             "ProjectId": $("#ddlProjects14 option:selected").val(),
-                            "Task": $('#txtTask4').val(),
+                            "Task": $('#txtTaskForReimbursement4').val(),
                             "Amount": $('#txtAmount4').val(),
                             "TravelRequestId": travelRequestId
                         },
@@ -1288,7 +1288,7 @@ function savereimbursementdataentry() {
                             "CostCenterId": $("#ddlCostCenter15 option:selected").val(),
                             "LineItem": $('#txtAccount5').val(),
                             "ProjectId": $("#ddlProjects15 option:selected").val(),
-                            "Task": $('#txtTask5').val(),
+                            "Task": $('#txtTaskForReimbursement5').val(),
                             "Amount": $('#txtAmount5').val(),
                             "TravelRequestId": travelRequestId
                         }

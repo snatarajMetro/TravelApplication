@@ -3290,7 +3290,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                                 var counter = 10 + (index + 1);
                                 document.getElementById("ddlCostCenter" + counter).value = costCenterName;
                                 $("#txtAccount" + (index + 1)).val($scope.Data.FIS.FISDetails[index].LineItem);
-                                $("#txtTask" + (index + 1)).val($scope.Data.FIS.FISDetails[index].Task);
+                                $("#txtTaskForReimbursement" + (index + 1)).val($scope.Data.FIS.FISDetails[index].Task);
 
                                 $scope.FISModel[index].Amount = $scope.Data.FIS.FISDetails[index].Amount;
 
