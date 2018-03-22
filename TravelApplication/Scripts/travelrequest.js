@@ -1785,7 +1785,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
         if (canSubmit) {
             $('#btnSubmit').prop("disabled", true);
-            $('#btnBack').prop("disabled", true);
+            $('#btnBackTravelRequest').prop("disabled", true);
 
             $.ajax({
                 type: "POST",
@@ -1846,13 +1846,13 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                     $('#submitsuccessmessage2').html("Travel request has been successfully submitted. Travel Request# is <b>" + travelRequestId + "</b>.");
 
                     $('#btnSubmit').prop("disabled", true);
-                    $('#btnBack').prop("disabled", true);
+                    $('#btnBackTravelRequest').prop("disabled", true);
                 },
                 error: function (xhr, options, error) {
                     if (xhr.status == 500) {
 
                         $('#btnSubmit').prop("disabled", false);
-                        $('#btnBack').prop("disabled", false);
+                        $('#btnBackTravelRequest').prop("disabled", false);
 
                         var errorMessage = xhr.responseText;
 
@@ -1867,7 +1867,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         }
         else {
             $('#btnSubmit').prop("disabled", false);
-            $('#btnBack').prop("disabled", false);
+            $('#btnBackTravelRequest').prop("disabled", false);
 
             $("#submiterror2").fadeIn("slow");
             $('#submiterrormessage2').text(errorMessage);
@@ -2016,7 +2016,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         if (canSubmit) {
 
             $('#btnSubmit').prop("disabled", true);
-            $('#btnBack').prop("disabled", true);
+            $('#btnBackTravelReimbursement').prop("disabled", true);
 
             $.ajax({
                 type: "POST",
@@ -2078,12 +2078,12 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                     $('#submitsuccessmessage2').html("Reimbursement request has been successfully submitted. Reimbursement Request# is <b>" + travelRequestId + "</b>.");
 
                     $('#btnSubmit').prop("disabled", true);
-                    $('#btnBack').prop("disabled", true);
+                    $('#btnBackTravelReimbursement').prop("disabled", true);
                 },
                 error: function (xhr, options, error) {
 
                     $('#btnSubmit').prop("disabled", false);
-                    $('#btnBack').prop("disabled", false);
+                    $('#btnBackTravelReimbursement').prop("disabled", false);
 
                     if (xhr.status == 500) {
 
@@ -2101,7 +2101,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         else {
 
             $('#btnSubmit').prop("disabled", false);
-            $('#btnBack').prop("disabled", false);
+            $('#btnBackTravelReimbursement').prop("disabled", false);
 
             $("#submiterror2").fadeIn("slow");
             $('#submiterrormessage2').text(validationMessage);
