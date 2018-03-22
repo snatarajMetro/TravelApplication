@@ -2542,7 +2542,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
                     var counter = index + 1;
 
-                    $("#ddlCostCenter" + counter).val(value.CostCenterId);
+                    $("#ddlCostCenter" + (10 + counter)).val(value.CostCenterId);
                     $("#txtAccount" + counter).val(value.LineItem);
                     $("#txtTask" + counter).val(value.Task);
                     //$("#txtAmount" + counter).val(value.Amount);
@@ -2555,7 +2555,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                     currentRowNumberFIS = ((index + 1) + 1);
 
                     $scope.SelectedProject[index].Id = value.ProjectId;
-                    $timeout(angular.element("#ddlCostCenter" + (index + 1)).triggerHandler('change'), 0, true);
+                    $timeout(angular.element("#ddlCostCenter" + (10 + counter)).triggerHandler('change'), 0, true);
                 })
             });
 
