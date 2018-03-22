@@ -482,8 +482,8 @@ function savedataentry()
         }
     }
 
-    // if user is not admin, reset to zero
-    if (selectedRoleId != 4) {
+    // if user is not admin and when creating a new travel request, reset to zero
+    if (selectedRoleId != 4 && travelRequestId == 0) {
 
         // Other Estimated costs
         totalOtherEstimatedLodge = 0;
