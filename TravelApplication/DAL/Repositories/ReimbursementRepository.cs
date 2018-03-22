@@ -205,8 +205,8 @@ namespace TravelApplication.DAL.Repositories
                             Division = dataReader["DIVISION"].ToString(),
                             DepartureDateTime = Convert.ToDateTime(dataReader["DEPARTUREDATETIME"]),
                             ReturnDateTime = Convert.ToDateTime(dataReader["RETURNDATETIME"]),
-                            StrDepartureDateTime = Convert.ToDateTime(dataReader["DEPARTUREDATETIME"]).ToShortDateString() ?? string.Empty,
-                            StrReturnDateTime = Convert.ToDateTime(dataReader["RETURNDATETIME"]).ToShortDateString() ?? string.Empty,
+                            StrDepartureDateTime = Convert.ToDateTime(dataReader["MEETINGBEGINDATETIME"]).ToShortDateString() ?? string.Empty,
+                            StrReturnDateTime = Convert.ToDateTime(dataReader["MEETINGENDDATETIME"]).ToShortDateString() ?? string.Empty,
                             Purpose = dataReader["Purpose"].ToString()                              
 
                         };
