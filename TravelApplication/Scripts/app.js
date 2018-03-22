@@ -771,7 +771,7 @@ function approve() {
 
     // Disable the approve and cancel button, once the user clicks on it.
     $('#btnApprove').prop("disabled", true);
-    $('#btnCancel').prop("disabled", true);
+    $('#btnCancelApprove').prop("disabled", true);
     
     $.ajax({
         type: "POST",
@@ -803,7 +803,7 @@ function approve() {
 
             // Enable the approve and cancel button
             $('#btnApprove').prop("disabled", false);
-            $('#btnCancel').prop("disabled", false);
+            $('#btnCancelApprove').prop("disabled", false);
 
             if (xhr.status == 500) {
                 var errorMessage = xhr.responseText;
@@ -881,6 +881,7 @@ function reject() {
 
         // Disable the reject button, once the user clicks on it.
         $('#btnReject').prop("disabled", true);
+        $('#btnCancelReject').prop("disabled", true);
 
         $.ajax({
             type: "POST",
@@ -930,6 +931,7 @@ function reject() {
 
                 // Disable the reject button, once the user clicks on it.
                 $('#btnReject').prop("disabled", false);
+                $('#btnCancelReject').prop("disabled", false);
 
                 if (xhr.status == 500) {
                     var errorMessage = xhr.responseText;
