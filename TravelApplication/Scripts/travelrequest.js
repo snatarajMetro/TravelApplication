@@ -2481,6 +2481,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         $scope.totalPersonalAdvanceAmount = "";
         $scope.totalAmount = "";
         $scope.totalFISAmount = "";
+        $scope.totalDailyAmount = "";
         $scope.SelectedProject = [{}, {}, {}, {}, {}];
 
         setWatch();
