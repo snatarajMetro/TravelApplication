@@ -1775,7 +1775,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             if (travelRequestCEORequired == 'true') {
                 if (ceoForAPTABadgeNumber == "" || ceoForAPTABadgeNumber == '0') {
                     canSubmit = false;
-                    errorMessage = "Since cash advance is requested, CEO's approval is required";
+                    errorMessage = "Since cash advance is requested, CEO's (For APTA/CTA/TRB conference) approval is required";
                 } else if ((ceoForAPTABadgeNumber == '-1') && (!ceoForAPTABadgeNumber)) {
                     canSubmit = false
                     errorMessage = "CEO is required as one of the approvers";

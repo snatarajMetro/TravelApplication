@@ -1907,7 +1907,7 @@ namespace TravelApplication.Services
             command.Dispose();
             dataReader.Close();
 
-            if (response == ApprovalStatus.New.ToString() || response == ApprovalStatus.Rejected.ToString() || response == ApprovalStatus.Cancelled.ToString())
+            if (response == ApprovalStatus.New.ToString() || response == ApprovalStatus.Rejected.ToString() )
             {
                 return true;
             }
