@@ -329,6 +329,7 @@ function savedataentry()
     var purpose = $('#txtPurpose').val();
     var personalTravelIncluded = $('#cbPersonalTravelRequest').prop('checked');
     var specialInstruction = jQuery.trim($('#txtSpecialInstruction').val());
+    var cashAdvanceRequired = ($('input[name=cashadvance]:checked').val() == "1");
 
     // Get estimated expenses
     var advLodge = $('#txtAdvLodge').val();
@@ -407,14 +408,6 @@ function savedataentry()
     if (!meetingEndDate || meetingEndDate.length <= 0) {
         canSubmit = false;
     }
-
-    //if (!departureDate || departureDate.length <= 0) {
-    //    canSubmit = false;
-    //}
-
-    //if (!returnDate || returnDate.length <= 0) {
-    //    canSubmit = false;
-    //}
 
     // Validation
     if (canSubmit) {
@@ -556,7 +549,8 @@ function savedataentry()
                     'TotalActualEstimatedTotal': totalActualEstimatedTotal,
                     'PersonalTravelExpense': personalTravelExpense,
                     'PersonalTravelIncluded': personalTravelIncluded,
-                    'SpecialInstruction': specialInstruction
+                    'SpecialInstruction': specialInstruction,
+                    'CashAdvanceRequired': cashAdvanceRequired
                 },
                 "FISData":
                 {
@@ -1671,5 +1665,23 @@ function setmaxlength(id, event) {
     if (!(cond && len <= max)) {
         event.preventDefault();
         return false;
+    }
+}
+
+function displayCashAdvance(display) {
+    if (display == 1) {
+        // display cash advance section
+        $(".advancedneeded").removeAttr("style");
+    } else {
+
+        // reset cash advance fields
+        $("#txtAdvLodge").val("");
+        $("#txtAdvMeals").val("");
+        $("#txtAdvMiscellaneous").val("");
+        $("#txtAdvanceTotal").val("");
+        $("#txtCashAdvanceRequested").val("");
+
+        // hide cash advance section
+        $(".advancedneeded").attr("style","display:none;");
     }
 }

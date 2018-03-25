@@ -84,16 +84,21 @@
                             </div>
                         </div>
                     </div>
-                <div class="estimatedexpensesection row">
+                <div class="estimatedexpensesection row" ng-app="travelApp" ng-controller="travelAppCtrl">
                     <div class="pagetitle3">
                         <span>Estimated Expenses</span>
+                    </div>
+                    <div>
+                        <span class="expenserowtitle">Need Cash Advanced?&nbsp;&nbsp;</span>
+                        <input type="radio" name="cashadvance" value="1" onclick="displayCashAdvance(1)"> Yes
+                        <input type="radio" name="cashadvance" value="0" style="margin-left:5px;" onclick="displayCashAdvance(0)"> No
                     </div>
                     <div class="">
                         <div class="tablecontainer">
                             <div class="tableheading">
                                 <div class="tablehead">Expense Items</div>
                                 <div class="spacer"></div>
-                                <div class="tableheadnew">Advance&nbsp;Needed</div>
+                                <div class="tableheadnew advancedneeded" style="display:none;">Advance&nbsp;Needed</div>
                                 <div class="spacer"></div>
                                 <div class="tableheadnew">Estimated&nbsp;Cost</div>
                                 <div class="spacer otherestimatecostsection" style="display:none;"></div>
@@ -104,11 +109,11 @@
                                 <div class="tablehead">Fill in all information as indicated</div>
                                 <div class="tablehead"></div>
                             </div>
-                            <div class="tablebody" ng-app="travelApp" ng-controller="travelAppCtrl">
+                            <div class="tablebody">
                                 <div class="tablerow">
                                     <div class="tablecellheader expenserowtitle">Lodging (Per Night)</div>
                                     <div class="spacer"></div>
-                                    <div class="tablecell">
+                                    <div class="tablecell advancedneeded" style="display:none;">
                                         <input type="number" min="0.00" maxlength="7" max="9999999.99"
                                                step="any" placeholder="0.00" id="txtAdvLodge" class="inputnumber"
                                                onkeypress="setmaxlength(this.id, event)"
@@ -135,7 +140,7 @@
                                 <div class="tablerow">
                                     <div class="tablecellheader expenserowtitle">Airfare (Prepaid)</div>
                                     <div class="spacer"></div>
-                                    <div class="tablecell">
+                                    <div class="tablecell advancedneeded" style="display:none;">
                                         <input type="text" placeholder="N/A " id="txtAdvAirfare" 
                                                class="inputnumber" ng-model="advanceAirfareAmount" disabled tabindex=3 />
                                     </div>
@@ -160,7 +165,7 @@
                                 <div class="tablerow">
                                     <div class="tablecellheader expenserowtitle">Registration (Prepaid)</div>
                                     <div class="spacer"></div>
-                                    <div class="tablecell">
+                                    <div class="tablecell advancedneeded" style="display:none;">
                                         <input type="text" placeholder="N/A " id="txtAdvRegistration" 
                                                class="inputnumber" ng-model="advanceRegistrationAmount" disabled tabindex=5 />
                                     </div>
@@ -185,7 +190,7 @@
                                 <div class="tablerow">
                                     <div class="tablecellheader expenserowtitle">Meals</div>
                                     <div class="spacer"></div>
-                                    <div class="tablecell">
+                                    <div class="tablecell advancedneeded" style="display:none;">
                                         <input type="number" min="0.00" maxlength="7" max="9999999.99" 
                                                step="any" placeholder="0.00" id="txtAdvMeals" class="inputnumber" 
                                                onkeypress="setmaxlength(this.id, event)"
@@ -212,7 +217,7 @@
                                 <div class="tablerow">
                                     <div class="tablecellheader expenserowtitle">Car Rental</div>
                                     <div class="spacer"></div>
-                                    <div class="tablecell">
+                                    <div class="tablecell advancedneeded" style="display:none;">
                                         <input type="text" placeholder="N/A " id="txtAdvCarRental" 
                                                class="inputnumber" ng-model="advanceCarRentalAmount" disabled tabindex=9 />
                                     </div>
@@ -237,7 +242,7 @@
                                 <div class="tablerow">
                                     <div class="tablecellheader expenserowtitle">Miscellaneous</div>
                                     <div class="spacer"></div>
-                                    <div class="tablecell">
+                                    <div class="tablecell advancedneeded" style="display:none;">
                                         <input type="number" min="0.00" maxlength="7" max="9999999.99"  
                                                step="any" placeholder="0.00" id="txtAdvMiscellaneous" class="inputnumber"
                                                onkeypress="setmaxlength(this.id, event)"
@@ -264,7 +269,7 @@
                                 <div class="tablerow">
                                     <div class="tablecellheader expenserowtitle"><b>Total</b></div>
                                     <div class="spacer"></div>
-                                    <div class="tablecell">
+                                    <div class="tablecell advancedneeded" style="display:none;">
                                         <input type="number" min="0.00" max="999999999.99" step="any" placeholder="0.00" id="txtAdvanceTotal" readonly disabled class="inputnumber totalbgcolor" ng-model="totalAdvanceAmount" />
                                     </div>
                                     <div class="spacer"></div>
@@ -288,7 +293,7 @@
                                 <div class="tablerow">
                                     <div class="tablecellheader expenserowtitle"></div>
                                     <div class="spacer"></div>
-                                    <div class="tablecell"></div>
+                                    <div class="tablecell advancedneeded" style="display:none;"></div>
                                     <div class="spacer"></div>
                                     <div class="tablecell"></div>
                                     <div class="spacer otherestimatecostsection" style="display:none;"></div>

@@ -3,20 +3,6 @@
 
 app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridConstants) {
 
-    // Estimated Expense section
-    //$scope.advanceLodgingAmount = 0.00;
-    //$scope.advanceAirfareAmount = 0.00;
-    //$scope.advanceRegistrationAmount = 0.00;
-    //$scope.advanceMealsAmount = 0.00;
-    //$scope.advanceCarRentalAmount = 0.00;
-    //$scope.advanceMiscellaneousAmount = 0.00;
-    //$scope.estimatedLodgingAmount = 0.00;
-    //$scope.estimatedAirfareAmount = 0.00;
-    //$scope.estimatedRegistrationAmount = 0.00;
-    //$scope.estimatedMealsAmount = 0.00;
-    //$scope.estimatedCarRentalAmount = 0.00;
-    //$scope.estimatedMiscellaneousAmount = 0.00;
-
     $scope.updateTotalAdvanceAmount = function () {
 
         $scope.totalAdvanceAmount = parseFloat((
@@ -636,11 +622,6 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             $scope.estimatedCarRentalAmount = "";
             $scope.estimatedMiscellaneousAmount = "";
             $scope.totalFISAmount = "";
-            //$scope.totalFISAmount1 = "";
-            //$scope.totalFISAmount2 = "";
-            //$scope.totalFISAmount3 = "";
-            //$scope.totalFISAmount4 = "";
-            //$scope.totalFISAmount5 = "";
 
             // set default values
             for (var index = 0; index < maxRowCount; index++) {
@@ -2276,8 +2257,6 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
         $scope.estimatedActualMealsAmount = "";
         $scope.totalCashAdvanceAmount = "";
         $scope.personalTravelExpense = "";
-        //$scope.totalFISAmount1 = "";
-        //$scope.totalFISAmount2 = "";
 
         // set default values
         for (var index = 0; index < maxRowCount; index++) {
@@ -2327,19 +2306,26 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                 $('#txtNotes').val($scope.Data.EstimatedExpenseData.Note);
                 $('#txtAgencyName').val($scope.Data.EstimatedExpenseData.AgencyNameAndReservation);
                 $('#txtShuttle').val($scope.Data.EstimatedExpenseData.Shuttle);
-                //$('#txtCashAdvanceRequested').val($scope.Data.EstimatedExpenseData.CashAdvance);
                 $('#estimatedExpenseId').text($scope.Data.EstimatedExpenseData.EstimatedExpenseId);
 
                 // Set Personal Travel Included, Special Instruction
                 $("#cbPersonalTravelRequest").attr("checked", ($scope.Data.EstimatedExpenseData.PersonalTravelIncluded == true));
                 $('#txtSpecialInstruction').val($scope.Data.EstimatedExpenseData.SpecialInstruction);
 
-                $scope.advanceLodgingAmount         = ($scope.Data.EstimatedExpenseData.AdvanceLodging > 0) ? $scope.Data.EstimatedExpenseData.AdvanceLodging : $scope.advanceLodgingAmount;
-                $scope.advanceAirfareAmount         = ($scope.Data.EstimatedExpenseData.AdvanceAirFare > 0) ? $scope.Data.EstimatedExpenseData.AdvanceAirFare : $scope.advanceAirfareAmount;
-                $scope.advanceRegistrationAmount    = ($scope.Data.EstimatedExpenseData.AdvanceRegistration > 0) ? $scope.Data.EstimatedExpenseData.AdvanceRegistration : $scope.advanceRegistrationAmount;
-                $scope.advanceMealsAmount           = ($scope.Data.EstimatedExpenseData.AdvanceMeals > 0) ? $scope.Data.EstimatedExpenseData.AdvanceMeals : $scope.advanceMealsAmount;
-                $scope.advanceCarRentalAmount       = ($scope.Data.EstimatedExpenseData.AdvanceCarRental > 0) ? $scope.Data.EstimatedExpenseData.AdvanceCarRental : $scope.advanceCarRentalAmount;
-                $scope.advanceMiscellaneousAmount   = ($scope.Data.EstimatedExpenseData.AdvanceMiscellaneous > 0) ? $scope.Data.EstimatedExpenseData.AdvanceMiscellaneous : $scope.advanceMiscellaneousAmount;
+                // Set Cash Advance Required radio button
+                $('input:radio[name=cashadvance]')[0].checked = $scope.Data.EstimatedExpenseData.CashAdvanceRequired;
+                $('input:radio[name=cashadvance]')[1].checked = !$scope.Data.EstimatedExpenseData.CashAdvanceRequired;
+
+                if ($scope.Data.EstimatedExpenseData.CashAdvanceRequired) {
+                    $(".advancedneeded").removeAttr("style");
+
+                    $scope.advanceLodgingAmount         = ($scope.Data.EstimatedExpenseData.AdvanceLodging > 0) ? $scope.Data.EstimatedExpenseData.AdvanceLodging : $scope.advanceLodgingAmount;
+                    $scope.advanceAirfareAmount         = ($scope.Data.EstimatedExpenseData.AdvanceAirFare > 0) ? $scope.Data.EstimatedExpenseData.AdvanceAirFare : $scope.advanceAirfareAmount;
+                    $scope.advanceRegistrationAmount    = ($scope.Data.EstimatedExpenseData.AdvanceRegistration > 0) ? $scope.Data.EstimatedExpenseData.AdvanceRegistration : $scope.advanceRegistrationAmount;
+                    $scope.advanceMealsAmount           = ($scope.Data.EstimatedExpenseData.AdvanceMeals > 0) ? $scope.Data.EstimatedExpenseData.AdvanceMeals : $scope.advanceMealsAmount;
+                    $scope.advanceCarRentalAmount       = ($scope.Data.EstimatedExpenseData.AdvanceCarRental > 0) ? $scope.Data.EstimatedExpenseData.AdvanceCarRental : $scope.advanceCarRentalAmount;
+                    $scope.advanceMiscellaneousAmount   = ($scope.Data.EstimatedExpenseData.AdvanceMiscellaneous > 0) ? $scope.Data.EstimatedExpenseData.AdvanceMiscellaneous : $scope.advanceMiscellaneousAmount;
+                }
 
                 $scope.estimatedLodgingAmount       = ($scope.Data.EstimatedExpenseData.TotalEstimatedLodge > 0) ? $scope.Data.EstimatedExpenseData.TotalEstimatedLodge : $scope.estimatedLodgingAmount;
                 $scope.estimatedAirfareAmount       = ($scope.Data.EstimatedExpenseData.TotalEstimatedAirFare > 0) ? $scope.Data.EstimatedExpenseData.TotalEstimatedAirFare : $scope.estimatedAirfareAmount;

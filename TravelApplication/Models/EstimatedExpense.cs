@@ -46,5 +46,7 @@ namespace TravelApplication.Models
         public bool PersonalTravelIncluded { get; set; }
 
         public string SpecialInstruction { get; set; }
+
+        public bool CashAdvanceRequired { get; set; }
     }
 }
