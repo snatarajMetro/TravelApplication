@@ -17,6 +17,8 @@ namespace TravelApplication.Models
         public string UploadDateTime { get; set; }
 
         public string DownloadUrl { get; set; }
+
+        public string Notes { get; set; }
     }
 }
  

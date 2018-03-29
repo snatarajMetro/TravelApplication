@@ -507,7 +507,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
                         $("#supportingDocumentZone" + documentNumber + " .dz-message")
                             .css("background", "white");
 
-                        $("#uploaddocumenttext" + documentNumber).html("Click here to<br /> upload document " + documentNumber);
+                        $("#uploaddocumenttext" + documentNumber).html("Click here to<br /> upload document");
 
                         $("#uploaddocumenticon" + documentNumber).hide();
 
@@ -811,7 +811,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
     $scope.loadSupportingDocuments = function (travelRequestNumber) {
 
         //var cellTemplate2 = "<a href='{{row.entity.DownloadUrl}}'><img title='View/Download Document' class='viewDocument' src='/Images/download.png' width='30' height='30' /></a><a href='#'><img title='Delete Document' class='viewDocument' src='/Images/delete2.png' width='20' height='20' alt='{{row.entity.Id}}' onclick=deletedocument(this); /></a>";
-        var cellTemplate2 = "<span ng-if='row.entity.AllowUpload == true'><a><img title='Upload Document' class='dz-clickable supportingDocumentZoneUpload' id='supportingDocumentZoneUpload{{row.entity.Id}}' src='/Images/upload.png' width='30' height='30' /></a></span><a href='{{row.entity.DownloadUrl}}'><img title='View/Download Document' class='viewDocument' src='/Images/download.png' width='30' height='30' /></a><a href='#'><img title='Delete Document' class='viewDocument' src='/Images/delete2.png' width='20' height='20' alt='{{row.entity.Id}}' onclick=deletedocument(this); /></a>";
+        var cellTemplate2 = "<span ng-if='row.entity.AllowUpload == true'><a><img title='Upload Document' class='dz-clickable supportingDocumentZoneUpload' id='supportingDocumentZoneUpload{{row.entity.Id}}' src='/Images/upload.png' width='30' height='30' /></a></span><a href='{{row.entity.DownloadUrl}}'><img title='View/Download Document' class='viewDocument' src='/Images/download.png' width='30' height='30' /></a><a href='#'><img title='Delete Document' class='viewDocument' src='/Images/delete2.png' width='20' height='20' alt='{{row.entity.Id}}' onclick=deletedocument(this); /></a><span ng-if='row.entity.Notes != null'><a href='#'><img title='View/Edit Notes' class='viewDocument' src='/Images/edit.png' width='20' height='20' alt='{{row.entity.Id}}|{{row.entity.FileName}}|{{row.entity.Notes}}' onclick=editNotes(this); /></a></span>";
 
         $scope.gridOptions = {
             enableSorting: false,
@@ -822,7 +822,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             columnDefs: [
             {
                 field: 'FileName',
-                displayName: 'File Name',
+                displayName: 'File Name / Notes',
                 width: '420'
             },
             {
@@ -834,7 +834,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             {
                 field: 'actions',
                 headerCellClass: 'headerStyle',
-                width: '150',
+                width: '170',
                 displayName: 'Actions',
                 cellTemplate: cellTemplate2,
                 enableFiltering: false,
