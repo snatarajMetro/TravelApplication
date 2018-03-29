@@ -84,6 +84,31 @@
                             </div>
                         </div>
                     </div>-->
+                    <div style="width:610px;margin-left:20px;margin-top:10px;box-shadow: 10px 10px 5px #3c3c3c;border-radius: 3px;border: solid 1px black;">
+                        <div style="background-color: #064468;width:608px;color:white;">
+                            <span style="margin-left:3px;">Add Notes</span>
+                        </div>
+                        <div>
+                            <div style="margin-top:5px;float:left;margin-top:10px;margin-right:3px;">
+                                <span style="margin-left:3px;padding-top:3px;width:100px;">For</span>
+                            </div>
+                            <div style="margin-left:3px;overflow:hidden;">
+                                <select id="ddlOptions" class="inputdropdown notes" style="margin-top:5px;">
+                                    <option value="1">Justification Memo</option>
+                                    <option value="1">Agenda</option>
+                                    <option value="1">Registration</option>
+                                    <option value="1">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="margin-left:3px;">
+                            <textarea id="taNotes" name="taNotes" rows="8" cols="90" class="notesdatainput" maxlength="2500"></textarea>
+                        </div>
+                        <div style="margin-bottom:5px;">
+
+                            <input class="btn btn-primary backbutton" type="button" id="btnSaveNotes" name="btnSaveNotes" value="Save" style="margin-left:500px;margin-top:5px;" />
+                        </div>
+                    </div>
                     <div class="row">
                         <div id="supportingDocuments" class="supportingDocumentSection">
                             <div ng-app="travelApp" ng-controller="travelAppCtrl">
