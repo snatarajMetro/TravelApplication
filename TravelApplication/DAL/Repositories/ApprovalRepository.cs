@@ -392,6 +392,7 @@ namespace TravelApplication.DAL.Repositories
                                 cmd.ExecuteNonQuery();
                             }
                         }
+                       
                     }
                     else
                     {
@@ -449,9 +450,11 @@ namespace TravelApplication.DAL.Repositories
                                 cmd.Dispose();
                             }
                         }
+                        //send new submission email 
+                        sendNewRequestEmail(submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestBadgeNumber, "Travel Request Submitted Successfully", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
                     }
                     OracleCommand cmd1 = new OracleCommand();
-                        cmd1.Connection = (OracleConnection)dbConn;
+                        cmd1.Connection = (OracleConnection)ConnectionFactory.GetOpenDefaultConnection();
                         cmd1.CommandText = string.Format(@"UPDATE TRAVELREQUEST SET                                                 
                                                        SUBMITTEDBYUSERNAME = :p1 ,
                                                         SUBMITTEDDATETIME = :p2,
@@ -464,22 +467,12 @@ namespace TravelApplication.DAL.Repositories
                         cmd1.Parameters.Add(new OracleParameter("p3", Common.ApprovalStatus.Pending.ToString()));
                         cmd1.Parameters.Add(new OracleParameter("p4", (submitTravelRequest.HeirarchichalApprovalRequest.AgreedToTermsAndConditions) ? "Y" : "N"));
                         var rowsUpdated1 = cmd1.ExecuteNonQuery();
-                        cmd1.Dispose();
                     
 
-                    var result = getNextApproverBadgeNumber(dbConn, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId, "TRAVELREQUEST_APPROVAL");
-
-                    dbConn.Close();
-                    dbConn.Dispose();
+                    var result = getNextApproverBadgeNumber(cmd1.Connection, submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId, "TRAVELREQUEST_APPROVAL");
 
                     string subject = string.Format(@"Travel Request Approval for Id - {0} ", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
 
-
-                    // Send sucessful submission email only if its new
-                    if (string.IsNullOrEmpty(submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId))
-                    {                        
-                        sendNewRequestEmail(submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestBadgeNumber, "Travel Request Submitted Successfully", submitTravelRequest.HeirarchichalApprovalRequest.TravelRequestId);
-                    }
 
                     if (submitTravelRequest.HeirarchichalApprovalRequest.SignedInBadgeNumber != result)
                     {
@@ -499,6 +492,9 @@ namespace TravelApplication.DAL.Repositories
                         }
                     }
 
+                    cmd1.Dispose();
+                    dbConn.Close();
+                    dbConn.Dispose();
                     return true;
                 }
 
