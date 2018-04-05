@@ -1685,3 +1685,26 @@ function displayCashAdvance(display) {
         $(".advancedneeded").attr("style","display:none;");
     }
 }
+
+function editNotes(container) {
+
+    var altObj = $(container).prop('alt');
+    var documentId = altObj.split('|')[0];
+    var fileName = altObj.split('|')[1];
+    var notes = altObj.split('|')[2];
+
+    if (notes) {
+        $("#taNotes").val(notes);
+        $("#ddlNoteOptions").val(fileName);
+    }
+}
+
+function cancelEditNotes() {
+
+    // clear the notes
+    $("#taNotes").val("");
+
+    // reset the notes option dropdpwn value to its default value
+    $("#ddlNoteOptions").val("Justification Memo");
+
+}
