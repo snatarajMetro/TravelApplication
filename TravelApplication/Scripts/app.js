@@ -1704,7 +1704,84 @@ function cancelEditNotes() {
     // clear the notes
     $("#taNotes").val("");
 
-    // reset the notes option dropdpwn value to its default value
+    // reset the notes option dropdown value to its default value
     $("#ddlNoteOptions").val("Justification Memo");
 
+}
+
+function saveTravelRequestNotes() {
+
+    var travelRequestId = $('#travelRequestId').text();
+    var notes = $("#taNotes").val();
+    var noteOption = $("#ddlNoteOptions option:selected").val();
+    var documentId = "";
+
+    if (notes) {
+
+        // call save notes api
+        $('#btnSaveNotes').prop("disabled", true);
+        $('#btnCancelNotes').prop("disabled", true);
+
+        $.ajax({
+            type: "POST",
+            url: "api/documents/savenotes",
+            data: JSON.stringify({
+                "DocumentNoteRequest": {
+                    "TravelRequestId": travelRequestId,
+                    "DocumentId": documentId,
+                    "Notes": notes,
+                    "NotesOption": noteOption
+                }
+            }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function () {
+
+                $("#submitsuccess2").fadeIn("slow");
+                $('#submitsuccessmessage2').text("Notes has been successfully saved.");
+
+                $('#btnSaveNotes').prop("disabled", false);
+                $('#btnCancelNotes').prop("disabled", false);
+
+                // refresh supporting document grid
+                var scope = angular.element('#fileuploadtemplate').scope();
+                scope.loadSupportingDocuments(travelRequestId);
+
+                // clear the notes
+                $("#taNotes").val("");
+
+                // reset the notes option dropdpwn value to its default value
+                $("#ddlNoteOptions").val("Justification Memo");
+            },
+            error: function (xhr, options, error) {
+                if (xhr.status == 500) {
+
+                    $('#btnSaveNotes').prop("disabled", false);
+                    $('#btnCancelNotes').prop("disabled", false);
+
+                    var errorMessage = xhr.responseText;
+
+                    $("#submiterror2").fadeIn("slow");
+                    $('#submiterrormessage2').text(errorMessage);
+
+                    // fade out in 5 seconds
+                    $("#submiterror2").fadeOut(fadeOutTimeInMilliseconds);
+                }
+            }
+        });
+    }
+    else {
+        $('#btnSaveNotes').prop("disabled", false);
+        $('#btnCancelNotes').prop("disabled", false);
+
+        errorMessage = "Please enter some value for notes";
+
+        $("#submiterror2").fadeIn("slow");
+        $('#submiterrormessage2').text(errorMessage);
+
+        // fade out in 5 seconds
+        $("#submiterror2").fadeOut(fadeOutTimeInMilliseconds);
+    }
+
+    
 }
