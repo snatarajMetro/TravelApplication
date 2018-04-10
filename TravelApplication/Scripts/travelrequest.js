@@ -23,7 +23,7 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
     $scope.updateTotalEstimatedAmount = function () {
 
-        $scope.FISRequestModel = [{}, {}, {}, {}, {}];
+        //$scope.FISRequestModel = [{}, {}, {}, {}, {}];
 
         $scope.totalEstimatedAmount = parseFloat((
             ($scope.estimatedLodgingAmount * 1)
@@ -39,9 +39,9 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
             $('#txtAmount2').val(($scope.estimatedRegistrationAmount * 1));
             $timeout(angular.element("#txtAmount2").triggerHandler('change'), 0, true);
         } else {
-            $('#txtLineItem2').val("");
-            $('#txtAmount2').val("");
-            $timeout(angular.element("#txtAmount2").triggerHandler('change'), 0, true);
+            //$('#txtLineItem2').val("");
+            //$('#txtAmount2').val("");
+            //$timeout(angular.element("#txtAmount2").triggerHandler('change'), 0, true);
         }
     }
 
