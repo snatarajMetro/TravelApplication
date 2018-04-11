@@ -306,5 +306,36 @@ namespace TravelApplication.Controllers.WebAPI
             }
             return response;
         }
+
+        [HttpPost]
+        [Route("api/documents/savenotes")]
+        public HttpResponseMessage SaveTravelRequestNotes(DocumentNoteRequest documentNoteRequest)
+        {
+            HttpResponseMessage response = null;
+
+            try
+            {
+                //TODO: Call Service to save notes
+                response = Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                LogMessage.Log("api/documents/savenotes : " + ex.Message);
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, "Notes cannot be saved.");
+            }
+            return response;
+        }
     }
+
+    public class DocumentNoteRequest
+    {
+        public int TravelRequestId { get; set; }
+
+        public int DocumentId { get; set; }
+
+        public string Notes { get; set; }
+
+        public string NotesOption { get; set; }
+    }
+}
 }
