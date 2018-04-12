@@ -506,8 +506,13 @@ app.controller('travelAppCtrl', function ($scope, $compile, $timeout, uiGridCons
 
                         $("#supportingDocumentZone" + documentNumber + " .dz-message")
                             .css("background", "white");
-
-                        $("#uploaddocumenttext" + documentNumber).html("Click here to<br /> upload document");
+                        if (documentNumber == 1) {
+                            $("#uploaddocumenttext" + documentNumber).html("Click here to<br /> upload document or add justification memo below.");
+                        }
+                        else {
+                            $("#uploaddocumenttext" + documentNumber).html("Click here to<br /> upload document");
+                        }
+                        
 
                         $("#uploaddocumenticon" + documentNumber).hide();
 
