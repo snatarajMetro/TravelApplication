@@ -93,18 +93,18 @@
                                 <span style="margin-left:3px;padding-top:3px;width:100px;">For</span>
                             </div>
                             <div style="margin-left:3px;overflow:hidden;">
-                                <select id="ddlNoteOptions" name="ddlNoteOptions" class="inputdropdown notes" style="margin-top:5px;">
+                                <select id="ddlNoteOptions" name="ddlNoteOptions" class="inputdropdown notes" style="margin-top:5px;" onchange="setDefaultNotes();">
                                     <option value="Approved Travel">Approved Travel</option>
-                                    <option value="Local Lodging">Local Lodging</option>
                                     <option value="Car Rental">Car Rental</option>
-                                    <option value="Personal Vehicle Use">Personal Vehicle Use</option>
                                     <option value="Cash Advance">Cash Advance</option>
+                                    <option value="Local Lodging">Local Lodging</option>
                                     <option value="Personal time off approval">Personal time off approval</option>
+                                    <option value="Personal Vehicle Use">Personal Vehicle Use</option>
                                 </select>
                             </div>
                         </div>
                         <div style="margin-left:3px;">
-                            <textarea id="taNotes" name="taNotes" rows="8" cols="90" class="notesdatainput" maxlength="2500"></textarea>
+                            <textarea id="taNotes" name="taNotes" rows="8" cols="90" class="notesdatainput" maxlength="2500">Approved Travel...</textarea>
                         </div>
                         <div style="margin-bottom:5px;float:left;">
                             <input class="btn btn-primary backbutton" type="button" id="btnCancelNotes" name="btnCancelNotes" value="Cancel" style="margin-left:550px;margin-top:15px;" onclick="cancelEditNotes()" />

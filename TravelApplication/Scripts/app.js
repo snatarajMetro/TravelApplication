@@ -1782,6 +1782,29 @@ function saveTravelRequestNotes() {
         // fade out in 5 seconds
         $("#submiterror2").fadeOut(fadeOutTimeInMilliseconds);
     }
+}
 
-    
+function setDefaultNotes() {
+    var selectedJustificationMemoType = $("#ddlNoteOptions option:selected").text();
+
+    if (selectedJustificationMemoType == "Approved Travel") {
+        $("#taNotes").text("Approved Travel...");
+    }
+    else if (selectedJustificationMemoType == "Local Lodging") {
+        $("#taNotes").text("Local Lodging...");
+    }
+    else if (selectedJustificationMemoType == "Car Rental") {
+        $("#taNotes").text("Car Rental...");
+    }
+    else if (selectedJustificationMemoType == "Personal Vehicle Use") {
+        $("#taNotes").text("Personal Vehicle Use...");
+    }
+    else if (selectedJustificationMemoType == "Cash Advance") {
+        $("#taNotes").text("Cash Advance...");
+    }
+    else if (selectedJustificationMemoType == "Personal time off approval") {
+        $("#taNotes").text("Personal time off approval");
+    }
+
+    $("#taNotes").focus();
 }
