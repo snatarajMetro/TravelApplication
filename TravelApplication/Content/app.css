@@ -2477,8 +2477,8 @@ div.adminrejectactioncontainer {
     border-radius: 3px;
     border: solid 1px gray;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    width: 600px;
-    height: 100px;
+    width: 750px;
+    height: 160px;
     font-size: 14px;
     color: black;
     margin-top: 2px;
@@ -2489,4 +2489,14 @@ div.adminrejectactioncontainer {
     height: 30px;
     margin-left: 2px;
     font-size: 14px;
+}
+
+.justificationmemotitle {
+    font-size: 18px;
+    /*margin-bottom: 15px;*/
+    background-color: #064468;
+    color: white;
+    width: 800px;
+    padding-left: 5px;
+    margin-top: 20px;
 }

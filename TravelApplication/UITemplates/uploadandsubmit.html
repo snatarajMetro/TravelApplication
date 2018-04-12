@@ -78,16 +78,16 @@
                         </div>
                     </div>
                     <!--<div class="row">
-                        <div class="dropzone dz-clickable supportingDocumentZone" id="supportingDocumentZone">
-                            <div class="dz-default dz-message" data-dz-message="">
-                                <span>Drop files here to upload</span>
-                            </div>
-                        </div>
-                    </div>-->
-                    <div style="width:610px;height:210px;margin-left:20px;margin-top:10px;box-shadow: 10px 10px 5px #3c3c3c;border-radius: 3px;border: solid 1px black;">
-                        <div style="background-color: #064468;width:608px;color:white;">
-                            <span style="margin-left:3px;">Justifaction Memos</span>
-                        </div>
+        <div class="dropzone dz-clickable supportingDocumentZone" id="supportingDocumentZone">
+            <div class="dz-default dz-message" data-dz-message="">
+                <span>Drop files here to upload</span>
+            </div>
+        </div>
+    </div>-->
+                    <div class="justificationmemotitle" style="margin-left:20px;">
+                        <span style="margin-left:3px;">Justifaction Memos</span>
+                    </div>
+                    <div style="width:800px;height:260px;margin-left:20px;margin-top:2px;box-shadow: 10px 10px 5px #3c3c3c;border-radius: 3px;border: solid 1px black;">
                         <div>
                             <div style="margin-top:5px;float:left;margin-top:10px;margin-right:3px;">
                                 <span style="margin-left:3px;padding-top:3px;width:100px;">For</span>
@@ -107,10 +107,10 @@
                             <textarea id="taNotes" name="taNotes" rows="8" cols="90" class="notesdatainput" maxlength="2500"></textarea>
                         </div>
                         <div style="margin-bottom:5px;float:left;">
-                            <input class="btn btn-primary backbutton" type="button" id="btnCancelNotes" name="btnCancelNotes" value="Cancel" style="margin-left:380px;margin-top:5px;" onclick="cancelEditNotes()" />
+                            <input class="btn btn-primary backbutton" type="button" id="btnCancelNotes" name="btnCancelNotes" value="Cancel" style="margin-left:550px;margin-top:15px;" onclick="cancelEditNotes()" />
                         </div>
                         <div style="overflow:hidden;">
-                            <input class="btn btn-primary backbutton" type="button" id="btnSaveNotes" name="btnSaveNotes" value="Save" style="margin-top:5px;" onclick="saveTravelRequestNotes()" />
+                            <input class="btn btn-primary backbutton" type="button" id="btnSaveNotes" name="btnSaveNotes" value="Save" style="margin-left:20px;margin-top:15px;" onclick="saveTravelRequestNotes()" />
                         </div>
                     </div>
                     <div class="row">
@@ -236,43 +236,43 @@
                                 </span>
                             </div>
                             <!--<div style="margin-top:2px;">
-                                <div  id="submittername" name="submittername">
-                                    <div style="float:left;padding-top:10px;margin-right:10px;">
-                                        <span class="approvaltitle">Submitter's Name</span><sup class="required">*</sup>
-                                    </div>
-                                    <div style="margin-left:10px;">
-                                        <input type="text" placeholder="Submitter's Name" id="txtSubmittedByUserName" name="txtSubmittedByUserName" width="100" class="datainputname" />
+                <div  id="submittername" name="submittername">
+                    <div style="float:left;padding-top:10px;margin-right:10px;">
+                        <span class="approvaltitle">Submitter's Name</span><sup class="required">*</sup>
+                    </div>
+                    <div style="margin-left:10px;">
+                        <input type="text" placeholder="Submitter's Name" id="txtSubmittedByUserName" name="txtSubmittedByUserName" width="100" class="datainputname" />
+                    </div>
+                </div>
+            </div>-->
+                        </div>
+                    </div>
+                </div>
+                            <div class="row">
+                                <div id="submiterror2" class="main errorcontainer2" style="display:none;">
+                                    <span class="dialog" id="submiterrormessage2">error</span>
+                                    <a href="#" class="close-thick" onclick="return closesubmiterror();"></a>
+                                </div>
+                                <div id="submitsuccess2" class="main successcontainerok" style="float:left;display:none;">
+                                    <div class="dialogSuccessSubmit">
+                                        <span id="submitsuccessmessage2"></span>
+                                        <input class="btn btn-primary signinbutton ok" type="button" id="btnOk" name="btnOk" value="Ok" onclick="showaction()" />
                                     </div>
                                 </div>
-                            </div>-->
+                            </div>
+                            <div class="estimatedexpensesection row">
+                                <!--<div>
+            <sub class="required">* required fields.</sub>
+         </div>-->
+                                <div style="float:left;position:absolute;clear:left;width:200px;">
+                                    <sub class="required">* required fields.</sub>
+                                </div>
+                                <div class="actionbuttonold">
+                                    <input class="btn btn-primary backbutton" type="button" id="btnBackTravelRequest" name="btnBackTravelRequest" value="Back" onclick="backtotravelrequestsection()" />
+                                    <input class="btn btn-primary signinbutton" type="button" id="btnSubmit" name="btnSubmit" value="Submit" ng-click="submitRequest2()" />
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div id="submiterror2" class="main errorcontainer2" style="display:none;">
-                        <span class="dialog" id="submiterrormessage2">error</span>
-                        <a href="#" class="close-thick" onclick="return closesubmiterror();"></a>
-                    </div>
-                    <div id="submitsuccess2" class="main successcontainerok" style="float:left;display:none;">
-                        <div class="dialogSuccessSubmit">
-                            <span id="submitsuccessmessage2"></span>
-                            <input class="btn btn-primary signinbutton ok" type="button" id="btnOk" name="btnOk" value="Ok" onclick="showaction()" />
-                        </div>
-                    </div>
-                </div>
-                <div class="estimatedexpensesection row">
-                    <!--<div>
-                        <sub class="required">* required fields.</sub>
-                     </div>-->
-                    <div style="float:left;position:absolute;clear:left;width:200px;">
-                        <sub class="required">* required fields.</sub>
-                    </div>
-                    <div class="actionbuttonold">
-                        <input class="btn btn-primary backbutton" type="button" id="btnBackTravelRequest" name="btnBackTravelRequest" value="Back" onclick="backtotravelrequestsection()" />
-                        <input class="btn btn-primary signinbutton" type="button" id="btnSubmit" name="btnSubmit" value="Submit" ng-click="submitRequest2()" />
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
