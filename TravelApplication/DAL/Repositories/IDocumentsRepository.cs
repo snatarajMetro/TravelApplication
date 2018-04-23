@@ -16,5 +16,6 @@ namespace TravelApplication.DAL.Repositories
         List<RequiredDocuments> GetAllRequiredDocumentsByTravelId(string travelRequestId, int badgeNumber);
 
         void DeleteFilesByTravelId(int travelRequestId, int id);
+        void UploadNotes(DocumentNoteRequest documentNoteRequest);
     }
 }

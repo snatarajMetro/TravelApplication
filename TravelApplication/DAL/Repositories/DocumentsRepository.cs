@@ -218,5 +218,33 @@ namespace TravelApplication.DAL.Repositories
             }
 
         }
+
+        public void UploadNotes(DocumentNoteRequest documentNoteRequest)
+        {
+            try
+            {
+                using (dbConn = ConnectionFactory.GetOpenDefaultConnection())
+                {
+                    string query = @"Insert into Travel_Uploads (TRAVELREQUESTID, FILENAME, UPLOADEDDATETIME, NOTES ) values (:tarId, :fileName, :uploadedDateTime , :notes)";
+                    OracleCommand command = new OracleCommand(query, (OracleConnection)dbConn);
+                    command.CommandText = query;
+                    command.Parameters.Add(new OracleParameter("tarId", OracleDbType.Int32, documentNoteRequest.TravelRequestId, ParameterDirection.Input));
+                    command.Parameters.Add(new OracleParameter("fileName", OracleDbType.Varchar2, documentNoteRequest.NotesOption, ParameterDirection.Input));
+                    command.Parameters.Add(new OracleParameter("uploadedDateTime", OracleDbType.Date, System.DateTime.Now, ParameterDirection.Input));
+                    command.Parameters.Add(new OracleParameter("notes", OracleDbType.Clob, documentNoteRequest.Notes, ParameterDirection.Input));
+                    command.ExecuteNonQuery();
+
+                    command.Dispose();
+                    dbConn.Close();
+                    dbConn.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogMessage.Log("DocumentRepository : UploadNotes" + ex.Message);
+
+                throw new Exception("Couldn't save file name to database");
+            }
+        }
     }
 }

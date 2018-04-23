@@ -207,6 +207,7 @@
     <Compile Include="Models\ApproveRequest.cs" />
     <Compile Include="Models\BootstrapTableJSONModel.cs" />
     <Compile Include="Models\CostCenter.cs" />
+    <Compile Include="Models\DocumentNoteRequest.cs" />
     <Compile Include="Models\Email.cs" />
     <Compile Include="Models\EmailApprovalDetails.cs" />
     <Compile Include="Models\EmployeeDetails.cs" />

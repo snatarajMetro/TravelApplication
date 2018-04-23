@@ -309,13 +309,13 @@ namespace TravelApplication.Controllers.WebAPI
 
         [HttpPost]
         [Route("api/documents/savenotes")]
-        public HttpResponseMessage SaveTravelRequestNotes(DocumentNoteRequest documentNoteRequest)
+        public HttpResponseMessage SaveTravelRequestNotes(JustifactionRequest justifactionRequest)
         {
             HttpResponseMessage response = null;
 
             try
             {
-                //TODO: Call Service to save notes
+                documentService.UploadNotes(justifactionRequest.documentNoteRequest);
                 response = Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception ex)
@@ -327,15 +327,6 @@ namespace TravelApplication.Controllers.WebAPI
         }
     }
 
-    public class DocumentNoteRequest
-    {
-        public int TravelRequestId { get; set; }
+    
 
-        public int DocumentId { get; set; }
-
-        public string Notes { get; set; }
-
-        public string NotesOption { get; set; }
-    }
-}
 }

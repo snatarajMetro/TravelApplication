@@ -94,5 +94,19 @@ namespace TravelApplication.Services
                 throw;
             }
         }
+
+        public void UploadNotes(DocumentNoteRequest documentNoteRequest)
+        {
+            try
+            {
+                documentsRepository.UploadNotes(documentNoteRequest);
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Unable to upload the document" + ex.Message);
+            }
+
+        }
     }
 }
